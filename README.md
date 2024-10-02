@@ -3,7 +3,7 @@ INSTALLATION INSTRUCTIONS :
 ADD THE DEPENDENCIES : 
 
 FRONT END
-- npm intall
+- npm install
 
 
 BACK END
