@@ -1,6 +1,12 @@
 INSTALLATION INSTRUCTIONS : 
 
+
+
 ADD THE DEPENDENCIES : 
+- Node.js
+- Composer
+- XAMPP or Laragon or Bard
+
 
 FRONT END
 - npm install
