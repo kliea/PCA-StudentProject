@@ -1,9 +1,10 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+
+import AuthenticatedLayoutEmployee from '@/Layouts/AuthenticatedLayoutEmployee';
 import { Head, Link, usePage } from '@inertiajs/react';
 
 export default function Dashboard() {
     return (
-        <AuthenticatedLayout
+        <AuthenticatedLayoutEmployee
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800">
                     {usePage().component}
@@ -16,7 +17,7 @@ export default function Dashboard() {
             <Link href={route('logout')} method="post" as="button">Button</Link>
 
             </div>
-        </AuthenticatedLayout>
+        </AuthenticatedLayoutEmployee>
     );
 }
 
