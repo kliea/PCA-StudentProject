@@ -5,7 +5,7 @@ INSTALLATION INSTRUCTIONS :
 ADD THE DEPENDENCIES : 
 - Node.js
 - Composer
-- XAMPP or Laragon or Bard
+- XAMPP or Laragon (Optional)
 
 
 FRONT END
