@@ -25,22 +25,22 @@ export default function Authenticated({
     const links: link [] = [
         {title: 'PAYROLL SYSTEM',
             items : [
-                {label: 'Dashboard', url: 'dashboard', icon: LayoutDashboard}
+                {label: 'Dashboard', url: 'employee.dashboard', icon: LayoutDashboard}
             ]},
 
         {title: 'EMPLOYEES',
             items : [
-                {label: 'Salary', url: 'salary' , icon: Package},
-                {label: 'Benefits', url: 'benefits' , icon: ThumbsUp},
-                {label: 'Loans', url: 'loans' , icon: FlagIcon},
+                {label: 'Salary', url: 'employee.salary' , icon: Package},
+                {label: 'Benefits', url: 'employee.benefits' , icon: ThumbsUp},
+                {label: 'Loans', url: 'employee.loans' , icon: FlagIcon},
             ]},
 
         {title: 'MANAGEMENT',
             items : [
-                {label: 'Records', url: 'records' , icon: History},
-                {label: 'Designations', url: 'designations' , icon: Users},
-                {label: 'Compensations', url: 'compensations' , icon: TrendingUp},
-                {label: 'Deductions', url: 'deductions' , icon: TrendingDown},
+                {label: 'Records', url: 'employee.records' , icon: History},
+                {label: 'Designations', url: 'employee.designations' , icon: Users},
+                {label: 'Compensations', url: 'employee.compensations' , icon: TrendingUp},
+                {label: 'Deductions', url: 'employee.deductions' , icon: TrendingDown},
             ]},
         
 

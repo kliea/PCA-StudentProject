@@ -27,22 +27,22 @@ export default function Authenticated({
     const links: link [] = [
         {title: 'PAYROLL SYSTEM',
             items : [
-                {label: 'Dashboard', url: 'dashboard', icon: LayoutDashboard}
+                {label: 'Dashboard', url: 'admin.dashboard', icon: LayoutDashboard}
             ]},
 
         {title: 'EMPLOYEES',
             items : [
-                {label: 'Salary', url: 'salary' , icon: Package},
-                {label: 'Benefits', url: 'benefits' , icon: ThumbsUp},
-                {label: 'Loans', url: 'loans' , icon: FlagIcon},
+                {label: 'Salary', url: 'admin.salary' , icon: Package},
+                {label: 'Benefits', url: 'admin.benefits' , icon: ThumbsUp},
+                {label: 'Loans', url: 'admin.loans' , icon: FlagIcon},
             ]},
 
         {title: 'MANAGEMENT',
             items : [
-                {label: 'Records', url: 'records' , icon: History},
-                {label: 'Designations', url: 'designations' , icon: Users},
-                {label: 'Compensations', url: 'compensations' , icon: TrendingUp},
-                {label: 'Deductions', url: 'deductions' , icon: TrendingDown},
+                {label: 'Records', url: 'admin.records' , icon: History},
+                {label: 'Designations', url: 'admin.designations' , icon: Users},
+                {label: 'Compensations', url: 'admin.compensations' , icon: TrendingUp},
+                {label: 'Deductions', url: 'admin.deductions' , icon: TrendingDown},
             ]},
         
 

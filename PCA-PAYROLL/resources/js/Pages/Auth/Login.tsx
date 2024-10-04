@@ -30,6 +30,7 @@ export default function Login({
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
+        user_level:'admin',
     });
 
     const submit: FormEventHandler = (e) => {
@@ -40,7 +41,7 @@ export default function Login({
         });
     };
 
-    {console.log(errors)}
+    {console.log(useForm)}
 
     return (
         <GuestLayout>

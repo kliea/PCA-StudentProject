@@ -16,72 +16,71 @@ Route::get('/', function () {
 
 //  Admin Routes
 
-Route::get('/dashboard', function () {
+Route::get('/admin/dashboard', function () {
     return Inertia::render('Admin/Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware('auth', 'verified','usercheck:admin')->name('admin.dashboard');
 
-Route::get('/salary', function () {
+Route::get('/admin/salary', function () {
     return Inertia::render('Admin/Salary');
-})->middleware(['auth', 'verified'])->name('salary');
+})->middleware('auth', 'verified','usercheck:admin')->name('admin.salary');
 
-Route::get('/benefits', function () {
+Route::get('/admin/benefits', function () {
     return Inertia::render('Admin/Benefits');
-})->middleware(['auth', 'verified'])->name('benefits');
+})->middleware('auth', 'verified','usercheck:admin')->name('admin.benefits');
 
-Route::get('/loans', function () {
+Route::get('/admin/loans', function () {
     return Inertia::render('Admin/Loans');
-})->middleware(['auth', 'verified'])->name('loans');
+})->middleware('auth', 'verified','usercheck:admin')->name('admin.loans');
 
-Route::get('/records', function () {
+Route::get('/admin/records', function () {
     return Inertia::render('Admin/Records');
-})->middleware(['auth', 'verified'])->name('records');
+})->middleware('auth', 'verified','usercheck:admin')->name('admin.records');
 
-Route::get('/designations', function () {
+Route::get('/admin/designations', function () {
     return Inertia::render('Admin/Designations');
-})->middleware(['auth', 'verified'])->name('designations');
+})->middleware('auth', 'verified','usercheck:admin')->name('admin.designations');
 
-Route::get('/compensations', function () {
+Route::get('/admin/compensations', function () {
     return Inertia::render('Admin/Compensations');
-})->middleware(['auth', 'verified'])->name('compensations');
+})->middleware('auth', 'verified','usercheck:admin')->name('admin.compensations');
 
-Route::get('/deductions', function () {
+Route::get('/admin/deductions', function () {
     return Inertia::render('Admin/Deductions');
-})->middleware(['auth', 'verified'])->name('deductions');
+})->middleware('auth', 'verified','usercheck:admin')->name('admin.deductions');
 
 // Empoyee Routes
 
-
-Route::get('/dashboard', function () {
+Route::get('/employee/dashboard', function () {
     return Inertia::render('Employee/Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware('auth', 'verified','usercheck:employee')->name('employee.dashboard');
 
-Route::get('/salary', function () {
+Route::get('/employee/salary', function () {
     return Inertia::render('Employee/Salary');
-})->middleware(['auth', 'verified'])->name('salary');
+})->middleware('auth', 'verified','usercheck:employee')->name('employee.salary');
 
-Route::get('/benefits', function () {
+Route::get('/employee/benefits', function () {
     return Inertia::render('Employee/Benefits');
-})->middleware(['auth', 'verified'])->name('benefits');
+})->middleware('auth', 'verified','usercheck:employee')->name('employee.benefits');
 
-Route::get('/loans', function () {
+Route::get('/employee/loans', function () {
     return Inertia::render('Employee/Loans');
-})->middleware(['auth', 'verified'])->name('loans');
+})->middleware('auth', 'verified','usercheck:employee')->name('employee.loans');
 
-Route::get('/records', function () {
+Route::get('/employee/records', function () {
     return Inertia::render('Employee/Records');
-})->middleware(['auth', 'verified'])->name('records');
+})->middleware('auth', 'verified','usercheck:employee')->name('employee.records');
 
-Route::get('/designations', function () {
+Route::get('/employee/designations', function () {
     return Inertia::render('Employee/Designations');
-})->middleware(['auth', 'verified'])->name('designations');
+})->middleware('auth', 'verified','usercheck:employee')->name('employee.designations');
 
-Route::get('/compensations', function () {
+Route::get('/employee/compensations', function () {
     return Inertia::render('Employee/Compensations');
-})->middleware(['auth', 'verified'])->name('compensations');
+})->middleware('auth', 'verified','usercheck:employee')->name('employee.compensations');
 
-Route::get('/deductions', function () {
+Route::get('/employee/deductions', function () {
     return Inertia::render('Employee/Deductions');
-})->middleware(['auth', 'verified'])->name('deductions');
+})->middleware('auth', 'verified','usercheck:employee')->name('employee.deductions');
 
 
 Route::middleware('auth')->group(function () {
