@@ -2,10 +2,19 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, usePage } from "@inertiajs/react";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import Data from "@/Components/Constants/data.json";
-import { ColumnDef } from "@tanstack/react-table";
+import {
+    ColumnDef,
+    flexRender,
+    getCoreRowModel,
+    getPaginationRowModel,
+    useReactTable,
+    getFilteredRowModel,
+} from "@tanstack/react-table";
 import { DataTable } from "@/Components/DataTable";
 import { useState } from "react";
 import { Input } from "@/Components/ui/input";
+import { Button } from "@/Components/ui/button";
+import { PlusIcon } from "lucide-react";
 
 type CompensationProfile = {
     name: string;
@@ -43,6 +52,24 @@ export default function Dashboard() {
 
     const [globalFilter, setGlobalFilter] = useState<any>([]);
 
+    const table = useReactTable({
+        data,
+        columns,
+        getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        initialState: {
+            pagination: {
+                pageSize: 10,
+            },
+        },
+        getFilteredRowModel: getFilteredRowModel(),
+        globalFilterFn: "includesString",
+        state: {
+            globalFilter,
+        },
+        onGlobalFilterChange: setGlobalFilter,
+    });
+
     return (
         <AuthenticatedLayout
             header={
@@ -55,16 +82,25 @@ export default function Dashboard() {
 
             <div className="w-full h-[calc(100vh-120px)] overflow-hidden ">
                 <BodyContentLayout headerName="Compensation Profile List">
-                    <Input
-                        type="search"
-                        onChange={(e) => setGlobalFilter(e.target.value)}
-                    />
+                    <div className="mb-5 flex gap-5">
+                        <Input
+                            type="search"
+                            onChange={(e) => setGlobalFilter(e.target.value)}
+                            className="w-1/4"
+                            placeholder="Search...."
+                        />
+                        <div>
+                            <Button>
+                                <PlusIcon className="mr-2 h-6 w-auto" />
+                                ADD NEW COMPENSATION PROFILE
+                            </Button>
+                        </div>
+                    </div>
                     <DataTable
                         columns={columns}
-                        data={data}
                         rowStyle="odd:bg-white even:bg-transparent"
-                        paginationSize={10}
                         disablePagination={false}
+                        table={table}
                     ></DataTable>
                 </BodyContentLayout>
             </div>

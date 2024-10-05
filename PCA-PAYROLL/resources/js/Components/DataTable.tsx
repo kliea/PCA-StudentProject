@@ -1,13 +1,4 @@
 import {
-    ColumnDef,
-    flexRender,
-    getCoreRowModel,
-    getPaginationRowModel,
-    useReactTable,
-    getFilteredRowModel,
-} from "@tanstack/react-table";
-
-import {
     Table,
     TableBody,
     TableCell,
@@ -28,45 +19,23 @@ import {
 } from "@/Components/ui/pagination";
 
 import { useState } from "react";
+import { ColumnDef, flexRender } from "@tanstack/react-table";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
-    data: TData[];
     headerStyle?: string;
     rowStyle?: string;
-    paginationSize: number;
     disablePagination: boolean;
-    globalFilter?: any;
-    setGlobalFilter?: any;
+    table: any;
 }
 
 export function DataTable<TData, TValue>({
     columns,
-    data,
     headerStyle,
     rowStyle,
-    paginationSize,
     disablePagination,
-    globalFilter,
-    setGlobalFilter,
+    table,
 }: DataTableProps<TData, TValue>) {
-    const table = useReactTable({
-        data,
-        columns,
-        getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        initialState: {
-            pagination: {
-                pageSize: paginationSize,
-            },
-        },
-        getFilteredRowModel: getFilteredRowModel(),
-        globalFilterFn: "includesString",
-        state: {
-            globalFilter,
-        },
-        onGlobalFilterChange: setGlobalFilter,
-    });
     return (
         // Fix Pagination : Moves with table . Prefereable if stay sa bottom
         // Style the Table
@@ -80,9 +49,9 @@ export function DataTable<TData, TValue>({
             <div className={cn("rounded-md border shadow-md overflow-hidden")}>
                 <Table className="bg-baseGrey">
                     <TableHeader className={headerStyle}>
-                        {table.getHeaderGroups().map((headerGroup) => (
+                        {table.getHeaderGroups().map((headerGroup: any) => (
                             <TableRow key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => {
+                                {headerGroup.headers.map((header: any) => {
                                     return (
                                         <TableHead key={header.id}>
                                             {header.isPlaceholder
@@ -100,7 +69,7 @@ export function DataTable<TData, TValue>({
                     </TableHeader>
                     <TableBody>
                         {table.getRowModel().rows?.length ? (
-                            table.getRowModel().rows.map((row) => (
+                            table.getRowModel().rows.map((row: any) => (
                                 <TableRow
                                     className={rowStyle}
                                     key={row.id}
@@ -108,7 +77,7 @@ export function DataTable<TData, TValue>({
                                         row.getIsSelected() && "selected"
                                     }
                                 >
-                                    {row.getVisibleCells().map((cell) => (
+                                    {row.getVisibleCells().map((cell: any) => (
                                         <TableCell key={cell.id}>
                                             {flexRender(
                                                 cell.column.columnDef.cell,
