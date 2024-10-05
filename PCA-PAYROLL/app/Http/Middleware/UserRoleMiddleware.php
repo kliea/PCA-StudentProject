@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Middleware\error;
 
 class UserRoleMiddleware
 {
@@ -20,8 +21,18 @@ class UserRoleMiddleware
             return $next($request);
         }
 
+        
+        if(Auth::user()->user_level === "admin"){
+            return redirect()->route('admin.dashboard');
+        }
+
+        if(Auth::user()->user_level === "employee"){
+            return redirect()->route('employee.dashboard');
+        }
+        
         // Redirect if user is not authorized
         return redirect()->route('login')->withErrors(['access_denied' => 'Unauthorized access.']);
+
 
 
         
