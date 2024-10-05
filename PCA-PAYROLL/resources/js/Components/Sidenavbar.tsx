@@ -32,7 +32,7 @@ export function Sidenavbarlinks({links, activePage}: SidenavbarlinksProps){
             active={activePage === '/'+link.url}
             >
               <link.icon/>
-              <span className="px-2">{link.label}</span>
+              <span className="px-2 text-base">{link.label}</span>
           </NavLink>
           </li>
         ))}
@@ -44,8 +44,8 @@ export function Sidenavbarlinks({links, activePage}: SidenavbarlinksProps){
 export function Sidenavbargroup({title, className , children} : {title: String, className?: String, children: React.ReactNode}){
   return (
     <>
-      <section className={cn("w-full flex flex-col gap-4 px-5 z-50", className)}>
-        <h1 className="text-white font-bold text-2xl">{title}</h1>
+      <section className={cn("w-full flex flex-col gap-4", className)}>
+        <h1 className="text-white font-bold text-xl">{title}</h1>
         {children}
         <Separator/>
       </section>
@@ -55,7 +55,7 @@ export function Sidenavbargroup({title, className , children} : {title: String, 
 
 export function Sidenavbar({children, className} : SidenavbarProps) {
   return (
-    <aside className={cn("fixed bg-baseGreen w-[350px] h-screen", className)}>
+    <aside className={cn("fixed bg-baseGreen h-full", className)}>
       {children}
     </aside>
   )

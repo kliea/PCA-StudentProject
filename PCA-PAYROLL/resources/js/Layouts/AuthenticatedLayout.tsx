@@ -42,8 +42,6 @@ export default function Authenticated({
                 {label: 'Compensations', url: 'compensations' , icon: TrendingUp},
                 {label: 'Deductions', url: 'deductions' , icon: TrendingDown},
             ]},
-        
-
     ];
 
 
@@ -51,8 +49,7 @@ export default function Authenticated({
         <div className="min-h-screen bg-gray-100">
             {header && (
                 <header className="bg-white shadow">
-                    <nav>
-                    <Sidenavbar className={cn("flex flex-col items-center p-5")}>
+                    <Sidenavbar className={cn(" items-center py-5 px-10 w-[350px]")}>
                         <img src="https://placehold.co/280x100" alt="LOGO" />
                         {links.map((link)=>(
                             <Sidenavbargroup title={link.title} className="mt-7">
@@ -60,9 +57,7 @@ export default function Authenticated({
                             </Sidenavbargroup>
                         ))}
                     </ Sidenavbar>
-                    </nav>
-                    <div className={cn("ml-[350px] max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex gap-3 z-40")}>
-                        <ListCollapse onClick={()=>console.log('hello')}></ListCollapse>
+                    <div className={cn("ml-[350px] max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex")}>
                         {header}
                     </div>
                 </header>

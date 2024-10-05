@@ -5,18 +5,6 @@ import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
-import { Button } from '@/Components/ui/button';
-import { CaretSortIcon } from '@radix-ui/react-icons';
-import { CheckIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Command,
-    CommandGroup,
-    CommandItem,
-    CommandList, } from '@/Components/ui/command';
-
-import { Popover,
-    PopoverContent,
-    PopoverTrigger, } from '@/Components/ui/popover';
 import React from 'react';
 
 export default function Login({
@@ -92,7 +80,7 @@ export default function Login({
                 </div>
 
                 <div className="mt-5 flex">
-                    <PrimaryButton className="w-full flex justify-center " disabled={processing} >
+                    <PrimaryButton className="w-full flex justify-center h-10" disabled={processing} >
                         Log in
                     </PrimaryButton>
                 </div>

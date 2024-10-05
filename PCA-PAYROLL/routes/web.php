@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminPageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -52,4 +53,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+
+Route::prefix('admin')->group(function () {
+    Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
+    Route::get('compensations', [AdminPageController::class, 'compensations'])->name('admin.compensations');
+});
+
+require __DIR__ . '/auth.php';
