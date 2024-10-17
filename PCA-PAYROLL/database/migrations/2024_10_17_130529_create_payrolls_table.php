@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('daily_time_records', function (Blueprint $table) {
-            $table->string('dtr_code')->primary(); // PK
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->integer('total_tardy_minutes')->nullable();
-            $table->integer('total_undertime_minutes');
-            $table->integer('total_work_minutes');
+        Schema::create('payrolls', function (Blueprint $table) {
+            $table->string('payroll_code')->primary(); //PK
 
-            // foreign key
+            //foreign keys
             $table->string('employee_number')->references('employee_number')->on('employees');
+            $table->string('payroll_index_code')->references('payroll_index_code')->on('payroll_index');
+            
         });
     }
 
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('daily_time_records');
+        Schema::dropIfExists('payrolls');
     }
 };
