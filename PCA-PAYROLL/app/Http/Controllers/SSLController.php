@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\SSLModel;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Inertia\Response;
 
-class AdminPageController extends Controller
+class SSLController extends Controller
 {
 
-    public function ssl(): Response
+    public function index()
     {
         // Fetch data from the database
         $data = SSLModel::all();
@@ -19,7 +18,7 @@ class AdminPageController extends Controller
         return Inertia::render('Admin/Ssl', ['data' => $data, 'message' => 'hello']);
     }
 
-    public function ssl_addData(Request $request)
+    public function store(Request $request)
     {
         // Validate the request
         $validated = $request->validate([

@@ -2,7 +2,7 @@ import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutAdmin";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import { Head, usePage } from "@inertiajs/react";
 
-export default function Dashboard() {
+export default function Loans() {
     return (
         <AuthenticatedLayoutAdmin
             header={
@@ -11,9 +11,9 @@ export default function Dashboard() {
                 </h2>
             }
         >
-            <Head title="Dashboard" />
+            <Head title="Loans" />
 
-            <BodyContentLayout headerName={"DashBoard"}></BodyContentLayout>
+            <BodyContentLayout headerName={"Loans"}></BodyContentLayout>
         </AuthenticatedLayoutAdmin>
     );
 }
