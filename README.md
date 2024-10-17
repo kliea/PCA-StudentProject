@@ -10,6 +10,7 @@ ADD THE DEPENDENCIES :
 
 FRONT END
 - npm install
+- npm install @tanstack/react-table
 
 
 BACK END
