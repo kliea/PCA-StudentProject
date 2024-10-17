@@ -1,6 +1,5 @@
-
-import AuthenticatedLayoutEmployee from '@/Layouts/AuthenticatedLayoutEmployee';
-import { Head, Link, usePage } from '@inertiajs/react';
+import AuthenticatedLayoutEmployee from "@/Layouts/AuthenticatedLayoutAdmin copy";
+import { Head, Link, usePage } from "@inertiajs/react";
 
 export default function Dashboard() {
     return (
@@ -11,13 +10,13 @@ export default function Dashboard() {
                 </h2>
             }
         >
-            <Head title="Dashboard"/>
+            <Head title="Dashboard" />
 
             <div className="outline w-full h-[calc(100vh-120px)] overflow-hidden">
-            <Link href={route('logout')} method="post" as="button">Button</Link>
-
+                <Link href={route("logout")} method="post" as="button">
+                    Button
+                </Link>
             </div>
         </AuthenticatedLayoutEmployee>
     );
 }
-
