@@ -1,10 +1,9 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, usePage } from "@inertiajs/react";
+import { Head, usePage } from "@inertiajs/react";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import Data from "@/Components/Constants/data.json";
 import {
     ColumnDef,
-    flexRender,
     getCoreRowModel,
     getPaginationRowModel,
     useReactTable,
@@ -24,6 +23,7 @@ type CompensationProfile = {
     shorthand: string;
 };
 
+// Define Columns for Table .
 const columns: ColumnDef<CompensationProfile>[] = [
     {
         accessorKey: "name",
@@ -48,8 +48,10 @@ const columns: ColumnDef<CompensationProfile>[] = [
 ];
 
 export default function Dashboard() {
+    // Set the data that table will use
     const data: CompensationProfile[] = Data;
 
+    // State For Filtering Table
     const [globalFilter, setGlobalFilter] = useState<any>([]);
 
     const table = useReactTable({
@@ -63,7 +65,7 @@ export default function Dashboard() {
             },
         },
         getFilteredRowModel: getFilteredRowModel(),
-        globalFilterFn: "includesString",
+        globalFilterFn: "auto",
         state: {
             globalFilter,
         },
@@ -86,7 +88,7 @@ export default function Dashboard() {
                         <Input
                             type="search"
                             onChange={(e) => setGlobalFilter(e.target.value)}
-                            className="w-1/4"
+                            className="w-1/4 rounded-[5px]"
                             placeholder="Search...."
                         />
                         <div>

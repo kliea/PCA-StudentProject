@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminPageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SSLController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -57,6 +58,8 @@ Route::middleware('auth')->group(function () {
 Route::prefix('admin')->group(function () {
     Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
     Route::get('compensations', [AdminPageController::class, 'compensations'])->name('admin.compensations');
+    Route::get('ssl', [AdminPageController::class, 'ssl'])->name('admin.ssl');
+    Route::post('ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
 });
 
 require __DIR__ . '/auth.php';

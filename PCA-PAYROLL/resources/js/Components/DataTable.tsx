@@ -18,7 +18,6 @@ import {
     PaginationPrevious,
 } from "@/Components/ui/pagination";
 
-import { useState } from "react";
 import { ColumnDef, flexRender } from "@tanstack/react-table";
 
 interface DataTableProps<TData, TValue> {
@@ -44,9 +43,10 @@ export function DataTable<TData, TValue>({
         // Disable Next Button Page or Hide kung wanay next page
         // Link On Click for Add Button
         // Optimize Pagination : Possibly Use Manual Pagination
-        // Optimize Search : Disable functions when search is not enabled
         <div className="h-full">
-            <div className={cn("rounded-md border shadow-md overflow-hidden")}>
+            <div
+                className={cn("rounded-[5px] border shadow-md overflow-hidden")}
+            >
                 <Table className="bg-baseGrey">
                     <TableHeader className={headerStyle}>
                         {table.getHeaderGroups().map((headerGroup: any) => (
@@ -107,7 +107,6 @@ export function DataTable<TData, TValue>({
                             <PaginationContent>
                                 <PaginationItem>
                                     <PaginationPrevious
-                                        href="#"
                                         onClick={table.previousPage}
                                     />
                                 </PaginationItem>
@@ -115,7 +114,7 @@ export function DataTable<TData, TValue>({
                                     <PaginationEllipsis />
                                 </PaginationItem>
                                 <PaginationItem>
-                                    <PaginationLink href="#">
+                                    <PaginationLink>
                                         {table.getState().pagination.pageIndex +
                                             1}
                                     </PaginationLink>
@@ -124,10 +123,7 @@ export function DataTable<TData, TValue>({
                                     <PaginationEllipsis />
                                 </PaginationItem>
                                 <PaginationItem>
-                                    <PaginationNext
-                                        href="#"
-                                        onClick={table.nextPage}
-                                    />
+                                    <PaginationNext onClick={table.nextPage} />
                                 </PaginationItem>
                             </PaginationContent>
                         </Pagination>
