@@ -8,8 +8,9 @@ import { FormEventHandler } from "react";
 
 export default function Login({ status }: { status?: string }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        email: "",
-        password: "",
+        email: '',
+        password: '',
+        user_level:'admin',
     });
 
     const submit: FormEventHandler = (e) => {
@@ -20,9 +21,7 @@ export default function Login({ status }: { status?: string }) {
         });
     };
 
-    const page = usePage();
-
-    console.log(page);
+    {console.log(useForm)}
 
     return (
         <GuestLayout>
