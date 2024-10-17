@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactNode, useState } from "react";
+import { PropsWithChildren, ReactNode } from "react";
 import {
     Sidenavbar,
     Sidenavbargroup,
@@ -6,14 +6,16 @@ import {
 } from "@/Components/Sidenavbar";
 import {
     FlagIcon,
-    History,
     LayoutDashboard,
-    ListCollapse,
-    Package,
-    ThumbsUp,
+    PhilippinePeso,
+    HandCoins,
+    UserCog,
+    Wallet,
     TrendingDown,
-    TrendingUp,
-    Users,
+    HeartHandshake,
+    Wrench,
+    Shield,
+    Fingerprint,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { usePage } from "@inertiajs/react";
@@ -41,29 +43,29 @@ export default function Authenticated({
             title: "PAYROLL SYSTEM",
             items: [
                 { label: "Dashboard", url: "dashboard", icon: LayoutDashboard },
+                { label: "Payrolls", url: "dashboard", icon: PhilippinePeso },
             ],
         },
 
         {
-            title: "EMPLOYEES",
-            items: [
-                { label: "Salary", url: "salary", icon: Package },
-                { label: "Benefits", url: "benefits", icon: ThumbsUp },
-                { label: "Loans", url: "loans", icon: FlagIcon },
-            ],
+            title: "REQUESTS",
+            items: [{ label: "Loans", url: "dashboard", icon: HandCoins }],
         },
 
         {
-            title: "MANAGEMENT",
+            title: "CONFIGURATION",
             items: [
-                { label: "Records", url: "records", icon: History },
-                { label: "Designations", url: "designations", icon: Users },
+                { label: "Employees", url: "salary", icon: UserCog },
+                { label: "Compensations", url: "benefits", icon: Wallet },
+                { label: "Deductions", url: "loans", icon: TrendingDown },
                 {
-                    label: "Compensations",
-                    url: "compensations",
-                    icon: TrendingUp,
+                    label: "Government Share",
+                    url: "loans",
+                    icon: HeartHandshake,
                 },
-                { label: "Deductions", url: "deductions", icon: TrendingDown },
+                { label: "Appointment", url: "loans", icon: Wrench },
+                { label: "SSL", url: "loans", icon: Shield },
+                { label: "Format", url: "loans", icon: Fingerprint },
             ],
         },
     ];

@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import AuthenticatedLayout from "@/Layouts/AdminAuthenticatedLayout";
 import { Head, useForm, usePage } from "@inertiajs/react";
 import Data from "@/Components/Constants/data2.json";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
