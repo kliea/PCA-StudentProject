@@ -1,8 +1,8 @@
+import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutAdmin";
+import BodyContentLayout from "@/Layouts/BodyContentLayout";
+import { Head, usePage } from "@inertiajs/react";
 
-import AuthenticatedLayoutAdmin from '@/Layouts/AuthenticatedLayoutAdmin';
-import { Head, Link, usePage } from '@inertiajs/react';
-
-export default function Dashboard() {
+export default function Loans() {
     return (
         <AuthenticatedLayoutAdmin
             header={
@@ -11,13 +11,9 @@ export default function Dashboard() {
                 </h2>
             }
         >
-            <Head title="Dashboard"/>
+            <Head title="Loans" />
 
-            <div className="outline w-full h-[calc(100vh-120px)] overflow-hidden">
-            <Link href={route('logout')} method="post" as="button">Button</Link>
-
-            </div>
+            <BodyContentLayout headerName={"Loans"}></BodyContentLayout>
         </AuthenticatedLayoutAdmin>
     );
 }
-

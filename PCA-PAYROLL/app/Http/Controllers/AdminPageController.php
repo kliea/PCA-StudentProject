@@ -9,15 +9,6 @@ use Inertia\Response;
 
 class AdminPageController extends Controller
 {
-    public function index(): Response
-    {
-        return Inertia::render('Admin/Dashboard');
-    }
-
-    public function compensations(): Response
-    {
-        return Inertia::render('Admin/Compensations');
-    }
 
     public function ssl(): Response
     {

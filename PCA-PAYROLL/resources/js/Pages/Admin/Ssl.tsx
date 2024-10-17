@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "@/Layouts/AdminAuthenticatedLayout";
+import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutAdmin";
 import { Head, useForm, usePage } from "@inertiajs/react";
 import Data from "@/Components/Constants/data2.json";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
@@ -269,7 +269,7 @@ const Ssl = () => {
     // const { data , setData, post, processing, errors, reset } = useForm({});
     return (
         <div>
-            <AuthenticatedLayout
+            <AuthenticatedLayoutAdmin
                 header={
                     <h2 className="text-xl font-semibold leading-tight text-gray-800">
                         {usePage().component}
@@ -315,7 +315,7 @@ const Ssl = () => {
                         table={table}
                     ></DataTable>
                 </BodyContentLayout>
-            </AuthenticatedLayout>
+            </AuthenticatedLayoutAdmin>
         </div>
     );
 };
