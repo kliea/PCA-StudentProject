@@ -139,7 +139,7 @@ export default function Authenticated({
                     </nav>
                     <div
                         className={cn(
-                            " transition-all duration-300 max-w-7xl py-6 px-6 sm:px-6 flex gap-3 z-40",
+                            " transition-all duration-200 ease-in-out max-w-7xl py-6 px-6 sm:px-6 flex gap-3 z-40",
                             navStatus ? "ml-64 sm:ml-16" : "ml-16 sm:ml-64"
                         )}
                     >
@@ -153,7 +153,14 @@ export default function Authenticated({
                     </div>
                 </header>
             )}
-            <main className={cn("ml-[350px] px-10 pt-5")}>{children}</main>
+            <main
+                className={cn(
+                    "transition-all duration-100 px-10 pt-5",
+                    navStatus ? "ml-64 sm:ml-16" : "ml-16 sm:ml-64"
+                )}
+            >
+                {children}
+            </main>
         </div>
     );
 }
