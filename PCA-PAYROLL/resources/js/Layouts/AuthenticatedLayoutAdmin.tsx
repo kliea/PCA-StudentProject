@@ -148,7 +148,13 @@ export default function Authenticated({
                                 onClick={() => setnavStatus(!navStatus)}
                             />
                             <Separator orientation="vertical" />
-                            {header}
+                            <span
+                                className={
+                                    navStatus ? "hidden md:block" : "block"
+                                }
+                            >
+                                {header}
+                            </span>
                         </div>
                     </div>
                 </header>
@@ -156,7 +162,7 @@ export default function Authenticated({
             <main
                 className={cn(
                     "transition-all duration-100 px-10 pt-5",
-                    navStatus ? "ml-64 sm:ml-16" : "ml-16 sm:ml-64"
+                    navStatus ? "sm:ml-16" : "ml-16 sm:ml-64"
                 )}
             >
                 {children}

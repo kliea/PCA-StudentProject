@@ -84,7 +84,10 @@ export function Sidenavbar({
 }) {
     return (
         <aside
-            className={cn("fixed bg-baseGreen h-full flex flex-col", className)}
+            className={cn(
+                "fixed bg-baseGreen h-full flex flex-col z-50",
+                className
+            )}
         >
             {children}
         </aside>
