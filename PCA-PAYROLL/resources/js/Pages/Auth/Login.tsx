@@ -12,6 +12,8 @@ export default function Login({ status }: { status?: string }) {
         password: "",
     });
 
+    
+    // Set action for the Form
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
@@ -19,10 +21,6 @@ export default function Login({ status }: { status?: string }) {
             onFinish: () => reset("password"),
         });
     };
-
-    {
-        console.log(useForm);
-    }
 
     return (
         <GuestLayout>

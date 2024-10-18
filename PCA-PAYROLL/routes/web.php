@@ -84,10 +84,10 @@ Route::get('/', function () {
 //     return Inertia::render('Employee/Deductions');
 // })->middleware('auth', 'verified', 'usercheck:employee')->name('employee.deductions');
 
-// Route::prefix('admin')->group(function () {
-//     Route::get('ssl', [AdminPageController::class, 'ssl'])->name('admin.ssl');
-//     Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
-//     Route::post('ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
-// });
+Route::prefix('admin')->group(function () {
+    Route::get('ssl', [AdminPageController::class, 'ssl'])->name('admin.ssl');
+    Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
+    Route::post('ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
+});
 
 require __DIR__ . '/auth.php';

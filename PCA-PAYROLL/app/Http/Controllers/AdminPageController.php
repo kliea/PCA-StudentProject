@@ -10,6 +10,13 @@ use Inertia\Response;
 class AdminPageController extends Controller
 {
 
+    public function index(): Response
+    {
+
+        // Return the data to the frontend
+        return Inertia::render('Admin/Ssl');
+    }
+
     public function ssl(): Response
     {
         // Fetch data from the database
