@@ -1,18 +1,14 @@
-import { PropsWithChildren, ReactNode, useState } from "react";
+import { PropsWithChildren, ReactNode } from "react";
 import {
     Sidenavbar,
     Sidenavbargroup,
     Sidenavbarlinks,
 } from "@/Components/Sidenavbar";
 import {
-    FlagIcon,
     History,
     LayoutDashboard,
     ListCollapse,
     Package,
-    ThumbsUp,
-    TrendingDown,
-    TrendingUp,
     Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -39,23 +35,61 @@ export default function Authenticated({
     }
 
     const links: link[] = [
-        // {title: 'PAYROLL SYSTEM',
-        //     items : [
-        //         {label: 'Dashboard', url: 'admin.dashboard', icon: LayoutDashboard}
-        //     ]},
-        // {title: 'EMPLOYEES',
-        //     items : [
-        //         {label: 'Salary', url: 'admin.salary' , icon: Package},
-        //         {label: 'Benefits', url: 'admin.benefits' , icon: ThumbsUp},
-        //         {label: 'Loans', url: 'admin.loans' , icon: FlagIcon},
-        //     ]},
-        // {title: 'MANAGEMENT',
-        //     items : [
-        //         {label: 'Records', url: 'admin.records' , icon: History},
-        //         {label: 'Designations', url: 'admin.designations' , icon: Users},
-        //         {label: 'Compensations', url: 'admin.compensations' , icon: TrendingUp},
-        //         {label: 'Deductions', url: 'admin.deductions' , icon: TrendingDown},
-        //     ]},
+        {
+            title: "PAYROLL SYSTEM",
+            items: [
+                {
+                    label: "Dashboard",
+                    url: "admin.dashboard",
+                    icon: LayoutDashboard,
+                },
+                {
+                    label: "Payrolls",
+                    url: "admin.payrolls",
+                    icon: LayoutDashboard,
+                },
+            ],
+        },
+        {
+            title: "REQUESTS",
+            items: [{ label: "Loans", url: "admin.loans", icon: Package }],
+        },
+        {
+            title: "CONFIGURATIONS",
+            items: [
+                { label: "Employees", url: "admin.dashboard", icon: History },
+                {
+                    label: "Compensations",
+                    url: "admin.dashboard",
+                    icon: Users,
+                },
+                {
+                    label: "Deductions",
+                    url: "admin.dashboard",
+                    icon: Users,
+                },
+                {
+                    label: "Government Share",
+                    url: "admin.dashboard",
+                    icon: Users,
+                },
+                {
+                    label: "Appointment",
+                    url: "admin.dashboard",
+                    icon: Users,
+                },
+                {
+                    label: "SSL",
+                    url: "admin.dashboard",
+                    icon: Users,
+                },
+                {
+                    label: "Format",
+                    url: "admin.dashboard",
+                    icon: Users,
+                },
+            ],
+        },
     ];
 
     return (
@@ -64,17 +98,17 @@ export default function Authenticated({
                 <header className="bg-white shadow">
                     <nav>
                         <Sidenavbar
-                            className={cn("flex flex-col items-center p-5")}
+                            className="w-16 sm:w-64"
+                            logoSrc="https://placehold.co/200x100"
                         >
-                            <img
-                                src="https://placehold.co/280x100"
-                                alt="LOGO"
-                            />
                             {links.map((link) => (
                                 <Sidenavbargroup
-                                    title={link.title}
                                     className="mt-7"
+                                    key={link.title}
                                 >
+                                    <h1 className="text-white font-bold text-xl hidden sm:block">
+                                        {link.title}
+                                    </h1>
                                     <Sidenavbarlinks
                                         links={link.items}
                                         activePage={currentPage.url}
@@ -88,9 +122,6 @@ export default function Authenticated({
                             "ml-[350px] max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex gap-3 z-40"
                         )}
                     >
-                        <ListCollapse
-                            onClick={() => console.log("hello")}
-                        ></ListCollapse>
                         {header}
                     </div>
                 </header>

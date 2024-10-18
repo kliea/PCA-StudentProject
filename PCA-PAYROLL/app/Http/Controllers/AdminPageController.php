@@ -12,10 +12,49 @@ class AdminPageController extends Controller
 
     public function index(): Response
     {
-
-        // Return the data to the frontend
-        return Inertia::render('Admin/Ssl');
+        return Inertia::render('Admin/Dashboard');
     }
+
+    public function appointments(): Response
+    {
+        return Inertia::render('Admin/Appointments');
+    }
+
+    public function compensations(): Response
+    {
+        return Inertia::render('Admin/Compensations');
+    }
+
+    public function deductions(): Response
+    {
+        return Inertia::render('Admin/Deductions');
+    }
+
+    public function employees(): Response
+    {
+        return Inertia::render('Admin/Employees');
+    }
+
+    public function format(): Response
+    {
+        return Inertia::render('Admin/Formats');
+    }
+
+    public function governmentshare(): Response
+    {
+        return Inertia::render('Admin/GovernmentShares');
+    }
+
+    public function loans(): Response
+    {
+        return Inertia::render('Admin/Loans');
+    }
+    public function payrolls(): Response
+    {
+        return Inertia::render('Admin/Payrolls');
+    }
+
+
 
     public function ssl(): Response
     {
