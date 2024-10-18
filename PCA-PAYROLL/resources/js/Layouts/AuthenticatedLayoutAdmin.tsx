@@ -21,9 +21,6 @@ export default function Authenticated({
     children,
 }: PropsWithChildren<{ header?: ReactNode }>) {
     const currentPage = usePage();
-
-    console.log(currentPage);
-
     interface Item {
         label: string;
         url: string;
@@ -35,6 +32,8 @@ export default function Authenticated({
         items: Item[];
     }
 
+    // Links for the Navigation Bar : title attribute kay para sa mga header sa each navigation group
+    // Items kay para sa mga links na sa nav bar
     const links: link[] = [
         {
             title: "PAYROLL SYSTEM",
@@ -93,9 +92,9 @@ export default function Authenticated({
         },
     ];
 
-    const [navStatus, setnavStatus] = useState(false);
+    // State para sa collapsabe navbar
 
-    console.log(navStatus);
+    const [navStatus, setnavStatus] = useState(false);
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -108,10 +107,10 @@ export default function Authenticated({
                                 navStatus ? "w-64 sm:w-16" : "w-16 sm:w-64"
                             )}
                         >
-                            {/* Image For Non Collapsed Side Bar */}
                             <img src="#" alt="LOGO" className="p-5" />
 
                             <div className="overflow-y-auto overflow-x-hidden pl-5">
+                                {/* Diri mag generate ug mga groups sa navagation bar. Mao ni nga map mag generate sa mga title*/}
                                 {links.map((link) => (
                                     <Sidenavbargroup
                                         className="mt-7"
@@ -127,6 +126,8 @@ export default function Authenticated({
                                         >
                                             {link.title}
                                         </h1>
+
+                                        {/* Diri nga component mag generate ug mga links para sa navbar .  walay className nga props kay wanako na apilan sulod nalng sa component*/}
                                         <Sidenavbarlinks
                                             navStatus={navStatus}
                                             links={link.items}
@@ -137,6 +138,8 @@ export default function Authenticated({
                             </div>
                         </Sidenavbar>
                     </nav>
+
+                    {/* Mao ni ang pag generate sa header */}
                     <div
                         className={cn(
                             " transition-all duration-200 ease-in-out max-w-7xl py-6 px-6 sm:px-6 flex gap-3 z-40",

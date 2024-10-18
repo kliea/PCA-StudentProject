@@ -12,8 +12,6 @@ export default function Dashboard() {
             }
         >
             <Head title="Dashboard" />
-
-            <BodyContentLayout headerName={"DashBoard"}></BodyContentLayout>
         </AuthenticatedLayoutAdmin>
     );
 }
