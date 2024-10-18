@@ -10,7 +10,6 @@ export default function Login({ status }: { status?: string }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
         password: "",
-        user_level: "admin",
     });
 
     const submit: FormEventHandler = (e) => {
@@ -46,14 +45,23 @@ export default function Login({ status }: { status?: string }) {
 
                 <form onSubmit={submit}>
                     <div>
-                        <Label htmlFor="email">Email</Label>
+                        <Label
+                            htmlFor="email"
+                            className={errors.email && "text-red-600"}
+                        >
+                            Email
+                        </Label>
 
                         <Input
                             id="email"
                             type="email"
                             name="email"
                             value={data.email}
-                            className="mt-1 block w-full"
+                            className={
+                                errors.email
+                                    ? "mt-1 block w-full"
+                                    : "text-red-600"
+                            }
                             autoComplete="username"
                             onChange={(e) => setData("email", e.target.value)}
                         />
@@ -62,14 +70,23 @@ export default function Login({ status }: { status?: string }) {
                     </div>
 
                     <div className="mt-4">
-                        <Label htmlFor="password">Password</Label>
+                        <Label
+                            htmlFor="password"
+                            className={errors.password && "text-red-600"}
+                        >
+                            Password
+                        </Label>
 
                         <Input
                             id="password"
                             type="password"
                             name="password"
                             value={data.password}
-                            className="mt-1 block w-full"
+                            className={
+                                errors.password
+                                    ? "mt-1 block w-full"
+                                    : "text-red-600"
+                            }
                             autoComplete="current-password"
                             onChange={(e) =>
                                 setData("password", e.target.value)
