@@ -104,7 +104,7 @@ export default function Authenticated({
                     <nav>
                         <Sidenavbar
                             className={cn(
-                                "transition-all duration-300",
+                                "transition-all duration-100",
                                 navStatus ? "w-64 sm:w-16" : "w-16 sm:w-64"
                             )}
                         >
