@@ -2,8 +2,7 @@ import { cn } from "@/lib/utils";
 import { Separator } from "./ui/separator";
 import { Link } from "@inertiajs/react";
 import NavLink from "./NavLink";
-import { ListCollapse, LucideProps } from "lucide-react";
-import { useState } from "react";
+import { LucideProps } from "lucide-react";
 
 interface Link {
     label: string;
@@ -27,22 +26,29 @@ export function Sidenavbarlinks({
             <ul className="flex flex-col gap-3">
                 {links.map((link) => (
                     <li key={link.label}>
-                        <NavLink
-                            href={route(link.url)}
-                            active={activePage === "/" + link.url}
+                        <div
+                            className={cn(
+                                "hover:border-l-[1px]",
+                                navStatus ? "px-3 sm:px-0 " : "px-0 sm:px-3"
+                            )}
                         >
-                            <link.icon />
-                            <span
-                                className={cn(
-                                    "px-2 text-base",
-                                    navStatus
-                                        ? "block sm:hidden"
-                                        : "hidden sm:block"
-                                )}
+                            <NavLink
+                                href={route(link.url)}
+                                active={activePage === "/" + link.url}
                             >
-                                {link.label}
-                            </span>
-                        </NavLink>
+                                <link.icon />
+                                <span
+                                    className={cn(
+                                        "px-2 text-base",
+                                        navStatus
+                                            ? "block sm:hidden"
+                                            : "hidden sm:block"
+                                    )}
+                                >
+                                    {link.label}
+                                </span>
+                            </NavLink>
+                        </div>
                     </li>
                 ))}
             </ul>

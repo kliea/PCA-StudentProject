@@ -95,7 +95,7 @@ export default function Authenticated({
 
     const [navStatus, setnavStatus] = useState(false);
 
-    console.log(window.innerWidth);
+    console.log(navStatus);
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -109,11 +109,7 @@ export default function Authenticated({
                             )}
                         >
                             {/* Image For Non Collapsed Side Bar */}
-                            <img
-                                src="https://placehold.co/200x100"
-                                alt="LOGO"
-                                className="hidden sm:block p-5"
-                            />
+                            <img src="#" alt="LOGO" className="p-5" />
 
                             <div className="overflow-y-auto overflow-x-hidden pl-5">
                                 {links.map((link) => (
