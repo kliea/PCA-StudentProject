@@ -1,16 +1,16 @@
 import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
+import { Button } from "@/Components/ui/button";
+import { Input } from "@/Components/ui/input";
+import { Label } from "@/Components/ui/label";
 import GuestLayout from "@/Layouts/GuestLayout";
-import { Head, useForm, usePage } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import { FormEventHandler } from "react";
 
 export default function Login({ status }: { status?: string }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
-        password: '',
-        user_level:'admin',
+        email: "",
+        password: "",
+        user_level: "admin",
     });
 
     const submit: FormEventHandler = (e) => {
@@ -21,7 +21,9 @@ export default function Login({ status }: { status?: string }) {
         });
     };
 
-    {console.log(useForm)}
+    {
+        console.log(useForm);
+    }
 
     return (
         <GuestLayout>
@@ -44,16 +46,15 @@ export default function Login({ status }: { status?: string }) {
 
                 <form onSubmit={submit}>
                     <div>
-                        <InputLabel htmlFor="email" value="Email" />
+                        <Label htmlFor="email">Email</Label>
 
-                        <TextInput
+                        <Input
                             id="email"
                             type="email"
                             name="email"
                             value={data.email}
                             className="mt-1 block w-full"
                             autoComplete="username"
-                            isFocused={true}
                             onChange={(e) => setData("email", e.target.value)}
                         />
 
@@ -61,9 +62,9 @@ export default function Login({ status }: { status?: string }) {
                     </div>
 
                     <div className="mt-4">
-                        <InputLabel htmlFor="password" value="Password" />
+                        <Label htmlFor="password">Password</Label>
 
-                        <TextInput
+                        <Input
                             id="password"
                             type="password"
                             name="password"
@@ -82,12 +83,12 @@ export default function Login({ status }: { status?: string }) {
                     </div>
 
                     <div className="mt-5 flex">
-                        <PrimaryButton
+                        <Button
                             className="w-full flex justify-center h-10"
                             disabled={processing}
                         >
                             Log in
-                        </PrimaryButton>
+                        </Button>
                     </div>
                 </form>
             </div>
