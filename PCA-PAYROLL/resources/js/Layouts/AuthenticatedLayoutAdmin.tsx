@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactNode } from "react";
+import { PropsWithChildren, ReactNode, useState } from "react";
 import {
     Sidenavbar,
     Sidenavbargroup,
@@ -7,13 +7,14 @@ import {
 import {
     History,
     LayoutDashboard,
-    ListCollapse,
     Package,
+    PanelLeft,
     Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { usePage } from "@inertiajs/react";
 import { LucideProps } from "lucide-react";
+import { Separator } from "@/Components/ui/separator";
 
 export default function Authenticated({
     header,
@@ -92,37 +93,67 @@ export default function Authenticated({
         },
     ];
 
+    const [navStatus, setnavStatus] = useState(false);
+
+    console.log(window.innerWidth);
+
     return (
         <div className="min-h-screen bg-gray-100">
             {header && (
                 <header className="bg-white shadow">
                     <nav>
                         <Sidenavbar
-                            className="w-16 sm:w-64"
-                            logoSrc="https://placehold.co/200x100"
+                            className={cn(
+                                "transition-all duration-300",
+                                navStatus ? "w-64 sm:w-16" : "w-16 sm:w-64"
+                            )}
                         >
-                            {links.map((link) => (
-                                <Sidenavbargroup
-                                    className="mt-7"
-                                    key={link.title}
-                                >
-                                    <h1 className="text-white font-bold text-xl hidden sm:block">
-                                        {link.title}
-                                    </h1>
-                                    <Sidenavbarlinks
-                                        links={link.items}
-                                        activePage={currentPage.url}
-                                    />
-                                </Sidenavbargroup>
-                            ))}
+                            {/* Image For Non Collapsed Side Bar */}
+                            <img
+                                src="https://placehold.co/200x100"
+                                alt="LOGO"
+                                className="hidden sm:block p-5"
+                            />
+
+                            <div className="overflow-y-auto overflow-x-hidden pl-5">
+                                {links.map((link) => (
+                                    <Sidenavbargroup
+                                        className="mt-7"
+                                        key={link.title}
+                                    >
+                                        <h1
+                                            className={cn(
+                                                "text-white font-bold text-xl hidden sm:block",
+                                                navStatus
+                                                    ? "block sm:hidden"
+                                                    : "hidden sm:block"
+                                            )}
+                                        >
+                                            {link.title}
+                                        </h1>
+                                        <Sidenavbarlinks
+                                            navStatus={navStatus}
+                                            links={link.items}
+                                            activePage={currentPage.url}
+                                        />
+                                    </Sidenavbargroup>
+                                ))}
+                            </div>
                         </Sidenavbar>
                     </nav>
                     <div
                         className={cn(
-                            "ml-[350px] max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex gap-3 z-40"
+                            " transition-all duration-300 max-w-7xl py-6 px-6 sm:px-6 flex gap-3 z-40",
+                            navStatus ? "ml-64 sm:ml-16" : "ml-16 sm:ml-64"
                         )}
                     >
-                        {header}
+                        <div className="flex items-center gap-3">
+                            <PanelLeft
+                                onClick={() => setnavStatus(!navStatus)}
+                            />
+                            <Separator orientation="vertical" />
+                            {header}
+                        </div>
                     </div>
                 </header>
             )}

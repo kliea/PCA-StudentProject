@@ -14,9 +14,14 @@ interface Link {
 interface SidenavbarlinksProps {
     links: Link[];
     activePage?: string;
+    navStatus: boolean;
 }
 
-export function Sidenavbarlinks({ links, activePage }: SidenavbarlinksProps) {
+export function Sidenavbarlinks({
+    links,
+    activePage,
+    navStatus,
+}: SidenavbarlinksProps) {
     return (
         <>
             <ul className="flex flex-col gap-3">
@@ -27,7 +32,14 @@ export function Sidenavbarlinks({ links, activePage }: SidenavbarlinksProps) {
                             active={activePage === "/" + link.url}
                         >
                             <link.icon />
-                            <span className="px-2 text-base hidden sm:block">
+                            <span
+                                className={cn(
+                                    "px-2 text-base",
+                                    navStatus
+                                        ? "block sm:hidden"
+                                        : "hidden sm:block"
+                                )}
+                            >
                                 {link.label}
                             </span>
                         </NavLink>
@@ -49,7 +61,9 @@ export function Sidenavbargroup({
         <>
             <section className={cn("w-full flex flex-col gap-4 ", className)}>
                 {children}
-                <Separator />
+                <div className="pr-6">
+                    <Separator></Separator>
+                </div>
             </section>
         </>
     );
@@ -58,24 +72,14 @@ export function Sidenavbargroup({
 export function Sidenavbar({
     children,
     className,
-    logoSrc,
 }: {
     children: React.ReactNode;
     className?: string;
-    logoSrc: string;
 }) {
-    const [isOpen, setIsOpen] = useState(false);
-
     return (
         <aside
-            className={cn(
-                "fixed bg-baseGreen h-full flex flex-col items-center p-5",
-                className
-            )}
+            className={cn("fixed bg-baseGreen h-full flex flex-col", className)}
         >
-            <img src={logoSrc} alt="LOGO" className="hidden sm:block" />
-            <ListCollapse color="white" onClick={() => setIsOpen(!isOpen)} />
-
             {children}
         </aside>
     );
