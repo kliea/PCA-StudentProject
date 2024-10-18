@@ -5,19 +5,16 @@ import {
     Sidenavbarlinks,
 } from "@/Components/Sidenavbar";
 import {
-    FlagIcon,
     History,
     LayoutDashboard,
-    ListCollapse,
     Package,
-    ThumbsUp,
-    TrendingDown,
-    TrendingUp,
+    PanelLeft,
     Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { usePage } from "@inertiajs/react";
 import { LucideProps } from "lucide-react";
+import { Separator } from "@/Components/ui/separator";
 
 export default function Authenticated({
     header,
@@ -39,24 +36,66 @@ export default function Authenticated({
     }
 
     const links: link[] = [
-        // {title: 'PAYROLL SYSTEM',
-        //     items : [
-        //         {label: 'Dashboard', url: 'admin.dashboard', icon: LayoutDashboard}
-        //     ]},
-        // {title: 'EMPLOYEES',
-        //     items : [
-        //         {label: 'Salary', url: 'admin.salary' , icon: Package},
-        //         {label: 'Benefits', url: 'admin.benefits' , icon: ThumbsUp},
-        //         {label: 'Loans', url: 'admin.loans' , icon: FlagIcon},
-        //     ]},
-        // {title: 'MANAGEMENT',
-        //     items : [
-        //         {label: 'Records', url: 'admin.records' , icon: History},
-        //         {label: 'Designations', url: 'admin.designations' , icon: Users},
-        //         {label: 'Compensations', url: 'admin.compensations' , icon: TrendingUp},
-        //         {label: 'Deductions', url: 'admin.deductions' , icon: TrendingDown},
-        //     ]},
+        {
+            title: "PAYROLL SYSTEM",
+            items: [
+                {
+                    label: "Dashboard",
+                    url: "admin.dashboard",
+                    icon: LayoutDashboard,
+                },
+                {
+                    label: "Payrolls",
+                    url: "admin.payrolls",
+                    icon: LayoutDashboard,
+                },
+            ],
+        },
+        {
+            title: "REQUESTS",
+            items: [{ label: "Loans", url: "admin.loans", icon: Package }],
+        },
+        {
+            title: "CONFIGURATIONS",
+            items: [
+                { label: "Employees", url: "admin.dashboard", icon: History },
+                {
+                    label: "Compensations",
+                    url: "admin.dashboard",
+                    icon: Users,
+                },
+                {
+                    label: "Deductions",
+                    url: "admin.dashboard",
+                    icon: Users,
+                },
+                {
+                    label: "Government Share",
+                    url: "admin.dashboard",
+                    icon: Users,
+                },
+                {
+                    label: "Appointment",
+                    url: "admin.dashboard",
+                    icon: Users,
+                },
+                {
+                    label: "SSL",
+                    url: "admin.dashboard",
+                    icon: Users,
+                },
+                {
+                    label: "Format",
+                    url: "admin.dashboard",
+                    icon: Users,
+                },
+            ],
+        },
     ];
+
+    const [navStatus, setnavStatus] = useState(false);
+
+    console.log(navStatus);
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -64,38 +103,64 @@ export default function Authenticated({
                 <header className="bg-white shadow">
                     <nav>
                         <Sidenavbar
-                            className={cn("flex flex-col items-center p-5")}
+                            className={cn(
+                                "transition-all duration-100",
+                                navStatus ? "w-64 sm:w-16" : "w-16 sm:w-64"
+                            )}
                         >
-                            <img
-                                src="https://placehold.co/280x100"
-                                alt="LOGO"
-                            />
-                            {links.map((link) => (
-                                <Sidenavbargroup
-                                    title={link.title}
-                                    className="mt-7"
-                                >
-                                    <Sidenavbarlinks
-                                        links={link.items}
-                                        activePage={currentPage.url}
-                                    />
-                                </Sidenavbargroup>
-                            ))}
+                            {/* Image For Non Collapsed Side Bar */}
+                            <img src="#" alt="LOGO" className="p-5" />
+
+                            <div className="overflow-y-auto overflow-x-hidden pl-5">
+                                {links.map((link) => (
+                                    <Sidenavbargroup
+                                        className="mt-7"
+                                        key={link.title}
+                                    >
+                                        <h1
+                                            className={cn(
+                                                "text-white font-bold text-xl hidden sm:block",
+                                                navStatus
+                                                    ? "block sm:hidden"
+                                                    : "hidden sm:block"
+                                            )}
+                                        >
+                                            {link.title}
+                                        </h1>
+                                        <Sidenavbarlinks
+                                            navStatus={navStatus}
+                                            links={link.items}
+                                            activePage={currentPage.url}
+                                        />
+                                    </Sidenavbargroup>
+                                ))}
+                            </div>
                         </Sidenavbar>
                     </nav>
                     <div
                         className={cn(
-                            "ml-[350px] max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex gap-3 z-40"
+                            " transition-all duration-200 ease-in-out max-w-7xl py-6 px-6 sm:px-6 flex gap-3 z-40",
+                            navStatus ? "ml-64 sm:ml-16" : "ml-16 sm:ml-64"
                         )}
                     >
-                        <ListCollapse
-                            onClick={() => console.log("hello")}
-                        ></ListCollapse>
-                        {header}
+                        <div className="flex items-center gap-3">
+                            <PanelLeft
+                                onClick={() => setnavStatus(!navStatus)}
+                            />
+                            <Separator orientation="vertical" />
+                            {header}
+                        </div>
                     </div>
                 </header>
             )}
-            <main className={cn("ml-[350px] px-10 pt-5")}>{children}</main>
+            <main
+                className={cn(
+                    "transition-all duration-100 px-10 pt-5",
+                    navStatus ? "ml-64 sm:ml-16" : "ml-16 sm:ml-64"
+                )}
+            >
+                {children}
+            </main>
         </div>
     );
 }

@@ -23,8 +23,8 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/Components/ui/dialog";
-import InputLabel from "@/Components/InputLabel";
 import InputError from "@/Components/InputError";
+import { Label } from "@/Components/ui/label";
 
 type sslProfile = {
     salaryGrade: string;
@@ -119,7 +119,7 @@ function addSSL() {
         <div>
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="salary_grade" value="Salary Grade" />
+                    <Label htmlFor="salary_grade">Salary Grade</Label>
                     <Input
                         min={0}
                         id="salary_grade"
@@ -137,7 +137,7 @@ function addSSL() {
                     />
                 </div>
                 <div>
-                    <InputLabel htmlFor="step1" value="Step 1" />
+                    <Label htmlFor="step1">Step 1</Label>
                     <Input
                         min={0}
                         id="step1"
@@ -150,7 +150,7 @@ function addSSL() {
                     <InputError message={errors.step1} className="mt-2" />
                 </div>
                 <div>
-                    <InputLabel htmlFor="step2" value="Step 2" />
+                    <Label htmlFor="step2">Step 2</Label>
                     <Input
                         min={0}
                         id="step2"
@@ -162,7 +162,7 @@ function addSSL() {
                     <InputError message={errors.step2} className="mt-2" />
                 </div>
                 <div>
-                    <InputLabel htmlFor="step3" value="Step 3" />
+                    <Label htmlFor="step3">Step 3</Label>
                     <Input
                         min={0}
                         id="step3"
@@ -174,7 +174,7 @@ function addSSL() {
                     <InputError message={errors.step3} className="mt-2" />
                 </div>
                 <div>
-                    <InputLabel htmlFor="step4" value="Step 4" />
+                    <Label htmlFor="step4">Step 4</Label>
                     <Input
                         min={0}
                         id="step4"
@@ -186,7 +186,7 @@ function addSSL() {
                     <InputError message={errors.step4} className="mt-2" />
                 </div>
                 <div>
-                    <InputLabel htmlFor="step5" value="Step 5" />
+                    <Label htmlFor="step5">Step 5</Label>
                     <Input
                         min={0}
                         id="step5"
@@ -198,7 +198,7 @@ function addSSL() {
                     <InputError message={errors.step5} className="mt-2" />
                 </div>
                 <div>
-                    <InputLabel htmlFor="step6" value="Step 6" />
+                    <Label htmlFor="step6">Step 6</Label>
                     <Input
                         min={0}
                         id="step6"
@@ -210,7 +210,7 @@ function addSSL() {
                     <InputError message={errors.step6} className="mt-2" />
                 </div>
                 <div>
-                    <InputLabel htmlFor="step7" value="Step 7" />
+                    <Label htmlFor="step7">Step 7</Label>
                     <Input
                         min={0}
                         id="step7"
@@ -222,7 +222,7 @@ function addSSL() {
                     <InputError message={errors.step7} className="mt-2" />
                 </div>
                 <div>
-                    <InputLabel htmlFor="step8" value="Step 8" />
+                    <Label htmlFor="step8">Step 8</Label>
                     <Input
                         min={0}
                         id="step8"
@@ -242,7 +242,7 @@ function addSSL() {
 }
 
 const Ssl = () => {
-    const pageData = usePage().props.data as sslProfile[];
+    const pageData = (usePage().props.data as sslProfile[]) || [];
     const data: sslProfile[] = pageData;
     console.log(data);
     console.log(Data);
@@ -266,7 +266,6 @@ const Ssl = () => {
         onGlobalFilterChange: setGlobalFilter,
     });
 
-    // const { data , setData, post, processing, errors, reset } = useForm({});
     return (
         <div>
             <AuthenticatedLayoutAdmin
@@ -281,7 +280,9 @@ const Ssl = () => {
                     <div className="mb-5 flex gap-5">
                         <Input
                             type="search"
-                            onChange={(e) => setGlobalFilter(e.target.value)}
+                            onChange={(e) =>
+                                setGlobalFilter(e.target.value || "")
+                            }
                             className="w-1/4 rounded-[5px]"
                             placeholder="Search...."
                         />

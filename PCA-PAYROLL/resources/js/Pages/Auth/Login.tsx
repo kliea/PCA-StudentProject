@@ -1,18 +1,19 @@
 import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
+import { Button } from "@/Components/ui/button";
+import { Input } from "@/Components/ui/input";
+import { Label } from "@/Components/ui/label";
 import GuestLayout from "@/Layouts/GuestLayout";
-import { Head, useForm, usePage } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import { FormEventHandler } from "react";
 
 export default function Login({ status }: { status?: string }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
-        password: '',
-        user_level:'admin',
+        email: "",
+        password: "",
     });
 
+    
+    // Set action for the Form
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
@@ -20,8 +21,6 @@ export default function Login({ status }: { status?: string }) {
             onFinish: () => reset("password"),
         });
     };
-
-    {console.log(useForm)}
 
     return (
         <GuestLayout>
@@ -44,16 +43,24 @@ export default function Login({ status }: { status?: string }) {
 
                 <form onSubmit={submit}>
                     <div>
-                        <InputLabel htmlFor="email" value="Email" />
+                        <Label
+                            htmlFor="email"
+                            className={errors.email && "text-red-600"}
+                        >
+                            Email
+                        </Label>
 
-                        <TextInput
+                        <Input
                             id="email"
                             type="email"
                             name="email"
                             value={data.email}
-                            className="mt-1 block w-full"
+                            className={
+                                errors.email
+                                    ? "mt-1 block w-full"
+                                    : "text-red-600"
+                            }
                             autoComplete="username"
-                            isFocused={true}
                             onChange={(e) => setData("email", e.target.value)}
                         />
 
@@ -61,14 +68,23 @@ export default function Login({ status }: { status?: string }) {
                     </div>
 
                     <div className="mt-4">
-                        <InputLabel htmlFor="password" value="Password" />
+                        <Label
+                            htmlFor="password"
+                            className={errors.password && "text-red-600"}
+                        >
+                            Password
+                        </Label>
 
-                        <TextInput
+                        <Input
                             id="password"
                             type="password"
                             name="password"
                             value={data.password}
-                            className="mt-1 block w-full"
+                            className={
+                                errors.password
+                                    ? "mt-1 block w-full"
+                                    : "text-red-600"
+                            }
                             autoComplete="current-password"
                             onChange={(e) =>
                                 setData("password", e.target.value)
@@ -82,12 +98,12 @@ export default function Login({ status }: { status?: string }) {
                     </div>
 
                     <div className="mt-5 flex">
-                        <PrimaryButton
+                        <Button
                             className="w-full flex justify-center h-10"
                             disabled={processing}
                         >
                             Log in
-                        </PrimaryButton>
+                        </Button>
                     </div>
                 </form>
             </div>

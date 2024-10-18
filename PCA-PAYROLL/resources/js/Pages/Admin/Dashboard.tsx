@@ -7,7 +7,7 @@ export default function Dashboard() {
         <AuthenticatedLayoutAdmin
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    {usePage().component}
+                    {usePage().component.split("/")[1]}
                 </h2>
             }
         >
