@@ -78,35 +78,35 @@ export default function Authenticated({
         {
             title: "CONFIGURATIONS",
             items: [
-                { label: "Employees", url: "admin.dashboard", icon: Users },
+                { label: "Employees", url: "admin.employees", icon: Users },
                 {
                     label: "Compensations",
-                    url: "admin.dashboard",
+                    url: "admin.compensations",
                     icon: Wallet,
                 },
                 {
                     label: "Deductions",
-                    url: "admin.dashboard",
+                    url: "admin.deductions",
                     icon: TrendingDown,
                 },
                 {
                     label: "Government Share",
-                    url: "admin.dashboard",
+                    url: "admin.governmentshare",
                     icon: HeartHandshake,
                 },
                 {
                     label: "Appointment",
-                    url: "admin.dashboard",
+                    url: "admin.appointments",
                     icon: UserPen,
                 },
                 {
                     label: "SSL",
-                    url: "admin.dashboard",
+                    url: "admin.ssl",
                     icon: Scale,
                 },
                 {
                     label: "Format",
-                    url: "admin.dashboard",
+                    url: "admin.formats",
                     icon: ScrollText,
                 },
             ],
@@ -116,7 +116,6 @@ export default function Authenticated({
     // State para sa collapsabe navbar
 
     const [navStatus, setnavStatus] = useState(false);
-    console.log(currentPage);
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -154,7 +153,6 @@ export default function Authenticated({
                                         <Sidenavbarlinks
                                             navStatus={navStatus}
                                             links={link.items}
-                                            activePage={currentPage.url}
                                         />
                                     </Sidenavbargroup>
                                 ))}
@@ -233,6 +231,7 @@ export default function Authenticated({
                     navStatus ? "ml-16" : "ml-16 sm:ml-64"
                 )}
             >
+                
                 {children}
             </main>
         </div>

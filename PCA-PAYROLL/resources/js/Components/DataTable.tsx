@@ -26,6 +26,7 @@ interface DataTableProps<TData, TValue> {
     rowStyle?: string;
     disablePagination: boolean;
     table: any;
+    className?: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -34,6 +35,7 @@ export function DataTable<TData, TValue>({
     rowStyle,
     disablePagination,
     table,
+    className,
 }: DataTableProps<TData, TValue>) {
     return (
         // Fix Pagination : Moves with table . Prefereable if stay sa bottom
@@ -47,13 +49,16 @@ export function DataTable<TData, TValue>({
             <div
                 className={cn("rounded-[5px] border shadow-md overflow-hidden")}
             >
-                <Table className="bg-baseGrey">
+                <Table className={cn("bg-baseGrey h-full ", className)}>
                     <TableHeader className={headerStyle}>
                         {table.getHeaderGroups().map((headerGroup: any) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header: any) => {
                                     return (
-                                        <TableHead key={header.id}>
+                                        <TableHead
+                                            key={header.id}
+                                            className="text-center"
+                                        >
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(

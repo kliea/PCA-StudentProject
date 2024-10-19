@@ -1,19 +1,11 @@
-import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutAdmin";
-import BodyContentLayout from "@/Layouts/BodyContentLayout";
-import { Head, usePage } from "@inertiajs/react";
+import Layout from "@/Layouts/NavBarLayout";
 
 export default function Format() {
     return (
-        <AuthenticatedLayoutAdmin
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    {usePage().component}
-                </h2>
-            }
-        >
-            <Head title="Format" />
-
-            <BodyContentLayout headerName={"Format"}></BodyContentLayout>
-        </AuthenticatedLayoutAdmin>
+        <>
+            <Layout>
+                <div className="p-5"></div>
+            </Layout>
+        </>
     );
 }

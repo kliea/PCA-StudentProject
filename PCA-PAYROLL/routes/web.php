@@ -102,7 +102,8 @@ Route::prefix('admin')->group(function () {
     Route::get('compensations', [AdminPageController::class, 'compensations'])->name('admin.compensations');
     Route::get('deductions', [AdminPageController::class, 'deductions'])->name('admin.deductions');
     Route::get('governmentshare', [AdminPageController::class, 'governmentshare'])->name('admin.governmentshare');
-    Route::get('formats', [AdminPageController::class, 'formats'])->name('admin.formats');
+    Route::get('formats', [AdminPageController::class, 'format'])->name('admin.formats');
+    Route::get('appointments', [AdminPageController::class, 'appointments'])->name('admin.appointments');
     Route::get('ssl', [AdminPageController::class, 'ssl'])->name('admin.ssl');
     Route::post('ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
 });

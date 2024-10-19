@@ -12,15 +12,10 @@ interface Link {
 
 interface SidenavbarlinksProps {
     links: Link[];
-    activePage?: string;
     navStatus: boolean;
 }
 
-export function Sidenavbarlinks({
-    links,
-    activePage,
-    navStatus,
-}: SidenavbarlinksProps) {
+export function Sidenavbarlinks({ links, navStatus }: SidenavbarlinksProps) {
     return (
         <>
             <ul className="flex flex-col gap-3">
@@ -28,14 +23,12 @@ export function Sidenavbarlinks({
                     <li key={link.label}>
                         <div
                             className={cn(
-                                "hover:border-l-[1px]",
-                                navStatus ? "px-3 sm:px-0 " : "px-0 sm:px-3"
+                                "hover:border-l-[1px] ",
+                                navStatus ? "px-3 sm:px-0 " : "px-0 sm:px-3",
+                                route().current(link.url) && "border-l-[1px]"
                             )}
                         >
-                            <NavLink
-                                href={route(link.url)}
-                                active={activePage === "/" + link.url}
-                            >
+                            <NavLink href={route(link.url)}>
                                 <link.icon />
                                 <span
                                     className={cn(

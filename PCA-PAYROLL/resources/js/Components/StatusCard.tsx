@@ -9,13 +9,15 @@ export default function Component({
     cardTitle = "Status Card",
     cardQuantity = 0,
     cardPercent = 0,
-    cardPeriod = "month",
+    cardPeriodFrom = "month",
+    cardPeriodTo = "month",
     Icon = Wallet,
 }: {
     cardTitle: string;
     cardQuantity: number;
     cardPercent: number;
-    cardPeriod: string;
+    cardPeriodFrom?: string;
+    cardPeriodTo?: string;
     Icon?: React.ComponentType<LucideProps>;
 }) {
     return (
@@ -37,7 +39,7 @@ export default function Component({
                 </div>
                 <p className="text-xs text-muted-foreground">
                     {/* Report percent ug Period sa status report . Need pa ug red or green if up ang status or down */}
-                    {cardPercent}% from last {cardPeriod}
+                    {cardPercent}% from {cardPeriodFrom} to {cardPeriodTo}
                 </p>
             </CardContent>
         </Card>

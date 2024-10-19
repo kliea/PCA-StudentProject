@@ -1,6 +1,5 @@
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutAdmin";
 import { Head, useForm, usePage } from "@inertiajs/react";
-import Data from "@/Components/Constants/data2.json";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import {
     ColumnDef,
@@ -244,8 +243,6 @@ function addSSL() {
 const Ssl = () => {
     const pageData = (usePage().props.data as sslProfile[]) || [];
     const data: sslProfile[] = pageData;
-    console.log(data);
-    console.log(Data);
     const [globalFilter, setGlobalFilter] = useState<any>([]);
 
     const table = useReactTable({
@@ -311,7 +308,7 @@ const Ssl = () => {
                     </div>
                     <DataTable
                         columns={columns}
-                        rowStyle="odd:bg-white even:bg-transparent"
+                        rowStyle="odd:bg-white even:bg-transparent text-center"
                         disablePagination={false}
                         table={table}
                     ></DataTable>

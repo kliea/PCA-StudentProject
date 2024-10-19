@@ -13,7 +13,6 @@ export default {
 
     theme: {
     	extend: {
-			
     		width: {
     			'popover-trigger': 'var(--radix-popover-trigger-width)'
     		},
