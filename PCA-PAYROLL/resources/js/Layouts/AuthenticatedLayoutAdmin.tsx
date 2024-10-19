@@ -129,6 +129,7 @@ export default function Authenticated({
                                 navStatus ? "w-64 sm:w-16" : "w-16 sm:w-64"
                             )}
                         >
+                            {/* Add Logo Small + Logo Big. E Separate ratong Typography sa logo kay para pure tailwind ra atong responsive as much as possible */}
                             <img src="#" alt="LOGO" className="p-5" />
 
                             <div className="overflow-y-auto overflow-x-hidden pl-5">
