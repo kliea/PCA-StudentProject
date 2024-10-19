@@ -3,7 +3,7 @@ import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
 import GuestLayout from "@/Layouts/GuestLayout";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, useForm, usePage } from "@inertiajs/react";
 import { FormEventHandler } from "react";
 
 export default function Login({ status }: { status?: string }) {
@@ -20,6 +20,8 @@ export default function Login({ status }: { status?: string }) {
             onFinish: () => reset("password"),
         });
     };
+
+    console.log(usePage());
 
     return (
         <GuestLayout>
@@ -54,11 +56,7 @@ export default function Login({ status }: { status?: string }) {
                             type="email"
                             name="email"
                             value={data.email}
-                            className={
-                                errors.email
-                                    ? "mt-1 block w-full"
-                                    : "text-red-600"
-                            }
+                            className={errors.email && "text-red-600"}
                             autoComplete="username"
                             onChange={(e) => setData("email", e.target.value)}
                         />
@@ -79,11 +77,7 @@ export default function Login({ status }: { status?: string }) {
                             type="password"
                             name="password"
                             value={data.password}
-                            className={
-                                errors.password
-                                    ? "mt-1 block w-full"
-                                    : "text-red-600"
-                            }
+                            className={errors.password && "text-red-600"}
                             autoComplete="current-password"
                             onChange={(e) =>
                                 setData("password", e.target.value)
