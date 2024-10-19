@@ -73,15 +73,16 @@ class SSLController extends Controller
     {
         // validate requets first
         $validated = $request->validated();
-        $ssl = SSLModel::where('salary_grade', $salary_grade)->first();
+        $ssl = SSLModel::where('salary_grade', $salary_grade)->update($validated);
 
         // Check if the record exists
         if (!$ssl) {
             return response()->json(['message' => 'Record not found'], 404);
         }
 
-        $ssl->update($validated);
-        return $ssl;
+        $data = SSLModel::where('salary_grade', $salary_grade)->first();
+
+        return response()->json(['message' => 'successfully stored ssl.', 'data' => $data]);
     }
 
     /**
