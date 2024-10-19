@@ -4,6 +4,7 @@ import StatusCard from "@/Components/StatusCard";
 import {
     Banknote,
     CreditCard,
+    MoreHorizontal,
     PhilippinePeso,
     TrendingDown,
 } from "lucide-react";
@@ -22,6 +23,14 @@ import loanData from "@/Components/Constants/data4.json";
 import React from "react";
 import { DateRange } from "react-day-picker";
 import { addDays, format } from "date-fns";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/Components/ui/dropdown-menu";
 
 type recentPayrolls = {
     period: string;
@@ -65,12 +74,60 @@ const rpcolumns: ColumnDef<recentPayrolls>[] = [
         accessorKey: "compensation",
         header: "Compensation",
     },
+    {
+        id: "actions",
+        cell: ({ row }) => {
+            const action = row.original;
+            return (
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <section>
+                            <span className="sr-only">Open menu</span>
+                            <MoreHorizontal className="h-4 w-4" />
+                        </section>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuItem>View Details</DropdownMenuItem>
+                        <DropdownMenuItem>Edit</DropdownMenuItem>
+                        <DropdownMenuItem className="text-red-600">
+                            Delete
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            );
+        },
+    },
 ];
 
 const rlcolumns: ColumnDef<recentRequest>[] = [
     { accessorKey: "id", header: "No." },
     { accessorKey: "name", header: "Name" },
     { accessorKey: "loan_details", header: "Loan Details" },
+    {
+        id: "actions",
+        cell: ({ row }) => {
+            const action = row.original;
+            return (
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <section>
+                            <span className="sr-only">Open menu</span>
+                            <MoreHorizontal className="h-4 w-4" />
+                        </section>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuItem>View Details</DropdownMenuItem>
+                        <DropdownMenuItem className="text-green-600">
+                            Approve
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="text-red-600">
+                            Deny
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            );
+        },
+    },
 ];
 
 export default function Dashboard() {
@@ -183,7 +240,7 @@ export default function Dashboard() {
                 </div>
             </div>
             <div className="lg:flex gap-5">
-                <div className="lg:w-2/3 h-full">
+                <div className="lg:w-3/4 h-full">
                     <div>
                         <BodyContentLayout
                             headerName="Recent Payrolls"
@@ -199,7 +256,7 @@ export default function Dashboard() {
                         </BodyContentLayout>
                     </div>
                 </div>
-                <div className="lg:w-1/3 h-full">
+                <div className="lg:w-1/4 h-full">
                     <div>
                         <BodyContentLayout
                             headerName="Recent Loan Requests"

@@ -13,7 +13,6 @@ import { FormEventHandler, useState } from "react";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
 import {
-    ArrowLeft,
     ChevronLeft,
     ChevronRight,
     FolderDown,
@@ -36,8 +35,6 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
 import {
@@ -46,12 +43,10 @@ import {
     PaginationEllipsis,
     PaginationItem,
     PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
 } from "@/Components/ui/pagination";
 
 type sslProfile = {
-    salaryGrade: string;
+    salary_grade: string;
     step1: number;
     step2: number;
     step3: number;
@@ -99,10 +94,13 @@ const columns: ColumnDef<sslProfile>[] = [
         accessorKey: "step8",
         header: "STEP 8",
     },
+
+    // Action Button for the Tables .
     {
         id: "actions",
         cell: ({ row }) => {
-            const action = row.original;
+            const action = row.original.salary_grade;
+            console.log(action);
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -112,12 +110,11 @@ const columns: ColumnDef<sslProfile>[] = [
                         </section>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>Copy payment ID</DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>View customer</DropdownMenuItem>
-                        <DropdownMenuItem>
-                            View payment details
+                        {/* Apply Routes ug Create ug Function para mu accept ug entry */}
+                        <DropdownMenuItem>Edit</DropdownMenuItem>
+                        {/* Create row delete function */}
+                        <DropdownMenuItem className="text-red-600">
+                            Delete
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
