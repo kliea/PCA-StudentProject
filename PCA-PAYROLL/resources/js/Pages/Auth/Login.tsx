@@ -12,7 +12,6 @@ export default function Login({ status }: { status?: string }) {
         password: "",
     });
 
-    
     // Set action for the Form
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
