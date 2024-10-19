@@ -58,7 +58,7 @@ const columns: ColumnDef<columnTypes>[] = [
     { accessorKey: "gross_amount", header: "Gross Amount" },
     {
         // Action button for table
-        accessorKey: "name",
+        id: "actions",
         cell: ({ row }) => {
             const values = row.original;
             return (
@@ -148,7 +148,6 @@ export default function Payrolls() {
                     <DataTable
                         columns={columns}
                         table={table}
-                        disablePagination={false}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
                     ></DataTable>
                 </div>

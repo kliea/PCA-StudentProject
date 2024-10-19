@@ -403,7 +403,6 @@ const Ssl = () => {
                         <DataTable
                             columns={columns}
                             rowStyle="odd:bg-white even:bg-transparent text-center"
-                            disablePagination={false}
                             table={table}
                         ></DataTable>
                         <Pagination className="flex justify-end items-end">

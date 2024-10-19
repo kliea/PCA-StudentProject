@@ -24,7 +24,6 @@ interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     headerStyle?: string;
     rowStyle?: string;
-    disablePagination: boolean;
     table: any;
     className?: string;
 }
@@ -33,7 +32,6 @@ export function DataTable<TData, TValue>({
     columns,
     headerStyle,
     rowStyle,
-    disablePagination,
     table,
     className,
 }: DataTableProps<TData, TValue>) {
