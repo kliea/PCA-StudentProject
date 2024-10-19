@@ -29,6 +29,7 @@ export default {
     		},
     		colors: {
     			baseGreen: '#0E4736',
+				baseYellow: '#FFDE1A',
     			secondaryGreen: '#467E56',
     			baseGrey: '#EFEFED',
     			background: 'hsl(var(--background))',

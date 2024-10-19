@@ -311,11 +311,7 @@ const Ssl = () => {
     return (
         <div>
             <AuthenticatedLayoutAdmin
-                header={
-                    <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                        {usePage().component}
-                    </h2>
-                }
+                header={<h2>{usePage().component.split("/")[1]}</h2>}
             >
                 <Head title="SSL" />
                 <BodyContentLayout
