@@ -20,7 +20,7 @@ class SSLController extends Controller
         $ssl = SSLModel::all();
 
         if (!$ssl || $ssl->isEmpty()) {
-            return response()->json(['message' => 'No '], 404);
+            return response()->json(['message' => 'No Data Found in SSL.'], 404);
         }
 
         return $ssl;
@@ -31,15 +31,22 @@ class SSLController extends Controller
      */
     public function store(SSLRequest $request)
     {
-        // Validate the request
         $validated = $request->validated();
 
-        // Create a new profile record in the database
-        SSLModel::create($validated);
+        // Check if a record with the same data already exists
+        $existingRecord = SSLModel::where('salary_grade', $validated['salary_grade'])->first();
 
-        // Redirect back or to a specific page after saving
-        return $validated;
+        if ($existingRecord) {
+            return response()->json(['message' => 'Record already exists'], 409);
+        }
+
+        // If the record doesn't exist, create a new profile record in the database
+        $data = SSLModel::create($validated);
+
+        // Return or redirect after saving
+        return response()->json(['message' => 'Record created successfully', 'data' => $data], 201);
     }
+
 
 
     /**
