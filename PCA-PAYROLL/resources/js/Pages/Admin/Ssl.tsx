@@ -12,7 +12,15 @@ import { DataTable } from "@/Components/DataTable";
 import { FormEventHandler, useState } from "react";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
-import { PlusIcon } from "lucide-react";
+import {
+    ArrowLeft,
+    ChevronLeft,
+    ChevronRight,
+    FolderDown,
+    FolderUp,
+    MoreHorizontal,
+    PlusIcon,
+} from "lucide-react";
 
 import {
     Dialog,
@@ -24,6 +32,23 @@ import {
 } from "@/Components/ui/dialog";
 import InputError from "@/Components/InputError";
 import { Label } from "@/Components/ui/label";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/Components/ui/dropdown-menu";
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/Components/ui/pagination";
 
 type sslProfile = {
     salaryGrade: string;
@@ -74,6 +99,31 @@ const columns: ColumnDef<sslProfile>[] = [
         accessorKey: "step8",
         header: "STEP 8",
     },
+    {
+        id: "actions",
+        cell: ({ row }) => {
+            const action = row.original;
+            return (
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <section>
+                            <span className="sr-only">Open menu</span>
+                            <MoreHorizontal className="h-4 w-4" />
+                        </section>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuItem>Copy payment ID</DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>View customer</DropdownMenuItem>
+                        <DropdownMenuItem>
+                            View payment details
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            );
+        },
+    },
 ];
 
 function addSSL() {
@@ -111,8 +161,6 @@ function addSSL() {
             },
         });
     };
-
-    console.log(data.salary_grade);
 
     return (
         <div>
@@ -273,45 +321,133 @@ const Ssl = () => {
                 }
             >
                 <Head title="SSL" />
-                <BodyContentLayout headerName="SSL">
-                    <div className="mb-5 flex gap-5">
-                        <Input
-                            type="search"
-                            onChange={(e) =>
-                                setGlobalFilter(e.target.value || "")
-                            }
-                            className="w-1/4 rounded-[5px]"
-                            placeholder="Search...."
-                        />
-                        <div>
-                            <Dialog>
-                                <DialogTrigger>
-                                    <div className="flex p-2 bg-secondaryGreen text-white rounded-[5px ]">
-                                        <PlusIcon className="mr-2 h-6 w-auto" />
-                                        NEW SSL PROFILE
-                                    </div>
-                                </DialogTrigger>
-                                <DialogContent>
-                                    <DialogHeader>
-                                        <DialogTitle>
-                                            New SSL profile
-                                        </DialogTitle>
-                                        <DialogDescription>
-                                            Add New SSL Profile
-                                        </DialogDescription>
-                                        <div className="mt-5">{addSSL()}</div>
-                                        <div></div>
-                                    </DialogHeader>
-                                </DialogContent>
-                            </Dialog>
+                <BodyContentLayout
+                    headerName="SSL"
+                    className="h-[800px]"
+                    contentStyle="h-[650px]"
+                >
+                    <div className="h-full">
+                        <div className="mb-5 flex gap-5 ">
+                            <Input
+                                type="search"
+                                onChange={(e) =>
+                                    setGlobalFilter(e.target.value || "")
+                                }
+                                className="w-1/4 rounded-[10px]"
+                                placeholder="Search...."
+                            />
+                            <div>
+                                <Dialog>
+                                    <DialogTrigger>
+                                        <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-[10px] pl-3 pr-3">
+                                            <PlusIcon className="mr-2 h-6 w-auto" />
+                                            New SSL Profile
+                                        </section>
+                                    </DialogTrigger>
+                                    <DialogContent>
+                                        <DialogHeader>
+                                            <DialogTitle>
+                                                New SSL Profile
+                                            </DialogTitle>
+                                            <DialogDescription>
+                                                Add New SSL Profile
+                                            </DialogDescription>
+                                            <div className="mt-5">
+                                                {addSSL()}
+                                            </div>
+                                            <div></div>
+                                        </DialogHeader>
+                                    </DialogContent>
+                                </Dialog>
+                            </div>
+
+                            <div>
+                                <Dialog>
+                                    <DialogTrigger>
+                                        <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-[10px] pl-3 pr-3">
+                                            <FolderDown className="mr-2 h-6 w-auto" />
+                                            Import SSL
+                                        </section>
+                                    </DialogTrigger>
+                                    <DialogContent>
+                                        <DialogHeader>
+                                            <DialogTitle>
+                                                Feature Under Development
+                                            </DialogTitle>
+                                            <DialogDescription>
+                                                Feature is Still Under
+                                                Development
+                                            </DialogDescription>
+                                            <div className="mt-5"></div>
+                                        </DialogHeader>
+                                    </DialogContent>
+                                </Dialog>
+                            </div>
+
+                            <div>
+                                <Dialog>
+                                    <DialogTrigger>
+                                        <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-[10px] pl-3 pr-3">
+                                            <FolderUp className="mr-2 h-6 w-auto" />
+                                            Export SSL
+                                        </section>
+                                    </DialogTrigger>
+                                    <DialogContent>
+                                        <DialogHeader>
+                                            <DialogTitle>
+                                                Feature Under Development
+                                            </DialogTitle>
+                                            <DialogDescription>
+                                                Feature is Still Under
+                                                Development
+                                            </DialogDescription>
+                                            <div className="mt-5"></div>
+                                        </DialogHeader>
+                                    </DialogContent>
+                                </Dialog>
+                            </div>
                         </div>
+                        <DataTable
+                            columns={columns}
+                            rowStyle="odd:bg-white even:bg-transparent text-center"
+                            disablePagination={false}
+                            table={table}
+                        ></DataTable>
+                        <Pagination className="flex justify-end items-end">
+                            <PaginationContent>
+                                <PaginationItem>
+                                    <Button
+                                        onClick={table.previousPage}
+                                        className="bg-transparent text-black hover:bg-transparent w-30 p-2"
+                                        disabled={!table.getCanPreviousPage()}
+                                    >
+                                        <ChevronLeft className="pr-1" />
+                                        Previous
+                                    </Button>
+                                </PaginationItem>
+                                <PaginationItem>
+                                    <PaginationEllipsis />
+                                </PaginationItem>
+                                <PaginationItem>
+                                    <PaginationLink>
+                                        {table.getState().pagination.pageIndex +
+                                            1}
+                                    </PaginationLink>
+                                </PaginationItem>
+                                <PaginationItem>
+                                    <PaginationEllipsis />
+                                </PaginationItem>
+                                <Button
+                                    onClick={table.nextPage}
+                                    className="bg-transparent text-black hover:bg-transparent w-30 p-2"
+                                    disabled={!table.getCanNextPage()}
+                                >
+                                    Next
+                                    <ChevronRight className="pl-1" />
+                                </Button>
+                            </PaginationContent>
+                        </Pagination>
                     </div>
-                    <DataTable
-                        columns={columns}
-                        rowStyle="odd:bg-white even:bg-transparent text-center"
-                        disablePagination={false}
-                        table={table}
-                    ></DataTable>
                 </BodyContentLayout>
             </AuthenticatedLayoutAdmin>
         </div>

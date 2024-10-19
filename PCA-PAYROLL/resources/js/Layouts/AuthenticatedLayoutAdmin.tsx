@@ -163,7 +163,7 @@ export default function Authenticated({
                     {/* Mao ni ang pag generate sa header */}
                     <div
                         className={cn(
-                            " transition-all duration-200 ease-in-out py-6 px-6 sm:px-6 flex gap-3 z-40 justify-between",
+                            " transition-all duration-200 ease-in-out py-2 px-6 sm:px-6 flex gap-3 z-40 justify-between",
                             navStatus ? "ml-64 sm:ml-16" : "ml-16 sm:ml-64"
                         )}
                     >
@@ -231,7 +231,6 @@ export default function Authenticated({
                     navStatus ? "ml-16" : "ml-16 sm:ml-64"
                 )}
             >
-                
                 {children}
             </main>
         </div>
