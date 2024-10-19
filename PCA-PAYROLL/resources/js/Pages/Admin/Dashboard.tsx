@@ -1,5 +1,5 @@
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutAdmin";
-import BodyContentLayout from "@/Layouts/BodyContentLayout";
+import { Link } from "@inertiajs/react";
 import { Head, usePage } from "@inertiajs/react";
 
 export default function Dashboard() {
@@ -12,6 +12,12 @@ export default function Dashboard() {
             }
         >
             <Head title="Dashboard" />
+            <div>
+                <Link href="/logout" method="post" as="button">
+                    {" "}
+                    Logout
+                </Link>
+            </div>
         </AuthenticatedLayoutAdmin>
     );
 }
