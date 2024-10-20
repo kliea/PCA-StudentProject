@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('salary_standard_law', function (Blueprint $table) {
-            $table->id('salary_grade'); // PK
+            $table->integer('salary_grade')->primary(); // PK
             $table->decimal('step1', 10, 2);
             $table->decimal('step2', 10, 2);
             $table->decimal('step3', 10, 2);
@@ -21,6 +21,10 @@ return new class extends Migration
             $table->decimal('step6', 10, 2);
             $table->decimal('step7', 10, 2);
             $table->decimal('step8', 10, 2);
+            
+            // NO FURTHER ATTRIBUTES
+            
+            $table->timestamps();
         });
     }
 

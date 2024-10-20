@@ -12,11 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('positions', function (Blueprint $table) {
-            $table->string('position_name')->primary(); // PK
-            $table->string('salary_grade');
-            
-            // foreign key
+            $table->string('position_title')->primary();
+
+            $table->integer('salary_grade');
+
             $table->foreign('salary_grade')->references('salary_grade')->on('salary_standard_law');
+
+            // NO FURTHER ATTRIBUTES
+
+            $table->timestamps();
         });
     }
 
@@ -25,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('positions_');
+        Schema::dropIfExists('positions');
     }
 };

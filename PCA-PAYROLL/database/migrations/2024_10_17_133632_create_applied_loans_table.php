@@ -11,18 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('borrower', function (Blueprint $table) {
-            $table->string('borrower_code')->primary(); // PK
+        Schema::create('applied_loans', function (Blueprint $table) {
+            $table->string('applied_loan_code')->primary(); // PK
+
             $table->date('date_started');
             $table->date('date_ended');
             $table->decimal('monthly_paid', 10, 2);
             $table->decimal('begin_balance', 10, 2);
             $table->decimal('paid_amount', 10, 2);
             $table->decimal('balance', 10, 2);
+            
+            $table->string('employee_number');
+            $table->string('loan_name');
 
-            //foreign keys
-            $table->string('employee_number')->reference('employee_number')->on('employees');
-            $table->string('loan_name')->reference('loan_name')->on('loan_types');
+            $table->foreign('employee_number')->references('employee_number')->on('employees');
+            $table->foreign('loan_name')->references('loan_name')->on('loan_types');
+
+
+            // NO FURTHER ATTRIBUTES
+
+            $table->timestamps();
 
         });
     }
@@ -32,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('borrower');
+        Schema::dropIfExists('applied_loans');
     }
 };

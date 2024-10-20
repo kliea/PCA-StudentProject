@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('loan_types', function (Blueprint $table) {
-            $table->string('loan_name')->primary(); //PK
+            $table->string('loan_name')->primary(); //PK 
+
+            // NO FURTHER ATTRIBUTES
+
+            $table->timestamps();
         });
     }
 

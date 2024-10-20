@@ -12,12 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('appointment', function (Blueprint $table) {
-            $table->string('appointment_type')->primary(); // PK
-            $table->boolean('mandatory_deduction')->default(false); 
+            $table->string('appointment_type')->primary();
 
-            //foreign keys
-            $table->string('compensation_code')->reference('compensation_code')->on('employee_compensations'); 
-            $table->string('deduction_code')->reference('deduction_code')->on('employee_deduction');
+            $table->boolean('has_deduction');
+            $table->string('basic_pay_type');
+            $table->string('tax_type');
+
+            // NO FURTHER ATTRIBUTES
+
+            $table->timestamps();
+
+            // //foreign keys
+            // $table->string('compensation_code')->reference('compensation_code')->on('employee_compensations'); 
+            // $table->string('deduction_code')->reference('deduction_code')->on('employee_deduction');
         });
     }
 

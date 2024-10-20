@@ -12,16 +12,29 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employees', function (Blueprint $table) {
-            $table->string('employee_number')->primary(); // PK
-            $table->string('last_name');
-            $table->string('first_name');
-            $table->string('middle_name')->nullable();
-            $table->string('extended_name')->nullable();
-            $table->string('appointment');
-            $table->string('salary_type');
+            $table->string('employee_number')->primary();
 
-            // foreign key
-            $table->string('position_name')->references('position_name')->on('positions');
+            $table->string('last_name');
+            $table->string('middle_name')->nullable();
+            $table->string('first_name');
+            $table->string('name_extension')->nullable();
+
+            $table->string('salary_type'); // Per Month? or Per 15 days?
+            $table->integer('salary_step');
+
+            $table->string('salary_grade'); //SG1, SG2, etc
+            $table->string('appointment_type'); // casual, COS, external, JO, lecturer...
+            $table->string('position_title'); 
+            $table->string('station_name');
+
+            $table->foreign('salary_grade')->references('salary_grade')->on('salary_standard_law');
+            $table->foreign('appointment_type')->references('appointment_type')->on('appointments');
+            $table->foreign('position_title')->references('position_title')->on('positions');
+            $table->foreign('station_name')->references('station_name')->on('stations');
+
+            // NO FURTHER ATTRIBUTES
+
+            $table->timestamps();
         });
     }
 
