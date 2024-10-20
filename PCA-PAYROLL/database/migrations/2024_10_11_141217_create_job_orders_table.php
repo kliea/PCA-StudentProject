@@ -16,8 +16,12 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             
-            // foreign key
-            $table->string('employee_number')->references('employee_number')->on('employees');
+            $table->string('employee_number');
+            $table->foreign('employee_number')->references('employee_number')->on('employees');
+
+            // NO FURTHER ATTRIBUTES
+
+            $table->timestamps();
         });
     }
 

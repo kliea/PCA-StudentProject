@@ -12,17 +12,24 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('travel_orders', function (Blueprint $table) {
-            $table->string('travel_order_code')->primary();// PK
+            $table->string('travel_order_code')->primary();
+
             $table->date('date_filed');
             $table->date('start_date');
             $table->date('end_date');
-            $table->string('type'); 
-            $table->text('description');
-            $table->string('status');
+            $table->string('travel_order_type');
+            $table->string('travel_order_description')->nullable();
+            $table->string('travel_order_status');
 
-            // foreign key
-            $table->string('approver_number')->references('employee_number')->on('employees');
-            $table->string('employee_number')->references('employee_number')->on('employees');
+            $table->string('approver_number');
+            $table->string('employee_number');
+
+            $table->foreign('approver_number')->references('employee_number')->on('employees');
+            $table->foreign('employee_number')->references('employee_number')->on('employees');
+
+            // NO FURTHER ATTRIBUTES
+
+            $table->timestamps();
         });
     }
 

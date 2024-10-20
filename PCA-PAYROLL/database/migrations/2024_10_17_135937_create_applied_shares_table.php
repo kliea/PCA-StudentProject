@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contracts', function (Blueprint $table) {
-            $table->string('contract_code')->primary();
+        Schema::create('applied_shares', function (Blueprint $table) {
+            $table->string('app_share_code')->primary();
 
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->decimal('amount', 10, 2);
 
             $table->string('employee_number');
+            $table->string('agency_share_code');
+
             $table->foreign('employee_number')->references('employee_number')->on('employees');
+            $table->foreign('agency_share_code')->references('agency_share_code')->on('agency_shares');
 
             // NO FURTHER ATTRIBUTES
 
@@ -31,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contracts');
+        Schema::dropIfExists('applied_shares');
     }
 };

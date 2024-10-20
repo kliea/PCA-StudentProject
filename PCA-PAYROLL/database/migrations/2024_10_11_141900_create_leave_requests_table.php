@@ -11,13 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contracts', function (Blueprint $table) {
-            $table->string('contract_code')->primary();
+        Schema::create('leave_requests', function (Blueprint $table) {
+            $table->string('leave_request_code')->primary();
 
+            $table->date('date_filed');
             $table->date('start_date');
             $table->date('end_date');
+            $table->string('leave_type');
+            $table->string('leave_description')->nullable();
+            $table->string('leave_status');
 
+            $table->string('approver_number');
             $table->string('employee_number');
+
+            $table->foreign('approver_number')->references('employee_number')->on('employees');
             $table->foreign('employee_number')->references('employee_number')->on('employees');
 
             // NO FURTHER ATTRIBUTES
@@ -31,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contracts');
+        Schema::dropIfExists('leave_requests');
     }
 };

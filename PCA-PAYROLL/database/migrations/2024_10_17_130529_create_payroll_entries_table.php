@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contracts', function (Blueprint $table) {
-            $table->string('contract_code')->primary();
+        Schema::create('payroll_entries', function (Blueprint $table) {
+            $table->string('payroll_entry_code')->primary();
 
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->string('current_position'); // this one is extracted in the employee table
 
             $table->string('employee_number');
             $table->foreign('employee_number')->references('employee_number')->on('employees');
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contracts');
+        Schema::dropIfExists('payroll_entries');
     }
 };

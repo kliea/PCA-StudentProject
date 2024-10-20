@@ -11,13 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('income_tax_table', function (Blueprint $table) {
-            $table->string('income_tax_table_code')->primay(); // PK
-            $table->decimal('annoual_amount_from',10,2);
-            $table->decimal('annoual_amount_to',10,2);
-            $table->decimal('base_amount',10,2);
-            $table->decimal('tax_rate',3,2);
+        Schema::create('income_taxes', function (Blueprint $table) {
+            $table->integer('tax_bracket')->primary();
 
+            $table->decimal('lower_bound', 10, 2);
+            $table->decimal('upper_bound', 10, 2);
+            $table->decimal('base_amount', 10, 2);
+            $table->decimal('tax_rate', 10, 2);
+
+            // NO FURTHER ATTRIBUTES
+
+            $table->timestamps();
         });
     }
 
@@ -26,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('income_tax_table');
+        Schema::dropIfExists('income_taxes');
     }
 };

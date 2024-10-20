@@ -11,14 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employee_compensations', function (Blueprint $table) {
+        Schema::create('compensation_types', function (Blueprint $table) {
             $table->string('compensation_code')->primary();
+
             $table->string('compensation_name');
             $table->string('shorthand');
-            $table->integer('quantity');
-            $table->decimal('compensation_amount',10,2);
+            $table->decimal('amount', 10, 2);
             $table->boolean('is_taxable')->default(false);
-            $table->boolean('is_fixedamount')->default(false);
+            $table->boolean('is_salary')->default(false);
+
+            // NO FURTHER ATTRIBUTES
+
+            $table->timestamps();
         });
     }
 
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('employee_compensations');
+        Schema::dropIfExists('compensation_types');
     }
 };

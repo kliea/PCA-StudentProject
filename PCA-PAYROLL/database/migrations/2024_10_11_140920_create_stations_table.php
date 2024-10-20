@@ -17,6 +17,8 @@ return new class extends Migration
 
             // foreign key
             $table->string('employee_number')->references('employee_number')->on('employees');
+
+            // NO FURTHER ATTTRIBUTES
         });
     }
 

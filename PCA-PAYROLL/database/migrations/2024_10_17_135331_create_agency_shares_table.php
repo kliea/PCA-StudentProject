@@ -11,17 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employee_agency_share', function (Blueprint $table) {
+        Schema::create('agency_shares', function (Blueprint $table) {
             $table->string('agency_share_code')->primary(); // PK
+
             $table->string('agency_share_name');
             $table->string('shorthand');
-            $table->decimal('agency_share_amount',10,2);
+            $table->decimal('amount',10,2);
             $table->boolean('is_mandatory')->default(false);
-            $table->decimal('percent',10,2);
+            $table->decimal('remittance_percent',10,2);
             $table->decimal('ceiling_amount',10,2);
-            
-            //foreign key
-            $table->string('compensation_link')->reference('employee_code')->on('employee_compensations');
+
+            // NO FURTHER ATTRIBUTES
+
+            $table->timestamps();
         });
     }
 
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('employee_agency_share');
+        Schema::dropIfExists('agency_shares');
     }
 };

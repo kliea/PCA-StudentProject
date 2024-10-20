@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contracts', function (Blueprint $table) {
-            $table->string('contract_code')->primary();
+        Schema::create('holidays', function (Blueprint $table) {
+            $table->string('holiday_name')->primary();
 
-            $table->date('start_date');
-            $table->date('end_date');
-
-            $table->string('employee_number');
-            $table->foreign('employee_number')->references('employee_number')->on('employees');
+            $table->date('date');
+            $table->string('type');
+            $table->boolean('is_recurring');
 
             // NO FURTHER ATTRIBUTES
 
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contracts');
+        Schema::dropIfExists('holidays');
     }
 };
