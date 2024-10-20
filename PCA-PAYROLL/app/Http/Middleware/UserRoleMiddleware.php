@@ -17,11 +17,13 @@ class UserRoleMiddleware
      */
     public function handle(Request $request, Closure $next,string $role): Response
     {
+        // if (!Auth::check()) {
+        //     return redirect()->route('login')->withErrors(['access_denied' => 'Unauthorized access']);
+        // }
         if (Auth::check() && Auth::user()->user_level === $role) {
             return $next($request);
         }
 
-        
         if(Auth::user()->user_level === "admin"){
             return redirect()->route('admin.dashboard');
         }
