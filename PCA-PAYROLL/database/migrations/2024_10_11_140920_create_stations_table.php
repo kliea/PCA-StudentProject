@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('employee_number')->references('employee_number')->on('employees');
 
             // NO FURTHER ATTTRIBUTES
+            $table->timestamps();
         });
     }
 

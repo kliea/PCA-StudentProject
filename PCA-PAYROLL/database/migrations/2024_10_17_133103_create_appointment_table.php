@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('appointment', function (Blueprint $table) {
             $table->string('appointment_type')->primary();
 
-            $table->boolean('has_deduction');
+            $table->boolean('has_mandatory_deduction');
             $table->string('basic_pay_type');
             $table->string('tax_type');
 

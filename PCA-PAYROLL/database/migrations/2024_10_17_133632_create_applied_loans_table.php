@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('applied_loan_code')->primary(); // PK
 
             $table->date('date_started');
-            $table->date('date_ended');
+            $table->date('date_ended')->nullable();
             $table->decimal('monthly_paid', 10, 2);
             $table->decimal('begin_balance', 10, 2);
             $table->decimal('paid_amount', 10, 2);

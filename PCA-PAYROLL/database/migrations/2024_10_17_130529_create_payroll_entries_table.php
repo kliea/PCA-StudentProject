@@ -17,7 +17,10 @@ return new class extends Migration
             $table->string('current_position'); // this one is extracted in the employee table
 
             $table->string('employee_number');
+            $table->string('payroll_sheet_code');
+            
             $table->foreign('employee_number')->references('employee_number')->on('employees');
+            $table->foreign('payroll_sheet_code')->references('payroll_sheet_code')->on('payroll_sheets');
 
             // NO FURTHER ATTRIBUTES
 
