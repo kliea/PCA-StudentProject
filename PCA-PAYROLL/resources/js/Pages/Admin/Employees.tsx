@@ -57,7 +57,7 @@ const columns: ColumnDef<columnTypes>[] = [
     },
 ];
 
-export default function Loans() {
+export default function Employees() {
     const data: columnTypes[] = Data;
     const table = useReactTable({
         data,
@@ -72,15 +72,11 @@ export default function Loans() {
     });
     return (
         <AuthenticatedLayoutAdmin
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    {usePage().component}
-                </h2>
-            }
+            header={<h2>{usePage().component.split("/")[1]}</h2>}
         >
             <Head title="Employees" />
 
-            <BodyContentLayout headerName={"Loans"}>
+            <BodyContentLayout headerName={"Employee List"}>
                 <div className="flex  mb-5 gap-3">
                     <Input
                         type="text"

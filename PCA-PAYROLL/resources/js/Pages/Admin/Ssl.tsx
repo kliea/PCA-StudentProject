@@ -100,7 +100,6 @@ const columns: ColumnDef<sslProfile>[] = [
         id: "actions",
         cell: ({ row }) => {
             const action = row.original.salary_grade;
-            console.log(action);
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -367,11 +366,6 @@ const Ssl = () => {
                                             <DialogTitle>
                                                 Feature Under Development
                                             </DialogTitle>
-                                            <DialogDescription>
-                                                Feature is Still Under
-                                                Development
-                                            </DialogDescription>
-                                            <div className="mt-5"></div>
                                         </DialogHeader>
                                     </DialogContent>
                                 </Dialog>
@@ -390,11 +384,6 @@ const Ssl = () => {
                                             <DialogTitle>
                                                 Feature Under Development
                                             </DialogTitle>
-                                            <DialogDescription>
-                                                Feature is Still Under
-                                                Development
-                                            </DialogDescription>
-                                            <div className="mt-5"></div>
                                         </DialogHeader>
                                     </DialogContent>
                                 </Dialog>

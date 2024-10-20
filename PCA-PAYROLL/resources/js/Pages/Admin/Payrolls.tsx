@@ -107,19 +107,19 @@ export default function Payrolls() {
         >
             <Head title="Payrolls" />
 
-            <BodyContentLayout headerName={"Payrolls"}>
+            <BodyContentLayout headerName={"Payrolls List"}>
                 <div className="flex  mb-5 justify-between">
                     <section className="flex gap-5 w-full">
                         <div>
                             <Select>
                                 <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="Theme" />
+                                    <SelectValue placeholder="All" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="light">Light</SelectItem>
-                                    <SelectItem value="dark">Dark</SelectItem>
-                                    <SelectItem value="system">
-                                        System
+                                    <SelectItem value="all">All</SelectItem>
+                                    <SelectItem value="flexi">Dark</SelectItem>
+                                    <SelectItem value="regular">
+                                        Regular
                                     </SelectItem>
                                 </SelectContent>
                             </Select>
