@@ -49,7 +49,8 @@ const columns: ColumnDef<columnTypes>[] = [
                         </section>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                        <DropdownMenuItem>View Data</DropdownMenuItem>
+                        <DropdownMenuItem>View</DropdownMenuItem>
+                        <DropdownMenuItem>Edit</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             );

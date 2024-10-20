@@ -14,7 +14,7 @@ class SSLController extends Controller
      * Display a listing of the resource.
      */
 
-     public function index()
+    public function index()
     {
         // Fetch data from the database
         $ssl = SSLModel::all();
@@ -48,14 +48,13 @@ class SSLController extends Controller
     }
 
 
-
     /**
      * Display the specified resource.
      */
     public function show($salary_grade)
     {
         // Find the record by salary_grade and return it as a JSON response
-        $ssl = SSLModel::where('salary_grade', $salary_grade);
+        $ssl = SSLModel::where('salary_grade', $salary_grade)->first();
 
         // Check if the record exists
         if (!$ssl) {
@@ -63,7 +62,7 @@ class SSLController extends Controller
         }
 
         // Return the record in JSON format
-        return response()->json(['message' => 'successfully stored ssl.', 'data' => $ssl]);
+        return response()->json(['message' => 'successfully retrieved ssl.', 'data' => $ssl]);
     }
 
     /**
@@ -101,5 +100,4 @@ class SSLController extends Controller
         // Return a success response
         return response()->json(['message' => 'Record deleted successfully']);
     }
-
 }

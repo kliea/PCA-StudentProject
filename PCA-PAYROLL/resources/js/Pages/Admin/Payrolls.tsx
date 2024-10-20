@@ -13,7 +13,7 @@ import {
     getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { File, MoreHorizontal } from "lucide-react";
+import { File, FolderUp, MoreHorizontal } from "lucide-react";
 import Data from "@/Components/Constants/data5.json";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
@@ -30,6 +30,13 @@ import { addDays } from "date-fns";
 import React from "react";
 import { DateRange } from "react-day-picker";
 import { Button } from "@/Components/ui/button";
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/Components/ui/dialog";
 
 //  Set accepted column types
 
@@ -138,10 +145,21 @@ export default function Payrolls() {
                                 setDate={setDate}
                             ></DatePickerWithRange>
                         </div>
-                        <Button className="flex gap-1 bg-baseYellow text-black hover:bg-transparent hover:border">
-                            <File size={20} />
-                            Print Payroll
-                        </Button>
+                        <Dialog>
+                            <DialogTrigger>
+                                <section className="flex gap-1 bg-baseYellow text-black items-center justify-center p-2 rounded-[10px] pl-3 pr-3">
+                                    <File size={15} />
+                                    Print Payroll
+                                </section>
+                            </DialogTrigger>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>
+                                        Feature Under Development
+                                    </DialogTitle>
+                                </DialogHeader>
+                            </DialogContent>
+                        </Dialog>
                     </section>
                 </div>
                 <div>
