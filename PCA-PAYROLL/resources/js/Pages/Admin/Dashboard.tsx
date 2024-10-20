@@ -247,7 +247,6 @@ export default function Dashboard() {
                             <DataTable
                                 columns={rpcolumns}
                                 rowStyle="odd:bg-white even:bg-transparent text-center"
-                                disablePagination={true}
                                 table={rpTable}
                                 className="lg:h-[450px]"
                             />
@@ -263,7 +262,6 @@ export default function Dashboard() {
                             <DataTable
                                 columns={rlcolumns}
                                 rowStyle="odd:bg-white even:bg-transparent text-center"
-                                disablePagination={true}
                                 table={rlTable}
                                 className="lg:h-[450px]"
                             />
