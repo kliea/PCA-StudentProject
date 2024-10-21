@@ -1,10 +1,28 @@
-import Dialog from "@/Components/Dialog";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutAdmin";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import { Head, usePage } from "@inertiajs/react";
-import { toast } from "sonner";
+import { SslStore } from "@/Components/CrudComponents/SslCrud";
+
+import { useState } from "react";
+import DropdownDialog from "./DropdownDialog";
+import { MoreHorizontal } from "lucide-react";
 
 export default function Compensations() {
+    const dialogs = [
+        {
+            tag: "1",
+            name: "Edit",
+            dialogtitle: "Dialog 1",
+            dialogContent: <SslStore></SslStore>,
+            style: "text-red-600",
+        },
+        {
+            tag: "2",
+            name: "Delete",
+            dialogtitle: "Dialog 2",
+            dialogContent: <>Hello Dialog2</>,
+        },
+    ];
     return (
         <AuthenticatedLayoutAdmin
             header={
@@ -16,15 +34,16 @@ export default function Compensations() {
             <Head title="Compensations" />
 
             <BodyContentLayout headerName={"Compensations"}>
-                <button
-                    className="bg-red-400"
-                    onClick={() => toast(<>hello</>)}
-                >
-                    click
-                </button>
-                <Dialog trigger={<>Open Dialog</>} title="Hello">
-                    <h1>Hola</h1>
-                </Dialog>
+                <DropdownDialog
+                    dialogs={dialogs}
+                    trigger={
+                        <>
+                            <section>
+                                <MoreHorizontal className="h-4 w-4" />
+                            </section>
+                        </>
+                    }
+                ></DropdownDialog>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin>
     );

@@ -24,7 +24,7 @@ export function SslStore() {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route("ssl.store"), {
+        post(route("store.ssl"), {
             onFinish: () => {
                 reset(
                     "salary_grade",
@@ -67,13 +67,13 @@ export function SslStore() {
                         </div>
                     </div>,
                     {
-                        duration: 20000000,
+                        duration: 2000,
                     }
                 );
             },
         });
     };
-    console.log(usePage());
+
     return (
         <div>
             <form onSubmit={submit}>

@@ -45,6 +45,8 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/Components/ui/dialog";
+import DropdownDialog from "./DropdownDialog";
+import { cn } from "@/lib/utils";
 
 type sslProfile = {
     salary_grade: string;
@@ -100,51 +102,40 @@ const columns: ColumnDef<sslProfile>[] = [
     {
         id: "actions",
         cell: ({ row }) => {
-            const action = row.original;
+            const rowData = row.original;
+            console.log(row.original.salary_grade);
+
+            const dialogs = [
+                {
+                    tag: "1",
+                    name: "Edit",
+                    dialogtitle: cn(
+                        "Editing Salary Grade ",
+                        rowData.salary_grade
+                    ),
+                    dialogContent: <SslUpdate RowData={rowData}></SslUpdate>,
+                },
+                {
+                    tag: "2",
+                    name: "Delete",
+                    dialogtitle: "Dialog 2",
+                    dialogContent: <>Hello Dialog2</>,
+                    style: "text-red-600",
+                },
+            ];
 
             return (
                 <div>
-                    <Dialog>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger>
+                    <DropdownDialog
+                        dialogs={dialogs}
+                        trigger={
+                            <>
                                 <section>
-                                    <span className="sr-only">Open menu</span>
                                     <MoreHorizontal className="h-4 w-4" />
                                 </section>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                {/* Apply Routes ug Create ug Function para mu accept ug entry */}
-                                <DialogTrigger asChild>
-                                    <DropdownMenuItem>
-                                        Edit
-                                        <DialogContent>
-                                            <DialogHeader>
-                                                <DialogTitle>
-                                                    Are you absolutely sure?
-                                                </DialogTitle>
-                                                <DialogDescription>
-                                                    This action cannot be
-                                                    undone. Are you sure you
-                                                    want to permanently delete
-                                                    this file from our servers?
-                                                </DialogDescription>
-                                            </DialogHeader>
-                                            <DialogFooter>
-                                                <Button type="submit">
-                                                    Confirm
-                                                </Button>
-                                            </DialogFooter>
-                                        </DialogContent>
-                                    </DropdownMenuItem>
-                                </DialogTrigger>
-
-                                {/* Create row delete function */}
-                                <DropdownMenuItem className="text-red-600">
-                                    Delete
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </Dialog>
+                            </>
+                        }
+                    ></DropdownDialog>
                 </div>
             );
         },

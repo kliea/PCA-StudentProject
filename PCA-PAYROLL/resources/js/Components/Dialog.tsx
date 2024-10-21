@@ -23,21 +23,23 @@ export default function ({
     title,
     trigger,
     description,
+    open,
+    openDialog,
 }: {
     children?: ReactNode;
     title?: string;
-    trigger: ReactNode;
+    trigger?: ReactNode;
     description?: string;
+    open?: boolean;
+    openDialog?: any;
 }) {
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={openDialog}>
             <DialogTrigger>{trigger}</DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    {title && <DialogTitle>{title}</DialogTitle>}
-                    {description && (
-                        <DialogDescription>{description}</DialogDescription>
-                    )}
+                    <DialogTitle>{title}</DialogTitle>
+                    <DialogDescription>{description}</DialogDescription>
                     {children}
                 </DialogHeader>
             </DialogContent>

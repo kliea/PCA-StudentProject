@@ -14,7 +14,7 @@ class SSLController extends Controller
      * Display a listing of the resource.
      */
 
-     public function index()
+    public function index()
     {
         // Fetch data from the database
         $ssl = SSLModel::all();
@@ -101,5 +101,4 @@ class SSLController extends Controller
         // Return a success response
         return response()->json(['message' => 'Record deleted successfully']);
     }
-
 }
