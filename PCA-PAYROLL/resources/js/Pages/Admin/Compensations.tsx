@@ -1,6 +1,8 @@
+import Dialog from "@/Components/Dialog";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutAdmin";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import { Head, usePage } from "@inertiajs/react";
+import { toast } from "sonner";
 
 export default function Compensations() {
     return (
@@ -13,7 +15,17 @@ export default function Compensations() {
         >
             <Head title="Compensations" />
 
-            <BodyContentLayout headerName={"Compensations"}></BodyContentLayout>
+            <BodyContentLayout headerName={"Compensations"}>
+                <button
+                    className="bg-red-400"
+                    onClick={() => toast(<>hello</>)}
+                >
+                    click
+                </button>
+                <Dialog trigger={<>Open Dialog</>} title="Hello">
+                    <h1>Hola</h1>
+                </Dialog>
+            </BodyContentLayout>
         </AuthenticatedLayoutAdmin>
     );
 }
