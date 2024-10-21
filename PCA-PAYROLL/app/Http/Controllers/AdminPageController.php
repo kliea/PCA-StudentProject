@@ -96,4 +96,12 @@ class AdminPageController extends Controller
         // Redirect back or to a specific page after saving
         return redirect()->back()->with('success', 'Data saved successfully!');
     }
+
+    public function update(Request $request, SSLModel $salary_grade)
+    {
+
+
+        // Return success response or redirect
+        return back()->with('success', 'User updated successfully!');
+    }
 }

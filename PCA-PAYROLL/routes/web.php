@@ -106,6 +106,7 @@ Route::prefix('admin')->group(function () {
     Route::get('appointments', [AdminPageController::class, 'appointments'])->name('admin.appointments');
     Route::get('ssl', [AdminPageController::class, 'ssl'])->name('admin.ssl');
     Route::post('ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
+    Route::put('/ssl/{salary_grade}', [AdminPageController::class, 'update'])->name('ssl.update');
 });
 
 require __DIR__ . '/auth.php';

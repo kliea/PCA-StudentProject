@@ -52,6 +52,7 @@ const DropdownDialog = ({
             </DropdownMenu>
             {dialogs.map((dialog: any) => (
                 <Dialog
+                    key={dialog.tag}
                     title={dialog.dialogtitle}
                     open={openDialog === dialog.tag}
                     openDialog={(e: any) => setOpenDialog(null)}
