@@ -12,11 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('stations', function (Blueprint $table) {
-            $table->string('station_code')->primary();
-            $table->string('station_name')->unique();
-
-            // foreign key
-            $table->string('employee_number')->references('employee_number')->on('employees');
+            $table->string('station_name')->primary();
 
             // NO FURTHER ATTTRIBUTES
             $table->timestamps();
