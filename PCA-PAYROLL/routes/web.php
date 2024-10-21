@@ -18,7 +18,6 @@ Route::get('/', function () {
 
 
 // Admin Routes
-// Admin Routes
 Route::middleware(['auth', 'verified', 'usercheck:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/payroll', [AdminPageController::class, 'payrolls'])->name('admin.payroll');
