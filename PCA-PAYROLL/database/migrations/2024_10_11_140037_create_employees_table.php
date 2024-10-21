@@ -22,12 +22,10 @@ return new class extends Migration
             $table->string('salary_type'); // Per Month? or Per 15 days?
             $table->integer('salary_step');
 
-            $table->integer('salary_grade'); //1, 2, 3, 4...
             $table->string('appointment_type'); // casual, COS, external, JO, lecturer...
             $table->string('position_title'); 
             $table->string('station_name');
-
-            $table->foreign('salary_grade')->references('salary_grade')->on('salary_standard_law');
+            
             $table->foreign('appointment_type')->references('appointment_type')->on('appointments');
             $table->foreign('position_title')->references('position_title')->on('positions');
             $table->foreign('station_name')->references('station_name')->on('stations');
