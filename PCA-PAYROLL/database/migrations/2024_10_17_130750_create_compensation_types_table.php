@@ -20,7 +20,7 @@ return new class extends Migration
             $table->boolean('is_taxable')->default(false);
             $table->boolean('is_fixed')->default(false);
 
-            // NO FURTHER ATTRIBUTES
+            // NO FURTHER ATTRIBUTES    
 
             $table->timestamps();
         });

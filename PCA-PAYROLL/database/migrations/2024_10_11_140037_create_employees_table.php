@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('salary_type'); // Per Month? or Per 15 days?
             $table->integer('salary_step');
 
-            $table->string('salary_grade'); //SG1, SG2, etc
+            $table->integer('salary_grade'); //1, 2, 3, 4...
             $table->string('appointment_type'); // casual, COS, external, JO, lecturer...
             $table->string('position_title'); 
             $table->string('station_name');
