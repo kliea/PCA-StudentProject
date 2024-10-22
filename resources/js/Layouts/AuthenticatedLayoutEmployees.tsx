@@ -1,101 +1,164 @@
-// import { PropsWithChildren, ReactNode, useState } from "react";
-// import {
-//     Sidenavbar,
-//     Sidenavbargroup,
-//     Sidenavbarlinks,
-// } from "@/Components/Sidenavbar";
-// import {
-//     FlagIcon,
-//     History,
-//     LayoutDashboard,
-//     ListCollapse,
-//     Package,
-//     ThumbsUp,
-//     TrendingDown,
-//     TrendingUp,
-//     Users,
-// } from "lucide-react";
-// import { cn } from "@/lib/utils";
-// import { usePage } from "@inertiajs/react";
-// import { LucideProps } from "lucide-react";
+import {
+    SidebarGroup,
+    SidebarGroupContent,
+    SidebarGroupLabel,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    SidebarProvider,
+    SidebarSeparator,
+    SidebarTrigger,
+} from "@/Components/ui/sidebar";
+import {
+    BookOpen,
+    Cog,
+    HandCoins,
+    HeartHandshake,
+    LayoutDashboard,
+    LogOut,
+    LucideProps,
+    Scale,
+    ScrollText,
+    TrendingDown,
+    UserPen,
+    Users,
+    Wallet,
+} from "lucide-react";
+interface Item {
+    label: string;
+    url: string;
+    icon: React.ComponentType<LucideProps>;
+}
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarHeader,
+} from "@/Components/ui/sidebar";
+import NavLink from "@/Components/NavLink";
+import { Separator } from "@/Components/ui/separator";
+import { Head, usePage } from "@inertiajs/react";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
+interface link {
+    title: string;
+    items: Item[];
+}
+const links: link[] = [
+    {
+        title: "PAYROLL SYSTEM",
+        items: [
+            {
+                label: "Dashboard",
+                url: "admin.dashboard",
+                icon: LayoutDashboard,
+            },
+            {
+                label: "Payrolls",
+                url: "admin.payrolls",
+                icon: BookOpen,
+            },
+        ],
+    },
+    {
+        title: "REQUESTS",
+        items: [{ label: "Loans", url: "admin.loans", icon: HandCoins }],
+    },
+    {
+        title: "CONFIGURATIONS",
+        items: [
+            { label: "Employees", url: "admin.employees", icon: Users },
+            {
+                label: "Compensations",
+                url: "admin.compensations",
+                icon: Wallet,
+            },
+            {
+                label: "Deductions",
+                url: "admin.deductions",
+                icon: TrendingDown,
+            },
+            {
+                label: "Government Share",
+                url: "admin.governmentshare",
+                icon: HeartHandshake,
+            },
+            {
+                label: "Appointment",
+                url: "admin.appointments",
+                icon: UserPen,
+            },
+            {
+                label: "SSL",
+                url: "admin.ssl",
+                icon: Scale,
+            },
+            {
+                label: "Format",
+                url: "admin.formats",
+                icon: ScrollText,
+            },
+        ],
+    },
+];
 
-// export default function Authenticated({
-//     header,
-//     children,
-// }: PropsWithChildren<{ header?: ReactNode }>) {
-//     const currentPage = usePage();
-
-//     console.log(currentPage);
-
-//     interface Item {
-//         label: string;
-//         url: string;
-//         icon: React.ComponentType<LucideProps>;
-//     }
-
-//     interface link {
-//         title: string;
-//         items: Item[];
-//     }
-
-//     const links: link[] = [
-//         // {title: 'PAYROLL SYSTEM',
-//         //     items : [
-//         //         {label: 'Dashboard', url: 'admin.dashboard', icon: LayoutDashboard}
-//         //     ]},
-//         // {title: 'EMPLOYEES',
-//         //     items : [
-//         //         {label: 'Salary', url: 'admin.salary' , icon: Package},
-//         //         {label: 'Benefits', url: 'admin.benefits' , icon: ThumbsUp},
-//         //         {label: 'Loans', url: 'admin.loans' , icon: FlagIcon},
-//         //     ]},
-//         // {title: 'MANAGEMENT',
-//         //     items : [
-//         //         {label: 'Records', url: 'admin.records' , icon: History},
-//         //         {label: 'Designations', url: 'admin.designations' , icon: Users},
-//         //         {label: 'Compensations', url: 'admin.compensations' , icon: TrendingUp},
-//         //         {label: 'Deductions', url: 'admin.deductions' , icon: TrendingDown},
-//         //     ]},
-//     ];
-
-//     return (
-//         <div className="min-h-screen bg-gray-100">
-//             {header && (
-//                 <header className="bg-white shadow">
-//                     <nav>
-//                         <Sidenavbar
-//                             className={cn("flex flex-col items-center p-5")}
-//                         >
-//                             <img
-//                                 src="https://placehold.co/280x100"
-//                                 alt="LOGO"
-//                             />
-//                             {links.map((link) => (
-//                                 <Sidenavbargroup
-//                                     title={link.title}
-//                                     className="mt-7"
-//                                 >
-//                                     <Sidenavbarlinks
-//                                         links={link.items}
-//                                         activePage={currentPage.url}
-//                                     />
-//                                 </Sidenavbargroup>
-//                             ))}
-//                         </Sidenavbar>
-//                     </nav>
-//                     <div
-//                         className={cn(
-//                             "ml-[350px] max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex gap-3 z-40"
-//                         )}
-//                     >
-//                         <ListCollapse
-//                             onClick={() => console.log("hello")}
-//                         ></ListCollapse>
-//                         {header}
-//                     </div>
-//                 </header>
-//             )}
-//             <main className={cn("ml-[350px] px-10 pt-5")}>{children}</main>
-//         </div>
-//     );
-// }
+export default function AuthenticatedLayoutEmployees({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
+    const component = usePage().component.split("/");
+    const Title = component[component.length - 1];
+    const [open, setOpen] = useState(true);
+    return (
+        <SidebarProvider open={open} onOpenChange={() => setOpen(!open)}>
+            <Sidebar variant="sidebar" collapsible="icon">
+                <SidebarHeader className="bg-baseGreen">
+                    <img src="https://placehold.co/600x400" alt="" />
+                </SidebarHeader>
+                <SidebarContent className="bg-baseGreen scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-white scrollbar-track-transparent overflow-y overflow-x-hidden">
+                    {links.map((link) => (
+                        <SidebarGroup key={link.title}>
+                            <SidebarGroupLabel className="text-white">
+                                {link.title}
+                            </SidebarGroupLabel>
+                            <SidebarGroupContent className="mb-3">
+                                <SidebarMenu>
+                                    {link.items.map((item) => (
+                                        <SidebarMenuItem key={item.label}>
+                                            <SidebarMenuButton
+                                                variant="pca"
+                                                isActive={route().current(
+                                                    item.url
+                                                )}
+                                            >
+                                                <NavLink
+                                                    href={route(item.url)}
+                                                    className="gap-1"
+                                                >
+                                                    <item.icon size={15} />
+                                                    <span className="group-data-[collapsible=icon]:hidden ">
+                                                        {item.label}
+                                                    </span>
+                                                </NavLink>
+                                            </SidebarMenuButton>
+                                        </SidebarMenuItem>
+                                    ))}
+                                </SidebarMenu>
+                            </SidebarGroupContent>
+                            <SidebarSeparator></SidebarSeparator>
+                        </SidebarGroup>
+                    ))}
+                </SidebarContent>
+            </Sidebar>
+            <main className="overflow-hidden">
+                <header className="w-screen shadow h-14 py-4 flex gap-3 items-center pl-5">
+                    <SidebarTrigger />
+                    <Separator orientation="vertical" />
+                    {Title}
+                    <Head title={Title}></Head>
+                </header>
+                <div className={cn("h-header p-5")}>{children}</div>
+            </main>
+        </SidebarProvider>
+    );
+}

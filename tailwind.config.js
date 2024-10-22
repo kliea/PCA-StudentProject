@@ -12,11 +12,15 @@ export default {
     ],
 
     theme: {
-		
     	extend: {
     		width: {
-    			'popover-trigger': 'var(--radix-popover-trigger-width)'
+    			'popover-trigger': 'var(--radix-popover-trigger-width)',
+				'sidebar-open' : 'calc(100vw - 16rem)',
+				'sidebar-close' : 'calc(100vw - 3rem)',
     		},
+			height: {
+				'header' : 'calc(100vh - 3.5rem)',
+			},
     		maxHeight: {
     			'popover-content': 'var(--radix-popover-content-available-height)'
     		},
@@ -30,7 +34,7 @@ export default {
     		},
     		colors: {
     			baseGreen: '#0E4736',
-				baseYellow: '#FFDE1A',
+    			baseYellow: '#FFDE1A',
     			secondaryGreen: '#467E56',
     			baseGrey: '#EFEFED',
     			background: 'hsl(var(--background))',

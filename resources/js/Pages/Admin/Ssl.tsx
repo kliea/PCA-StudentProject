@@ -153,9 +153,7 @@ const Ssl = () => {
     const [openDialog, setOpenDialog] = useState(false);
     return (
         <div>
-            <AuthenticatedLayoutAdmin
-                header={<h2>{usePage().component.split("/")[1]}</h2>}
-            >
+            <AuthenticatedLayoutAdmin>
                 <Head title="SSL" />
                 <BodyContentLayout
                     headerName="SSL"

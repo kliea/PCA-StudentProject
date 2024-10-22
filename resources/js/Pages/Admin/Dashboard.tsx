@@ -165,78 +165,69 @@ export default function Dashboard() {
         to: addDays(new Date(), 20),
     });
     return (
-        <AuthenticatedLayoutAdmin
-            header={<h2>{usePage().component.split("/")[1]}</h2>}
-        >
+        <AuthenticatedLayoutAdmin>
             <Head title="Dashboard" />
 
             <DatePickerWithRange
                 className="mb-5"
                 date={date}
                 setDate={setDate}
-            ></DatePickerWithRange>
-            <div className="lg:bg-white lg:shadow-md w-full h-full rounded-[10px] overflow-x-auto lg:block lg:overflow-hidden">
-                <div className="flex gap-5 justify-between py-2 sm:p-5">
-                    {/* Status Card Props need Backend Data Retrieval */}
-                    {/* Need pag adjustments sa design sa Mobile view */}
-                    <StatusCard
-                        cardPercent={95.6}
-                        cardPeriodFrom={
-                            date?.from
-                                ? format(date.from, "LLL dd, y")
-                                : "Month"
-                        }
-                        cardPeriodTo={
-                            date?.to ? format(date.to, "LLL dd, y") : "Month"
-                        }
-                        cardQuantity={99999}
-                        cardTitle="Payroll Cost"
-                        Icon={PhilippinePeso}
-                    />
-                    <StatusCard
-                        cardPercent={95.6}
-                        cardPeriodFrom={
-                            date?.from
-                                ? format(date.from, "LLL dd, y")
-                                : "Month"
-                        }
-                        cardPeriodTo={
-                            date?.to ? format(date.to, "LLL dd, y") : "Month"
-                        }
-                        cardQuantity={99999}
-                        cardTitle="Statury Pay"
-                        Icon={Banknote}
-                    />
-                    <StatusCard
-                        cardPercent={95.6}
-                        cardPeriodFrom={
-                            date?.from
-                                ? format(date.from, "LLL dd, y")
-                                : "Month"
-                        }
-                        cardPeriodTo={
-                            date?.to ? format(date.to, "LLL dd, y") : "Month"
-                        }
-                        cardQuantity={99999}
-                        cardTitle="Deductions"
-                        Icon={TrendingDown}
-                    />
-                    <StatusCard
-                        cardPercent={95.6}
-                        cardPeriodFrom={
-                            date?.from
-                                ? format(date.from, "LLL dd, y")
-                                : "Month"
-                        }
-                        cardPeriodTo={
-                            date?.to ? format(date.to, "LLL dd, y") : "Month"
-                        }
-                        cardQuantity={99999}
-                        cardTitle="Net Salary"
-                        Icon={CreditCard}
-                    />
-                </div>
+            />
+
+            <div className="flex flex-col gap-3 shadow lg:flex-row py-2 lg:p-5 rounded-[10px]">
+                {/* Status Card Props need Backend Data Retrieval */}
+                {/* Need pag adjustments sa design sa Mobile view */}
+                {/* Pwede gamitan ug Map ug naa natay data ma receive */}
+                <StatusCard
+                    cardPercent={95.6}
+                    cardPeriodFrom={
+                        date?.from ? format(date.from, "LLL dd, y") : "Month"
+                    }
+                    cardPeriodTo={
+                        date?.to ? format(date.to, "LLL dd, y") : "Month"
+                    }
+                    cardQuantity={99999}
+                    cardTitle="Payroll Cost"
+                    Icon={PhilippinePeso}
+                />
+                <StatusCard
+                    cardPercent={95.6}
+                    cardPeriodFrom={
+                        date?.from ? format(date.from, "LLL dd, y") : "Month"
+                    }
+                    cardPeriodTo={
+                        date?.to ? format(date.to, "LLL dd, y") : "Month"
+                    }
+                    cardQuantity={99999}
+                    cardTitle="Statury Pay"
+                    Icon={Banknote}
+                />
+                <StatusCard
+                    cardPercent={95.6}
+                    cardPeriodFrom={
+                        date?.from ? format(date.from, "LLL dd, y") : "Month"
+                    }
+                    cardPeriodTo={
+                        date?.to ? format(date.to, "LLL dd, y") : "Month"
+                    }
+                    cardQuantity={99999}
+                    cardTitle="Deductions"
+                    Icon={TrendingDown}
+                />
+                <StatusCard
+                    cardPercent={95.6}
+                    cardPeriodFrom={
+                        date?.from ? format(date.from, "LLL dd, y") : "Month"
+                    }
+                    cardPeriodTo={
+                        date?.to ? format(date.to, "LLL dd, y") : "Month"
+                    }
+                    cardQuantity={99999}
+                    cardTitle="Net Salary"
+                    Icon={CreditCard}
+                />
             </div>
+
             <div className="lg:flex gap-5">
                 <div className="lg:w-3/4 h-full">
                     <div>
