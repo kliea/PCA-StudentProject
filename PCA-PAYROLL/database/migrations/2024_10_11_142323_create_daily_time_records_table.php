@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('total_tardy_minutes')->nullable();
             $table->integer('total_undertime_minutes');
             $table->integer('total_work_minutes');
+
             $table->string('employee_number')->references('employee_number')->on('employees');
         });
     }
