@@ -4,7 +4,7 @@ import { Head, usePage } from "@inertiajs/react";
 import { SslStore } from "@/Components/CrudComponents/SslCrud";
 
 import { useState } from "react";
-import DropdownDialog from "./DropdownDialog";
+import DropdownDialog from "../../Components/DropdownDialog";
 import { MoreHorizontal } from "lucide-react";
 
 export default function Compensations() {

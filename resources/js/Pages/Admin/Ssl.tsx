@@ -22,12 +22,6 @@ import {
 } from "lucide-react";
 
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/Components/ui/dropdown-menu";
-import {
     Pagination,
     PaginationContent,
     PaginationEllipsis,
@@ -36,16 +30,7 @@ import {
 } from "@/Components/ui/pagination";
 import { SslStore, SslUpdate } from "@/Components/CrudComponents/SslCrud";
 import DialogMenu from "@/Components/Dialog";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/Components/ui/dialog";
-import DropdownDialog from "./DropdownDialog";
+import DropdownDialog from "../../Components/DropdownDialog";
 import { cn } from "@/lib/utils";
 
 type sslProfile = {
@@ -165,6 +150,7 @@ const Ssl = () => {
         onGlobalFilterChange: setGlobalFilter,
     });
 
+    const [openDialog, setOpenDialog] = useState(false);
     return (
         <div>
             <AuthenticatedLayoutAdmin
@@ -195,6 +181,10 @@ const Ssl = () => {
                                 children react node optional
                                   */}
                                 <DialogMenu
+                                    open={openDialog}
+                                    openDialog={() =>
+                                        setOpenDialog(!openDialog)
+                                    }
                                     trigger={
                                         <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-[10px] pl-3 pr-3">
                                             <PlusIcon className="mr-2 h-6 w-auto" />
@@ -204,7 +194,11 @@ const Ssl = () => {
                                     title="New SSL Profile"
                                     description="Add New SSL Profile"
                                 >
-                                    <SslStore />
+                                    <SslStore
+                                        openDialog={() =>
+                                            setOpenDialog(!openDialog)
+                                        }
+                                    />
                                 </DialogMenu>
                             </div>
 

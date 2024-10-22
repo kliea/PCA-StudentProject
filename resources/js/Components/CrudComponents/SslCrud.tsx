@@ -1,6 +1,6 @@
 import { useForm, usePage } from "@inertiajs/react";
 import { CircleAlert, CircleCheck } from "lucide-react";
-import { FormEventHandler } from "react";
+import { FormEventHandler, useState } from "react";
 import { toast } from "sonner";
 import { Label } from "@/Components/ui/label";
 import { Input } from "@/Components/ui/input";
@@ -8,7 +8,7 @@ import InputError from "../InputError";
 import { Button } from "../ui/button";
 
 // Component for Storing SSL Data
-export function SslStore() {
+export function SslStore({ openDialog }: { openDialog: any }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         salary_grade: "",
         step1: "",
@@ -25,19 +25,6 @@ export function SslStore() {
         e.preventDefault();
 
         post(route("store.ssl"), {
-            onFinish: () => {
-                reset(
-                    "salary_grade",
-                    "step1",
-                    "step2",
-                    "step3",
-                    "step4",
-                    "step5",
-                    "step6",
-                    "step7",
-                    "step8"
-                );
-            },
             onSuccess: () => {
                 toast(
                     <div className=" text-green-600 flex-col">
@@ -53,6 +40,17 @@ export function SslStore() {
                         </div>
                     </div>,
                     { duration: 2000 }
+                );
+                reset(
+                    "salary_grade",
+                    "step1",
+                    "step2",
+                    "step3",
+                    "step4",
+                    "step5",
+                    "step6",
+                    "step7",
+                    "step8"
                 );
             },
             onError: () => {
@@ -78,7 +76,12 @@ export function SslStore() {
         <div>
             <form onSubmit={submit}>
                 <div>
-                    <Label htmlFor="salary_grade">Salary Grade</Label>
+                    <Label
+                        htmlFor="salary_grade"
+                        className={errors.salary_grade && "text-red-600"}
+                    >
+                        Salary Grade
+                    </Label>
                     <Input
                         min={0}
                         id="salary_grade"
@@ -96,7 +99,12 @@ export function SslStore() {
                     />
                 </div>
                 <div>
-                    <Label htmlFor="step1">Step 1</Label>
+                    <Label
+                        htmlFor="step1"
+                        className={errors.step1 && "text-red-600"}
+                    >
+                        Step 1
+                    </Label>
                     <Input
                         min={0}
                         id="step1"
@@ -109,7 +117,12 @@ export function SslStore() {
                     <InputError message={errors.step1} className="mt-2" />
                 </div>
                 <div>
-                    <Label htmlFor="step2">Step 2</Label>
+                    <Label
+                        htmlFor="step2"
+                        className={errors.step2 && "text-red-600"}
+                    >
+                        Step 2
+                    </Label>
                     <Input
                         min={0}
                         id="step2"
@@ -121,7 +134,12 @@ export function SslStore() {
                     <InputError message={errors.step2} className="mt-2" />
                 </div>
                 <div>
-                    <Label htmlFor="step3">Step 3</Label>
+                    <Label
+                        htmlFor="step3"
+                        className={errors.step3 && "text-red-600"}
+                    >
+                        Step 3
+                    </Label>
                     <Input
                         min={0}
                         id="step3"
@@ -133,7 +151,12 @@ export function SslStore() {
                     <InputError message={errors.step3} className="mt-2" />
                 </div>
                 <div>
-                    <Label htmlFor="step4">Step 4</Label>
+                    <Label
+                        htmlFor="step4"
+                        className={errors.step4 && "text-red-600"}
+                    >
+                        Step 4
+                    </Label>
                     <Input
                         min={0}
                         id="step4"
@@ -145,7 +168,12 @@ export function SslStore() {
                     <InputError message={errors.step4} className="mt-2" />
                 </div>
                 <div>
-                    <Label htmlFor="step5">Step 5</Label>
+                    <Label
+                        htmlFor="step5"
+                        className={errors.step5 && "text-red-600"}
+                    >
+                        Step 5
+                    </Label>
                     <Input
                         min={0}
                         id="step5"
@@ -157,7 +185,12 @@ export function SslStore() {
                     <InputError message={errors.step5} className="mt-2" />
                 </div>
                 <div>
-                    <Label htmlFor="step6">Step 6</Label>
+                    <Label
+                        htmlFor="step6"
+                        className={errors.step6 && "text-red-600"}
+                    >
+                        Step 6
+                    </Label>
                     <Input
                         min={0}
                         id="step6"
@@ -169,7 +202,12 @@ export function SslStore() {
                     <InputError message={errors.step6} className="mt-2" />
                 </div>
                 <div>
-                    <Label htmlFor="step7">Step 7</Label>
+                    <Label
+                        htmlFor="step7"
+                        className={errors.step7 && "text-red-600"}
+                    >
+                        Step 7
+                    </Label>
                     <Input
                         min={0}
                         id="step7"
@@ -181,7 +219,12 @@ export function SslStore() {
                     <InputError message={errors.step7} className="mt-2" />
                 </div>
                 <div>
-                    <Label htmlFor="step8">Step 8</Label>
+                    <Label
+                        htmlFor="step8"
+                        className={errors.step8 && "text-red-600"}
+                    >
+                        Step 8
+                    </Label>
                     <Input
                         min={0}
                         id="step8"
@@ -192,8 +235,20 @@ export function SslStore() {
                     />
                     <InputError message={errors.step8} className="mt-2" />
                 </div>
-                <Button className="mt-5 w-full" disabled={processing}>
+                <Button
+                    className="mt-5 w-full"
+                    disabled={processing}
+                    type="submit"
+                >
                     Submit
+                </Button>
+                <Button
+                    className="mt-5 w-full"
+                    disabled={processing}
+                    type="button"
+                    onClick={() => openDialog(false)}
+                >
+                    Cancel
                 </Button>
             </form>
         </div>
@@ -352,8 +407,19 @@ export function SslUpdate({ RowData }: { RowData: any }) {
                     />
                     <InputError message={errors.step8} className="mt-2" />
                 </div>
-                <Button className="mt-5 w-full" disabled={processing}>
+                <Button
+                    className="mt-5 w-full"
+                    disabled={processing}
+                    type="submit"
+                >
                     Submit
+                </Button>
+                <Button
+                    className="mt-5 w-full"
+                    disabled={processing}
+                    onClick={() => reset()}
+                >
+                    Cancel
                 </Button>
             </form>
         </div>
