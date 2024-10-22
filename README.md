@@ -11,6 +11,7 @@ ADD THE DEPENDENCIES :
 FRONT END
 - npm install
 - npm install @tanstack/react-table
+- npm install @radix-ui/react-avatar
 
 
 BACK END

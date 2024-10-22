@@ -78,35 +78,35 @@ export default function Authenticated({
         {
             title: "CONFIGURATIONS",
             items: [
-                { label: "Employees", url: "admin.dashboard", icon: Users },
+                { label: "Employees", url: "admin.employees", icon: Users },
                 {
                     label: "Compensations",
-                    url: "admin.dashboard",
+                    url: "admin.compensations",
                     icon: Wallet,
                 },
                 {
                     label: "Deductions",
-                    url: "admin.dashboard",
+                    url: "admin.deductions",
                     icon: TrendingDown,
                 },
                 {
                     label: "Government Share",
-                    url: "admin.dashboard",
+                    url: "admin.governmentshare",
                     icon: HeartHandshake,
                 },
                 {
                     label: "Appointment",
-                    url: "admin.dashboard",
+                    url: "admin.appointments",
                     icon: UserPen,
                 },
                 {
                     label: "SSL",
-                    url: "admin.dashboard",
+                    url: "admin.ssl",
                     icon: Scale,
                 },
                 {
                     label: "Format",
-                    url: "admin.dashboard",
+                    url: "admin.formats",
                     icon: ScrollText,
                 },
             ],
@@ -116,7 +116,6 @@ export default function Authenticated({
     // State para sa collapsabe navbar
 
     const [navStatus, setnavStatus] = useState(false);
-    console.log(currentPage);
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -129,6 +128,7 @@ export default function Authenticated({
                                 navStatus ? "w-64 sm:w-16" : "w-16 sm:w-64"
                             )}
                         >
+                            {/* Add Logo Small + Logo Big. E Separate ratong Typography sa logo kay para pure tailwind ra atong responsive as much as possible */}
                             <img src="#" alt="LOGO" className="p-5" />
 
                             <div className="overflow-y-auto overflow-x-hidden pl-5">
@@ -153,7 +153,6 @@ export default function Authenticated({
                                         <Sidenavbarlinks
                                             navStatus={navStatus}
                                             links={link.items}
-                                            activePage={currentPage.url}
                                         />
                                     </Sidenavbargroup>
                                 ))}
@@ -164,7 +163,7 @@ export default function Authenticated({
                     {/* Mao ni ang pag generate sa header */}
                     <div
                         className={cn(
-                            " transition-all duration-200 ease-in-out py-6 px-6 sm:px-6 flex gap-3 z-40 justify-between",
+                            " transition-all duration-200 ease-in-out py-2 px-6 sm:px-6 flex gap-3 z-40 justify-between",
                             navStatus ? "ml-64 sm:ml-16" : "ml-16 sm:ml-64"
                         )}
                     >
@@ -215,7 +214,11 @@ export default function Authenticated({
                                         </Link>
                                     </DropdownMenuItem>
                                     <DropdownMenuItem>
-                                        <Link href="#" className="flex">
+                                        <Link
+                                            href="#"
+                                            className="flex"
+                                            method={"post"}
+                                        >
                                             <LogOut className="w-5 pr-1" />
                                             Logout
                                         </Link>

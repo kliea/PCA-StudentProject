@@ -24,16 +24,16 @@ interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     headerStyle?: string;
     rowStyle?: string;
-    disablePagination: boolean;
     table: any;
+    className?: string;
 }
 
 export function DataTable<TData, TValue>({
     columns,
     headerStyle,
     rowStyle,
-    disablePagination,
     table,
+    className,
 }: DataTableProps<TData, TValue>) {
     return (
         // Fix Pagination : Moves with table . Prefereable if stay sa bottom
@@ -47,13 +47,16 @@ export function DataTable<TData, TValue>({
             <div
                 className={cn("rounded-[5px] border shadow-md overflow-hidden")}
             >
-                <Table className="bg-baseGrey">
+                <Table className={cn("bg-baseGrey h-full ", className)}>
                     <TableHeader className={headerStyle}>
                         {table.getHeaderGroups().map((headerGroup: any) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header: any) => {
                                     return (
-                                        <TableHead key={header.id}>
+                                        <TableHead
+                                            key={header.id}
+                                            className="text-center"
+                                        >
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
@@ -100,36 +103,6 @@ export function DataTable<TData, TValue>({
                     </TableBody>
                 </Table>
             </div>
-            {!disablePagination && (
-                <div className="m-5 flex justify-end">
-                    <div>
-                        <Pagination>
-                            <PaginationContent>
-                                <PaginationItem>
-                                    <PaginationPrevious
-                                        onClick={table.previousPage}
-                                    />
-                                </PaginationItem>
-                                <PaginationItem>
-                                    <PaginationEllipsis />
-                                </PaginationItem>
-                                <PaginationItem>
-                                    <PaginationLink>
-                                        {table.getState().pagination.pageIndex +
-                                            1}
-                                    </PaginationLink>
-                                </PaginationItem>
-                                <PaginationItem>
-                                    <PaginationEllipsis />
-                                </PaginationItem>
-                                <PaginationItem>
-                                    <PaginationNext onClick={table.nextPage} />
-                                </PaginationItem>
-                            </PaginationContent>
-                        </Pagination>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }

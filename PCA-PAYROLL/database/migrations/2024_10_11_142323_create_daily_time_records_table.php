@@ -19,8 +19,6 @@ return new class extends Migration
             $table->integer('total_undertime_minutes');
             $table->integer('total_work_minutes');
 
-            $table->string('employee_number');
-            
             $table->string('employee_number')->references('employee_number')->on('employees');
         });
     }
