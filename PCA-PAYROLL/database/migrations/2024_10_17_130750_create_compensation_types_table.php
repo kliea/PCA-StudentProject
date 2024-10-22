@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('shorthand');
             $table->decimal('amount', 10, 2);
             $table->boolean('is_taxable')->default(false);
-            $table->boolean('is_salary')->default(false);
+            $table->boolean('is_fixed')->default(false);
 
-            // NO FURTHER ATTRIBUTES
+            // NO FURTHER ATTRIBUTES    
 
             $table->timestamps();
         });
