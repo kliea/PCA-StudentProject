@@ -100,8 +100,7 @@ class AdminPageController extends Controller
     public function update(Request $request, SSLModel $salary_grade)
     {
 
-
         // Return success response or redirect
-        return back()->with('success', 'User updated successfully!');
+        return Inertia::render('Admin/Ssl', ['message' => $salary_grade]);
     }
 }
