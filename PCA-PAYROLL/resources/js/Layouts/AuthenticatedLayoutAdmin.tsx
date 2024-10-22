@@ -26,6 +26,9 @@ import { LucideProps } from "lucide-react";
 import { Separator } from "@/Components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
 
+import logoImage from "../Components/Images/Logo image.png"
+import logoText from "../Components/Images/Logo text.png"
+
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -129,9 +132,16 @@ export default function Authenticated({
                             )}
                         >
                             {/* Add Logo Small + Logo Big. E Separate ratong Typography sa logo kay para pure tailwind ra atong responsive as much as possible */}
-                            <img src="#" alt="LOGO" className="p-5" />
+                            {/* <img src="#" alt="LOGO" className="p-5" /> */}
 
-                            <div className="overflow-y-auto overflow-x-hidden pl-5">
+                            <div className="pl-3 bg-opacity-60 flex items-center pt-4">
+                                <div className="flex size-3/4 items-center">
+                                    <img src={logoImage} alt="LogoImage" className="max-w-[77px] max-h-[62px]" />
+                                    <img src={logoText} alt="logoText" className="max-w-[174.6px] max-h-[78.09px]" />
+                                </div>
+                            </div>
+                            
+                            <div className="overflow-y-auto overflow-x-hidden pl-5 -mt-2">
                                 {/* Diri mag generate ug mga groups sa navagation bar. Mao ni nga map mag generate sa mga title*/}
                                 {links.map((link) => (
                                     <Sidenavbargroup
