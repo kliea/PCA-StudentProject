@@ -12,6 +12,7 @@ export default {
     ],
 
     theme: {
+		
     	extend: {
     		width: {
     			'popover-trigger': 'var(--radix-popover-trigger-width)'
@@ -86,5 +87,7 @@ export default {
     	}
     },
 
-    plugins: [forms, require("tailwindcss-animate")],
+    plugins: [forms, require("tailwindcss-animate"),  require('tailwind-scrollbar')({ nocompatible: true })],
 };
+
+

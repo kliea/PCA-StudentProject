@@ -124,14 +124,14 @@ export default function Authenticated({
                     <nav>
                         <Sidenavbar
                             className={cn(
-                                "transition-all duration-100",
+                                "transition-all duration-100 ",
                                 navStatus ? "w-64 sm:w-16" : "w-16 sm:w-64"
                             )}
                         >
                             {/* Add Logo Small + Logo Big. E Separate ratong Typography sa logo kay para pure tailwind ra atong responsive as much as possible */}
                             <img src="#" alt="LOGO" className="p-5" />
 
-                            <div className="overflow-y-auto overflow-x-hidden pl-5">
+                            <div className="scrollbar-track-rounded scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-white scrollbar-track-transparent overflow-y overflow-x-hidden pl-5">
                                 {/* Diri mag generate ug mga groups sa navagation bar. Mao ni nga map mag generate sa mga title*/}
                                 {links.map((link) => (
                                     <Sidenavbargroup
