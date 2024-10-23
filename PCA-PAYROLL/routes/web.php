@@ -1,11 +1,10 @@
 <?php
 
 use App\Http\Controllers\AdminPageController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SSLController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\SSLController;
 
 Route::get('/', function () {
     return Inertia::render('Auth/Login', [
@@ -16,9 +15,6 @@ Route::get('/', function () {
     ]);
 });
 
-
-// Admin Routes
-// Route::get('/admin/ssl', [AdminPageController::class, 'ssl'])->name('admin.ssl');
 
 // Route for storing SSL data
 Route::post('/admin/ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
@@ -104,9 +100,18 @@ Route::prefix('admin')->group(function () {
     Route::get('governmentshare', [AdminPageController::class, 'governmentshare'])->name('admin.governmentshare');
     Route::get('formats', [AdminPageController::class, 'format'])->name('admin.formats');
     Route::get('appointments', [AdminPageController::class, 'appointments'])->name('admin.appointments');
-    Route::get('ssl', [AdminPageController::class, 'ssl'])->name('admin.ssl');
-    Route::post('ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
-    Route::put('/ssl/{salary_grade}', [AdminPageController::class, 'update'])->name('ssl.update');
+
+    // Route::get('ssl', [AdminPageController::class, 'ssl'])->name('admin.ssl');
+    // Route::post('ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
+    // Route::put('/ssl/{salary_grade}', [AdminPageController::class, 'update'])->name('ssl.update');
 });
+
+// SSL CRUD
+Route::prefix('admin')->group(function () {
+    Route::get('ssl', [SSLController::class, 'index'])->name('admin.ssl');
+    Route::post('ssl/store', [SSLController::class, 'store'])->name('store.ssl');
+    Route::put('/ssl/{salary_grade}', [SSLController::class,'update'])->name('update.ssl');
+});
+
 
 require __DIR__ . '/auth.php';
