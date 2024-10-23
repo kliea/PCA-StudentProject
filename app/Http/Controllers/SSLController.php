@@ -58,23 +58,6 @@ class SSLController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show($salary_grade)
-    {
-        // Find the record by salary_grade and return it as a JSON response
-        $ssl = SSLModel::where('salary_grade', $salary_grade)->first();
-
-        // Check if the record exists
-        if (!$ssl) {
-            return response()->json(['message' => 'Record not found'], 404);
-        }
-
-        // Return the record in JSON format
-        return response()->json(['message' => 'successfully retrieved ssl.', 'data' => $ssl]);
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $salary_grade)
