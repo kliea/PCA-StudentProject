@@ -12,7 +12,7 @@ export default function ({
     contentStyle?: string;
 }) {
     return (
-        <div className={cn("relative bg-white rounded-[10px]", className)}>
+        <div className={cn("relative bg-white rounded-pca", className)}>
             <div className="w-full h-[44px] bg-secondaryGreen flex items-center px-5 rounded-t-[10px]">
                 <h1 className="text-white font-bold">{headerName}</h1>
             </div>

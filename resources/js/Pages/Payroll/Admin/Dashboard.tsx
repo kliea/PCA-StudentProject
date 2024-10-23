@@ -29,7 +29,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
-import { AdminLinks } from "@/lib/payrollLinks";
+import { AdminLinks } from "@/lib/payrollData";
 
 type recentPayrolls = {
     period: string;
@@ -173,7 +173,7 @@ export default function Dashboard() {
                 setDate={setDate}
             />
 
-            <div className="flex flex-col gap-3 lg:flex-row py-2 lg:p-5 rounded-[10px]">
+            <div className="flex flex-col gap-3 lg:flex-row py-2 lg:p-5 rounded-pca">
                 {/* Status Card Props need Backend Data Retrieval */}
                 {/* Need pag adjustments sa design sa Mobile view */}
                 {/* Pwede gamitan ug Map ug naa natay data ma receive */}

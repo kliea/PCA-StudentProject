@@ -17,7 +17,7 @@ import {
 } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import Data from "@/Components/Constants/data7.json";
-import { AdminLinks } from "@/lib/payrollLinks";
+import { AdminLinks } from "@/lib/payrollData";
 
 type columnTypes = {
     name: string;
@@ -79,7 +79,7 @@ export default function Employees() {
                     <Input
                         type="text"
                         placeholder="Search..."
-                        className="w-1/4 rounded-[10px]"
+                        className="w-1/4 rounded-pca"
                     />
                 </div>
                 <div>

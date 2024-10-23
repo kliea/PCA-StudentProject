@@ -18,7 +18,7 @@ import Data from "@/Components/Constants/data9.json";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
-import { AdminLinks } from "@/lib/payrollLinks";
+import { AdminLinks } from "@/lib/payrollData";
 
 type columnTypes = {
     name: string;
@@ -81,7 +81,7 @@ export default function GovernmentShare() {
                     <Input
                         type="text"
                         placeholder="Search..."
-                        className="w-1/4 rounded-[10px]"
+                        className="w-1/4 rounded-pca"
                     />
 
                     <Button className="flex gap-1">

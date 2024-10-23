@@ -13,6 +13,9 @@ export default {
 
     theme: {
     	extend: {
+			borderRadius: {
+				'pca' : '10px'
+			},
     		width: {
     			'popover-trigger': 'var(--radix-popover-trigger-width)',
 				'sidebar-open' : 'calc(100vw - 16rem)',

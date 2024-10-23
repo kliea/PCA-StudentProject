@@ -37,7 +37,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/Components/ui/dialog";
-import { AdminLinks } from "@/lib/payrollLinks";
+import { AdminLinks } from "@/lib/payrollData";
 
 //  Set accepted column types
 
@@ -131,7 +131,7 @@ export default function Payrolls() {
                         <Input
                             type="text"
                             placeholder="Search..."
-                            className="w-1/4 rounded-[10px]"
+                            className="w-1/4 rounded-pca"
                         />
                     </section>
                     <section className="flex gap-5 w-full justify-end">
@@ -144,7 +144,7 @@ export default function Payrolls() {
                         </div>
                         <Dialog>
                             <DialogTrigger>
-                                <section className="flex gap-1 bg-baseYellow text-black items-center justify-center p-2 rounded-[10px] pl-3 pr-3">
+                                <section className="flex gap-1 bg-baseYellow text-black items-center justify-center p-2 rounded-pca pl-3 pr-3">
                                     <File size={15} />
                                     Print Payroll
                                 </section>

@@ -36,7 +36,7 @@ import {
 import DialogMenu from "@/Components/Dialog";
 import DropdownDialog from "../../../Components/DropdownDialog";
 import { cn } from "@/lib/utils";
-import { AdminLinks } from "@/lib/payrollLinks";
+import { AdminLinks } from "@/lib/payrollData";
 
 type sslProfile = {
     salary_grade: number;
@@ -181,7 +181,7 @@ const Ssl = () => {
                                 onChange={(e) =>
                                     setGlobalFilter(e.target.value || "")
                                 }
-                                className="w-1/4 rounded-[10px]"
+                                className="w-1/4 rounded-pca"
                                 placeholder="Search...."
                             />
                             <div>
@@ -198,7 +198,7 @@ const Ssl = () => {
                                         setOpenDialog(!openDialog)
                                     }
                                     trigger={
-                                        <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-[10px] pl-3 pr-3">
+                                        <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
                                             <PlusIcon className="mr-2 h-6 w-auto" />
                                             New SSL Profile
                                         </section>
@@ -217,7 +217,7 @@ const Ssl = () => {
                             <div>
                                 <DialogMenu
                                     trigger={
-                                        <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-[10px] pl-3 pr-3">
+                                        <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
                                             <FolderDown className="mr-2 h-6 w-auto" />
                                             Import SSL
                                         </section>
@@ -229,7 +229,7 @@ const Ssl = () => {
                             <div>
                                 <DialogMenu
                                     trigger={
-                                        <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-[10px] pl-3 pr-3">
+                                        <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
                                             <FolderUp className="mr-2 h-6 w-auto" />
                                             Export SSL
                                         </section>

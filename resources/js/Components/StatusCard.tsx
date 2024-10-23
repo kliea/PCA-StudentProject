@@ -21,7 +21,7 @@ export default function Component({
     Icon?: React.ComponentType<LucideProps>;
 }) {
     return (
-        <Card className="border-l-emerald-800 border-l-4 rounded-[10px] shadow-md w-full">
+        <Card className="border-l-emerald-800 border-l-4 rounded-pca shadow-md w-full">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
                     {/* Title for Card */}
