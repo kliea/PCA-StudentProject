@@ -6,6 +6,7 @@ import { Label } from "@/Components/ui/label";
 import { Input } from "@/Components/ui/input";
 import InputError from "../InputError";
 import { Button } from "../ui/button";
+import Dialog from "../Dialog";
 
 // Component for Storing SSL Data
 export function SslStore({ openDialog }: { openDialog: any }) {
@@ -423,5 +424,56 @@ export function SslUpdate({ RowData }: { RowData: any }) {
                 </Button>
             </form>
         </div>
+    );
+}
+
+export function SslDelete({ rowId }: { rowId: number }) {
+    const { delete: destroy } = useForm();
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+
+        destroy(route("store.ssl", rowId), {
+            onSuccess: () => {
+                toast(
+                    <div className=" text-green-600 flex-col">
+                        <div className="flex items-center">
+                            <CircleCheck className="h-4" />
+                            <span className="text-base">Succes</span>
+                        </div>
+                        <div className="flex">
+                            <span className="pl-6">
+                                SSL Salary Grade {rowId} has been succesfully
+                                deleted.
+                            </span>
+                        </div>
+                    </div>,
+                    { duration: 2000 }
+                );
+            },
+            onError: () => {
+                toast(
+                    <div className=" text-red-600 flex-col">
+                        <div className="flex items-center">
+                            <CircleAlert className="h-4" />
+                            <span className="text-base">Error</span>
+                        </div>
+                        <div className="flex">
+                            <span className="pl-6">Please try again...</span>
+                        </div>
+                    </div>,
+                    {
+                        duration: 2000,
+                    }
+                );
+            },
+        });
+    };
+    return (
+        <>
+            <form onSubmit={submit}>
+                <Button type="submit">Confirm</Button>
+            </form>
+        </>
     );
 }

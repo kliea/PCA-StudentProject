@@ -28,13 +28,17 @@ import {
     PaginationItem,
     PaginationLink,
 } from "@/Components/ui/pagination";
-import { SslStore, SslUpdate } from "@/Components/CrudComponents/SslCrud";
+import {
+    SslDelete,
+    SslStore,
+    SslUpdate,
+} from "@/Components/CrudComponents/SslCrud";
 import DialogMenu from "@/Components/Dialog";
 import DropdownDialog from "../../../Components/DropdownDialog";
 import { cn } from "@/lib/utils";
 
 type sslProfile = {
-    salary_grade: string;
+    salary_grade: number;
     step1: number;
     step2: number;
     step3: number;
@@ -88,8 +92,7 @@ const columns: ColumnDef<sslProfile>[] = [
         id: "actions",
         cell: ({ row }) => {
             const rowData = row.original;
-            console.log(row.original.salary_grade);
-
+            console.log(rowData.salary_grade);
             const dialogs = [
                 {
                     tag: "1",
@@ -103,8 +106,14 @@ const columns: ColumnDef<sslProfile>[] = [
                 {
                     tag: "2",
                     name: "Delete",
-                    dialogtitle: "Dialog 2",
-                    dialogContent: <>Hello Dialog2</>,
+                    dialogtitle: cn(
+                        "Are you sure you want to delete Salary Grade",
+                        rowData.salary_grade,
+                        "?"
+                    ),
+                    dialogContent: (
+                        <SslDelete rowId={rowData.salary_grade}></SslDelete>
+                    ),
                     style: "text-red-600",
                 },
             ];
