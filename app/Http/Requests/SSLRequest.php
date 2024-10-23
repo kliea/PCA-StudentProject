@@ -3,9 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use \Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
-
 
 class SSLRequest extends FormRequest
 {
@@ -35,13 +32,5 @@ class SSLRequest extends FormRequest
             'step7' => 'required|numeric|min:0',
             'step8' => 'required|numeric|min:0',
         ];
-    }
-
-    protected function failedValidation(Validator $validator){
-        $response = response()->json([
-            "message" => "There was an error with the input data.",
-            "errors" => $validator->errors()], status: 422);
-
-        throw new HttpResponseException(response: $response);
     }
 }
