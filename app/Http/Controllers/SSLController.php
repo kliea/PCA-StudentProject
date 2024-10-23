@@ -19,7 +19,7 @@ class SSLController extends Controller
         $data = SSLModel::all();
 
         // Return the data to the frontend
-        return Inertia::render('Admin/Ssl', ['data' => $data, 'message' => 'hello']);
+        return Inertia::render('Payroll/Admin/Ssl', ['data' => $data, 'message' => 'hello']);
     }
 
     /**
