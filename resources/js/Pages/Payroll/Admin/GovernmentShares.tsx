@@ -14,27 +14,27 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import { MoreHorizontal, Plus, View } from "lucide-react";
-import Data from "@/Components/Constants/data10.json";
+import Data from "@/Components/Constants/data9.json";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
 
 type columnTypes = {
-    type: string;
-    mandatory_deduction: boolean;
-    basic_pay: number;
-    compensation: number;
-    tax: number;
-    deduction: number;
+    name: string;
+    amount: number;
+    percent: number;
+    mandatory: boolean;
+    shorthand: string;
+    legend: string;
 };
 
 const columns: ColumnDef<columnTypes>[] = [
-    { accessorKey: "type", header: "Type" },
-    { accessorKey: "mandatory_deduction", header: "Mandatory Deduction" },
-    { accessorKey: "basic_pay", header: "Basic Pay" },
-    { accessorKey: "compensation", header: "Compensation" },
-    { accessorKey: "tax", header: "Tax" },
-    { accessorKey: "deduction", header: "Deduction" },
+    { accessorKey: "name", header: "Name" },
+    { accessorKey: "amount", header: "Amount" },
+    { accessorKey: "percent", header: "Percent" },
+    { accessorKey: "mandatory", header: "Mandatory" },
+    { accessorKey: "shorthand", header: "Shorthand" },
+    { accessorKey: "legend", header: "legend" },
     {
         id: "actions",
         cell: ({ row }) => {
@@ -59,7 +59,7 @@ const columns: ColumnDef<columnTypes>[] = [
     },
 ];
 
-export default function Appointments() {
+export default function GovernmentShare() {
     const data: columnTypes[] = Data;
 
     const table = useReactTable({
@@ -74,12 +74,10 @@ export default function Appointments() {
         },
     });
     return (
-        <AuthenticatedLayoutAdmin
-            header={<h2>{usePage().component.split("/")[1]}</h2>}
-        >
-            <Head title="Appointments" />
+        <AuthenticatedLayoutAdmin>
+            <Head title="Governmen Shares" />
 
-            <BodyContentLayout headerName={"Appointments List"}>
+            <BodyContentLayout headerName={"Government Shares"}>
                 <div className="flex  mb-5 gap-3">
                     <Input
                         type="text"
@@ -89,7 +87,7 @@ export default function Appointments() {
 
                     <Button className="flex gap-1">
                         <Plus size={20} />
-                        Add New Appointment Profile
+                        Add New Government Share
                     </Button>
                 </div>
                 <div>

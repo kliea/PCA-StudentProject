@@ -13,32 +13,28 @@ import {
     getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { MoreHorizontal, Plus, View } from "lucide-react";
-import Data from "@/Components/Constants/data8.json";
+import { MoreHorizontal, View } from "lucide-react";
+import Data from "@/Components/Constants/data6.json";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
 
 type columnTypes = {
     name: string;
-    amount: number;
-    code: number;
-    percent: number;
-    mandatory: boolean;
-    group: string;
-    type: string;
-    shorthand: string;
+    id: string;
+    monthly_ammount: number;
+    begin_balance: number;
+    previous_paid: number;
+    paid_amount: number;
 };
 
 const columns: ColumnDef<columnTypes>[] = [
     { accessorKey: "name", header: "Name" },
-    { accessorKey: "amount", header: "Amount" },
-    { accessorKey: "code", header: "Code" },
-    { accessorKey: "percent", header: "Percent" },
-    { accessorKey: "mandatory", header: "Mandatory" },
-    { accessorKey: "group", header: "group" },
-    { accessorKey: "type", header: "type" },
-    { accessorKey: "shorthand", header: "shorthand" },
+    { accessorKey: "id", header: "Id Number" },
+    { accessorKey: "monthly_amount", header: "Monthly Amount" },
+    { accessorKey: "begin_balance", header: "Begin Balance" },
+    { accessorKey: "previous_paid", header: "Previous Paid" },
+    { accessorKey: "paid_amount", header: "Paid Amount" },
     {
         id: "actions",
         cell: ({ row }) => {
@@ -52,10 +48,13 @@ const columns: ColumnDef<columnTypes>[] = [
                         </section>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
+                        <DropdownMenuItem>Edit Loan</DropdownMenuItem>
                         <DropdownMenuItem>
-                            Edit Deduction Profile
+                            View Paid Amount Details
                         </DropdownMenuItem>
-
+                        <DropdownMenuItem>View Loan History</DropdownMenuItem>
+                        <DropdownMenuItem>Reloan</DropdownMenuItem>
+                        <DropdownMenuItem>Refresh</DropdownMenuItem>
                         <DropdownMenuItem className="text-red-600">
                             Delete
                         </DropdownMenuItem>
@@ -66,7 +65,7 @@ const columns: ColumnDef<columnTypes>[] = [
     },
 ];
 
-export default function Deductions() {
+export default function Loans() {
     const data: columnTypes[] = Data;
 
     const table = useReactTable({
@@ -81,12 +80,10 @@ export default function Deductions() {
         },
     });
     return (
-        <AuthenticatedLayoutAdmin
-            header={<h2>{usePage().component.split("/")[1]}</h2>}
-        >
-            <Head title="Deductions" />
+        <AuthenticatedLayoutAdmin>
+            <Head title="Loans" />
 
-            <BodyContentLayout headerName={"Deductions"}>
+            <BodyContentLayout headerName={"Loans"}>
                 <div className="flex  mb-5 gap-3">
                     <Input
                         type="text"
@@ -95,8 +92,8 @@ export default function Deductions() {
                     />
 
                     <Button className="flex gap-1">
-                        <Plus size={20} />
-                        Add New Deduction Profile
+                        <View size={20} />
+                        View Loan Types
                     </Button>
                 </div>
                 <div>

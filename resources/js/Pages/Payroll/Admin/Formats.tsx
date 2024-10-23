@@ -66,9 +66,7 @@ export default function Formats() {
         },
     });
     return (
-        <AuthenticatedLayoutAdmin
-            header={<h2>{usePage().component.split("/")[1]}</h2>}
-        >
+        <AuthenticatedLayoutAdmin>
             <Head title="Formats" />
 
             <BodyContentLayout headerName={"Formats List"}>

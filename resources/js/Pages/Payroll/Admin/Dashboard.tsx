@@ -174,30 +174,26 @@ export default function Dashboard() {
                 setDate={setDate}
             />
 
-            <div className="flex flex-col gap-3 shadow lg:flex-row py-2 lg:p-5 rounded-[10px]">
+            <div className="flex flex-col gap-3 lg:flex-row py-2 lg:p-5 rounded-[10px]">
                 {/* Status Card Props need Backend Data Retrieval */}
                 {/* Need pag adjustments sa design sa Mobile view */}
                 {/* Pwede gamitan ug Map ug naa natay data ma receive */}
                 <StatusCard
                     cardPercent={95.6}
                     cardPeriodFrom={
-                        date?.from ? format(date.from, "LLL dd, y") : "Month"
+                        date?.from ? format(date.from, "LLL dd, y") : ""
                     }
-                    cardPeriodTo={
-                        date?.to ? format(date.to, "LLL dd, y") : "Month"
-                    }
-                    cardQuantity={99999}
+                    cardPeriodTo={date?.to ? format(date.to, "LLL dd, y") : ""}
+                    cardQuantity={99999.57}
                     cardTitle="Payroll Cost"
                     Icon={PhilippinePeso}
                 />
                 <StatusCard
                     cardPercent={95.6}
                     cardPeriodFrom={
-                        date?.from ? format(date.from, "LLL dd, y") : "Month"
+                        date?.from ? format(date.from, "LLL dd, y") : ""
                     }
-                    cardPeriodTo={
-                        date?.to ? format(date.to, "LLL dd, y") : "Month"
-                    }
+                    cardPeriodTo={date?.to ? format(date.to, "LLL dd, y") : ""}
                     cardQuantity={99999}
                     cardTitle="Statury Pay"
                     Icon={Banknote}
@@ -205,11 +201,9 @@ export default function Dashboard() {
                 <StatusCard
                     cardPercent={95.6}
                     cardPeriodFrom={
-                        date?.from ? format(date.from, "LLL dd, y") : "Month"
+                        date?.from ? format(date.from, "LLL dd, y") : ""
                     }
-                    cardPeriodTo={
-                        date?.to ? format(date.to, "LLL dd, y") : "Month"
-                    }
+                    cardPeriodTo={date?.to ? format(date.to, "LLL dd, y") : ""}
                     cardQuantity={99999}
                     cardTitle="Deductions"
                     Icon={TrendingDown}
@@ -217,11 +211,9 @@ export default function Dashboard() {
                 <StatusCard
                     cardPercent={95.6}
                     cardPeriodFrom={
-                        date?.from ? format(date.from, "LLL dd, y") : "Month"
+                        date?.from ? format(date.from, "LLL dd, y") : ""
                     }
-                    cardPeriodTo={
-                        date?.to ? format(date.to, "LLL dd, y") : "Month"
-                    }
+                    cardPeriodTo={date?.to ? format(date.to, "LLL dd, y") : ""}
                     cardQuantity={99999}
                     cardTitle="Net Salary"
                     Icon={CreditCard}

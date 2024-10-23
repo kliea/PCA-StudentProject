@@ -9,8 +9,8 @@ export default function Component({
     cardTitle = "Status Card",
     cardQuantity = 0,
     cardPercent = 0,
-    cardPeriodFrom = "month",
-    cardPeriodTo = "month",
+    cardPeriodFrom = "",
+    cardPeriodTo = "",
     Icon = Wallet,
 }: {
     cardTitle: string;
@@ -39,7 +39,8 @@ export default function Component({
                 </div>
                 <p className="text-xs text-muted-foreground">
                     {/* Report percent ug Period sa status report . Need pa ug red or green if up ang status or down */}
-                    {cardPercent}% from {cardPeriodFrom} to {cardPeriodTo}
+                    {cardPercent}% from {cardPeriodFrom}{" "}
+                    {cardPeriodTo && <>to {cardPeriodTo}</>}
                 </p>
             </CardContent>
         </Card>

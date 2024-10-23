@@ -30,7 +30,7 @@ import {
 } from "@/Components/ui/pagination";
 import { SslStore, SslUpdate } from "@/Components/CrudComponents/SslCrud";
 import DialogMenu from "@/Components/Dialog";
-import DropdownDialog from "../../Components/DropdownDialog";
+import DropdownDialog from "../../../Components/DropdownDialog";
 import { cn } from "@/lib/utils";
 
 type sslProfile = {

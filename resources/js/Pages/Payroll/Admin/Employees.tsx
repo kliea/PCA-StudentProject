@@ -1,9 +1,11 @@
+import { DataTable } from "@/Components/DataTable";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
+import { Input } from "@/Components/ui/input";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutAdmin";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import { Head, usePage } from "@inertiajs/react";
@@ -13,30 +15,29 @@ import {
     getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { MoreHorizontal, View } from "lucide-react";
-import Data from "@/Components/Constants/data6.json";
-import { DataTable } from "@/Components/DataTable";
-import { Input } from "@/Components/ui/input";
-import { Button } from "@/Components/ui/button";
+import { MoreHorizontal } from "lucide-react";
+import Data from "@/Components/Constants/data7.json";
 
 type columnTypes = {
     name: string;
     id: string;
-    monthly_ammount: number;
-    begin_balance: number;
-    previous_paid: number;
-    paid_amount: number;
+    official_station: string;
+    position: string;
+    appointment: string;
+    sg: string;
+    step: string;
 };
 
 const columns: ColumnDef<columnTypes>[] = [
     { accessorKey: "name", header: "Name" },
-    { accessorKey: "id", header: "Id Number" },
-    { accessorKey: "monthly_amount", header: "Monthly Amount" },
-    { accessorKey: "begin_balance", header: "Begin Balance" },
-    { accessorKey: "previous_paid", header: "Previous Paid" },
-    { accessorKey: "paid_amount", header: "Paid Amount" },
+    { accessorKey: "id", header: "Id" },
+    { accessorKey: "official_station", header: "Official Station" },
+    { accessorKey: "position", header: "Position" },
+    { accessorKey: "appointment", header: "appointment" },
+    { accessorKey: "sg", header: "SG" },
+    { accessorKey: "step", header: "Step" },
     {
-        id: "actions",
+        id: "action",
         cell: ({ row }) => {
             const values = row.original;
             return (
@@ -45,19 +46,11 @@ const columns: ColumnDef<columnTypes>[] = [
                         <section>
                             <span className="sr-only">Open menu</span>
                             <MoreHorizontal className="h-4 w-4" />
-                        </section> 
+                        </section>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                        <DropdownMenuItem>Edit Loan</DropdownMenuItem>
-                        <DropdownMenuItem>
-                            View Paid Amount Details
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>View Loan History</DropdownMenuItem>
-                        <DropdownMenuItem>Reloan</DropdownMenuItem>
-                        <DropdownMenuItem>Refresh</DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600">
-                            Delete
-                        </DropdownMenuItem>
+                        <DropdownMenuItem>View</DropdownMenuItem>
+                        <DropdownMenuItem>Edit</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             );
@@ -65,9 +58,8 @@ const columns: ColumnDef<columnTypes>[] = [
     },
 ];
 
-export default function Loans() {
+export default function Employees() {
     const data: columnTypes[] = Data;
-
     const table = useReactTable({
         data,
         columns,
@@ -80,23 +72,16 @@ export default function Loans() {
         },
     });
     return (
-        <AuthenticatedLayoutAdmin
-            header={<h2>{usePage().component.split("/")[1]}</h2>}
-        >
-            <Head title="Loans" />
+        <AuthenticatedLayoutAdmin>
+            <Head title="Employees" />
 
-            <BodyContentLayout headerName={"Loans"}>
+            <BodyContentLayout headerName={"Employee List"}>
                 <div className="flex  mb-5 gap-3">
                     <Input
                         type="text"
                         placeholder="Search..."
                         className="w-1/4 rounded-[10px]"
                     />
-
-                    <Button className="flex gap-1">
-                        <View size={20} />
-                        View Loan Types
-                    </Button>
                 </div>
                 <div>
                     <DataTable

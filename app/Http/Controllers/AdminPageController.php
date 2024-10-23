@@ -12,46 +12,46 @@ class AdminPageController extends Controller
 
     public function index(): Response
     {
-        return Inertia::render('Admin/Dashboard');
+        return Inertia::render('Payroll/Admin/Dashboard');
     }
 
     public function appointments(): Response
     {
-        return Inertia::render('Admin/Appointments');
+        return Inertia::render('Payroll/Admin/Appointments');
     }
 
     public function compensations(): Response
     {
-        return Inertia::render('Admin/Compensations');
+        return Inertia::render('Payroll/Admin/Compensations');
     }
 
     public function deductions(): Response
     {
-        return Inertia::render('Admin/Deductions');
+        return Inertia::render('Payroll/Admin/Deductions');
     }
 
     public function employees(): Response
     {
-        return Inertia::render('Admin/Employees');
+        return Inertia::render('Payroll/Admin/Employees');
     }
 
     public function format(): Response
     {
-        return Inertia::render('Admin/Formats');
+        return Inertia::render('Payroll/Admin/Formats');
     }
 
     public function governmentshare(): Response
     {
-        return Inertia::render('Admin/GovernmentShares');
+        return Inertia::render('Payroll/Admin/GovernmentShares');
     }
 
     public function loans(): Response
     {
-        return Inertia::render('Admin/Loans');
+        return Inertia::render('Payroll/Admin/Loans');
     }
     public function payrolls(): Response
     {
-        return Inertia::render('Admin/Payrolls');
+        return Inertia::render('Payroll/Admin/Payrolls');
     }
 
 
@@ -62,7 +62,7 @@ class AdminPageController extends Controller
         $data = SSLModel::all();
 
         // Return the data to the frontend
-        return Inertia::render('Admin/Ssl', ['data' => $data, 'message' => 'hello']);
+        return Inertia::render('Payroll/Admin/Ssl', ['data' => $data, 'message' => 'hello']);
     }
 
     public function ssl_addData(Request $request)
@@ -101,6 +101,6 @@ class AdminPageController extends Controller
     {
 
         // Return success response or redirect
-        return Inertia::render('Admin/Ssl', ['message' => $salary_grade]);
+        return Inertia::render('Payroll/Admin/Ssl', ['message' => $salary_grade]);
     }
 }

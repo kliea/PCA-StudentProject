@@ -1,11 +1,9 @@
-import { DataTable } from "@/Components/DataTable";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
-import { Input } from "@/Components/ui/input";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutAdmin";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import { Head, usePage } from "@inertiajs/react";
@@ -15,29 +13,30 @@ import {
     getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
-import Data from "@/Components/Constants/data7.json";
+import { MoreHorizontal, Plus, View } from "lucide-react";
+import Data from "@/Components/Constants/data10.json";
+import { DataTable } from "@/Components/DataTable";
+import { Input } from "@/Components/ui/input";
+import { Button } from "@/Components/ui/button";
 
 type columnTypes = {
-    name: string;
-    id: string;
-    official_station: string;
-    position: string;
-    appointment: string;
-    sg: string;
-    step: string;
+    type: string;
+    mandatory_deduction: boolean;
+    basic_pay: number;
+    compensation: number;
+    tax: number;
+    deduction: number;
 };
 
 const columns: ColumnDef<columnTypes>[] = [
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "id", header: "Id" },
-    { accessorKey: "official_station", header: "Official Station" },
-    { accessorKey: "position", header: "Position" },
-    { accessorKey: "appointment", header: "appointment" },
-    { accessorKey: "sg", header: "SG" },
-    { accessorKey: "step", header: "Step" },
+    { accessorKey: "type", header: "Type" },
+    { accessorKey: "mandatory_deduction", header: "Mandatory Deduction" },
+    { accessorKey: "basic_pay", header: "Basic Pay" },
+    { accessorKey: "compensation", header: "Compensation" },
+    { accessorKey: "tax", header: "Tax" },
+    { accessorKey: "deduction", header: "Deduction" },
     {
-        id: "action",
+        id: "actions",
         cell: ({ row }) => {
             const values = row.original;
             return (
@@ -49,8 +48,10 @@ const columns: ColumnDef<columnTypes>[] = [
                         </section>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                        <DropdownMenuItem>View</DropdownMenuItem>
                         <DropdownMenuItem>Edit</DropdownMenuItem>
+                        <DropdownMenuItem className="text-red-600">
+                            Delete
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             );
@@ -58,8 +59,9 @@ const columns: ColumnDef<columnTypes>[] = [
     },
 ];
 
-export default function Employees() {
+export default function Appointments() {
     const data: columnTypes[] = Data;
+
     const table = useReactTable({
         data,
         columns,
@@ -72,18 +74,21 @@ export default function Employees() {
         },
     });
     return (
-        <AuthenticatedLayoutAdmin
-            header={<h2>{usePage().component.split("/")[1]}</h2>}
-        >
-            <Head title="Employees" />
+        <AuthenticatedLayoutAdmin>
+            <Head title="Appointments" />
 
-            <BodyContentLayout headerName={"Employee List"}>
+            <BodyContentLayout headerName={"Appointments List"}>
                 <div className="flex  mb-5 gap-3">
                     <Input
                         type="text"
                         placeholder="Search..."
                         className="w-1/4 rounded-[10px]"
                     />
+
+                    <Button className="flex gap-1">
+                        <Plus size={20} />
+                        Add New Appointment Profile
+                    </Button>
                 </div>
                 <div>
                     <DataTable

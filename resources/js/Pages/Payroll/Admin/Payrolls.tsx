@@ -109,9 +109,7 @@ export default function Payrolls() {
         to: addDays(new Date(), 20),
     });
     return (
-        <AuthenticatedLayoutAdmin
-            header={<h2>{usePage().component.split("/")[1]}</h2>}
-        >
+        <AuthenticatedLayoutAdmin>
             <Head title="Payrolls" />
 
             <BodyContentLayout headerName={"Payrolls List"}>

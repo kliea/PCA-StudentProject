@@ -14,7 +14,7 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import { MoreHorizontal, Plus, View } from "lucide-react";
-import Data from "@/Components/Constants/data9.json";
+import Data from "@/Components/Constants/data8.json";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
@@ -22,19 +22,23 @@ import { Button } from "@/Components/ui/button";
 type columnTypes = {
     name: string;
     amount: number;
+    code: number;
     percent: number;
     mandatory: boolean;
+    group: string;
+    type: string;
     shorthand: string;
-    legend: string;
 };
 
 const columns: ColumnDef<columnTypes>[] = [
     { accessorKey: "name", header: "Name" },
     { accessorKey: "amount", header: "Amount" },
+    { accessorKey: "code", header: "Code" },
     { accessorKey: "percent", header: "Percent" },
     { accessorKey: "mandatory", header: "Mandatory" },
-    { accessorKey: "shorthand", header: "Shorthand" },
-    { accessorKey: "legend", header: "legend" },
+    { accessorKey: "group", header: "group" },
+    { accessorKey: "type", header: "type" },
+    { accessorKey: "shorthand", header: "shorthand" },
     {
         id: "actions",
         cell: ({ row }) => {
@@ -48,7 +52,10 @@ const columns: ColumnDef<columnTypes>[] = [
                         </section>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
+                        <DropdownMenuItem>
+                            Edit Deduction Profile
+                        </DropdownMenuItem>
+
                         <DropdownMenuItem className="text-red-600">
                             Delete
                         </DropdownMenuItem>
@@ -59,7 +66,7 @@ const columns: ColumnDef<columnTypes>[] = [
     },
 ];
 
-export default function GovernmentShare() {
+export default function Deductions() {
     const data: columnTypes[] = Data;
 
     const table = useReactTable({
@@ -74,12 +81,10 @@ export default function GovernmentShare() {
         },
     });
     return (
-        <AuthenticatedLayoutAdmin
-            header={<h2>{usePage().component.split("/")[1]}</h2>}
-        >
-            <Head title="Governmen Shares" />
+        <AuthenticatedLayoutAdmin>
+            <Head title="Deductions" />
 
-            <BodyContentLayout headerName={"Government Shares"}>
+            <BodyContentLayout headerName={"Deductions"}>
                 <div className="flex  mb-5 gap-3">
                     <Input
                         type="text"
@@ -89,7 +94,7 @@ export default function GovernmentShare() {
 
                     <Button className="flex gap-1">
                         <Plus size={20} />
-                        Add New Government Share
+                        Add New Deduction Profile
                     </Button>
                 </div>
                 <div>
