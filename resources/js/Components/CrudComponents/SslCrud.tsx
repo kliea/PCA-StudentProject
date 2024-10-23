@@ -427,7 +427,13 @@ export function SslUpdate({ RowData }: { RowData: any }) {
     );
 }
 
-export function SslDelete({ rowId }: { rowId: number }) {
+export function SslDelete({
+    rowId,
+    setOpenDialog,
+}: {
+    rowId: number;
+    setOpenDialog: any;
+}) {
     const { delete: destroy } = useForm();
 
     const submit: FormEventHandler = (e) => {
@@ -450,6 +456,7 @@ export function SslDelete({ rowId }: { rowId: number }) {
                     </div>,
                     { duration: 2000 }
                 );
+                setOpenDialog(false);
             },
             onError: () => {
                 toast(
@@ -472,7 +479,18 @@ export function SslDelete({ rowId }: { rowId: number }) {
     return (
         <>
             <form onSubmit={submit}>
-                <Button type="submit">Confirm</Button>
+                <div className="flex gap-3 w-full justify-end">
+                    <Button
+                        type="button"
+                        onClick={() => setOpenDialog(false)}
+                        variant="ghost"
+                    >
+                        Cancel
+                    </Button>
+                    <Button type="submit" variant="destructive">
+                        Confirm
+                    </Button>
+                </div>
             </form>
         </>
     );

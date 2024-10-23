@@ -91,6 +91,7 @@ const columns: ColumnDef<sslProfile>[] = [
     {
         id: "actions",
         cell: ({ row }) => {
+            const [openDialog, setOpenDialog] = useState<string | null>(null);
             const rowData = row.original;
             console.log(rowData.salary_grade);
             const dialogs = [
@@ -112,7 +113,7 @@ const columns: ColumnDef<sslProfile>[] = [
                         "?"
                     ),
                     dialogContent: (
-                        <SslDelete rowId={rowData.salary_grade}></SslDelete>
+                        <SslDelete rowId={rowData.salary_grade} setOpenDialog={setOpenDialog}></SslDelete>
                     ),
                     style: "text-red-600",
                 },
@@ -121,6 +122,8 @@ const columns: ColumnDef<sslProfile>[] = [
             return (
                 <div>
                     <DropdownDialog
+                        openDialog={openDialog}
+                        setOpenDialog={setOpenDialog}
                         dialogs={dialogs}
                         trigger={
                             <>

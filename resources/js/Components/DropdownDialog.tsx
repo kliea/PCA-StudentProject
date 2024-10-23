@@ -29,11 +29,14 @@ style : optional -> string -> tailwind format . Walay outformatting . Antos Anto
 const DropdownDialog = ({
     dialogs,
     trigger,
+    openDialog,
+    setOpenDialog,
 }: {
     dialogs: any;
     trigger: ReactNode;
+    openDialog: string | null;
+    setOpenDialog: any;
 }) => {
-    const [openDialog, setOpenDialog] = useState<string | null>(null);
     return (
         <>
             <DropdownMenu>
