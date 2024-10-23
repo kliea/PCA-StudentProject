@@ -111,6 +111,7 @@ Route::prefix('admin')->group(function () {
     Route::get('ssl', [SSLController::class, 'index'])->name('admin.ssl');
     Route::post('ssl/store', [SSLController::class, 'store'])->name('store.ssl');
     Route::put('/ssl/{salary_grade}', [SSLController::class, 'update'])->name('update.ssl');
+    Route::delete('/ssl/{salary_grade}', [SSLController::class,'destroy'])->name('delete.ssl');
 });
 
 

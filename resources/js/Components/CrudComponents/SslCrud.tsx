@@ -433,7 +433,7 @@ export function SslDelete({ rowId }: { rowId: number }) {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        destroy(route("store.ssl", rowId), {
+        destroy(route("delete.ssl", rowId), {
             onSuccess: () => {
                 toast(
                     <div className=" text-green-600 flex-col">

@@ -102,14 +102,7 @@ class SSLController extends Controller
     public function destroy($salary_grade)
     {
         // Find the record by salary_grade
-        $ssl = SSLModel::where('salary_grade', $salary_grade)->delete();
-
-        // Check if the record exists
-        if (!$ssl) {
-            return response()->json(['message' => 'Record not found'], 404);
-        }
-
-        // Return a success response
-        return response()->json(['message' => 'Record deleted successfully']);
+        SSLModel::where('salary_grade', $salary_grade)->delete();
+        return redirect()->back()->with('success', 'Successfully deleted ssl');
     }
 }
