@@ -3,7 +3,7 @@ import { usePage } from "@inertiajs/react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
-        <AuthenticatedLayoutEmployees>
+        <AuthenticatedLayoutEmployees >
             <div className="w-full bg-red-400 flex justify-end h-full">
                 asdsad
             </div>

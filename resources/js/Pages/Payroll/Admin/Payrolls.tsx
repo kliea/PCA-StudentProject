@@ -4,7 +4,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
-import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutAdmin";
+import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import { Head, usePage } from "@inertiajs/react";
 import {
@@ -37,6 +37,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/Components/ui/dialog";
+import { AdminLinks } from "@/lib/payrollLinks";
 
 //  Set accepted column types
 
@@ -109,9 +110,7 @@ export default function Payrolls() {
         to: addDays(new Date(), 20),
     });
     return (
-        <AuthenticatedLayoutAdmin>
-            <Head title="Payrolls" />
-
+        <AuthenticatedLayoutAdmin title="Payrolls" links={AdminLinks}>
             <BodyContentLayout headerName={"Payrolls List"}>
                 <div className="flex  mb-5 justify-between">
                     <section className="flex gap-5 w-full">

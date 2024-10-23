@@ -10,26 +10,6 @@ import {
     SidebarTrigger,
 } from "@/Components/ui/sidebar";
 import {
-    BookOpen,
-    Cog,
-    HandCoins,
-    HeartHandshake,
-    LayoutDashboard,
-    LogOut,
-    LucideProps,
-    Scale,
-    ScrollText,
-    TrendingDown,
-    UserPen,
-    Users,
-    Wallet,
-} from "lucide-react";
-interface Item {
-    label: string;
-    url: string;
-    icon: React.ComponentType<LucideProps>;
-}
-import {
     Sidebar,
     SidebarContent,
     SidebarHeader,
@@ -39,75 +19,17 @@ import { Separator } from "@/Components/ui/separator";
 import { Head, usePage } from "@inertiajs/react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-interface link {
-    title: string;
-    items: Item[];
-}
-const links: link[] = [
-    {
-        title: "PAYROLL SYSTEM",
-        items: [
-            {
-                label: "Dashboard",
-                url: "admin.dashboard",
-                icon: LayoutDashboard,
-            },
-            {
-                label: "Payrolls",
-                url: "admin.payrolls",
-                icon: BookOpen,
-            },
-        ],
-    },
-    {
-        title: "REQUESTS",
-        items: [{ label: "Loans", url: "admin.loans", icon: HandCoins }],
-    },
-    {
-        title: "CONFIGURATIONS",
-        items: [
-            { label: "Employees", url: "admin.employees", icon: Users },
-            {
-                label: "Compensations",
-                url: "admin.compensations",
-                icon: Wallet,
-            },
-            {
-                label: "Deductions",
-                url: "admin.deductions",
-                icon: TrendingDown,
-            },
-            {
-                label: "Government Share",
-                url: "admin.governmentshare",
-                icon: HeartHandshake,
-            },
-            {
-                label: "Appointment",
-                url: "admin.appointments",
-                icon: UserPen,
-            },
-            {
-                label: "SSL",
-                url: "admin.ssl",
-                icon: Scale,
-            },
-            {
-                label: "Format",
-                url: "admin.formats",
-                icon: ScrollText,
-            },
-        ],
-    },
-];
+import { navigationLinks } from "@/types/payroll";
 
 export default function AuthenticatedLayoutEmployees({
     children,
+    title,
+    links,
 }: {
     children: React.ReactNode;
+    title: string;
+    links: navigationLinks[];
 }) {
-    const component = usePage().component.split("/");
-    const Title = component[component.length - 1];
     const [open, setOpen] = useState(true);
     return (
         <SidebarProvider open={open} onOpenChange={() => setOpen(!open)}>
@@ -130,10 +52,11 @@ export default function AuthenticatedLayoutEmployees({
                                                 isActive={route().current(
                                                     item.url
                                                 )}
+                                                className="active:bg-transparent active:scale-105 transition-transform ease-linear"
                                             >
                                                 <NavLink
                                                     href={route(item.url)}
-                                                    className="gap-1"
+                                                    className="gap-1 w-full"
                                                 >
                                                     <item.icon size={15} />
                                                     <span className="group-data-[collapsible=icon]:hidden ">
@@ -154,8 +77,8 @@ export default function AuthenticatedLayoutEmployees({
                 <header className="w-screen shadow h-14 py-4 flex gap-3 items-center pl-5">
                     <SidebarTrigger />
                     <Separator orientation="vertical" />
-                    {Title}
-                    <Head title={Title}></Head>
+                    {title}
+                    <Head title={title}></Head>
                 </header>
                 <div className={cn("h-header p-5")}>{children}</div>
             </main>

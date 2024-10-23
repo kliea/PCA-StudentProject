@@ -1,4 +1,4 @@
-import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutAdmin";
+import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import { Head, usePage } from "@inertiajs/react";
 import StatusCard from "@/Components/StatusCard";
 import {
@@ -29,6 +29,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
+import { AdminLinks } from "@/lib/payrollLinks";
 
 type recentPayrolls = {
     period: string;
@@ -165,9 +166,7 @@ export default function Dashboard() {
         to: addDays(new Date(), 20),
     });
     return (
-        <AuthenticatedLayoutAdmin>
-            <Head title="Dashboard" />
-
+        <AuthenticatedLayoutAdmin title="Dashboard" links={AdminLinks}>
             <DatePickerWithRange
                 className="mb-5"
                 date={date}

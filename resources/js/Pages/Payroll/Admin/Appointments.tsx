@@ -4,7 +4,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
-import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutAdmin";
+import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import { Head, usePage } from "@inertiajs/react";
 import {
@@ -18,6 +18,7 @@ import Data from "@/Components/Constants/data10.json";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
+import { AdminLinks } from "@/lib/payrollLinks";
 
 type columnTypes = {
     type: string;
@@ -74,9 +75,7 @@ export default function Appointments() {
         },
     });
     return (
-        <AuthenticatedLayoutAdmin>
-            <Head title="Appointments" />
-
+        <AuthenticatedLayoutAdmin title="Appointments" links={AdminLinks}>
             <BodyContentLayout headerName={"Appointments List"}>
                 <div className="flex  mb-5 gap-3">
                     <Input

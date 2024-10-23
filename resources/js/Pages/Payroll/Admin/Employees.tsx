@@ -6,7 +6,7 @@ import {
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
 import { Input } from "@/Components/ui/input";
-import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutAdmin";
+import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import { Head, usePage } from "@inertiajs/react";
 import {
@@ -17,6 +17,7 @@ import {
 } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import Data from "@/Components/Constants/data7.json";
+import { AdminLinks } from "@/lib/payrollLinks";
 
 type columnTypes = {
     name: string;
@@ -72,9 +73,7 @@ export default function Employees() {
         },
     });
     return (
-        <AuthenticatedLayoutAdmin>
-            <Head title="Employees" />
-
+        <AuthenticatedLayoutAdmin title="Employees" links={AdminLinks}>
             <BodyContentLayout headerName={"Employee List"}>
                 <div className="flex  mb-5 gap-3">
                     <Input

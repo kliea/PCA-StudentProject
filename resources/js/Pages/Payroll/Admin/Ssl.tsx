@@ -1,4 +1,4 @@
-import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutAdmin";
+import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import { Head, usePage } from "@inertiajs/react";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import {
@@ -36,6 +36,7 @@ import {
 import DialogMenu from "@/Components/Dialog";
 import DropdownDialog from "../../../Components/DropdownDialog";
 import { cn } from "@/lib/utils";
+import { AdminLinks } from "@/lib/payrollLinks";
 
 type sslProfile = {
     salary_grade: number;
@@ -93,7 +94,6 @@ const columns: ColumnDef<sslProfile>[] = [
         cell: ({ row }) => {
             const [openDialog, setOpenDialog] = useState<string | null>(null);
             const rowData = row.original;
-            console.log(rowData.salary_grade);
             const dialogs = [
                 {
                     tag: "1",
@@ -113,7 +113,10 @@ const columns: ColumnDef<sslProfile>[] = [
                         "?"
                     ),
                     dialogContent: (
-                        <SslDelete rowId={rowData.salary_grade} setOpenDialog={setOpenDialog}></SslDelete>
+                        <SslDelete
+                            rowId={rowData.salary_grade}
+                            setOpenDialog={setOpenDialog}
+                        ></SslDelete>
                     ),
                     style: "text-red-600",
                 },
@@ -165,8 +168,7 @@ const Ssl = () => {
     const [openDialog, setOpenDialog] = useState(false);
     return (
         <div>
-            <AuthenticatedLayoutAdmin>
-                <Head title="SSL" />
+            <AuthenticatedLayoutAdmin title="SSL" links={AdminLinks}>
                 <BodyContentLayout
                     headerName="SSL"
                     className="h-[800px]"

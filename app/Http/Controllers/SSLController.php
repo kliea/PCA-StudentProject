@@ -79,6 +79,7 @@ class SSLController extends Controller
         return redirect()->back()->with('success', 'Successfully stored ssl');
     }
 
+    
     /**
      * Remove the specified resource from storage.
      */
