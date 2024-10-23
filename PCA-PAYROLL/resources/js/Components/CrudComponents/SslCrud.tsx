@@ -216,7 +216,7 @@ export function SslUpdate({ RowData }: { RowData: any }) {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        put(route("update.ssl", RowData.salary_grade), {
+        put(route("update.ssl", RowData), {
             onSuccess: () => {
                 toast(
                     <div className=" text-green-600 flex-col">
