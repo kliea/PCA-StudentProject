@@ -27,7 +27,7 @@ import {
 } from "@/Components/ui/select";
 import { DatePickerWithRange } from "@/Components/DateRangePicker";
 import { addDays } from "date-fns";
-import React from "react";
+import React, { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { Button } from "@/Components/ui/button";
 import {
@@ -108,6 +108,15 @@ export default function Payrolls() {
         from: new Date(),
         to: addDays(new Date(), 20),
     });
+
+    const designationList = ["Baranga 1", "Baranga 2", "All"];
+
+    const [
+        selected,setSelected 
+    ] = useState("All")
+
+    console.log(selected)
+
     return (
         <AuthenticatedLayoutAdmin>
             <Head title="Payrolls" />
@@ -121,11 +130,16 @@ export default function Payrolls() {
                                     <SelectValue placeholder="All" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="all">All</SelectItem>
-                                    <SelectItem value="flexi">Dark</SelectItem>
-                                    <SelectItem value="regular">
-                                        Regular
-                                    </SelectItem>
+                                    {
+                                        designationList.map (designation =>
+                                            <SelectItem  key={designation} value={designation}>{
+                                                designation
+                                            } 
+                                            <button onClick={() => setSelected(designation)}></button>
+                                            </SelectItem>
+                                            
+                                        ) 
+                                    }
                                 </SelectContent>
                             </Select>
                         </div>

@@ -13,6 +13,9 @@ export default {
 
     theme: {
     	extend: {
+			dropShadow:{
+				'custom': '0 1px 3px rgba(0, 0, 0, 0.5)',
+			},
     		width: {
     			'popover-trigger': 'var(--radix-popover-trigger-width)',
 				'sidebar-open' : 'calc(100vw - 16rem)',
@@ -25,12 +28,14 @@ export default {
     			'popover-content': 'var(--radix-popover-content-available-height)'
     		},
     		fontFamily: {
-    			sans: ['Figtree', ...defaultTheme.fontFamily.sans]
+    			// sans: ['Figtree', ...defaultTheme.fontFamily.sans]
+				sans: ['Poppins', 'sans-serif'],
     		},
     		borderRadius: {
     			lg: 'var(--radius)',
     			md: 'calc(var(--radius) - 2px)',
-    			sm: 'calc(var(--radius) - 4px)'
+    			sm: 'calc(var(--radius) - 4px)',
+				pca: '10px',
     		},
     		colors: {
     			baseGreen: '#0E4736',

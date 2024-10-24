@@ -38,7 +38,7 @@ const DropdownDialog = ({
         <>
             <DropdownMenu>
                 <DropdownMenuTrigger>{trigger}</DropdownMenuTrigger>
-                <DropdownMenuContent>
+                <DropdownMenuContent >
                     {dialogs.map((dialog: any) => (
                         <DropdownMenuItem
                             key={dialog.tag}

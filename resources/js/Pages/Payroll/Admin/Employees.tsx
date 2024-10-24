@@ -17,6 +17,9 @@ import {
 } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import Data from "@/Components/Constants/data7.json";
+import { cn } from "@/lib/utils";
+import Select from "@/Dialogs/Select";
+import DropdownDialog from "@/Components/DropdownDialog";
 
 type columnTypes = {
     name: string;
@@ -40,19 +43,36 @@ const columns: ColumnDef<columnTypes>[] = [
         id: "action",
         cell: ({ row }) => {
             const values = row.original;
+            const dialogs = [
+                {
+                    tag: "1",
+                    name: "Edit",
+                    dialogtitle: cn(
+                        "Employee Profile",
+                    ),
+                    dialogContent: <Select ></Select>,
+                },
+                {
+                    tag: "2",
+                    name: "Delete",
+                    dialogtitle: "Dialog 2",
+                    dialogContent: <>Hello Dialog2</>,
+                    style: "text-red-600",
+                },
+            ];
             return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <section>
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </section>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem>View</DropdownMenuItem>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <div>
+                    <DropdownDialog
+                        dialogs={dialogs}
+                        trigger={
+                            <>
+                                <section>
+                                    <MoreHorizontal className="h-4 w-4" />
+                                </section>
+                            </>
+                        }
+                    ></DropdownDialog>
+                </div>
             );
         },
     },

@@ -34,11 +34,11 @@ export default function ({
     openDialog?: any;
 }) {
     return (
-        <Dialog open={open} onOpenChange={openDialog}>
+        <Dialog  open={open} onOpenChange={openDialog}>
             <DialogTrigger>{trigger}</DialogTrigger>
-            <DialogContent>
-                <DialogHeader>
-                    <DialogTitle>{title}</DialogTitle>
+            <DialogContent className="max-w-fit bg-secondaryGreen overflow-hidden  ">
+                <DialogHeader className="">
+                    <DialogTitle className=" text-white h-[40px] pt-2 flex items-center px-6 ">{title}</DialogTitle>
                     <DialogDescription>{description}</DialogDescription>
                     {children}
                 </DialogHeader>

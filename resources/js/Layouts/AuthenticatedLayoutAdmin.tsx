@@ -39,6 +39,10 @@ import { Separator } from "@/Components/ui/separator";
 import { Head, usePage } from "@inertiajs/react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+
+import logoImage from "../Components/images/Logo image.png"
+import logoText from "../Components/images/Logo text.png"
+
 interface link {
     title: string;
     items: Item[];
@@ -113,7 +117,19 @@ export default function AuthenticatedLayoutEmployees({
         <SidebarProvider open={open} onOpenChange={() => setOpen(!open)}>
             <Sidebar variant="sidebar" collapsible="icon">
                 <SidebarHeader className="bg-baseGreen">
-                    <img src="https://placehold.co/600x400" alt="" />
+                    {/* <img src="https://placehold.co/600x400" alt="" /> */}
+{/* 
+                    <div className="h-16 w-full bg-black">
+                        <img src={logoImage} alt="LogoImage" className="size-2/4" />
+                    </div> */}
+
+
+                    <div className="bg-opacity-60 flex items-center pt-2">
+                        <div className="flex size-3/4 items-center">
+                            <img src={logoImage} alt="LogoImage" className="max-w-[77px] max-h-[62px] group-data-[collapsible=icon]:w-9" />
+                            <img src={logoText} alt="logoText" className="max-w-[174.6px] max-h-[78.09px] group-data-[collapsible=icon]:hidden" />
+                        </div>
+                    </div>
                 </SidebarHeader>
                 <SidebarContent className="bg-baseGreen scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-white scrollbar-track-transparent overflow-y overflow-x-hidden">
                     {links.map((link) => (
