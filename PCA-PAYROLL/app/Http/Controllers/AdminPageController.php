@@ -54,7 +54,7 @@ class AdminPageController extends Controller
         return Inertia::render('Admin/Payrolls');
     }
 
-
+    
 
     public function ssl(): Response
     {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminPageController;
+use App\Http\Controllers\BioAdminPageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -51,7 +52,11 @@ Route::get('/admin/deductions', function () {
     return Inertia::render('Admin/Deductions');
 })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.deductions');
 
+////////////////////////////////
 
+Route::get('/bioadmin/dashboard', function () {
+    return Inertia::render('BioAdmin/Dashboard');
+})->middleware('auth', 'verified', 'usercheck:bioadmin')->name('bioadmin.dashboard');
 
 
 // Empoyee Routes
@@ -100,6 +105,14 @@ Route::prefix('admin')->group(function () {
     Route::get('governmentshare', [AdminPageController::class, 'governmentshare'])->name('admin.governmentshare');
     Route::get('formats', [AdminPageController::class, 'format'])->name('admin.formats');
     Route::get('appointments', [AdminPageController::class, 'appointments'])->name('admin.appointments');
+
+    // Route::get('ssl', [AdminPageController::class, 'ssl'])->name('admin.ssl');
+    // Route::post('ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
+    // Route::put('/ssl/{salary_grade}', [AdminPageController::class, 'update'])->name('ssl.update');
+});
+///
+Route::prefix('bioadmin')->group(function () {
+    Route::get('dashboard', [BioAdminPageController::class, 'index'])->name('bioadmin.dashboard');
 
     // Route::get('ssl', [AdminPageController::class, 'ssl'])->name('admin.ssl');
     // Route::post('ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
