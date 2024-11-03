@@ -53,6 +53,25 @@ class AdminPageController extends Controller
     {
         return Inertia::render('Admin/Payrolls');
     }
+    public function dashboardb(): Response
+    {
+        return Inertia::render('BioAdmin/Dashboard');
+    }
+    public function attendancelist(): Response
+    {
+        return Inertia::render('BioAdmin/AttendanceList');
+    }
+
+    public function attendancerecords(): Response
+    {
+        return Inertia::render('BioAdmin/AttendanceRecord');
+    }
+
+    public function manageusers(): Response
+    {
+        return Inertia::render('BioAdmin/ManageUsers');
+    }
+
 
     
 

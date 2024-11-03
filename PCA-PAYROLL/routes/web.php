@@ -52,11 +52,23 @@ Route::get('/admin/deductions', function () {
     return Inertia::render('Admin/Deductions');
 })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.deductions');
 
-////////////////////////////////
+////////////////////////////////bio routes
 
 Route::get('/bioadmin/dashboard', function () {
     return Inertia::render('BioAdmin/Dashboard');
-})->middleware('auth', 'verified', 'usercheck:bioadmin')->name('bioadmin.dashboard');
+})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.dashboardb');
+
+Route::get('/bioadmin/attendancelist', function () {
+    return Inertia::render('BioAdmin/AttendanceList');
+})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.attendancelist');
+
+Route::get('/bioadmin/attendancerecords', function () {
+    return Inertia::render('BioAdmin/AttendanceRecord');
+})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.attendancerecords');
+
+Route::get('/bioadmin/manageusers', function () {
+    return Inertia::render('BioAdmin/ManageUsers');
+})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.manageusers');
 
 
 // Empoyee Routes
@@ -105,19 +117,18 @@ Route::prefix('admin')->group(function () {
     Route::get('governmentshare', [AdminPageController::class, 'governmentshare'])->name('admin.governmentshare');
     Route::get('formats', [AdminPageController::class, 'format'])->name('admin.formats');
     Route::get('appointments', [AdminPageController::class, 'appointments'])->name('admin.appointments');
+    //bioadmins
+    Route::get('dashboardb', [AdminPageController::class, 'dashboardb'])->name('admin.dashboardb');
+    Route::get('attendancelist', [AdminPageController::class, 'attendancelist'])->name('admin.attendancelist');
+    Route::get('attendancerecords', [AdminPageController::class, 'attendancerecords'])->name('admin.attendancerecords');
+    Route::get('manageusers', [AdminPageController::class, 'manageusers'])->name('admin.manageusers');
 
     // Route::get('ssl', [AdminPageController::class, 'ssl'])->name('admin.ssl');
     // Route::post('ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
     // Route::put('/ssl/{salary_grade}', [AdminPageController::class, 'update'])->name('ssl.update');
 });
 ///
-Route::prefix('bioadmin')->group(function () {
-    Route::get('dashboard', [BioAdminPageController::class, 'index'])->name('bioadmin.dashboard');
 
-    // Route::get('ssl', [AdminPageController::class, 'ssl'])->name('admin.ssl');
-    // Route::post('ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
-    // Route::put('/ssl/{salary_grade}', [AdminPageController::class, 'update'])->name('ssl.update');
-});
 
 // SSL CRUD
 Route::prefix('admin')->group(function () {

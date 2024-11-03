@@ -7,6 +7,7 @@ import {
 import {
     BookOpen,
     Cog,
+    Files,
     HandCoins,
     HeartHandshake,
     LayoutDashboard,
@@ -57,60 +58,31 @@ export default function Authenticated({
     // or if gusto mo lain pag butang rag or sa icon sa Item nga interface
     const links: link[] = [
         {
-            title: "PAYROLL SYSTEM",
+            title: "BIOMETRICS SYSTEM",
             items: [
                 {
                     label: "Dashboard",
-                    url: "admin.dashboard",
+                    url: "admin.dashboardb",
                     icon: LayoutDashboard,
                 },
                 {
-                    label: "Payrolls",
-                    url: "admin.payrolls",
-                    icon: BookOpen,
+                    label: "Attendance List",
+                    url: "admin.attendancelist",
+                    icon: Users,
+                },
+                {
+                    label: "Attendance Records",
+                    url: "admin.attendancerecords",
+                    icon: Files,
+                },
+                {
+                    label: "Manage Users",
+                    url: "admin.manageusers",
+                    icon: Users,
                 },
             ],
         },
-        {
-            title: "REQUESTS",
-            items: [{ label: "Loans", url: "admin.loans", icon: HandCoins }],
-        },
-        {
-            title: "CONFIGURATIONS",
-            items: [
-                { label: "Employees", url: "admin.employees", icon: Users },
-                {
-                    label: "Compensations",
-                    url: "admin.compensations",
-                    icon: Wallet,
-                },
-                {
-                    label: "Deductions",
-                    url: "admin.deductions",
-                    icon: TrendingDown,
-                },
-                {
-                    label: "Government Share",
-                    url: "admin.governmentshare",
-                    icon: HeartHandshake,
-                },
-                {
-                    label: "Appointment",
-                    url: "admin.appointments",
-                    icon: UserPen,
-                },
-                {
-                    label: "SSL",
-                    url: "admin.ssl",
-                    icon: Scale,
-                },
-                {
-                    label: "Format",
-                    url: "admin.formats",
-                    icon: ScrollText,
-                },
-            ],
-        },
+       
     ];
 
     // State para sa collapsabe navbar
