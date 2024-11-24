@@ -14,6 +14,7 @@ class AdminPageController extends Controller
     {
         return Inertia::render('Payroll/Admin/Dashboard');
     }
+    // a
 
     public function appointments(): Response
     {
@@ -53,8 +54,27 @@ class AdminPageController extends Controller
     {
         return Inertia::render('Payroll/Admin/Payrolls');
     }
+    public function dashboardb(): Response
+    {
+        return Inertia::render('BioAdmin/Dashboard');
+    }
+    public function attendancelist(): Response
+    {
+        return Inertia::render('BioAdmin/AttendanceList');
+    }
+
+    public function attendancerecords(): Response
+    {
+        return Inertia::render('BioAdmin/AttendanceRecord');
+    }
+
+    public function manageusers(): Response
+    {
+        return Inertia::render('BioAdmin/ManageUsers');
+    }
 
 
+    
 
     public function ssl(): Response
     {
@@ -101,6 +121,7 @@ class AdminPageController extends Controller
     {
 
         // Return success response or redirect
+        // return Inertia::render('Admin/Ssl', ['message' => $salary_grade]);
         return Inertia::render('Payroll/Admin/Ssl', ['message' => $salary_grade]);
     }
 }
