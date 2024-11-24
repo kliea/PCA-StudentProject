@@ -14,6 +14,7 @@ class AdminPageController extends Controller
     {
         return Inertia::render('Admin/Dashboard');
     }
+    // a
 
     public function appointments(): Response
     {
