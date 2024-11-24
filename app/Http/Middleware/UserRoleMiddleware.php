@@ -32,6 +32,14 @@ class UserRoleMiddleware
             return redirect()->route('employee.dashboard');
         }
         
+        if(Auth::user()->user_level === "bioemployee"){
+            return redirect()->route('bioemployee.dashboard');
+        }
+        
+        if(Auth::user()->user_level === "bioadmin"){
+            return redirect()->route('bioadmin.dashboard');
+        }
+        
         // Redirect if user is not authorized
         return redirect()->route('login')->withErrors(['access_denied' => 'Unauthorized access.']);
 
