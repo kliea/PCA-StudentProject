@@ -52,7 +52,23 @@ Route::get('/', function () {
 // })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.deductions');
 
 
+////////////////////////////////bio routes
 
+Route::get('/bioadmin/dashboard', function () {
+    return Inertia::render('BioAdmin/Dashboard');
+})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.dashboardb');
+
+Route::get('/bioadmin/attendancelist', function () {
+    return Inertia::render('BioAdmin/AttendanceList');
+})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.attendancelist');
+
+Route::get('/bioadmin/attendancerecords', function () {
+    return Inertia::render('BioAdmin/AttendanceRecord');
+})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.attendancerecords');
+
+Route::get('/bioadmin/manageusers', function () {
+    return Inertia::render('BioAdmin/ManageUsers');
+})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.manageusers');
 
 // Empoyee Routes
 
