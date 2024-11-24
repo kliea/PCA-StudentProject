@@ -14,6 +14,7 @@ class AdminPageController extends Controller
     {
         return Inertia::render('Admin/Dashboard');
     }
+    // a
 
     public function appointments(): Response
     {
@@ -53,8 +54,27 @@ class AdminPageController extends Controller
     {
         return Inertia::render('Admin/Payrolls');
     }
+    public function dashboardb(): Response
+    {
+        return Inertia::render('BioAdmin/Dashboard');
+    }
+    public function attendancelist(): Response
+    {
+        return Inertia::render('BioAdmin/AttendanceList');
+    }
+
+    public function attendancerecords(): Response
+    {
+        return Inertia::render('BioAdmin/AttendanceRecord');
+    }
+
+    public function manageusers(): Response
+    {
+        return Inertia::render('BioAdmin/ManageUsers');
+    }
 
 
+    
 
     public function ssl(): Response
     {
@@ -69,7 +89,7 @@ class AdminPageController extends Controller
     {
         // Validate the request
         $validated = $request->validate([
-            'salary_grade' => 'required|numeric|min:0',
+            'salary_grade' => 'required|numeric|unique:salary_standard_law|min:0',
             'step1' => 'required|numeric|min:0',
             'step2' => 'required|numeric|min:0',
             'step3' => 'required|numeric|min:0',
@@ -95,5 +115,12 @@ class AdminPageController extends Controller
 
         // Redirect back or to a specific page after saving
         return redirect()->back()->with('success', 'Data saved successfully!');
+    }
+
+    public function update(Request $request, SSLModel $salary_grade)
+    {
+
+        // Return success response or redirect
+        return Inertia::render('Admin/Ssl', ['message' => $salary_grade]);
     }
 }
