@@ -11,7 +11,7 @@ import Dialog from "../Dialog";
 // Component for Storing SSL Data
 export function SslStore({ openDialog }: { openDialog: any }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        salary_grade: "",
+        grade: "",
         step1: "",
         step2: "",
         step3: "",
@@ -35,15 +35,14 @@ export function SslStore({ openDialog }: { openDialog: any }) {
                         </div>
                         <div className="flex">
                             <span className="pl-6">
-                                SSL {data.salary_grade} has been succesfully
-                                added.
+                                SSL {data.grade} has been succesfully added.
                             </span>
                         </div>
                     </div>,
                     { duration: 2000 }
                 );
                 reset(
-                    "salary_grade",
+                    "grade",
                     "step1",
                     "step2",
                     "step3",
@@ -78,26 +77,21 @@ export function SslStore({ openDialog }: { openDialog: any }) {
             <form onSubmit={submit}>
                 <div>
                     <Label
-                        htmlFor="salary_grade"
-                        className={errors.salary_grade && "text-red-600"}
+                        htmlFor="grade"
+                        className={errors.grade && "text-red-600"}
                     >
                         Salary Grade
                     </Label>
                     <Input
                         min={0}
-                        id="salary_grade"
+                        id="grade"
                         type="number"
-                        name="salary_grade"
-                        value={data.salary_grade}
-                        onChange={(e) =>
-                            setData("salary_grade", e.target.value)
-                        }
+                        name="grade"
+                        value={data.grade}
+                        onChange={(e) => setData("grade", e.target.value)}
                     />
 
-                    <InputError
-                        message={errors.salary_grade}
-                        className="mt-2"
-                    />
+                    <InputError message={errors.grade} className="mt-2" />
                 </div>
                 <div>
                     <Label
@@ -258,7 +252,7 @@ export function SslStore({ openDialog }: { openDialog: any }) {
 
 export function SslUpdate({ RowData }: { RowData: any }) {
     const { data, setData, put, processing, errors, reset } = useForm({
-        salary_grade: RowData.salary_grade,
+        grade: RowData.grade,
         step1: RowData.step1,
         step2: RowData.step2,
         step3: RowData.step3,
@@ -282,8 +276,7 @@ export function SslUpdate({ RowData }: { RowData: any }) {
                         </div>
                         <div className="flex">
                             <span className="pl-6">
-                                SSL {data.salary_grade} has been succesfully
-                                edited.
+                                SSL {data.grade} has been succesfully edited.
                             </span>
                         </div>
                     </div>,

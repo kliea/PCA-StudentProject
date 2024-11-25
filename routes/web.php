@@ -123,8 +123,8 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('ssl', [SalaryGradeController::class, 'index'])->name('admin.ssl');
         Route::post('ssl/store', [SalaryGradeController::class, 'store'])->name('store.ssl');
-        Route::put('/ssl/{salary_grade}', [SalaryGradeController::class, 'update'])->name('update.ssl');
-        Route::delete('/ssl/{salary_grade}', [SalaryGradeController::class,'destroy'])->name('delete.ssl');
+        Route::put('/ssl/{grade}', [SalaryGradeController::class, 'update'])->name('update.ssl');
+        Route::delete('/ssl/{grade}', [SalaryGradeController::class, 'destroy'])->name('delete.ssl');
     });
 });
 

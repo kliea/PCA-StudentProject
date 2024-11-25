@@ -29,7 +29,7 @@ class SalaryGradeController extends Controller
     {
         /* Validating the user request. */
         $validated = $request->validate([
-            'salary_grade' => 'required|numeric|unique:salary_standard_law|min:0',
+            'grade' => 'required|numeric|unique:salary_grades|min:0',
             'step1' => 'required|numeric|min:0',
             'step2' => 'required|numeric|min:0',
             'step3' => 'required|numeric|min:0',
@@ -42,7 +42,7 @@ class SalaryGradeController extends Controller
 
         // Create a new profile record in the database
         SalaryGrade::create([
-            'salary_grade' => $validated['salary_grade'],
+            'grade' => $validated['grade'],
             'step1' => $validated['step1'],
             'step2' => $validated['step2'],
             'step3' => $validated['step3'],
@@ -60,12 +60,10 @@ class SalaryGradeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $salary_grade)
+    public function update(Request $request, string $salary_grade_code)
     {
         // validate requets first
         $validated = $request->validate([
-			'salary_grade_code' => 'required|numeric',
-            'salary_grade' => 'required|numeric|min:0',
             'step1' => 'required|numeric|min:0',
             'step2' => 'required|numeric|min:0',
             'step3' => 'required|numeric|min:0',
@@ -76,7 +74,7 @@ class SalaryGradeController extends Controller
             'step8' => 'required|numeric|min:0',
         ]);
 
-        SalaryGrade::where('salary_grade_code', $salary_grade)->update($validated);
+        SalaryGrade::where('salary_grade_code', $salary_grade_code)->update($validated);
         return redirect()->back()->with('success', 'Successfully stored ssl');
     }
 
@@ -84,10 +82,10 @@ class SalaryGradeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($salary_grade)
+    public function destroy($grade)
     {
         // Find the record by salary_grade
-        SalaryGrade::where('salary_grade', $salary_grade)->delete();
+        SalaryGrade::where('grade', $grade)->delete();
         return redirect()->back()->with('success', 'Successfully deleted ssl');
     }
 }
