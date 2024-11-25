@@ -82,7 +82,7 @@ export default function Authenticated({
                 },
             ],
         },
-       
+
     ];
 
     // State para sa collapsabe navbar

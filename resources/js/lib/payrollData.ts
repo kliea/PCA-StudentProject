@@ -34,7 +34,7 @@ export const AdminLinks = [
     {
         title: "CONFIGURATIONS",
         items: [
-            { label: "Employees", url: "admin.employees", icon: Users },
+            { label: "Employees", url: "admin.employee", icon: Users },
             {
                 label: "Compensations",
                 url: "admin.compensations",
@@ -42,7 +42,7 @@ export const AdminLinks = [
             },
             {
                 label: "Deductions",
-                url: "admin.deductions",
+                url: "admin.deduction",
                 icon: TrendingDown,
             },
             {
@@ -52,7 +52,7 @@ export const AdminLinks = [
             },
             {
                 label: "Appointment",
-                url: "admin.appointments",
+                url: "admin.appointment",
                 icon: UserPen,
             },
             {

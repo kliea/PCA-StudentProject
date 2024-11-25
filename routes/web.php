@@ -4,7 +4,12 @@ use App\Http\Controllers\AdminPageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+// Controllers
 use App\Http\Controllers\SalaryGradeController;
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\DeductionTypeController;
+use App\Http\Controllers\EmployeeController;
 
 Route::get('/', function () {
     return Inertia::render('Payroll/Auth/Login', [
@@ -104,29 +109,40 @@ Route::get('/bioadmin/manageusers', function () {
 //     return Inertia::render('Employee/Deductions');
 // })->middleware('auth', 'verified', 'usercheck:employee')->name('employee.deductions');
 
-
 // SUBDOMAIN FOR PAYROLL
 Route::domain('payroll.' . env('APP_URL'))->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
         Route::get('payrolls', [AdminPageController::class, 'payrolls'])->name('admin.payrolls');
         Route::get('loans', [AdminPageController::class, 'loans'])->name('admin.loans');
-        Route::get('employees', [AdminPageController::class, 'employees'])->name('admin.employees');
         Route::get('compensations', [AdminPageController::class, 'compensations'])->name('admin.compensations');
-        Route::get('deductions', [AdminPageController::class, 'deductions'])->name('admin.deductions');
         Route::get('governmentshare', [AdminPageController::class, 'governmentshare'])->name('admin.governmentshare');
         Route::get('formats', [AdminPageController::class, 'format'])->name('admin.formats');
-        Route::get('appointments', [AdminPageController::class, 'appointments'])->name('admin.appointments');
-    });
 
-    // SSL CRUD
-    Route::prefix('admin')->group(function () {
+        // SSL
         Route::get('ssl', [SalaryGradeController::class, 'index'])->name('admin.ssl');
         Route::post('ssl/store', [SalaryGradeController::class, 'store'])->name('store.ssl');
-        Route::put('/ssl/{grade}', [SalaryGradeController::class, 'update'])->name('update.ssl');
-        Route::delete('/ssl/{grade}', [SalaryGradeController::class, 'destroy'])->name('delete.ssl');
+        Route::put('ssl/{grade}', [SalaryGradeController::class, 'update'])->name('update.ssl');
+        Route::delete('ssl/{grade}', [SalaryGradeController::class, 'destroy'])->name('delete.ssl');
+
+        // APPOINTMENT
+        Route::get('appointment', [AppointmentController::class, 'index'])->name('admin.appointment');
+        Route::post('appointment', [AppointmentController::class, 'store'])->name('store.appointment');
+        Route::put('appointment/{appointment_type}', [AppointmentController::class, 'update'])->name('update.appointment');
+        Route::delete('appointment/{appointment_type}', [AppointmentController::class, 'destroy'])->name('delete.appointment');
+
+        // DEDUCTIONS
+        Route::get('deduction', [DeductionTypeController::class, 'index'])->name('admin.deduction');
+        Route::post('deduction', [DeductionTypeController::class, 'store'])->name('store.deduction');
+        Route::put('deduction/{deduction_code}', [DeductionTypeController::class, 'update'])->name('update.deduction');
+        Route::delete('deduction/{deduction_code}', [DeductionTypeController::class, 'destroy'])->name('delete.deduction');
+
+        // EMPLOYEE
+        Route::get('employee', [EmployeeController::class, 'index'])->name('admin.employee');
+        Route::post('employee', [EmployeeController::class, 'store'])->name('store.employee');
+        Route::put('employee/{employee_number}', [EmployeeController::class, 'store'])->name('update.employee');
+        Route::delete('employee/{employee_number}', [EmployeeController::class, 'destroy'])->name('delete.employee');
     });
 });
-
 
 require __DIR__ . '/auth.php';

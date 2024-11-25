@@ -6,8 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'employees';
+
+    /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'employee_code';
+
 	protected $fillable = [
-		'employee_code',
 		'employee_number',
 		'first_name',
 		'middle_name',
