@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Appointment extends Model
 {
 	protected $fillable = [
-		'appointment_code',
 		'appointment_type',
 		'has_mandatory_deduction',
 		'basic_pay_type',

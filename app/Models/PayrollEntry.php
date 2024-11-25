@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class PayrollEntry extends Model
 {
     protected $fillable = [
-		'payroll_entry_code',
 		'current_position',
 		'employee_code',
 		'payroll_sheet_code'

@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class CompensationType extends Model
 {
 	protected $fillable = [
-		'compensation_code',
 		'compensation_name',
 		'shorthand',
 		'amount',

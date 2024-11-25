@@ -21,7 +21,6 @@ class SalaryGrade extends Model
 	protected $primaryKey = 'salary_grade_code';
 
 	protected $fillable = [
-		'salary_grade_code',
 		'grade',
 		'step1',
 		'step2',

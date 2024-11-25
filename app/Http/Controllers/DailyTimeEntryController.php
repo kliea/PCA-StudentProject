@@ -40,14 +40,13 @@ class DailyTimeEntryController extends Controller
 		$employees = Employee::all();
 
 		if (sizeof($employees) == 0) {
-			echo 'There are no employees.';
-
 			return;
 		}
 
 		/* Creating a new DTR entry for the day, for every employee. */
 		foreach ($employees as $employee) {
 			DailyTimeEntry::create([
+				'dtr_entry_code' => 1,
 				'date' => $currentDate,
 				'time_in_am' => null,
 				'time_out_am' => null,
@@ -56,11 +55,9 @@ class DailyTimeEntryController extends Controller
 				'tardy_minutes' => 0,
 				'undertime_minutes' => 0,
 				'work_minutes' => 0,
-				'employee_code' => $employee->code
+				'employee_code' => $employee->employee_code
 			]);
 		}
-
-		echo 'Successfully updated the database.';
 
 		return;
     }

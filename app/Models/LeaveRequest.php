@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class LeaveRequest extends Model
 {
 	protected $fillable = [
-		'leave_request_code',
 		'date_filed',
 		'start_date',
 		'end_date',

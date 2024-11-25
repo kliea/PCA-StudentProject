@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Station extends Model
 {
 	protected $fillable = [
-		'station_code',
 		'station_name',
 		'street_address',
 		'barangay',
