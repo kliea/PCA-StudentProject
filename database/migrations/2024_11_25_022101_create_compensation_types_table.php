@@ -19,7 +19,6 @@ return new class extends Migration
 			$table->double('amount');
 			$table->boolean('is_taxable');
 			$table->boolean('is_fixed');
-
             $table->timestamps();
         });
     }

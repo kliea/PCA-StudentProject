@@ -38,10 +38,13 @@ export function AppointmentStore() {
                     <div className=" text-green-600 flex-col">
                         <div className="flex items-center">
                             <CircleCheck className="h-4" />
-                            <span className="text-base">Succes</span>
+                            <span className="text-base">Success!</span>
                         </div>
                         <div className="flex">
-                            <span className="pl-6">JHK</span>
+                            <span className="pl-6">
+                                Appointment Type {data.appointment_type} has
+                                been added!
+                            </span>
                         </div>
                     </div>,
                     { duration: 2000 }
@@ -58,7 +61,7 @@ export function AppointmentStore() {
                     <div className=" text-red-600 flex-col">
                         <div className="flex items-center">
                             <CircleAlert className="h-4" />
-                            <span className="text-base">Error</span>
+                            <span className="text-base">Error!</span>
                         </div>
                         <div className="flex">
                             <span className="pl-6">Please try again...</span>
@@ -213,11 +216,11 @@ export function AppointmentUpdate({ RowData }: { RowData: any }) {
                     <div className=" text-green-600 flex-col">
                         <div className="flex items-center">
                             <CircleCheck className="h-4" />
-                            <span className="text-base">Succes</span>
+                            <span className="text-base">Success!</span>
                         </div>
                         <div className="flex">
                             <span className="pl-6">
-                                SSL has been succesfully edited.
+                                Appointment has been succesfully edited.
                             </span>
                         </div>
                     </div>,
@@ -356,8 +359,7 @@ export function AppointmentDelete({
                         </div>
                         <div className="flex">
                             <span className="pl-6">
-                                SSL Salary Grade {rowId} has been succesfully
-                                deleted.
+                                Appointment has been succesfully deleted.
                             </span>
                         </div>
                     </div>,
@@ -370,7 +372,7 @@ export function AppointmentDelete({
                     <div className=" text-red-600 flex-col">
                         <div className="flex items-center">
                             <CircleAlert className="h-4" />
-                            <span className="text-base">Error</span>
+                            <span className="text-base">Error!</span>
                         </div>
                         <div className="flex">
                             <span className="pl-6">Please try again...</span>

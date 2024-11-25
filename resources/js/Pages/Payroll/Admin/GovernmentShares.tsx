@@ -6,7 +6,6 @@ import {
 } from "@/Components/ui/dropdown-menu";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
-import { Head, usePage } from "@inertiajs/react";
 import {
     ColumnDef,
     getCoreRowModel,
@@ -17,25 +16,25 @@ import { MoreHorizontal, Plus, View } from "lucide-react";
 import Data from "@/Components/Constants/data9.json";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
-import { Button } from "@/Components/ui/button";
+import DialogMenu from "@/Components/Dialog";
 import { AdminLinks } from "@/lib/payrollData";
+import { AgencyShareStore } from "@/Components/CrudComponents/AgencyShareCRUD";
+import { usePage } from "@inertiajs/react";
 
-type columnTypes = {
+type agencyTypes = {
     name: string;
     amount: number;
     percent: number;
     mandatory: boolean;
     shorthand: string;
-    legend: string;
 };
 
-const columns: ColumnDef<columnTypes>[] = [
+const columns: ColumnDef<agencyTypes>[] = [
     { accessorKey: "name", header: "Name" },
     { accessorKey: "amount", header: "Amount" },
     { accessorKey: "percent", header: "Percent" },
     { accessorKey: "mandatory", header: "Mandatory" },
     { accessorKey: "shorthand", header: "Shorthand" },
-    { accessorKey: "legend", header: "legend" },
     {
         id: "actions",
         cell: ({ row }) => {
@@ -61,7 +60,8 @@ const columns: ColumnDef<columnTypes>[] = [
 ];
 
 export default function GovernmentShare() {
-    const data: columnTypes[] = Data;
+    const pageData = (usePage().props.data as agencyTypes[]) || [];
+    const data: agencyTypes[] = pageData;
 
     const table = useReactTable({
         data,
@@ -84,10 +84,19 @@ export default function GovernmentShare() {
                         className="w-1/4 rounded-pca"
                     />
 
-                    <Button className="flex gap-1">
-                        <Plus size={20} />
-                        Add New Government Share
-                    </Button>
+                    <div>
+                        <DialogMenu
+                            trigger={
+                                <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
+                                    <Plus className="mr-2 h-6 w-auto" />
+                                    Add New Government Share Profile
+                                </section>
+                            }
+                            title="Add New Appointment Profile"
+                        >
+                            <AgencyShareStore></AgencyShareStore>
+                        </DialogMenu>
+                    </div>
                 </div>
                 <div>
                     <DataTable

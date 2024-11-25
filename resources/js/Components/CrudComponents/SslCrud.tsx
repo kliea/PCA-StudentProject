@@ -30,7 +30,7 @@ export function SslStore({ openDialog }: { openDialog: any }) {
                     <div className=" text-green-600 flex-col">
                         <div className="flex items-center">
                             <CircleCheck className="h-4" />
-                            <span className="text-base">Succes</span>
+                            <span className="text-base">Success!</span>
                         </div>
                         <div className="flex">
                             <span className="pl-6">
@@ -57,7 +57,7 @@ export function SslStore({ openDialog }: { openDialog: any }) {
                     <div className=" text-red-600 flex-col">
                         <div className="flex items-center">
                             <CircleAlert className="h-4" />
-                            <span className="text-base">Error</span>
+                            <span className="text-base">Error!</span>
                         </div>
                         <div className="flex">
                             <span className="pl-6">Please try again...</span>
@@ -279,7 +279,7 @@ export function SslUpdate({ RowData }: { RowData: any }) {
                     <div className=" text-green-600 flex-col">
                         <div className="flex items-center">
                             <CircleCheck className="h-4" />
-                            <span className="text-base">Succes</span>
+                            <span className="text-base">Success!</span>
                         </div>
                         <div className="flex">
                             <span className="pl-6">
@@ -295,7 +295,7 @@ export function SslUpdate({ RowData }: { RowData: any }) {
                     <div className=" text-red-600 flex-col">
                         <div className="flex items-center">
                             <CircleAlert className="h-4" />
-                            <span className="text-base">Error</span>
+                            <span className="text-base">Error!</span>
                         </div>
                         <div className="flex">
                             <span className="pl-6">Please try again...</span>
