@@ -27,7 +27,7 @@ class SalaryGradeController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the request
+        /* Validating the user request. */
         $validated = $request->validate([
             'salary_grade' => 'required|numeric|unique:salary_standard_law|min:0',
             'step1' => 'required|numeric|min:0',
