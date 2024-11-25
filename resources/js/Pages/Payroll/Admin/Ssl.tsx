@@ -165,9 +165,12 @@ const Ssl = () => {
     const [openDialog, setOpenDialog] = useState(false);
     return (
         <div>
-            <AuthenticatedLayoutAdmin title="SSL" links={AdminLinks}>
+            <AuthenticatedLayoutAdmin
+                title="Salary Standard Law"
+                links={AdminLinks}
+            >
                 <BodyContentLayout
-                    headerName="SSL"
+                    headerName="Salary Standard Law List"
                     className="h-[800px]"
                     contentStyle="h-[650px]"
                 >

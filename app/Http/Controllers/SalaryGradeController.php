@@ -60,7 +60,7 @@ class SalaryGradeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $salary_grade_code)
+    public function update(Request $request, string $grade)
     {
         // validate requets first
         $validated = $request->validate([
@@ -74,7 +74,7 @@ class SalaryGradeController extends Controller
             'step8' => 'required|numeric|min:0',
         ]);
 
-        SalaryGrade::where('salary_grade_code', $salary_grade_code)->update($validated);
+        SalaryGrade::where('grade', $grade)->update($validated);
         return redirect()->back()->with('success', 'Successfully stored ssl');
     }
 

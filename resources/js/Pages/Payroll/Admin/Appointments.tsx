@@ -7,6 +7,7 @@ import {
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import { Head, usePage } from "@inertiajs/react";
+import { AppointmentStore } from "@/Components/CrudComponents/AppointmentCRUD";
 import {
     ColumnDef,
     getCoreRowModel,
@@ -24,18 +25,14 @@ type columnTypes = {
     type: string;
     mandatory_deduction: boolean;
     basic_pay: number;
-    compensation: number;
     tax: number;
-    deduction: number;
 };
 
 const columns: ColumnDef<columnTypes>[] = [
-    { accessorKey: "type", header: "Type" },
-    { accessorKey: "mandatory_deduction", header: "Mandatory Deduction" },
-    { accessorKey: "basic_pay", header: "Basic Pay" },
-    { accessorKey: "compensation", header: "Compensation" },
-    { accessorKey: "tax", header: "Tax" },
-    { accessorKey: "deduction", header: "Deduction" },
+    { accessorKey: "appointment_type", header: "Type" },
+    { accessorKey: "basic_pay_type", header: "Basic Pay" },
+    { accessorKey: "tax_type", header: "Tax" },
+    { accessorKey: "has_mandatory_deduction", header: "Mandatory Deduction" },
     {
         id: "actions",
         cell: ({ row }) => {
@@ -93,7 +90,9 @@ export default function Appointments() {
                                 </section>
                             }
                             title="Add New Appointment Profile"
-                        ></DialogMenu>
+                        >
+                            <AppointmentStore />
+                        </DialogMenu>
                     </div>
                 </div>
                 <div>
