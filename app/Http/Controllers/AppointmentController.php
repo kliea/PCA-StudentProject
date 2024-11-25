@@ -29,7 +29,7 @@ class AppointmentController extends Controller
     {
         /* Validating the user request. */
         $validated = $request->validate([
-            'appointment_type'=> 'required|unique:appointments',
+            'appointment_type' => 'required|unique:appointments',
             'has_mandatory_deduction' => 'required|boolean',
             'basic_pay_type' => 'required|string',
             'tax_type' => 'required|string'
@@ -54,7 +54,6 @@ class AppointmentController extends Controller
     {
         /* Validating the user request. */
         $validated = $request->validate([
-            'appointment_type'=> 'required|unique:appointments',
             'has_mandatory_deduction' => 'required|boolean',
             'basic_pay_type' => 'required|string',
             'tax_type' => 'required|string'
@@ -67,10 +66,10 @@ class AppointmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($appointment_type)
+    public function destroy($appointment_code)
     {
         // Find the record by salary_grade
-        Appointment::where('grade', $appointment_type)->delete();
+        Appointment::where('appointment_code', $appointment_code)->delete();
         return redirect()->back()->with('success', 'Successfully deleted ssl');
     }
 }

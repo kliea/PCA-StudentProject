@@ -1,13 +1,12 @@
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import { usePage } from "@inertiajs/react";
 import { AdminLinks } from "@/lib/payrollData";
-import { AppointmentStore } from "@/Components/CrudComponents/AppointmentCRUD";
+import { AgencyShareStore } from "@/Components/CrudComponents/AgencyShareCRUD";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <AuthenticatedLayoutAdmin title="Dashboard" links={AdminLinks}>
-            <AppointmentStore>
-            </AppointmentStore>
+            <AgencyShareStore></AgencyShareStore>
         </AuthenticatedLayoutAdmin>
     );
 }

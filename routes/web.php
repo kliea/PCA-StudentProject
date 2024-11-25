@@ -129,7 +129,7 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::get('appointment', [AppointmentController::class, 'index'])->name('admin.appointment');
         Route::post('appointment', [AppointmentController::class, 'store'])->name('store.appointment');
         Route::put('appointment/{appointment_type}', [AppointmentController::class, 'update'])->name('update.appointment');
-        Route::delete('appointment/{appointment_type}', [AppointmentController::class, 'destroy'])->name('delete.appointment');
+        Route::delete('appointment/{appointment_code}', [AppointmentController::class, 'destroy'])->name('delete.appointment');
 
         // DEDUCTIONS
         Route::get('deduction', [DeductionTypeController::class, 'index'])->name('admin.deduction');

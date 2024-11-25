@@ -190,7 +190,7 @@ export function AppointmentStore() {
 }
 
 export function AppointmentUpdate({ RowData }: { RowData: any }) {
-    const { data, setData, put, processing, errors, reset } = useForm({
+    const { data, put, processing, errors, reset } = useForm({
         appointment_type: RowData.appointment_type,
         has_mandatory_deduction: RowData.has_mandatory_deduction,
         basic_pay_type: RowData.basic_pay_type,
@@ -207,7 +207,7 @@ export function AppointmentUpdate({ RowData }: { RowData: any }) {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        put(route("update.ssl", RowData), {
+        put(route("update.appointment", RowData), {
             onSuccess: () => {
                 toast(
                     <div className=" text-green-600 flex-col">
@@ -247,32 +247,6 @@ export function AppointmentUpdate({ RowData }: { RowData: any }) {
             <form onSubmit={submit} className="gap-4 flex flex-col">
                 <div>
                     <Label
-                        htmlFor="appointment_type"
-                        className={errors.appointment_type && "text-red-600"}
-                    >
-                        Appointment Type Name
-                    </Label>
-                    <Input
-                        min={0}
-                        id="appointment_type"
-                        type="text"
-                        name="appointment_type"
-                        value={data.appointment_type}
-                        onChange={(e) =>
-                            setData(
-                                "appointment_type",
-                                e.target.value.toLocaleUpperCase()
-                            )
-                        }
-                    />
-                    <InputError
-                        message={errors.appointment_type}
-                        className="mt-2"
-                    />
-                </div>
-
-                <div>
-                    <Label
                         htmlFor="basic_pay_type"
                         className={errors.basic_pay_type && "text-red-600"}
                     >
@@ -280,7 +254,7 @@ export function AppointmentUpdate({ RowData }: { RowData: any }) {
                     </Label>
                     <Select onValueChange={changeBasicPayType}>
                         <SelectTrigger>
-                            <SelectValue placeholder="SELECT BASIC PAY TYPE" />
+                            <SelectValue placeholder={data.basic_pay_type} />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="BASIC SALARY-CASUAL">
@@ -310,7 +284,7 @@ export function AppointmentUpdate({ RowData }: { RowData: any }) {
 
                     <Select onValueChange={changeTaxType}>
                         <SelectTrigger>
-                            <SelectValue placeholder="SELECT TAX TYPE" />
+                            <SelectValue placeholder={data.tax_type} />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="WITHHOLDING TAX 1">
@@ -332,6 +306,7 @@ export function AppointmentUpdate({ RowData }: { RowData: any }) {
                         Mandatory Deduction
                     </Label>
                     <Switch
+                        defaultChecked={data.has_mandatory_deduction}
                         id="has_mandatory_deduction"
                         onCheckedChange={() => {
                             data.has_mandatory_deduction =
@@ -371,7 +346,7 @@ export function AppointmentDelete({
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        destroy(route("delete.ssl", rowId), {
+        destroy(route("delete.appointment", rowId), {
             onSuccess: () => {
                 toast(
                     <div className=" text-green-600 flex-col">

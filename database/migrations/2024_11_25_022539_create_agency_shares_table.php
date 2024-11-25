@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('agency_shares', function (Blueprint $table) {
             $table->id('agency_share_code');
-
 			$table->string('agency_share_name');
 			$table->string('shorthand');
 			$table->double('amount');
