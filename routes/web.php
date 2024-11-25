@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\SalaryGradeController;
+use App\Http\Controllers\AgencyShareController;
 
 Route::get('/', function () {
     return Inertia::render('Payroll/Auth/Login', [
@@ -117,15 +118,21 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::get('governmentshare', [AdminPageController::class, 'governmentshare'])->name('admin.governmentshare');
         Route::get('formats', [AdminPageController::class, 'format'])->name('admin.formats');
         Route::get('appointments', [AdminPageController::class, 'appointments'])->name('admin.appointments');
-    });
-
-    // SSL CRUD
-    Route::prefix('admin')->group(function () {
+        //SSl CRUD
         Route::get('ssl', [SalaryGradeController::class, 'index'])->name('admin.ssl');
         Route::post('ssl/store', [SalaryGradeController::class, 'store'])->name('store.ssl');
         Route::put('/ssl/{grade}', [SalaryGradeController::class, 'update'])->name('update.ssl');
         Route::delete('/ssl/{grade}', [SalaryGradeController::class, 'destroy'])->name('delete.ssl');
+        //Goverment Share CRUD
+        Route::get('governmentshare',[AgencyShareController::class,'index'])->name('admin.governmentshare');
+        Route::post('governmentshare/store',[AgencyShareController::class,'store'])->name('store.governmentshare');
+        Route::put('/governmentshare/{agency_share_name}',[AgencyShareController::class,'update'])->name('update.governmentshare');
+        Route::delete('/governmentshare/{agency_share_name}',[AgencyShareController::class,'destroy'])->name('delete.governmentshare');
+        
     });
+
+
+
 });
 
 
