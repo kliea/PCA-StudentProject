@@ -52,6 +52,10 @@ class Employee extends Model
 		return $this->hasOne(Contract::class);
 	}
 
+	public function biometric() {
+		return $this->hasOne(Biometric::class);
+	}
+
 	public function payrollEntry() {
 		return $this->hasMany(PayrollEntry::class);
 	}
