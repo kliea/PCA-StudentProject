@@ -13,12 +13,12 @@ import {
     getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { MoreHorizontal, Plus, View } from "lucide-react";
+import { MoreHorizontal, Plus } from "lucide-react";
 import Data from "@/Components/Constants/data10.json";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
-import { Button } from "@/Components/ui/button";
 import { AdminLinks } from "@/lib/payrollData";
+import DialogMenu from "@/Components/Dialog";
 
 type columnTypes = {
     type: string;
@@ -84,10 +84,17 @@ export default function Appointments() {
                         className="w-1/4 rounded-pca"
                     />
 
-                    <Button className="flex gap-1">
-                        <Plus size={20} />
-                        Add New Appointment Profile
-                    </Button>
+                    <div>
+                        <DialogMenu
+                            trigger={
+                                <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
+                                    <Plus className="mr-2 h-6 w-auto" />
+                                    Add New Appointment Profile
+                                </section>
+                            }
+                            title="Add New Appointment Profile"
+                        ></DialogMenu>
+                    </div>
                 </div>
                 <div>
                     <DataTable

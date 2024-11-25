@@ -16,12 +16,12 @@ import {
 } from "@/Components/ui/sidebar";
 import NavLink from "@/Components/NavLink";
 import { Separator } from "@/Components/ui/separator";
-import { Head, usePage } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { navigationLinks } from "@/types/payroll";
 
-export default function AuthenticatedLayoutEmployees({
+export default function AuthenticatedLayoutAdmin({
     children,
     title,
     links,
@@ -35,7 +35,18 @@ export default function AuthenticatedLayoutEmployees({
         <SidebarProvider open={open} onOpenChange={() => setOpen(!open)}>
             <Sidebar variant="sidebar" collapsible="icon">
                 <SidebarHeader className="bg-baseGreen">
-                    <img src="https://placehold.co/600x400" alt="" />
+                    <div className="flex flex-row items-center">
+                        <img
+                            src="/LogoImg.png"
+                            alt="PCA LOGO"
+                            className="max-h-16"
+                        />
+                        <img
+                            src="/Logotxt.png"
+                            alt="PCA LOGO"
+                            className={cn("max-h-20", open ? "" : "hidden")}
+                        />
+                    </div>
                 </SidebarHeader>
                 <SidebarContent className="bg-baseGreen scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-white scrollbar-track-transparent overflow-y overflow-x-hidden">
                     {links.map((link) => (
@@ -59,7 +70,7 @@ export default function AuthenticatedLayoutEmployees({
                                                     className="gap-1 w-full"
                                                 >
                                                     <item.icon size={15} />
-                                                    <span className="group-data-[collapsible=icon]:hidden ">
+                                                    <span className="group-data-[collapsible=icon]:hidden">
                                                         {item.label}
                                                     </span>
                                                 </NavLink>

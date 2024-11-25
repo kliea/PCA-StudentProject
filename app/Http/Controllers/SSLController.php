@@ -64,7 +64,6 @@ class SSLController extends Controller
     {
         // validate requets first
         $validated = $request->validate([
-            'salary_grade' => 'required|numeric|min:0',
             'step1' => 'required|numeric|min:0',
             'step2' => 'required|numeric|min:0',
             'step3' => 'required|numeric|min:0',
@@ -79,7 +78,7 @@ class SSLController extends Controller
         return redirect()->back()->with('success', 'Successfully stored ssl');
     }
 
-    
+
     /**
      * Remove the specified resource from storage.
      */

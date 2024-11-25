@@ -6,7 +6,6 @@ import { Label } from "@/Components/ui/label";
 import { Input } from "@/Components/ui/input";
 import InputError from "../InputError";
 import { Button } from "../ui/button";
-import Dialog from "../Dialog";
 
 // Component for Storing SSL Data
 export function SslStore({ openDialog }: { openDialog: any }) {
