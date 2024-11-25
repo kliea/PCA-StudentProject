@@ -64,6 +64,7 @@ class SalaryGradeController extends Controller
     {
         // validate requets first
         $validated = $request->validate([
+			'salary_grade_code' => 'required|numeric',
             'salary_grade' => 'required|numeric|min:0',
             'step1' => 'required|numeric|min:0',
             'step2' => 'required|numeric|min:0',
@@ -75,7 +76,7 @@ class SalaryGradeController extends Controller
             'step8' => 'required|numeric|min:0',
         ]);
 
-        $ssl = SalaryGrade::where('salary_grade', $salary_grade)->update($validated);
+        SalaryGrade::where('salary_grade_code', $salary_grade)->update($validated);
         return redirect()->back()->with('success', 'Successfully stored ssl');
     }
 
