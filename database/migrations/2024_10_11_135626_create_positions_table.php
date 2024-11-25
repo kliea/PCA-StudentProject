@@ -20,7 +20,7 @@ return new class extends Migration
 
             // NO FURTHER ATTRIBUTES
 
-            $table->timestamps();
+            $table->timestamps();//
         });
     }
 
