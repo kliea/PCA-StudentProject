@@ -172,21 +172,25 @@ export function AppointmentStore({ openDialog }: { openDialog: any }) {
                         }}
                     />
                 </div>
-                <Button
-                    className="mt-5 w-full"
-                    disabled={processing}
-                    type="submit"
-                >
-                    Submit
-                </Button>
+                <div className="flex gap-3 justify-end pl-5">
+                    <Button
+                        variant="ghost"
+                        className="mt-5 w-full max-w-32"
+                        disabled={processing}
+                        type="button"
+                        onClick={() => openDialog(false)}
+                    >
+                        Cancel
+                    </Button>
 
-                <Button
-                    className="mt-5 w-full"
-                    disabled={processing}
-                    onClick={() => reset()}
-                >
-                    Cancel
-                </Button>
+                    <Button
+                        className="mt-5 w-full max-w-32"
+                        disabled={processing}
+                        type="submit"
+                    >
+                        Submit
+                    </Button>
+                </div>
             </form>
         </div>
     );
@@ -317,21 +321,15 @@ export function AppointmentUpdate({ RowData }: { RowData: any }) {
                         }}
                     />
                 </div>
-                <Button
-                    className="mt-5 w-full"
-                    disabled={processing}
-                    type="submit"
-                >
-                    Submit
-                </Button>
-
-                <Button
-                    className="mt-5 w-full"
-                    disabled={processing}
-                    onClick={() => reset()}
-                >
-                    Cancel
-                </Button>
+                <div className="flex gap-3 justify-end pl-5">
+                    <Button
+                        className="mt-5 w-full max-w-32"
+                        disabled={processing}
+                        type="submit"
+                    >
+                        Confirm
+                    </Button>
+                </div>
             </form>
         </div>
     );
