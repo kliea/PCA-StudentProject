@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DTREntry extends Model
+class DailyTimeEntry extends Model
 {
 	protected $fillable = [
 		'dtr_entry_code',
