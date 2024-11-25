@@ -7,6 +7,7 @@ import { Input } from "../ui/input";
 import InputError from "../InputError";
 import { RadioGroup, RadioGroupItem } from "@/Components/ui/radio-group";
 import { Switch } from "../ui/switch";
+import { Button } from "../ui/button";
 
 export function AgencyShareStore() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -188,6 +189,25 @@ export function AgencyShareStore() {
                         data.is_mandatory = !data.is_mandatory;
                     }}
                 />
+            </div>
+
+            <div className="flex gap-3 justify-end pl-5">
+                <Button
+                    variant="ghost"
+                    className="mt-5 w-full max-w-32"
+                    disabled={processing}
+                    type="button"
+                >
+                    Cancel
+                </Button>
+
+                <Button
+                    className="mt-5 w-full max-w-32"
+                    disabled={processing}
+                    type="submit"
+                >
+                    Submit
+                </Button>
             </div>
         </div>
     );
