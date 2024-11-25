@@ -26,7 +26,7 @@ class AgencyShareController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, string $agency_share_name)
+    public function store(Request $request)
     {
 
         //validate user request

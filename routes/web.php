@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\SalaryGradeController;
 use App\Http\Controllers\AgencyShareController;
+use App\Http\Controllers\CompensationTypeController;
 
 Route::get('/', function () {
     return Inertia::render('Payroll/Auth/Login', [
@@ -128,6 +129,11 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::post('governmentshare/store',[AgencyShareController::class,'store'])->name('store.governmentshare');
         Route::put('/governmentshare/{agency_share_name}',[AgencyShareController::class,'update'])->name('update.governmentshare');
         Route::delete('/governmentshare/{agency_share_name}',[AgencyShareController::class,'destroy'])->name('delete.governmentshare');
+        //Compensation CRUD
+        Route::get('compensations',[CompensationTypeController::class,'index'])->name('admin.compensations');
+        Route::post('compensations/store',[CompensationTypeController::class,'store'])->name('store.compensations');
+        Route::put('/compensations/{compensation_code}',[CompensationTypeController::class,'update'])->name('update.compensations');
+        Route::delete('/compensations/{compensation_code}',[CompensationTypeController::class,'destroy'])->name('delete.compensations');
         
     });
 
