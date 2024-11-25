@@ -20,7 +20,7 @@ class AttendanceLogger
       date_default_timezone_set("Asia/Manila");
       $t = date("Y-m-d, H:i:s");
       try {
-        
+
         $this->zk->connect();
         $this->zk->disableDevice();
         $this->zk->testVoice();
@@ -29,7 +29,7 @@ class AttendanceLogger
         $logs = $this->zk->getAttendance();
 
         foreach ($logs as $log) {
-           
+			echo $log;
         }
 
         $this->zk->enableDevice();
