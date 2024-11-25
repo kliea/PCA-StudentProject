@@ -1,13 +1,26 @@
 <?php
 
+use App\Http\Services\AttendanceLogger;
 use App\Http\Controllers\AdminPageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\SalaryGradeController;
 
+Route::get('/fetch-attendance', function () {
+    $logger = new AttendanceLogger();
+    $logs = $logger->getLog();
+    
+
+    return response()->json([
+        'message' => 'Attendance logs fetched successfully',
+        'data' => $logs,
+    ]);
+});
+
+
 Route::get('/', function () {
-    return Inertia::render('Payroll/Auth/Login', [
+    return Inertia::render('Auth/Login', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
