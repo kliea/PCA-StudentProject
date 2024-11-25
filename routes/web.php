@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\SalaryGradeController;
 use App\Services\AttendanceLogger;
-use App\Http\Controllers\DTREntryController;
+use App\Http\Controllers\DailyTimeEntryController;
 use App\Models\DTREntry;
 
 Route::get('/', function () {
@@ -29,7 +29,7 @@ Route::get('/fetch-attendance', function () {
 });
 
 // Route::put('/autogenerate-today', DTREntryController::create());
-Route::get('/autogenerate-today', [DTREntryController::class, 'create'])->name('generate-DTRs');
+Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'create'])->name('generate-DTRs');
 
 // Route for storing SSL data
 // Route::post('/admin/ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');

@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DailyTimeEntry;
 use App\Models\Employee;
+use Exception;
+use DateTime;
 
-class DailyTimeRecordController extends Controller
+class DailyTimeEntryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,7 +24,13 @@ class DailyTimeRecordController extends Controller
     public function create()
     {
 		$currentDate = date('Y-m-d');
-		$recentDate = DailyTimeEntry::latest()->first()->date;
+		$recentDate = NULL;
+
+		try {
+			$recentDate = DailyTimeEntry::latest()->first()->date;
+		} catch (Exception $e) {
+			$recentDate = (new DateTime())->setTimestamp(0);
+		}
 
 		/* Checking to see if today matches the most recent DTR entry. */
 		if ($recentDate == $currentDate) {
@@ -30,6 +38,12 @@ class DailyTimeRecordController extends Controller
 		}
 
 		$employees = Employee::all();
+
+		if (sizeof($employees) == 0) {
+			echo 'There are no employees.';
+
+			return;
+		}
 
 		/* Creating a new DTR entry for the day, for every employee. */
 		foreach ($employees as $employee) {
@@ -45,6 +59,8 @@ class DailyTimeRecordController extends Controller
 				'employee_code' => $employee->code
 			]);
 		}
+
+		echo 'Successfully updated the database.';
 
 		return;
     }
