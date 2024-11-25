@@ -11,11 +11,9 @@ import {
 } from "@/Components/ui/sidebar";
 import {
     BookOpen,
-    Cog,
     HandCoins,
     HeartHandshake,
     LayoutDashboard,
-    LogOut,
     LucideProps,
     Scale,
     ScrollText,
