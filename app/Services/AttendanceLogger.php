@@ -28,9 +28,10 @@ class AttendanceLogger
         $this->zk->setTime($t);
         $logs = $this->zk->getAttendance();
 
-        foreach ($logs as $log) {
-           
-        }
+        // foreach ($logs as $log) {
+
+        // }
+
 
         $this->zk->enableDevice();
         $this->zk->disconnect();

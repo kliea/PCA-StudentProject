@@ -32,8 +32,8 @@ class Employee extends Model
 		return $this->belongsTo(Appointment::class);
 	}
 
-	public function dailyTimeRecord() {
-		return $this->hasMany(DailyTimeRecord::class);
+	public function DTREntry() {
+		return $this->hasMany(DTREntry::class);
 	}
 
 	public function travelOrder() {

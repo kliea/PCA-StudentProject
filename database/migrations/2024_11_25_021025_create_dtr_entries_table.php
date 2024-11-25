@@ -15,15 +15,15 @@ return new class extends Migration
             $table->id('dtr_entry_code');
 
 			$table->date('date');
-			$table->time('time_in_am');
-			$table->time('time_ouu_am');
-			$table->time('time_in_pm');
-			$table->time('time_out_pm');
+			$table->time('time_in_am')->nullable();
+			$table->time('time_out_am')->nullable();
+			$table->time('time_in_pm')->nullable();
+			$table->time('time_out_pm')->nullable();
 			$table->integer('tardy_minutes');
 			$table->integer('undertime_minutes');
 			$table->integer('work_minutes');
 
-			$table->foreignId('dtr_code')->constrained('daily_time_records')->references('dtr_code');
+			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');
 
             $table->timestamps();
         });
