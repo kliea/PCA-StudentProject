@@ -32,7 +32,7 @@ export function AppointmentStore() {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route("store.ssl"), {
+        post(route("store.appointment"), {
             onSuccess: () => {
                 toast(
                     <div className=" text-green-600 flex-col">
