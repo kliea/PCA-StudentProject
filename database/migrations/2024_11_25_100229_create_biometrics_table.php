@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('biometrics', function (Blueprint $table) {
             $table->id('biometric_code');
 
-			$table->integer('device_bio_id', false, true);
+			$table->string('device_bio_id')->unique();
 
 			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');
 

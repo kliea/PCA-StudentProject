@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\DTREntry;
+use App\Models\Employee;
 
 class DTREntryController extends Controller
 {
@@ -27,7 +29,9 @@ class DTREntryController extends Controller
      */
     public function store(Request $request)
     {
-		//
+		$userId = $request[1];
+		$logType = $request[2];
+		$logDateTime = $request[3];
 
         return;
     }
