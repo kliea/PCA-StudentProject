@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class AppliedShare extends Model
 {
+	protected $table = 'applied_shares';
+	protected $primaryKey = 'app_share_code';
+
     protected $fillable = [
 		'amount',
 		'employee_code',

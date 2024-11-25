@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Position extends Model
 {
+	protected $table = 'positions';
+	protected $primaryKey = 'position_code';
+
 	protected $fillable = [
 		'position_title',
 		'salary_grade_code'

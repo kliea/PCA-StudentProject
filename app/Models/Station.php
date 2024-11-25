@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Station extends Model
 {
+	protected $table = 'stations';
+	protected $primaryKey = 'station_code';
+
 	protected $fillable = [
 		'station_name',
 		'street_address',

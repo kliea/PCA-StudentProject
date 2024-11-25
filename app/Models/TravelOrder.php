@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class TravelOrder extends Model
 {
+	protected $table = 'travel_orders';
+	protected $primaryKey = 'travel_order_code';
+
 	protected $fillable = [
 		'date_filed',
 		'start_date',
