@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
+	protected $table = 'employees';
+	protected $primaryKey = 'employee_code';
+
 	protected $fillable = [
-		'employee_code',
 		'employee_number',
 		'first_name',
 		'middle_name',
@@ -32,8 +34,8 @@ class Employee extends Model
 		return $this->belongsTo(Appointment::class);
 	}
 
-	public function DTREntry() {
-		return $this->hasMany(DTREntry::class);
+	public function dailyTimeEntry() {
+		return $this->hasMany(DailyTimeEntry::class);
 	}
 
 	public function travelOrder() {

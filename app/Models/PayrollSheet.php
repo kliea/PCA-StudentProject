@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class PayrollSheet extends Model
 {
+	protected $table = 'payroll_sheets';
+	protected $primaryKey = 'payroll_sheet_code';
+
 	protected $fillable = [
-		'payroll_sheet_code',
 		'payroll_name',
 		'payroll_type',
 		'start_date',

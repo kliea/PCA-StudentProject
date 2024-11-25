@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\DTREntry;
-use App\Models\Biometric;
-use App\Models\DailyTimeRecord;
+use App\Models\DailyTimeEntry;
 use App\Models\Employee;
+use Exception;
+use DateTime;
 
-class DTREntryController extends Controller
+class DailyTimeEntryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,16 +24,29 @@ class DTREntryController extends Controller
     public function create()
     {
 		$currentDate = date('Y-m-d');
-		$recentDate = DTREntry::latest()->first()->date;
+		$recentDate = NULL;
 
+		try {
+			$recentDate = DailyTimeEntry::latest()->first()->date;
+		} catch (Exception $e) {
+			$recentDate = (new DateTime())->setTimestamp(0);
+		}
+
+		/* Checking to see if today matches the most recent DTR entry. */
 		if ($recentDate == $currentDate) {
 			return;
 		}
 
 		$employees = Employee::all();
 
+		if (sizeof($employees) == 0) {
+			return;
+		}
+
+		/* Creating a new DTR entry for the day, for every employee. */
 		foreach ($employees as $employee) {
-			DTREntry::create([
+			DailyTimeEntry::create([
+				'dtr_entry_code' => 1,
 				'date' => $currentDate,
 				'time_in_am' => null,
 				'time_out_am' => null,
@@ -41,9 +54,12 @@ class DTREntryController extends Controller
 				'time_out_pm' => null,
 				'tardy_minutes' => 0,
 				'undertime_minutes' => 0,
-				'work_minutes' => 0
+				'work_minutes' => 0,
+				'employee_code' => $employee->employee_code
 			]);
 		}
+
+		return;
     }
 
     /**

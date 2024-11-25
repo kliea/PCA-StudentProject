@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dtr_entries', function (Blueprint $table) {
+        Schema::create('daily_time_entries', function (Blueprint $table) {
             $table->id('dtr_entry_code');
 
 			$table->date('date');
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dtr_entries');
+        Schema::dropIfExists('daily_time_entries');
     }
 };

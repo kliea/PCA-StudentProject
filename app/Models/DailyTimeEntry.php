@@ -4,19 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DTREntry extends Model
+class DailyTimeEntry extends Model
 {
+	protected $table = 'daily_time_entries';
+	protected $primaryKey = 'dtr_entry_code';
+
 	protected $fillable = [
-		'dtr_entry_code',
 		'date',
 		'time_in_am',
-		'time_ouu_am',
+		'time_out_am',
 		'time_in_pm',
 		'time_out_pm',
 		'tardy_minutes',
 		'undertime_minutes',
 		'work_minutes',
-		'dtr_code'
+		'employee_code'
 	];
 
 	public function employee() {
