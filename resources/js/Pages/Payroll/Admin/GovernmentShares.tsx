@@ -92,7 +92,7 @@ export default function GovernmentShare() {
                                     Add New Government Share Profile
                                 </section>
                             }
-                            title="Add New Appointment Profile"
+                            title="Add New Government Share Profile"
                         >
                             <AgencyShareStore></AgencyShareStore>
                         </DialogMenu>

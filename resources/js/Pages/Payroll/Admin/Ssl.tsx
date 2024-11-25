@@ -204,7 +204,7 @@ const Ssl = () => {
                                         </section>
                                     }
                                     title="New SSL Profile"
-                                    description="Add New SSL Profile"
+                                    description=""
                                 >
                                     <SslStore
                                         openDialog={() =>

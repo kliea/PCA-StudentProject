@@ -15,7 +15,7 @@ import {
 } from "@/Components/ui/select";
 import { Button } from "../ui/button";
 
-export function AppointmentStore() {
+export function AppointmentStore({ openDialog }: { openDialog: any }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         appointment_type: "",
         has_mandatory_deduction: false,

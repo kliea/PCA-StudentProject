@@ -107,6 +107,9 @@ export default function Appointments() {
             },
         },
     });
+
+    const [openDialog, setOpenDialog] = useState(false);
+
     return (
         <AuthenticatedLayoutAdmin title="Appointments" links={AdminLinks}>
             <BodyContentLayout headerName={"Appointments List"}>
@@ -127,7 +130,9 @@ export default function Appointments() {
                             }
                             title="Add New Appointment Profile"
                         >
-                            <AppointmentStore />
+                            <AppointmentStore
+                                openDialog={() => setOpenDialog(!openDialog)}
+                            />
                         </DialogMenu>
                     </div>
                 </div>

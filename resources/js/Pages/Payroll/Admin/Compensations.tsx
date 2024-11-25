@@ -18,6 +18,7 @@ import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
 import { AdminLinks } from "@/lib/payrollData";
 import DialogMenu from "@/Components/Dialog";
+import { CompensationStore } from "@/Components/CrudComponents/CompensationCRUD";
 
 type compensationTypes = {
     compensation_code: number;
@@ -95,8 +96,10 @@ export default function Compensation() {
                                     Add New Compensation Profile
                                 </section>
                             }
-                            title="Add New Appointment Profile"
-                        ></DialogMenu>
+                            title="Add New Compensation Profile"
+                        >
+                            <CompensationStore></CompensationStore>
+                        </DialogMenu>
                     </div>
                 </div>
                 <div>
