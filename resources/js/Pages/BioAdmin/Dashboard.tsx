@@ -230,7 +230,7 @@ export default function Dashboard() {
                         }
                         cardPeriodTo={
                             date?.to ? format(date.to, "LLL dd, y") : "Month"
-                        }
+                        } 
                         cardQuantity={99999}
                         cardTitle="Net Salary"
                         Icon={CreditCard}
