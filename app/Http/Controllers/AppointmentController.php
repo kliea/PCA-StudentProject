@@ -50,7 +50,7 @@ class AppointmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $appointment_type)
+    public function update(Request $request, string $appointment_code)
     {
         /* Validating the user request. */
         $validated = $request->validate([
@@ -59,7 +59,7 @@ class AppointmentController extends Controller
             'tax_type' => 'required|string'
         ]);
 
-        Appointment::where('appointment_type', $appointment_type)->update($validated);
+        Appointment::where('appointment_code', $appointment_code)->update($validated);
         return redirect()->back()->with('success', 'Successfully updated ssl');
     }
 

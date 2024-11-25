@@ -19,7 +19,7 @@ class AgencyShareController extends Controller
         $data = AgencyShare::all();
 
         //return data to front end
-        return Inertia::render('Payroll/Admin/GovernmentShare',['data'=>$data , 'message' => 'hello']);
+        return Inertia::render('Payroll/Admin/GovernmentShares', ['data' => $data]);
     }
 
 
@@ -30,9 +30,9 @@ class AgencyShareController extends Controller
     {
 
         //validate user request
-        $validate = $request-> validate([
-            'agency_share_name' => 'required|string|max:255',
-            'shorthand' => 'required|string|max:50',
+        $validate = $request->validate([
+            'agency_share_name' => 'unique|required|string|max:255',
+            'shorthand' => 'unique|required|string|max:50',
             'amount' => 'required|numeric',
             'is_mandatory' => 'required|boolean',
             'remittance_percent' => 'required|numeric',
@@ -44,22 +44,22 @@ class AgencyShareController extends Controller
             'agency_share_name' => $validate['agency_share_name'],
             'shorthand' => $validate['shorthand'],
             'amount' => $validate['amount'],
-            'is_mandatory'=> $validate['is_mandatory'],
+            'is_mandatory' => $validate['is_mandatory'],
             'remittance_percent' => $validate['remittance_percent'],
             'ceiling_amount' => $validate['ceiling_amount'],
         ]);
 
-        return redirect()->back()->with('success','Data recieved successfully!');
+        return redirect()->back()->with('success', 'Data recieved successfully!');
     }
-    
+
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $agency_share_name)
     {
         //
-         //validate user request
-        $validate = $request-> validate([
+        //validate user request
+        $validate = $request->validate([
             'agency_share_name' => 'required|string|max:255',
             'shorthand' => 'required|string|max:50',
             'amount' => 'required|numeric',
@@ -69,9 +69,8 @@ class AgencyShareController extends Controller
 
         ]);
 
-        AgencyShare::where('agency_share_name',$agency_share_name)->update($validate);
-        return redirect()->back()->with('success','successfully stored Government Share!');
-
+        AgencyShare::where('agency_share_name', $agency_share_name)->update($validate);
+        return redirect()->back()->with('success', 'successfully stored Government Share!');
     }
 
     /**
@@ -80,7 +79,7 @@ class AgencyShareController extends Controller
     public function destroy($agency_share_name)
     {
         //find the specific column
-        AgencyShare::where('agency_share_name',$agency_share_name)->delete();
+        AgencyShare::where('agency_share_name', $agency_share_name)->delete();
         return redirect()->back()->with('success', 'Successfully deleted government share');
     }
 }

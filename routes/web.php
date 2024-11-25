@@ -118,13 +118,20 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::get('payrolls', [AdminPageController::class, 'payrolls'])->name('admin.payrolls');
         Route::get('loans', [AdminPageController::class, 'loans'])->name('admin.loans');
         Route::get('compensations', [AdminPageController::class, 'compensations'])->name('admin.compensations');
-        Route::get('governmentshare', [AdminPageController::class, 'governmentshare'])->name('admin.governmentshare');
+        // AGENCY ROUTES
+        Route::get('governmentshares', [AgencyShareController::class, 'index'])->name('admin.governmentshare');
+        Route::post('governmentshares/store', [AgencyShareController::class, 'store'])->name('governmentshare.store');
         Route::get('formats', [AdminPageController::class, 'format'])->name('admin.formats');
-        Route::get('appointments', [AdminPageController::class, 'appointments'])->name('admin.appointments');
-    });
+        // APPOINTMENT ROUTES
+        Route::get('appointments', [AppointmentController::class, 'index'])->name('admin.appointment');
+        Route::post('appointments/store', [AppointmentController::class, 'store'])->name('store.appointment');
+        Route::put('appointments/{appointment_code}', [AppointmentController::class, 'update'])->name('update.appointment');
+        Route::delete('appointments/{appointment_code}', [AppointmentController::class, 'destroy'])->name('delete.appointment');
 
-    // SSL CRUD
-    Route::prefix('admin')->group(function () {
+        // DEDUCTIONS ROUTES
+        Route::get('deductions', [DeductionTypeController::class, 'index'])->name('admin.deduction');
+        Route::get('employees', [EmployeeController::class, 'index'])->name('admin.employee');
+        // SSL ROUTES
         Route::get('ssl', [SalaryGradeController::class, 'index'])->name('admin.ssl');
         Route::post('ssl/store', [SalaryGradeController::class, 'store'])->name('store.ssl');
         Route::put('/ssl/{grade}', [SalaryGradeController::class, 'update'])->name('update.ssl');
