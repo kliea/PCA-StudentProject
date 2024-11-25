@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('loan_types', function (Blueprint $table) {
-            $table->id('loan_code');
+        Schema::create('holidays', function (Blueprint $table) {
+            $table->id('holiday_code');
 
-			$table->string('loan_name');
+			$table->string('holiday_name');
+			$table->date('date');
+			$table->string('type');
+			$table->boolean('is_recurring');
 
             $table->timestamps();
         });
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('loan_types');
+        Schema::dropIfExists('holidays');
     }
 };

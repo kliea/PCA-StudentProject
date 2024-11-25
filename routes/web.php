@@ -5,7 +5,7 @@ use App\Http\Controllers\AdminPageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\SSLController;
+use App\Http\Controllers\SalaryGradeController;
 
 Route::get('/fetch-attendance', function () {
     $logger = new AttendanceLogger();
@@ -134,10 +134,10 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
 
     // SSL CRUD
     Route::prefix('admin')->group(function () {
-        Route::get('ssl', [SSLController::class, 'index'])->name('admin.ssl');
-        Route::post('ssl/store', [SSLController::class, 'store'])->name('store.ssl');
-        Route::put('/ssl/{salary_grade}', [SSLController::class, 'update'])->name('update.ssl');
-        Route::delete('/ssl/{salary_grade}', [SSLController::class,'destroy'])->name('delete.ssl');
+        Route::get('ssl', [SalaryGradeController::class, 'index'])->name('admin.ssl');
+        Route::post('ssl/store', [SalaryGradeController::class, 'store'])->name('store.ssl');
+        Route::put('/ssl/{grade}', [SalaryGradeController::class, 'update'])->name('update.ssl');
+        Route::delete('/ssl/{grade}', [SalaryGradeController::class, 'destroy'])->name('delete.ssl');
     });
 });
 

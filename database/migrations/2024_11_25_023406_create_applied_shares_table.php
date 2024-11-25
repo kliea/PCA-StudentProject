@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('loan_types', function (Blueprint $table) {
-            $table->id('loan_code');
+        Schema::create('applied_shares', function (Blueprint $table) {
+            $table->id('app_share_code');
 
-			$table->string('loan_name');
+			$table->double('amount');
+
+			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');
+			$table->foreignId('agency_share_code')->constrained('agency_shares')->references('agency_share_code');
 
             $table->timestamps();
         });
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('loan_types');
+        Schema::dropIfExists('applied_shares');
     }
 };

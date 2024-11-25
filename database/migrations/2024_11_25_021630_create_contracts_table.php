@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('loan_types', function (Blueprint $table) {
-            $table->id('loan_code');
+        Schema::create('contracts', function (Blueprint $table) {
+            $table->id('contract_code');
 
-			$table->string('loan_name');
+			$table->date('start_date');
+			$table->date('end_date');
+
+			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');
 
             $table->timestamps();
         });
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('loan_types');
+        Schema::dropIfExists('contracts');
     }
 };
