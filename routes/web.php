@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Services\AttendanceLogger;
+use App\Services\AttendanceLogger;
 use App\Http\Controllers\AdminPageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -11,7 +11,6 @@ Route::get('/fetch-attendance', function () {
     $logger = new AttendanceLogger();
     $logs = $logger->getLog();
     
-
     return response()->json([
         'message' => 'Attendance logs fetched successfully',
         'data' => $logs,
