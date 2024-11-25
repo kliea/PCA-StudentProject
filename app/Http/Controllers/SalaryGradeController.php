@@ -19,7 +19,7 @@ class SalaryGradeController extends Controller
         $data = SalaryGrade::all();
 
         // Return the data to the frontend
-        return Inertia::render('Payroll/Admin/Ssl', ['data' => $data, 'message' => 'hello']);
+        return Inertia::render('Payroll/Admin/Ssl', ['data' => $data]);
     }
 
     /**
@@ -60,7 +60,7 @@ class SalaryGradeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $salary_grade_code)
+    public function update(Request $request, string $grade)
     {
         // validate requets first
         $validated = $request->validate([
@@ -74,10 +74,9 @@ class SalaryGradeController extends Controller
             'step8' => 'required|numeric|min:0',
         ]);
 
-        SalaryGrade::where('salary_grade_code', $salary_grade_code)->update($validated);
+        SalaryGrade::where('grade', $grade)->update($validated);
         return redirect()->back()->with('success', 'Successfully stored ssl');
     }
-
 
     /**
      * Remove the specified resource from storage.

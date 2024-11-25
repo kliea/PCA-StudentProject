@@ -64,7 +64,7 @@ const links: link[] = [
     {
         title: "CONFIGURATIONS",
         items: [
-            { label: "Employees", url: "admin.employees", icon: Users },
+            { label: "Employees", url: "admin.employee", icon: Users },
             {
                 label: "Compensations",
                 url: "admin.compensations",
@@ -72,7 +72,7 @@ const links: link[] = [
             },
             {
                 label: "Deductions",
-                url: "admin.deductions",
+                url: "admin.deduction",
                 icon: TrendingDown,
             },
             {
@@ -82,7 +82,7 @@ const links: link[] = [
             },
             {
                 label: "Appointment",
-                url: "admin.appointments",
+                url: "admin.appointment",
                 icon: UserPen,
             },
             {
