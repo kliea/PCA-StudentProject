@@ -39,7 +39,7 @@ import { cn } from "@/lib/utils";
 import { AdminLinks } from "@/lib/payrollData";
 
 type sslProfile = {
-    salary_grade: number;
+    grade: number;
     step1: number;
     step2: number;
     step3: number;
@@ -52,7 +52,7 @@ type sslProfile = {
 
 const columns: ColumnDef<sslProfile>[] = [
     {
-        accessorKey: "salary_grade",
+        accessorKey: "grade",
         header: "SG",
     },
     {
@@ -98,10 +98,7 @@ const columns: ColumnDef<sslProfile>[] = [
                 {
                     tag: "1",
                     name: "Edit",
-                    dialogtitle: cn(
-                        "Editing Salary Grade ",
-                        rowData.salary_grade
-                    ),
+                    dialogtitle: cn("Editing Salary Grade ", rowData.grade),
                     dialogContent: <SslUpdate RowData={rowData}></SslUpdate>,
                 },
                 {
@@ -109,12 +106,12 @@ const columns: ColumnDef<sslProfile>[] = [
                     name: "Delete",
                     dialogtitle: cn(
                         "Are you sure you want to delete Salary Grade",
-                        rowData.salary_grade,
+                        rowData.grade,
                         "?"
                     ),
                     dialogContent: (
                         <SslDelete
-                            rowId={rowData.salary_grade}
+                            rowId={rowData.grade}
                             setOpenDialog={setOpenDialog}
                         ></SslDelete>
                     ),

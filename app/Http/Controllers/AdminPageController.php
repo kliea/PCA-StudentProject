@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SSLModel;
+use App\Models\SalaryGrade;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -14,7 +14,6 @@ class AdminPageController extends Controller
     {
         return Inertia::render('Payroll/Admin/Dashboard');
     }
-    // a
 
     public function appointments(): Response
     {
@@ -74,12 +73,12 @@ class AdminPageController extends Controller
     }
 
 
-    
+
 
     public function ssl(): Response
     {
         // Fetch data from the database
-        $data = SSLModel::all();
+        $data = SalaryGrade::all();
 
         // Return the data to the frontend
         return Inertia::render('Payroll/Admin/Ssl', ['data' => $data, 'message' => 'hello']);
@@ -101,7 +100,7 @@ class AdminPageController extends Controller
         ]);
 
         // Create a new profile record in the database
-        SSLModel::create([
+        SalaryGrade::create([
             'salary_grade' => $validated['salary_grade'],
             'step1' => $validated['step1'],
             'step2' => $validated['step2'],
@@ -117,9 +116,8 @@ class AdminPageController extends Controller
         return redirect()->back()->with('success', 'Data saved successfully!');
     }
 
-    public function update(Request $request, SSLModel $salary_grade)
+    public function update(Request $request, SalaryGrade $salary_grade)
     {
-
         // Return success response or redirect
         // return Inertia::render('Admin/Ssl', ['message' => $salary_grade]);
         return Inertia::render('Payroll/Admin/Ssl', ['message' => $salary_grade]);
