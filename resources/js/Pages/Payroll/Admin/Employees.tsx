@@ -19,7 +19,7 @@ import { MoreHorizontal } from "lucide-react";
 import Data from "@/Components/Constants/data7.json";
 import { AdminLinks } from "@/lib/payrollData";
 
-type columnTypes = {
+type employeeTypes = {
     name: string;
     id: string;
     official_station: string;
@@ -29,12 +29,12 @@ type columnTypes = {
     step: string;
 };
 
-const columns: ColumnDef<columnTypes>[] = [
+const columns: ColumnDef<employeeTypes>[] = [
     { accessorKey: "name", header: "Name" },
     { accessorKey: "id", header: "Id" },
     { accessorKey: "official_station", header: "Official Station" },
     { accessorKey: "position", header: "Position" },
-    { accessorKey: "appointment", header: "appointment" },
+    { accessorKey: "appointment", header: "Appointment" },
     { accessorKey: "sg", header: "SG" },
     { accessorKey: "step", header: "Step" },
     {
@@ -60,7 +60,9 @@ const columns: ColumnDef<columnTypes>[] = [
 ];
 
 export default function Employees() {
-    const data: columnTypes[] = Data;
+    const pageData = (usePage().props.data as employeeTypes[]) || [];
+    const data: employeeTypes[] = pageData;
+
     const table = useReactTable({
         data,
         columns,

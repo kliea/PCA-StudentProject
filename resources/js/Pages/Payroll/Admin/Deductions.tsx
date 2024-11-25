@@ -14,13 +14,12 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import { MoreHorizontal, Plus, View } from "lucide-react";
-import Data from "@/Components/Constants/data8.json";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
-import { Button } from "@/Components/ui/button";
 import { AdminLinks } from "@/lib/payrollData";
+import DialogMenu from "@/Components/Dialog";
 
-type columnTypes = {
+type deductionTypes = {
     name: string;
     amount: number;
     code: number;
@@ -31,7 +30,7 @@ type columnTypes = {
     shorthand: string;
 };
 
-const columns: ColumnDef<columnTypes>[] = [
+const columns: ColumnDef<deductionTypes>[] = [
     { accessorKey: "name", header: "Name" },
     { accessorKey: "amount", header: "Amount" },
     { accessorKey: "code", header: "Code" },
@@ -68,7 +67,8 @@ const columns: ColumnDef<columnTypes>[] = [
 ];
 
 export default function Deductions() {
-    const data: columnTypes[] = Data;
+    const pageData = (usePage().props.data as deductionTypes[]) || [];
+    const data: deductionTypes[] = pageData;
 
     const table = useReactTable({
         data,
@@ -91,10 +91,17 @@ export default function Deductions() {
                         className="w-1/4 rounded-pca"
                     />
 
-                    <Button className="flex gap-1">
-                        <Plus size={20} />
-                        Add New Deduction Profile
-                    </Button>
+                    <div>
+                        <DialogMenu
+                            trigger={
+                                <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
+                                    <Plus className="mr-2 h-6 w-auto" />
+                                    Add New Deduction Profile
+                                </section>
+                            }
+                            title="Add New Appointment Profile"
+                        ></DialogMenu>
+                    </div>
                 </div>
                 <div>
                     <DataTable

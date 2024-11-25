@@ -6,15 +6,13 @@ import {
 } from "@/Components/ui/dropdown-menu";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
-import { Head, usePage } from "@inertiajs/react";
 import {
     ColumnDef,
     getCoreRowModel,
     getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { File, FolderUp, MoreHorizontal } from "lucide-react";
-import Data from "@/Components/Constants/data5.json";
+import { File, MoreHorizontal } from "lucide-react";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
 
@@ -29,7 +27,6 @@ import { DatePickerWithRange } from "@/Components/DateRangePicker";
 import { addDays } from "date-fns";
 import React from "react";
 import { DateRange } from "react-day-picker";
-import { Button } from "@/Components/ui/button";
 import {
     Dialog,
     DialogContent,
@@ -38,10 +35,11 @@ import {
     DialogTrigger,
 } from "@/Components/ui/dialog";
 import { AdminLinks } from "@/lib/payrollData";
+import { usePage } from "@inertiajs/react";
 
 //  Set accepted column types
 
-type columnTypes = {
+type payrollTypes = {
     name: string;
     rate: number;
     quantity: number;
@@ -54,7 +52,7 @@ type columnTypes = {
 };
 
 // Generate the headers for the columns
-const columns: ColumnDef<columnTypes>[] = [
+const columns: ColumnDef<payrollTypes>[] = [
     { accessorKey: "name", header: "Name" },
     { accessorKey: "rate", header: "Rate" },
     { accessorKey: "quantity", header: "Quantity" },
@@ -91,7 +89,8 @@ const columns: ColumnDef<columnTypes>[] = [
 ];
 
 export default function Payrolls() {
-    const data: columnTypes[] = Data;
+    const pageData = (usePage().props.data as payrollTypes[]) || [];
+    const data: payrollTypes[] = pageData;
 
     const table = useReactTable({
         data,
