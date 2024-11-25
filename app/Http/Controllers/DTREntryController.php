@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\DTREntry;
+use App\Models\Biometric;
+use App\Models\DailyTimeRecord;
 use App\Models\Employee;
 
 class DTREntryController extends Controller
@@ -21,7 +23,27 @@ class DTREntryController extends Controller
      */
     public function create()
     {
-		return;
+		$currentDate = date('Y-m-d');
+		$recentDate = DTREntry::latest()->first()->date;
+
+		if ($recentDate == $currentDate) {
+			return;
+		}
+
+		$employees = Employee::all();
+
+		foreach ($employees as $employee) {
+			DTREntry::create([
+				'date' => $currentDate,
+				'time_in_am' => null,
+				'time_out_am' => null,
+				'time_in_pm' => null,
+				'time_out_pm' => null,
+				'tardy_minutes' => 0,
+				'undertime_minutes' => 0,
+				'work_minutes' => 0
+			]);
+		}
     }
 
     /**
@@ -29,11 +51,7 @@ class DTREntryController extends Controller
      */
     public function store(Request $request)
     {
-		$userId = $request[1];
-		$logType = $request[2];
-		$logDateTime = $request[3];
 
-        return;
     }
 
     /**

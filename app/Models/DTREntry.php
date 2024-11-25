@@ -19,7 +19,7 @@ class DTREntry extends Model
 		'dtr_code'
 	];
 
-	public function dailyTimeRecord() {
-		return $this->belongsTo(DailyTimeRecord::class);
+	public function employee() {
+		return $this->belongsTo(Employee::class);
 	}
 }
