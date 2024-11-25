@@ -104,6 +104,7 @@ export function SslStore({ openDialog }: { openDialog: any }) {
                         id="step1"
                         type="number"
                         name="step1"
+                        step="any"
                         value={data.step1}
                         onChange={(e) => setData("step1", e.target.value)}
                     />
@@ -122,6 +123,7 @@ export function SslStore({ openDialog }: { openDialog: any }) {
                         id="step2"
                         type="number"
                         name="step2"
+                        step="any"
                         value={data.step2}
                         onChange={(e) => setData("step2", e.target.value)}
                     />
@@ -139,6 +141,7 @@ export function SslStore({ openDialog }: { openDialog: any }) {
                         id="step3"
                         type="number"
                         name="step3"
+                        step="any"
                         value={data.step3}
                         onChange={(e) => setData("step3", e.target.value)}
                     />
@@ -156,6 +159,7 @@ export function SslStore({ openDialog }: { openDialog: any }) {
                         id="step4"
                         type="number"
                         name="step4"
+                        step="any"
                         value={data.step4}
                         onChange={(e) => setData("step4", e.target.value)}
                     />
@@ -173,6 +177,7 @@ export function SslStore({ openDialog }: { openDialog: any }) {
                         id="step5"
                         type="number"
                         name="step5"
+                        step="any"
                         value={data.step5}
                         onChange={(e) => setData("step5", e.target.value)}
                     />
@@ -190,6 +195,7 @@ export function SslStore({ openDialog }: { openDialog: any }) {
                         id="step6"
                         type="number"
                         name="step6"
+                        step="any"
                         value={data.step6}
                         onChange={(e) => setData("step6", e.target.value)}
                     />
@@ -207,6 +213,7 @@ export function SslStore({ openDialog }: { openDialog: any }) {
                         id="step7"
                         type="number"
                         name="step7"
+                        step="any"
                         value={data.step7}
                         onChange={(e) => setData("step7", e.target.value)}
                     />
@@ -224,6 +231,7 @@ export function SslStore({ openDialog }: { openDialog: any }) {
                         id="step8"
                         type="number"
                         name="step8"
+                        step="any"
                         value={data.step8}
                         onChange={(e) => setData("step8", e.target.value)}
                     />
@@ -310,6 +318,7 @@ export function SslUpdate({ RowData }: { RowData: any }) {
                         id="step1"
                         type="number"
                         name="step1"
+                        step="any"
                         value={data.step1}
                         onChange={(e) => setData("step1", e.target.value)}
                     />
@@ -323,6 +332,7 @@ export function SslUpdate({ RowData }: { RowData: any }) {
                         id="step2"
                         type="number"
                         name="step2"
+                        step="any"
                         value={data.step2}
                         onChange={(e) => setData("step2", e.target.value)}
                     />
@@ -335,6 +345,7 @@ export function SslUpdate({ RowData }: { RowData: any }) {
                         id="step3"
                         type="number"
                         name="step3"
+                        step="any"
                         value={data.step3}
                         onChange={(e) => setData("step3", e.target.value)}
                     />
@@ -347,6 +358,7 @@ export function SslUpdate({ RowData }: { RowData: any }) {
                         id="step4"
                         type="number"
                         name="step4"
+                        step="any"
                         value={data.step4}
                         onChange={(e) => setData("step4", e.target.value)}
                     />
@@ -359,6 +371,7 @@ export function SslUpdate({ RowData }: { RowData: any }) {
                         id="step5"
                         type="number"
                         name="step5"
+                        step="any"
                         value={data.step5}
                         onChange={(e) => setData("step5", e.target.value)}
                     />
@@ -371,6 +384,7 @@ export function SslUpdate({ RowData }: { RowData: any }) {
                         id="step6"
                         type="number"
                         name="step6"
+                        step="any"
                         value={data.step6}
                         onChange={(e) => setData("step6", e.target.value)}
                     />
@@ -383,6 +397,7 @@ export function SslUpdate({ RowData }: { RowData: any }) {
                         id="step7"
                         type="number"
                         name="step7"
+                        step="any"
                         value={data.step7}
                         onChange={(e) => setData("step7", e.target.value)}
                     />
@@ -395,6 +410,7 @@ export function SslUpdate({ RowData }: { RowData: any }) {
                         id="step8"
                         type="number"
                         name="step8"
+                        step="any"
                         value={data.step8}
                         onChange={(e) => setData("step8", e.target.value)}
                     />

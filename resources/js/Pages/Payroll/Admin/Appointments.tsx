@@ -1,13 +1,10 @@
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/Components/ui/dropdown-menu";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
-import { Head, usePage } from "@inertiajs/react";
-import { AppointmentStore } from "@/Components/CrudComponents/AppointmentCRUD";
+import {
+    AppointmentStore,
+    AppointmentDelete,
+    AppointmentUpdate,
+} from "@/Components/CrudComponents/AppointmentCRUD";
 import {
     ColumnDef,
     getCoreRowModel,
@@ -20,45 +17,85 @@ import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
 import { AdminLinks } from "@/lib/payrollData";
 import DialogMenu from "@/Components/Dialog";
+import DropdownDialog from "@/Components/DropdownDialog";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { usePage } from "@inertiajs/react";
 
-type columnTypes = {
-    type: string;
-    mandatory_deduction: boolean;
-    basic_pay: number;
-    tax: number;
+type appointmentTypes = {
+    appointment_code: number;
+    appointment_type: string;
+    basic_pay_type: string;
+    tax_type: string;
+    has_mandatory_deduction: boolean;
 };
 
-const columns: ColumnDef<columnTypes>[] = [
-    { accessorKey: "appointment_type", header: "Type" },
-    { accessorKey: "basic_pay_type", header: "Basic Pay" },
-    { accessorKey: "tax_type", header: "Tax" },
-    { accessorKey: "has_mandatory_deduction", header: "Mandatory Deduction" },
+const columns: ColumnDef<appointmentTypes>[] = [
+    { accessorKey: "appointment_code", header: "ID" },
+    { accessorKey: "appointment_type", header: "TYPE" },
+    { accessorKey: "basic_pay_type", header: "BASIC PAY TYPE" },
+    { accessorKey: "tax_type", header: "TAX TYPE" },
+    { accessorKey: "has_mandatory_deduction", header: "MANDATORY DEDUCTION" },
     {
         id: "actions",
         cell: ({ row }) => {
-            const values = row.original;
+            const [openDialog, setOpenDialog] = useState<string | null>(null);
+            const rowData = row.original;
+            const dialogs = [
+                {
+                    tag: "1",
+                    name: "Edit",
+                    dialogtitle: cn(
+                        "Editing Appointment ",
+                        rowData.appointment_type
+                    ),
+                    dialogContent: (
+                        <AppointmentUpdate
+                            RowData={rowData}
+                        ></AppointmentUpdate>
+                    ),
+                },
+                {
+                    tag: "2",
+                    name: "Delete",
+                    dialogtitle: cn(
+                        "Are you sure you want to delete ",
+                        rowData.appointment_type,
+                        "?"
+                    ),
+                    dialogContent: (
+                        <AppointmentDelete
+                            rowId={rowData.appointment_code}
+                            setOpenDialog={setOpenDialog}
+                        ></AppointmentDelete>
+                    ),
+                    style: "text-red-600",
+                },
+            ];
+
             return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <section>
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </section>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600">
-                            Delete
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <div>
+                    <DropdownDialog
+                        openDialog={openDialog}
+                        setOpenDialog={setOpenDialog}
+                        dialogs={dialogs}
+                        trigger={
+                            <>
+                                <section>
+                                    <MoreHorizontal className="h-4 w-4" />
+                                </section>
+                            </>
+                        }
+                    ></DropdownDialog>
+                </div>
             );
         },
     },
 ];
 
 export default function Appointments() {
-    const data: columnTypes[] = Data;
+    const pageData = (usePage().props.data as appointmentTypes[]) || [];
+    const data: appointmentTypes[] = pageData;
 
     const table = useReactTable({
         data,

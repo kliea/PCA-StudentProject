@@ -1,5 +1,6 @@
 [
     {
+        
        "type": "string",
         "mandatory_deduction": true,
         "basic_pay": 0,
