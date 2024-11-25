@@ -7,6 +7,8 @@ use Inertia\Inertia;
 
 // Controllers
 use App\Http\Controllers\SalaryGradeController;
+use App\Http\Controllers\AgencyShareController;
+use App\Http\Controllers\CompensationTypeController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DeductionTypeController;
 use App\Http\Controllers\EmployeeController;
@@ -118,30 +120,15 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::get('compensations', [AdminPageController::class, 'compensations'])->name('admin.compensations');
         Route::get('governmentshare', [AdminPageController::class, 'governmentshare'])->name('admin.governmentshare');
         Route::get('formats', [AdminPageController::class, 'format'])->name('admin.formats');
+        Route::get('appointments', [AdminPageController::class, 'appointments'])->name('admin.appointments');
+    });
 
-        // SSL
+    // SSL CRUD
+    Route::prefix('admin')->group(function () {
         Route::get('ssl', [SalaryGradeController::class, 'index'])->name('admin.ssl');
         Route::post('ssl/store', [SalaryGradeController::class, 'store'])->name('store.ssl');
-        Route::put('ssl/{grade}', [SalaryGradeController::class, 'update'])->name('update.ssl');
-        Route::delete('ssl/{grade}', [SalaryGradeController::class, 'destroy'])->name('delete.ssl');
-
-        // APPOINTMENT
-        Route::get('appointment', [AppointmentController::class, 'index'])->name('admin.appointment');
-        Route::post('appointment', [AppointmentController::class, 'store'])->name('store.appointment');
-        Route::put('appointment/{appointment_type}', [AppointmentController::class, 'update'])->name('update.appointment');
-        Route::delete('appointment/{appointment_code}', [AppointmentController::class, 'destroy'])->name('delete.appointment');
-
-        // DEDUCTIONS
-        Route::get('deduction', [DeductionTypeController::class, 'index'])->name('admin.deduction');
-        Route::post('deduction', [DeductionTypeController::class, 'store'])->name('store.deduction');
-        Route::put('deduction/{deduction_code}', [DeductionTypeController::class, 'update'])->name('update.deduction');
-        Route::delete('deduction/{deduction_code}', [DeductionTypeController::class, 'destroy'])->name('delete.deduction');
-
-        // EMPLOYEE
-        Route::get('employee', [EmployeeController::class, 'index'])->name('admin.employee');
-        Route::post('employee', [EmployeeController::class, 'store'])->name('store.employee');
-        Route::put('employee/{employee_number}', [EmployeeController::class, 'store'])->name('update.employee');
-        Route::delete('employee/{employee_number}', [EmployeeController::class, 'destroy'])->name('delete.employee');
+        Route::put('/ssl/{grade}', [SalaryGradeController::class, 'update'])->name('update.ssl');
+        Route::delete('/ssl/{grade}', [SalaryGradeController::class, 'destroy'])->name('delete.ssl');
     });
 });
 
