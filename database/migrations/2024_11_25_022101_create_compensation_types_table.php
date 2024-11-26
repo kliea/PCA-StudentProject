@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('compensation_types', function (Blueprint $table) {
             $table->id('compensation_code');
-
 			$table->string('compensation_name');
 			$table->string('shorthand');
 			$table->double('amount');

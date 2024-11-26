@@ -145,6 +145,8 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
 
         // DEDUCTIONS ROUTES
         Route::get('deductions', [DeductionTypeController::class, 'index'])->name('admin.deduction');
+        Route::post('deductions/store', [DeductionTypeController::class, 'store'])->name('store.deduction');
+
         Route::get('employees', [EmployeeController::class, 'index'])->name('admin.employee');
         // SSL ROUTES
         Route::get('ssl', [SalaryGradeController::class, 'index'])->name('admin.ssl');

@@ -196,8 +196,14 @@ export function AppointmentStore({ openDialog }: { openDialog: any }) {
     );
 }
 
-export function AppointmentUpdate({ RowData }: { RowData: any }) {
-    const { data, put, processing, errors, reset } = useForm({
+export function AppointmentUpdate({
+    RowData,
+    setOpenDialog,
+}: {
+    RowData: any;
+    setOpenDialog: any;
+}) {
+    const { data, put, processing, errors } = useForm({
         appointment_type: RowData.appointment_type,
         has_mandatory_deduction: RowData.has_mandatory_deduction,
         basic_pay_type: RowData.basic_pay_type,
@@ -322,6 +328,14 @@ export function AppointmentUpdate({ RowData }: { RowData: any }) {
                     />
                 </div>
                 <div className="flex gap-3 justify-end pl-5">
+                    <Button
+                        className="mt-5 w-full max-w-32"
+                        type="button"
+                        onClick={() => setOpenDialog(false)}
+                        variant="ghost"
+                    >
+                        Cancel
+                    </Button>
                     <Button
                         className="mt-5 w-full max-w-32"
                         disabled={processing}

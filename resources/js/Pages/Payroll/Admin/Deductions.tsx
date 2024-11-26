@@ -18,8 +18,11 @@ import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
 import { AdminLinks } from "@/lib/payrollData";
 import DialogMenu from "@/Components/Dialog";
+import { useState } from "react";
+import { DeductionStore } from "@/Components/CrudComponents/DeductionCRUD";
 
 type deductionTypes = {
+    deduction_code: number;
     deduction_name: string;
     shorthand: string;
     amount: number;
@@ -29,6 +32,7 @@ type deductionTypes = {
 };
 
 const columns: ColumnDef<deductionTypes>[] = [
+    { accessorKey: "deduction_code", header: "ID" },
     { accessorKey: "deduction_name", header: "DEDUCTION NAME" },
     { accessorKey: "shorthand", header: "SHORTHAND" },
     { accessorKey: "amount", header: "AMOUNT" },
@@ -65,7 +69,6 @@ const columns: ColumnDef<deductionTypes>[] = [
 export default function Deductions() {
     const pageData = (usePage().props.data as deductionTypes[]) || [];
     const data: deductionTypes[] = pageData;
-
     const table = useReactTable({
         data,
         columns,
@@ -77,6 +80,7 @@ export default function Deductions() {
             },
         },
     });
+    const [openDialog, setOpenDialog] = useState(false);
     return (
         <AuthenticatedLayoutAdmin title="Deductions" links={AdminLinks}>
             <BodyContentLayout headerName={"Deductions"}>
@@ -89,14 +93,20 @@ export default function Deductions() {
 
                     <div>
                         <DialogMenu
+                            open={openDialog}
+                            openDialog={() => setOpenDialog(!openDialog)}
                             trigger={
                                 <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
                                     <Plus className="mr-2 h-6 w-auto" />
-                                    Add New Deduction Profile
+                                    New Deduction Profile
                                 </section>
                             }
-                            title="Add New Appointment Profile"
-                        ></DialogMenu>
+                            title="New Deduction Profile"
+                        >
+                            <DeductionStore
+                                openDialog={() => setOpenDialog(!openDialog)}
+                            ></DeductionStore>
+                        </DialogMenu>
                     </div>
                 </div>
                 <div>

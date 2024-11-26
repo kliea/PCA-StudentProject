@@ -9,7 +9,7 @@ import { RadioGroup, RadioGroupItem } from "@/Components/ui/radio-group";
 import { Switch } from "../ui/switch";
 import { Button } from "../ui/button";
 
-export function AgencyShareStore() {
+export function AgencyShareStore({ openDialog }: { openDialog: any }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         agency_share_name: "",
         shorthand: "",
@@ -33,7 +33,7 @@ export function AgencyShareStore() {
             data.amount = "0";
         }
 
-        post(route("governmentshare.store"), {
+        post(route("store.governmentshare"), {
             onSuccess: () => {
                 toast(
                     <div className=" text-green-600 flex-col">
@@ -42,7 +42,10 @@ export function AgencyShareStore() {
                             <span className="text-base">Success!</span>
                         </div>
                         <div className="flex">
-                            <span className="pl-6">JHK</span>
+                            <span className="pl-6">
+                                Agency Share {data.agency_share_name} has been
+                                Added
+                            </span>
                         </div>
                     </div>,
                     { duration: 2000 }
@@ -138,7 +141,12 @@ export function AgencyShareStore() {
                     <RadioGroup required onValueChange={changeDeductionType}>
                         <div className="flex items-center space-x-2">
                             <RadioGroupItem value="Fixed" id="r1" />
-                            <Label htmlFor="r1">Fixed Amount</Label>
+                            <Label
+                                htmlFor="r1"
+                                className={errors.shorthand && "text-red-600"}
+                            >
+                                Fixed Amount
+                            </Label>
                             <Input
                                 disabled={
                                     data.deductionType == "Fixed" ? false : true
@@ -159,7 +167,12 @@ export function AgencyShareStore() {
                         </div>
                         <div className="flex items-center space-x-2">
                             <RadioGroupItem value="Remittance" id="r2" />
-                            <Label htmlFor="r2">Remittance%</Label>
+                            <Label
+                                htmlFor="r2"
+                                className={errors.shorthand && "text-red-600"}
+                            >
+                                Remittance%
+                            </Label>
                             <Input
                                 disabled={
                                     data.deductionType == "Remittance"
@@ -180,7 +193,12 @@ export function AgencyShareStore() {
                                 }
                             />
 
-                            <Label htmlFor="r2">Ceiling Amount</Label>
+                            <Label
+                                htmlFor="r2"
+                                className={errors.shorthand && "text-red-600"}
+                            >
+                                Ceiling Amount
+                            </Label>
                             <Input
                                 disabled={
                                     data.deductionType == "Remittance"
@@ -202,8 +220,6 @@ export function AgencyShareStore() {
                             />
                         </div>
                     </RadioGroup>
-
-                    <InputError message={errors.shorthand} className="mt-2" />
                 </div>
 
                 <div className="flex items-center gap-3">
@@ -222,6 +238,7 @@ export function AgencyShareStore() {
                         className="mt-5 w-full max-w-32"
                         disabled={processing}
                         type="button"
+                        onClick={() => openDialog(false)}
                     >
                         Cancel
                     </Button>
@@ -241,7 +258,13 @@ export function AgencyShareStore() {
 
 // UPDATE FUNCTION
 
-export function AgencyShareUpdate({ RowData }: { RowData: any }) {
+export function AgencyShareUpdate({
+    RowData,
+    setOpenDialog,
+}: {
+    RowData: any;
+    setOpenDialog: any;
+}) {
     const { data, setData, put, processing, errors, reset } = useForm({
         agency_share_name: RowData.agency_share_name,
         shorthand: RowData.shorthand,
@@ -274,7 +297,9 @@ export function AgencyShareUpdate({ RowData }: { RowData: any }) {
                             <span className="text-base">Success!</span>
                         </div>
                         <div className="flex">
-                            <span className="pl-6">JHK</span>
+                            <span className="pl-6">
+                                Successfully Edited {data.agency_share_name}
+                            </span>
                         </div>
                     </div>,
                     { duration: 2000 }
@@ -421,23 +446,21 @@ export function AgencyShareUpdate({ RowData }: { RowData: any }) {
                         }}
                     />
                 </div>
-
                 <div className="flex gap-3 justify-end pl-5">
                     <Button
-                        variant="ghost"
                         className="mt-5 w-full max-w-32"
-                        disabled={processing}
                         type="button"
+                        onClick={() => setOpenDialog(false)}
+                        variant="ghost"
                     >
                         Cancel
                     </Button>
-
                     <Button
                         className="mt-5 w-full max-w-32"
                         disabled={processing}
                         type="submit"
                     >
-                        Submit
+                        Confirm
                     </Button>
                 </div>
             </form>

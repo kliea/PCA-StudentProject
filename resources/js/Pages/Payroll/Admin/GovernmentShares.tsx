@@ -54,6 +54,7 @@ const columns: ColumnDef<agencyTypes>[] = [
                     ),
                     dialogContent: (
                         <AgencyShareUpdate
+                            setOpenDialog={setOpenDialog}
                             RowData={rowData}
                         ></AgencyShareUpdate>
                     ),
@@ -111,6 +112,9 @@ export default function GovernmentShare() {
             },
         },
     });
+
+    const [openDialog, setOpenDialog] = useState(false);
+
     return (
         <AuthenticatedLayoutAdmin title="Government Shares " links={AdminLinks}>
             <BodyContentLayout headerName={"Government Shares"}>
@@ -123,6 +127,8 @@ export default function GovernmentShare() {
 
                     <div>
                         <DialogMenu
+                            open={openDialog}
+                            openDialog={() => setOpenDialog(!openDialog)}
                             trigger={
                                 <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
                                     <Plus className="mr-2 h-6 w-auto" />
@@ -131,7 +137,9 @@ export default function GovernmentShare() {
                             }
                             title="Add New Government Share Profile"
                         >
-                            <AgencyShareStore></AgencyShareStore>
+                            <AgencyShareStore
+                                openDialog={() => setOpenDialog(!openDialog)}
+                            ></AgencyShareStore>
                         </DialogMenu>
                     </div>
                 </div>

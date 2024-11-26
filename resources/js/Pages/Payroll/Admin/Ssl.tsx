@@ -99,7 +99,12 @@ const columns: ColumnDef<sslProfile>[] = [
                     tag: "1",
                     name: "Edit",
                     dialogtitle: cn("Editing Salary Grade ", rowData.grade),
-                    dialogContent: <SslUpdate RowData={rowData}></SslUpdate>,
+                    dialogContent: (
+                        <SslUpdate
+                            RowData={rowData}
+                            setOpenDialog={setOpenDialog}
+                        ></SslUpdate>
+                    ),
                 },
                 {
                     tag: "2",

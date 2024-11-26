@@ -76,7 +76,7 @@ class DeductionTypeController extends Controller
     public function destroy($deduction_code)
     {
         // Find the record by salary_grade
-        SalaryGrade::where('deduction_code', $deduction_code)->delete();
+        DeductionType::where('deduction_code', $deduction_code)->delete();
         return redirect()->back()->with('success', 'Successfully deleted ssl');
     }
 }

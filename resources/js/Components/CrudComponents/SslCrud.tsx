@@ -271,7 +271,13 @@ export function SslStore({ openDialog }: { openDialog: any }) {
     );
 }
 
-export function SslUpdate({ RowData }: { RowData: any }) {
+export function SslUpdate({
+    RowData,
+    setOpenDialog,
+}: {
+    RowData: any;
+    setOpenDialog: any;
+}) {
     const { data, setData, put, processing, errors, reset } = useForm({
         grade: RowData.grade,
         step1: RowData.step1,
@@ -481,6 +487,14 @@ export function SslUpdate({ RowData }: { RowData: any }) {
                     </div>
                 </div>
                 <div className="flex gap-3 justify-end pl-5">
+                    <Button
+                        className="mt-5 w-full max-w-32"
+                        type="button"
+                        onClick={() => setOpenDialog(false)}
+                        variant="ghost"
+                    >
+                        Cancel
+                    </Button>
                     <Button
                         className="mt-5 w-full max-w-32"
                         disabled={processing}

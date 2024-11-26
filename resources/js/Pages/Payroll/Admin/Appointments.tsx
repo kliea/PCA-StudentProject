@@ -51,6 +51,7 @@ const columns: ColumnDef<appointmentTypes>[] = [
                     dialogContent: (
                         <AppointmentUpdate
                             RowData={rowData}
+                            setOpenDialog={setOpenDialog}
                         ></AppointmentUpdate>
                     ),
                 },
@@ -122,6 +123,8 @@ export default function Appointments() {
 
                     <div>
                         <DialogMenu
+                            open={openDialog}
+                            openDialog={() => setOpenDialog(!openDialog)}
                             trigger={
                                 <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
                                     <Plus className="mr-2 h-6 w-auto" />

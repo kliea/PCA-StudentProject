@@ -13,6 +13,7 @@ FRONT END
 - npm install @tanstack/react-table
 - npm install @radix-ui/react-avatar
 - npm install --save-dev tailwind-scrollbar
+- npm install @radix-ui/react-switch
 
 
 BACK END
