@@ -21,7 +21,7 @@ export const AdminLinks = [
                 icon: LayoutDashboard,
             },
             {
-                label: "Payrolls",
+                label: "Payroll Index",
                 url: "admin.payrolls",
                 icon: BookOpen,
             },

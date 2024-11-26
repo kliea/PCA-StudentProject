@@ -15,7 +15,7 @@ import {
 import { File, MoreHorizontal } from "lucide-react";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
-
+import dummyData from "@/Components/Constants/DataTest/payrollTestData.json";
 import {
     Select,
     SelectContent,
@@ -25,7 +25,7 @@ import {
 } from "@/Components/ui/select";
 import { DatePickerWithRange } from "@/Components/DateRangePicker";
 import { addDays } from "date-fns";
-import React from "react";
+import React, { useState } from "react";
 import { DateRange } from "react-day-picker";
 import {
     Dialog,
@@ -36,53 +36,103 @@ import {
 } from "@/Components/ui/dialog";
 import { AdminLinks } from "@/lib/payrollData";
 import { usePage } from "@inertiajs/react";
-
+import DropdownDialog from "@/Components/DropdownDialog";
+import { cn } from "@/lib/utils";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
+import PayrollProperties from "@/Components/CrudComponents/PayrollTabs/Properties";
 //  Set accepted column types
 
 type payrollTypes = {
-    name: string;
-    rate: number;
-    quantity: number;
-    type: string;
-    position: string;
-    tardiness: number;
+    refNumber: number;
+    fundCluster: string;
+    payrollName: string;
+    payrollType: string;
+    startDate: string;
+    endDate: string;
+    paidDate: string;
     compensation: number;
+    gross: number;
     deduction: number;
-    gross_amount: number;
+    netAmount: number;
 };
 
 // Generate the headers for the columns
 const columns: ColumnDef<payrollTypes>[] = [
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "rate", header: "Rate" },
-    { accessorKey: "quantity", header: "Quantity" },
-    { accessorKey: "type", header: "Type" },
-    { accessorKey: "position", header: "Position" },
-    { accessorKey: "tardiness", header: "Tardiness" },
+    { accessorKey: "refNumber", header: "Ref No." },
+    { accessorKey: "fundCluster", header: "Fund" },
+    { accessorKey: "payrollName", header: "Name" },
+    { accessorKey: "payrollType", header: "Type" },
+    { accessorKey: "startDate", header: "Start Date" },
+    { accessorKey: "endDate", header: "End Date" },
     { accessorKey: "compensation", header: "Compensation" },
+    { accessorKey: "gross", header: "Gross" },
     { accessorKey: "deduction", header: "Deduction" },
-    { accessorKey: "gross_amount", header: "Gross Amount" },
+    { accessorKey: "netAmount", header: "Net Amount" },
     {
-        // Action button for table
         id: "actions",
         cell: ({ row }) => {
-            const values = row.original;
+            const [openDialog, setOpenDialog] = useState<string | null>(null);
+            const rowData = row.original;
+            const dialogs = [
+                {
+                    tag: "1",
+                    name: "Edit",
+                    dialogtitle: cn("Edit Payroll"),
+                    dialogContent: (
+                        <Tabs defaultValue="properties" className="w-full">
+                            <TabsList className="grid w-full grid-cols-4">
+                                <TabsTrigger value="properties">
+                                    Properties
+                                </TabsTrigger>
+                                <TabsTrigger value="signatories">
+                                    Signatories
+                                </TabsTrigger>
+                                <TabsTrigger value="compensation">
+                                    Compensation
+                                </TabsTrigger>
+                                <TabsTrigger value="Deduction">
+                                    Deduction
+                                </TabsTrigger>
+                            </TabsList>
+                            <TabsContent value="properties">
+                                <PayrollProperties setOpenDialog={setOpenDialog} RowData={rowData} />
+                            </TabsContent>
+                            <TabsContent value="signatories">
+                                Change your password here.
+                            </TabsContent>
+                        </Tabs>
+                    ),
+                },
+                {
+                    tag: "2",
+                    name: "Delete",
+                    dialogtitle: cn("Are you sure you want to delete ", "?"),
+                    // dialogContent: (
+                    //     <AppointmentDelete
+                    //         rowId={rowData.appointment_code}
+                    //         setOpenDialog={setOpenDialog}
+                    //     ></AppointmentDelete>
+                    // ),
+                    // style: "text-red-600",
+                },
+            ];
+
             return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <section>
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </section>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem>View Details</DropdownMenuItem>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600">
-                            Delete
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <div>
+                    <DropdownDialog
+                        dialogClassName="max-w-[800px]"
+                        openDialog={openDialog}
+                        setOpenDialog={setOpenDialog}
+                        dialogs={dialogs}
+                        trigger={
+                            <>
+                                <section>
+                                    <MoreHorizontal className="h-4 w-4" />
+                                </section>
+                            </>
+                        }
+                    ></DropdownDialog>
+                </div>
             );
         },
     },
@@ -90,8 +140,7 @@ const columns: ColumnDef<payrollTypes>[] = [
 
 export default function Payrolls() {
     const pageData = (usePage().props.data as payrollTypes[]) || [];
-    const data: payrollTypes[] = pageData;
-    console.log(pageData);
+    const data: payrollTypes[] = dummyData;
 
     const table = useReactTable({
         data,
