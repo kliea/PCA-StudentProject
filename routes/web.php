@@ -1,6 +1,5 @@
 <?php
 
-use App\Services\AttendanceLogger;
 use App\Http\Controllers\AdminPageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -8,17 +7,40 @@ use Inertia\Inertia;
 use App\Http\Controllers\SalaryGradeController;
 use App\Services\AttendanceLogger;
 use App\Http\Controllers\DailyTimeEntryController;
-use App\Models\DTREntry;
 
-Route::get('/fetch-attendance', function () {
+
+// for testing
+Route::get('/fetch-attendance', function () 
+{
     $logger = new AttendanceLogger();
     $logs = $logger->getLog();
     
-    return response()->json([
-        'message' => 'Attendance logs fetched successfully',
-        'data' => $logs,
-    ]);
-});
+
+    $pm = (new DateTime('01:00:00'))->format('H:i:s');
+    foreach($logs as $log => $k)
+    {
+        $kHours = (new DateTime($k[3]))->format('H:i:s');
+        if ($kHours > $pm) 
+        {
+            echo $log. " : " . $kHours . "\n". date('Y-m-d');
+        }
+    // echo $log. " : " . $kHours->format('H:i:s') . "\n";
+
+    // foreach($logs as $log)
+    // {
+    //     foreach($log as $per => $key)
+    //     {
+    //         echo "$per [". gettype($per) ."]: $key [". gettype($key)."]<br>";
+    //     }
+
+    // }
+   
+    // return response()->json([
+    //     'message' => 'Attendance logs fetched successfully',
+    //     'data' => $logs,
+    // ]);
+    }}
+    );
 
 
 Route::get('/', function () {
@@ -30,18 +52,11 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/fetch-attendance', function () {
-    $logger = new AttendanceLogger();
-    $logs = $logger->getLog();
 
-    return response()->json([
-        'message' => 'Attendance logs fetched successfully',
-        'data' => $logs,
-    ]);
-});
 
-// Route::put('/autogenerate-today', DTREntryController::create());
 Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'create'])->name('generate-DTRs');
+// Route::put('/autogenerate-today', [DailyTimeEntryController::class, 'create'])->name('generate-DTRs');
+// Route::put('/autogenerate-today', DTREntryController::create());
 
 // Route for storing SSL data
 // Route::post('/admin/ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
