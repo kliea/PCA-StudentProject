@@ -139,7 +139,7 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::put('governmentshares/{agency_share_name}', [AgencyShareController::class, 'update'])->name('update.governmentshare');
         Route::delete('governmentshares/{agency_share_name}', [AgencyShareController::class, 'destroy'])->name('delete.governmentshare');
         Route::get('formats', [AdminPageController::class, 'format'])->name('admin.formats');
-        
+
         // APPOINTMENT ROUTES
         Route::get('appointments', [AppointmentController::class, 'index'])->name('admin.appointment');
         Route::post('appointments/store', [AppointmentController::class, 'store'])->name('store.appointment');
@@ -158,7 +158,7 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
 
         //Query routes
         Route::get('/loans/{employee_code}',[LoanController::class,'showEmployeeLoanDetails'])->name('admin.Loans');
-
+        Route::get('employee/{employee_code}', [EmployeeController::class, 'get_employee_data'])->name('admin.employee_data');
     });
 });
 
