@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('agency_shares', function (Blueprint $table) {
             $table->id('agency_share_code');
 
-			$table->string('agency_share_name');
-			$table->string('shorthand');
+			$table->string('agency_share_name')->unique();
+			$table->string('shorthand')->unique();
 			$table->double('amount');
 			$table->boolean('is_mandatory');
 			$table->double('remittance_percent');

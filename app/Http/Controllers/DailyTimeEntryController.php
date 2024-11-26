@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DailyTimeEntry;
 use App\Models\Employee;
+use Inertia\Inertia;
+use Inertia\Response;
 use Exception;
 use DateTime;
 
@@ -13,15 +15,18 @@ class DailyTimeEntryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
-        return;
+		/* Fetching all the entries stored within the database. */
+		$allData = DailyTimeEntry::all();
+
+		return Inertia::render('', ['data' => $allData, 'message' => 'All the DTR entries have been retrieved successfully.']);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function generateNewBatch()
     {
 		$currentDate = date('Y-m-d');
 		$recentDate = NULL;
