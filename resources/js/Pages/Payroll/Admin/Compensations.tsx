@@ -22,6 +22,7 @@ import { useState } from "react";
 import {
     CompensationStore,
     CompensationDelete,
+    CompensationUpdate,
 } from "@/Components/CrudComponents/CompensationCRUD";
 import { cn } from "@/lib/utils";
 import DropdownDialog from "@/Components/DropdownDialog";
@@ -55,16 +56,12 @@ const columns: ColumnDef<compensationTypes>[] = [
                         "Edit Compensation ",
                         rowData.compensation_name
                     ),
-                    // dialogContent: (
-                    //     <AppointmentUpdate
-                    //         compensationTypes={
-                    //             usePage().props
-                    //                 .compensationTypes as Array<string>
-                    //         }
-                    //         RowData={rowData}
-                    //         setOpenDialog={setOpenDialog}
-                    //     ></AppointmentUpdate>
-                    // ),
+                    dialogContent: (
+                        <CompensationUpdate
+                            RowData={rowData}
+                            setOpenDialog={setOpenDialog}
+                        ></CompensationUpdate>
+                    ),
                 },
                 {
                     tag: "2",

@@ -31,11 +31,13 @@ const DropdownDialog = ({
     trigger,
     openDialog,
     setOpenDialog,
+    dialogClassName,
 }: {
     dialogs: any;
     trigger: ReactNode;
     openDialog: string | null;
     setOpenDialog: any;
+    dialogClassName?: string;
 }) => {
     return (
         <>
@@ -55,6 +57,7 @@ const DropdownDialog = ({
             </DropdownMenu>
             {dialogs.map((dialog: any) => (
                 <Dialog
+                    dialogClassName={dialogClassName}
                     key={dialog.tag}
                     title={dialog.dialogtitle}
                     open={openDialog === dialog.tag}

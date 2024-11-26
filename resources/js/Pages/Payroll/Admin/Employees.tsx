@@ -17,6 +17,10 @@ import {
 } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { AdminLinks } from "@/lib/payrollData";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
+import DropdownDialog from "@/Components/DropdownDialog";
+import { EmployeeView } from "@/Components/CrudComponents/EmployeesCRUD";
 
 type employeeTypes = {
     employee_number: number;
@@ -37,22 +41,43 @@ const columns: ColumnDef<employeeTypes>[] = [
     { accessorKey: "salary_type", header: "Salary Grade" },
     { accessorKey: "salary_step", header: "Salary Step" },
     {
-        id: "action",
+        id: "actions",
         cell: ({ row }) => {
-            const values = row.original;
+            const [openDialog, setOpenDialog] = useState<string | null>(null);
+            const rowData = row.original;
+            const dialogs = [
+                {
+                    tag: "1",
+                    name: "Edit",
+                    dialogtitle: cn(
+                        "Edit Information of Emplyee #",
+                        rowData.employee_number
+                    ),
+                    dialogContent: (
+                        <EmployeeView
+                            RowData={rowData}
+                            setOpenDialog={setOpenDialog}
+                        ></EmployeeView>
+                    ),
+                },
+            ];
+
             return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <section>
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </section>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem>View</DropdownMenuItem>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <div>
+                    <DropdownDialog
+                        dialogClassName="max-w-[1000px]"
+                        openDialog={openDialog}
+                        setOpenDialog={setOpenDialog}
+                        dialogs={dialogs}
+                        trigger={
+                            <>
+                                <section>
+                                    <MoreHorizontal className="h-4 w-4" />
+                                </section>
+                            </>
+                        }
+                    ></DropdownDialog>
+                </div>
             );
         },
     },
