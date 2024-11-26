@@ -12,7 +12,7 @@ import {
 
 const selectDropdown = ({selectValue, setSelected}:{placeholder:string, selectValue:Array<string>, setSelected:any}) => {
     
-
+    
   return (
     <div>
       <Select>

@@ -1,4 +1,4 @@
-import AuthenticatedLayoutEmployee from "@/Layouts/AuthenticatedLayoutAdmin copy";
+import AuthenticatedLayoutEmployee from "@/Layouts/AuthenticatedLayoutEmployees";
 import { Head, Link, usePage } from "@inertiajs/react";
 
 export default function Dashboard() {

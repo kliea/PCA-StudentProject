@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\SalaryGradeController;
+use App\Http\Controllers\EmployeePageController;
 
 Route::get('/', function () {
     return Inertia::render('Payroll/Auth/Login', [
@@ -139,6 +140,12 @@ Route::prefix('admin')->group(function () {
     Route::get('governmentshare', [AdminPageController::class, 'governmentshare'])->name('admin.governmentshare');
     Route::get('formats', [AdminPageController::class, 'format'])->name('admin.formats');
     Route::get('appointments', [AdminPageController::class, 'appointments'])->name('admin.appointments');
+});
+
+Route::prefix('employee')->group(function () {
+    Route::get('mydtr', [EmployeePageController::class, 'myDTR'])->name('employee.mydtr');
+    Route::get('mypayslip', [EmployeePageController::class, 'myPayslip'])->name('employee.mypayslip');
+    Route::get('dashboard', [EmployeePageController::class, 'dashboard'])->name('employee.dashboard');
 });
 
 // SSL CRUD

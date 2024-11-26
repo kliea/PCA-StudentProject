@@ -71,9 +71,7 @@ class AdminPageController extends Controller
     {
         return Inertia::render('BioAdmin/ManageUsers');
     }
-
-
-
+    
 
     public function ssl(): Response
     {
