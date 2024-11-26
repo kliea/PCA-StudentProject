@@ -14,6 +14,8 @@ use App\Http\Controllers\DeductionTypeController;
 use App\Services\AttendanceLogger;
 use App\Http\Controllers\DailyTimeEntryController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\LoanController;
+use App\Http\Controllers\SummaryController;
 
 Route::get('/', function () {
     return Inertia::render('Payroll/Auth/Login', [
@@ -142,6 +144,7 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::put('governmentshares/{agency_share_name}', [AgencyShareController::class, 'update'])->name('update.governmentshare');
         Route::delete('governmentshares/{agency_share_name}', [AgencyShareController::class, 'destroy'])->name('delete.governmentshare');
         Route::get('formats', [AdminPageController::class, 'format'])->name('admin.formats');
+
         // APPOINTMENT ROUTES
         Route::get('appointments', [AppointmentController::class, 'index'])->name('admin.appointment');
         Route::post('appointments/store', [AppointmentController::class, 'store'])->name('store.appointment');
@@ -156,11 +159,19 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
 
         // EMPLOYEES ROUTES
         Route::get('employees', [EmployeeController::class, 'index'])->name('admin.employee');
+
         // SSL ROUTES
         Route::get('ssl', [SalaryGradeController::class, 'index'])->name('admin.ssl');
         Route::post('ssl/store', [SalaryGradeController::class, 'store'])->name('store.ssl');
         Route::put('/ssl/{grade}', [SalaryGradeController::class, 'update'])->name('update.ssl');
         Route::delete('/ssl/{grade}', [SalaryGradeController::class, 'destroy'])->name('delete.ssl');
+
+        //Query routes
+        Route::get('/loans/{employee_code}',[LoanController::class,'showEmployeeLoanDetails'])->name('admin.Loans');
+        Route::get('/summary', [SummaryController::class, 'Summary'])->name('admin.summary');
+        Route::get('employee/{employee_code}', [EmployeeController::class, 'get_employee_data'])->name('admin.employee_data');
+
+
     });
 });
 

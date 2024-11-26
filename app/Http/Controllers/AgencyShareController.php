@@ -31,7 +31,7 @@ class AgencyShareController extends Controller
 
         //validate user request
         $validate = $request->validate([
-            'agency_share_name' => 'required|string|max:255',
+            'agency_share_name' => 'required|string|unique|max:255',
             'shorthand' => 'required|string|max:50',
             'amount' => 'required|numeric',
             'is_mandatory' => 'required|boolean',
