@@ -100,7 +100,6 @@ const columns: ColumnDef<appointmentTypes>[] = [
 export default function Appointments() {
     const pageData = (usePage().props.data as appointmentTypes[]) || [];
     const data: appointmentTypes[] = pageData;
-
     const table = useReactTable({
         data,
         columns,

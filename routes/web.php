@@ -131,8 +131,12 @@ Route::get('/bioadmin/manageusers', function () {
 Route::domain('payroll.' . env('APP_URL'))->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
-        Route::get('payrolls', [AdminPageController::class, 'payrolls'])->name('admin.payrolls');
-        Route::get('loans', [AdminPageController::class, 'loans'])->name('admin.loans');
+        // PAYROLL ROUTES
+        Route::get('payroll', [SummaryController::class, 'Summary'])->name('admin.payrolls');
+
+        // LOANS ROUTES
+        // Route::get('loans', [AdminPageController::class, 'loans'])->name('admin.loans');
+        Route::get('loans', [LoanController::class, 'showEmployeeLoanDetails'])->name('admin.loans');
         // COMPENSATION ROUTES
         Route::get('compensations', [CompensationTypeController::class, 'index'])->name('admin.compensations');
         Route::post('compensations/store', [CompensationTypeController::class, 'store'])->name('store.compensations');
@@ -163,18 +167,13 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         // SSL ROUTES
         Route::get('ssl', [SalaryGradeController::class, 'index'])->name('admin.ssl');
         Route::post('ssl/store', [SalaryGradeController::class, 'store'])->name('store.ssl');
-        Route::put('/ssl/{grade}', [SalaryGradeController::class, 'update'])->name('update.ssl');
-        Route::delete('/ssl/{grade}', [SalaryGradeController::class, 'destroy'])->name('delete.ssl');
+        Route::put('ssl/{grade}', [SalaryGradeController::class, 'update'])->name('update.ssl');
+        Route::delete('ssl/{grade}', [SalaryGradeController::class, 'destroy'])->name('delete.ssl');
 
         //Query routes
-        Route::get('/loans/{employee_code}',[LoanController::class,'showEmployeeLoanDetails'])->name('admin.Loans');
-        Route::get('/summary', [SummaryController::class, 'Summary'])->name('admin.summary');
+
         Route::get('employee/{employee_code}', [EmployeeController::class, 'get_employee_data'])->name('admin.employee_data');
-
-
     });
 });
 
 require __DIR__ . '/auth.php';
-
-

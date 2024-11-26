@@ -91,6 +91,7 @@ const columns: ColumnDef<payrollTypes>[] = [
 export default function Payrolls() {
     const pageData = (usePage().props.data as payrollTypes[]) || [];
     const data: payrollTypes[] = pageData;
+    console.log(pageData);
 
     const table = useReactTable({
         data,
@@ -166,6 +167,7 @@ export default function Payrolls() {
                     ></DataTable>
                 </div>
             </BodyContentLayout>
+            <div></div>
         </AuthenticatedLayoutAdmin>
     );
 }

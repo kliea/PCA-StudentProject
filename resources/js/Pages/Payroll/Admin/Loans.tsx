@@ -69,6 +69,8 @@ export default function Loans() {
     const pageData = (usePage().props.data as loanTypes[]) || [];
     const data: loanTypes[] = pageData;
 
+    console.log(usePage().props.employeeDetails);
+
     const table = useReactTable({
         data,
         columns,

@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class DemoSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
-    {
+	/**
+	 * Run the database seeds.
+	 */
+	public function run(): void
+	{
 		DB::table('salary_grades')->insert([
 			['grade' => 1,	'step1' => 13000, 	'step2' => 13109,  'step3' => 13219,  'step4' => 13329,  'step5' => 13441,   'step6' => 13553,   'step7' => 13666,  'step8' => 13780],
 			['grade' => 2,	'step1' => 13819, 	'step2' => 13925,  'step3' => 14032,  'step4' => 14140,  'step5' => 14248,   'step6' => 14357,   'step7' => 14468,  'step8' => 14578],
@@ -225,5 +225,5 @@ class DemoSeeder extends Seeder
 			'employee_code' => 1,
 			'loan_code' => 1
 		]);
-    }
+	}
 }
