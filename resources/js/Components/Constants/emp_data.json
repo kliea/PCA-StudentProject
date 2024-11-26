@@ -1,0 +1,51 @@
+[
+    {
+        "day": 1,
+        "am": "7:00",
+        "pm": "12:00",
+        "tardy": 0,
+        "undertime": 0
+    },
+    {
+        "day": 2,
+        "am": "7:00",
+        "pm": "12:00",
+        "tardy": 0,
+        "undertime": 0
+    },
+    {
+        "day": 3,
+        "am": "7:00",
+        "pm": "12:00",
+        "tardy": 0,
+        "undertime": 0
+    },
+    {
+        "day": 4,
+        "am": "7:00",
+        "pm": "12:00",
+        "tardy": 0,
+        "undertime": 0
+    },
+    {
+        "day": 5,
+        "am": "7:00",
+        "pm": "12:00",
+        "tardy": 0,
+        "undertime": 0
+    },
+    {
+        "day": 7,
+        "am": "7:00",
+        "pm": "12:00",
+        "tardy": 0,
+        "undertime": 0
+    },
+    {
+        "day": 8,
+        "am": "7:00",
+        "pm": "12:00",
+        "tardy": 0,
+        "undertime": 0
+    }
+]

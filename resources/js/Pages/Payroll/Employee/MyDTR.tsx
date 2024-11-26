@@ -1,7 +1,7 @@
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import AuthenticatedLayoutEmployee from "@/Layouts/AuthenticatedLayoutEmployees";
 import { Head, usePage } from "@inertiajs/react";
-import StatusCard from "@/Components/StatusCard";
+import StatusCardEmployee from "@/Components/StatusCardEmployee";
 import {
     Banknote,
     CreditCard,
@@ -9,6 +9,11 @@ import {
     PhilippinePeso,
     TrendingDown,
     File,
+    Percent,
+    ClockArrowUp,
+    ArrowUp,
+    ArrowDown,
+    ChartArea,
 } from "lucide-react";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import {
@@ -20,8 +25,7 @@ import {
 import { DataTable } from "@/Components/DataTable";
 import { DatePickerWithRange } from "@/Components/DateRangePicker";
 
-import payrollData from "@/Components/Constants/data3.json";
-import loanData from "@/Components/Constants/data4.json";
+import dtrData from "@/Components/Constants/emp_data.json";
 import React from "react";
 import { DateRange } from "react-day-picker";
 import { addDays, format } from "date-fns";
@@ -50,117 +54,53 @@ type recentPayrolls = {
     compensation: number;
 };
 
+type dtrDetails = {
+    day: number;
+    am: string;
+    pm: string;
+    tardy: number;
+    undertime: number;
+};
+
 type recentRequest = {
     id: number;
     name: string;
     loan_details: string;
 };
 
-// Column definition for Recent Payroll Table
-const rpcolumns: ColumnDef<recentPayrolls>[] = [
+// Column definition for dtrDetails
+const dtrcolumns: ColumnDef<dtrDetails>[] = [
     {
-        accessorKey: "period",
-        header: "Period",
+        accessorKey: "day",
+        header: "DAY",
     },
     {
-        accessorKey: "name",
-        header: "Name",
+        accessorKey: "am",
+        header: "AM",
     },
     {
-        accessorKey: "employee_id",
-        header: "Employee Id",
+        accessorKey: "pm",
+        header: "PM",
     },
     {
-        accessorKey: "position",
-        header: "Position",
+        accessorKey: "tardy",
+        header: "TARDY",
     },
 
     {
-        accessorKey: "deduction",
-        header: "Deduction",
-    },
-    {
-        accessorKey: "compensation",
-        header: "Compensation",
-    },
-    {
-        id: "actions",
-        cell: ({ row }) => {
-            const action = row.original;
-            return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <section>
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </section>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem>View Details</DropdownMenuItem>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600">
-                            Delete
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            );
-        },
+        accessorKey: "undertime",
+        header: "UNDERTIME",
     },
 ];
 
-const rlcolumns: ColumnDef<recentRequest>[] = [
-    { accessorKey: "id", header: "No." },
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "loan_details", header: "Loan Details" },
-    {
-        id: "actions",
-        cell: ({ row }) => {
-            const action = row.original;
-            return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <section>
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </section>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem>View Details</DropdownMenuItem>
-                        <DropdownMenuItem className="text-green-600">
-                            Approve
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600">
-                            Deny
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            );
-        },
-    },
-];
 
 export default function MyDTR() {
-    const recentPayrollData = payrollData;
-    const recentLoansData = loanData;
-    const rpData: recentPayrolls[] = recentPayrollData;
-    const rlData: recentRequest[] = recentLoansData;
+    const dtrEmployeeData = dtrData;
+    const DTRdata: dtrDetails[] = dtrEmployeeData;
 
-    const rpTable = useReactTable({
-        data: rpData,
-        columns: rpcolumns,
-        getPaginationRowModel: getPaginationRowModel(),
-        // Adjust Limit content after database has beeen set
-        initialState: {
-            pagination: {
-                pageSize: 7,
-            },
-        },
-        getCoreRowModel: getCoreRowModel(),
-    });
-
-    const rlTable = useReactTable({
-        data: rlData,
-        columns: rlcolumns,
+    const dtrTable = useReactTable({
+        data: DTRdata,
+        columns: dtrcolumns,
         getPaginationRowModel: getPaginationRowModel(),
         // Adjust Limit content after database has beeen set
         initialState: {
@@ -194,8 +134,68 @@ export default function MyDTR() {
                     </DialogTrigger>
                 </div>
             </Dialog>
+
+            <div className="flex flex-col gap-3 lg:flex-row py-2 lg:p-5 rounded-pca">
+                <StatusCardEmployee
+                    cardPercent={100}
+                    cardPeriodFrom={
+                        date?.from ? format(date.from, "LLL dd, y") : ""
+                    }
+                    cardPeriodTo={date?.to ? format(date.to, "LLL dd, y") : ""}
+                    cardQuantity={100}
+                    cardTitle="ON TIME"
+                    Icon={ChartArea}
+                    StatusIcon={ArrowUp}
+                />
+                <StatusCardEmployee
+                    cardPercent={0}
+                    cardPeriodFrom={
+                        date?.from ? format(date.from, "LLL dd, y") : ""
+                    }
+                    cardPeriodTo={date?.to ? format(date.to, "LLL dd, y") : ""}
+                    cardQuantity={0}
+                    cardTitle="LATE"
+                    Icon={ChartArea}
+                    StatusIcon={ArrowDown}
+                />
+                <StatusCardEmployee
+                    cardPercent={0}
+                    cardPeriodFrom={
+                        date?.from ? format(date.from, "LLL dd, y") : ""
+                    }
+                    cardPeriodTo={date?.to ? format(date.to, "LLL dd, y") : ""}
+                    cardQuantity={0}
+                    cardTitle="TARDY"
+                    Icon={ChartArea}
+                    StatusIcon={ArrowDown}
+                />
+                <StatusCardEmployee
+                    cardPercent={0}
+                    cardPeriodFrom={
+                        date?.from ? format(date.from, "LLL dd, y") : ""
+                    }
+                    cardPeriodTo={date?.to ? format(date.to, "LLL dd, y") : ""}
+                    cardQuantity={0}
+                    cardTitle="UNDERTIME"
+                    Icon={ChartArea}
+                    StatusIcon={ArrowDown}
+                />
+            </div>
+
+            <div className=" h-full">
+                <div>
+                    <BodyContentLayout headerName="DTR Details" className=" mt-5 h-fit shadow-md" >
+                        <DataTable
+                            columns={dtrcolumns}
+                            rowStyle="odd:bg-white even:bg-transparent text-center"
+                            table={dtrTable}
+                            className="lg:h-[450px]"
+                        />
+                    </BodyContentLayout>
+                </div>
+            </div>
             
-            <></>
+            
         </AuthenticatedLayoutEmployee>
     );
 }
