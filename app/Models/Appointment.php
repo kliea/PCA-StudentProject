@@ -6,19 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Appointment extends Model
 {
-    /**
-     * The primary key associated with the table.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'appointment_code';
-
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'appointments';
+	protected $table = 'appointments';
+	protected $primaryKey = 'appointment_code';
 
 	protected $fillable = [
 		'appointment_type',

@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('daily_time_records', function (Blueprint $table) {
-            $table->id('dtr_code');
+        Schema::create('daily_time_entries', function (Blueprint $table) {
+            $table->id('dtr_entry_code');
 
-			$table->date('start_date');
-			$table->date('end_date');
-			$table->integer('total_tardy_minutes', false, true);
-			$table->integer('total_undertime_minutes', false, true);
-			$table->integer('total_work_minutes', false, true);
+			$table->date('date');
+			$table->time('time_in_am')->nullable();
+			$table->time('time_out_am')->nullable();
+			$table->time('time_in_pm')->nullable();
+			$table->time('time_out_pm')->nullable();
+			$table->integer('tardy_minutes');
+			$table->integer('undertime_minutes');
+			$table->integer('work_minutes');
 
 			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');
 
@@ -31,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('daily_time_records');
+        Schema::dropIfExists('daily_time_entries');
     }
 };

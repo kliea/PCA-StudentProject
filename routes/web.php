@@ -12,6 +12,9 @@ use App\Http\Controllers\CompensationTypeController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DeductionTypeController;
 use App\Http\Controllers\EmployeeController;
+use App\Services\AttendanceLogger;
+use App\Http\Controllers\DailyTimeEntryController;
+use App\Models\DTREntry;
 
 Route::get('/', function () {
     return Inertia::render('Payroll/Auth/Login', [
@@ -22,6 +25,18 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/fetch-attendance', function () {
+    $logger = new AttendanceLogger();
+    $logs = $logger->getLog();
+
+    return response()->json([
+        'message' => 'Attendance logs fetched successfully',
+        'data' => $logs,
+    ]);
+});
+
+// Route::put('/autogenerate-today', DTREntryController::create());
+Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'create'])->name('generate-DTRs');
 
 // Route for storing SSL data
 // Route::post('/admin/ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
