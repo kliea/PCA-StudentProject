@@ -106,26 +106,47 @@ Route::get('/bioadmin/manageusers', function () {
 
 
 // SUBDOMAIN FOR PAYROLL
-Route::domain('payroll.' . env('APP_URL'))->group(function () {
-    Route::prefix('admin')->group(function () {
-        Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
-        Route::get('payrolls', [AdminPageController::class, 'payrolls'])->name('admin.payrolls');
-        Route::get('loans', [AdminPageController::class, 'loans'])->name('admin.loans');
-        Route::get('employees', [AdminPageController::class, 'employees'])->name('admin.employees');
-        Route::get('compensations', [AdminPageController::class, 'compensations'])->name('admin.compensations');
-        Route::get('deductions', [AdminPageController::class, 'deductions'])->name('admin.deductions');
-        Route::get('governmentshare', [AdminPageController::class, 'governmentshare'])->name('admin.governmentshare');
-        Route::get('formats', [AdminPageController::class, 'format'])->name('admin.formats');
-        Route::get('appointments', [AdminPageController::class, 'appointments'])->name('admin.appointments');
-    });
+// Route::domain('payroll.' . env('APP_URL'))->group(function () {
+//     Route::prefix('admin')->group(function () {
+//         Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
+//         Route::get('payrolls', [AdminPageController::class, 'payrolls'])->name('admin.payrolls');
+//         Route::get('loans', [AdminPageController::class, 'loans'])->name('admin.loans');
+//         Route::get('employees', [AdminPageController::class, 'employees'])->name('admin.employees');
+//         Route::get('compensations', [AdminPageController::class, 'compensations'])->name('admin.compensations');
+//         Route::get('deductions', [AdminPageController::class, 'deductions'])->name('admin.deductions');
+//         Route::get('governmentshare', [AdminPageController::class, 'governmentshare'])->name('admin.governmentshare');
+//         Route::get('formats', [AdminPageController::class, 'format'])->name('admin.formats');
+//         Route::get('appointments', [AdminPageController::class, 'appointments'])->name('admin.appointments');
+//     });
 
-    // SSL CRUD
-    Route::prefix('admin')->group(function () {
-        Route::get('ssl', [SalaryGradeController::class, 'index'])->name('admin.ssl');
-        Route::post('ssl/store', [SalaryGradeController::class, 'store'])->name('store.ssl');
-        Route::put('/ssl/{grade}', [SalaryGradeController::class, 'update'])->name('update.ssl');
-        Route::delete('/ssl/{grade}', [SalaryGradeController::class, 'destroy'])->name('delete.ssl');
-    });
+//     // SSL CRUD
+//     Route::prefix('admin')->group(function () {
+//         Route::get('ssl', [SalaryGradeController::class, 'index'])->name('admin.ssl');
+//         Route::post('ssl/store', [SalaryGradeController::class, 'store'])->name('store.ssl');
+//         Route::put('/ssl/{grade}', [SalaryGradeController::class, 'update'])->name('update.ssl');
+//         Route::delete('/ssl/{grade}', [SalaryGradeController::class, 'destroy'])->name('delete.ssl');
+//     });
+// });
+
+
+Route::prefix('admin')->group(function () {
+    Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
+    Route::get('payrolls', [AdminPageController::class, 'payrolls'])->name('admin.payrolls');
+    Route::get('loans', [AdminPageController::class, 'loans'])->name('admin.loans');
+    Route::get('employees', [AdminPageController::class, 'employees'])->name('admin.employees');
+    Route::get('compensations', [AdminPageController::class, 'compensations'])->name('admin.compensations');
+    Route::get('deductions', [AdminPageController::class, 'deductions'])->name('admin.deductions');
+    Route::get('governmentshare', [AdminPageController::class, 'governmentshare'])->name('admin.governmentshare');
+    Route::get('formats', [AdminPageController::class, 'format'])->name('admin.formats');
+    Route::get('appointments', [AdminPageController::class, 'appointments'])->name('admin.appointments');
+});
+
+// SSL CRUD
+Route::prefix('admin')->group(function () {
+    Route::get('ssl', [SalaryGradeController::class, 'index'])->name('admin.ssl');
+    Route::post('ssl/store', [SalaryGradeController::class, 'store'])->name('store.ssl');
+    Route::put('/ssl/{grade}', [SalaryGradeController::class, 'update'])->name('update.ssl');
+    Route::delete('/ssl/{grade}', [SalaryGradeController::class, 'destroy'])->name('delete.ssl');
 });
 
 
