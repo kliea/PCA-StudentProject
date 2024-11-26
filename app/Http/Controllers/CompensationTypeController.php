@@ -52,6 +52,24 @@ class CompensationTypeController extends Controller
     }
 
 
+    public function update(Request $request,string $compensation_code){
+
+        $validate = $request->validate([
+            'compensation_name' => 'string|max:255',
+            'shorthand' => 'string|max:255',
+            'amount' => 'numeric',
+            'is_taxable' => 'boolean',
+            'is_fixed' => 'boolean',
+
+        ]);
+
+        CompensationType::where('compensation_code',$compensation_code)->update($validate);
+        return redirect()->back()->with('success', 'Successfully stored');
+    }
+
+    
+
+
 
     /**
      * Remove the specified resource from storage.

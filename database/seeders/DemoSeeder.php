@@ -221,6 +221,7 @@ class DemoSeeder extends Seeder
 			'begin_balance' => 100.0,
 			'paid_amount' => 200.0,
 			'balance' => 200.0,
+			'previous_paid' => 100.01,
 			'employee_code' => 1,
 			'loan_code' => 1
 		]);

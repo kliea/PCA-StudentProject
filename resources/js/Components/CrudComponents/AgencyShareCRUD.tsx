@@ -33,7 +33,7 @@ export function AgencyShareStore() {
             data.amount = "0";
         }
 
-        post(route("governmentshare.store"), {
+        post(route("store.governmentshare"), {
             onSuccess: () => {
                 toast(
                     <div className=" text-green-600 flex-col">
