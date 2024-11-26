@@ -14,6 +14,7 @@ use App\Services\AttendanceLogger;
 use App\Http\Controllers\DailyTimeEntryController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\SummaryController;
 
 Route::get('/', function () {
     return Inertia::render('Payroll/Auth/Login', [
@@ -158,7 +159,7 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
 
         //Query routes
         Route::get('/loans/{employee_code}',[LoanController::class,'showEmployeeLoanDetails'])->name('admin.Loans');
-
+        Route::get('/summary', [SummaryController::class, 'Summary'])->name('admin.summary');
     });
 });
 
