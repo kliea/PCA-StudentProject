@@ -9,9 +9,9 @@ export default function ({
 }) {
     return (
         <div>
-            <div className="flex gap-3 justify-end pl-5">
+            <div className="bottom-0 right-0 fixed flex p-5 gap-5">
                 <Button
-                    className="mt-5 w-full max-w-32"
+                    className="mt-5 w-full min-w-32"
                     type="button"
                     onClick={() => setOpenDialog(false)}
                     variant="ghost"
@@ -19,7 +19,7 @@ export default function ({
                     Cancel
                 </Button>
                 <Button
-                    className="mt-5 w-full max-w-32"
+                    className="mt-5 w-full min-w-32"
                     disabled={processing}
                     type="submit"
                 >

@@ -12,6 +12,7 @@ import { useState } from "react";
 import { DatePicker } from "@/Components/DatePicker";
 import { Checkbox } from "@/Components/ui/checkbox";
 import ConfirmCancelButton from "@/Components/ConfirmCancelButton";
+import { Switch } from "@/Components/ui/switch";
 
 // CONSTANTS FOR NOW > MIGHT NEED TABLES LATER
 
@@ -114,6 +115,10 @@ export default function PayrollProperties({
                             setDate={setPaidDate}
                         />
                     </div>
+                </div>
+                <div className="flex gap-3 items-center">
+                    <Switch />
+                    <Label>Include Mandatory and Other Deductions</Label>
                 </div>
             </form>
             <ConfirmCancelButton

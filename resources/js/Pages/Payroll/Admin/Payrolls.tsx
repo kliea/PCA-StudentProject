@@ -40,6 +40,10 @@ import DropdownDialog from "@/Components/DropdownDialog";
 import { cn } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
 import PayrollProperties from "@/Components/CrudComponents/PayrollTabs/Properties";
+import PaginationTable from "@/Components/Pagination";
+import Signatories from "@/Components/CrudComponents/PayrollTabs/Signatories";
+import CompensationTab from "@/Components/CrudComponents/PayrollTabs/CompensationTab";
+import DeductionTab from "@/Components/CrudComponents/PayrollTabs/DeductionTab";
 //  Set accepted column types
 
 type payrollTypes = {
@@ -90,23 +94,43 @@ const columns: ColumnDef<payrollTypes>[] = [
                                 <TabsTrigger value="compensation">
                                     Compensation
                                 </TabsTrigger>
-                                <TabsTrigger value="Deduction">
+                                <TabsTrigger value="deduction">
                                     Deduction
                                 </TabsTrigger>
                             </TabsList>
                             <TabsContent value="properties">
-                                <PayrollProperties setOpenDialog={setOpenDialog} RowData={rowData} />
+                                <PayrollProperties
+                                    setOpenDialog={setOpenDialog}
+                                    RowData={rowData}
+                                />
                             </TabsContent>
                             <TabsContent value="signatories">
-                                Change your password here.
+                                <Signatories
+                                    setOpenDialog={setOpenDialog}
+                                ></Signatories>
+                            </TabsContent>
+                            <TabsContent value="compensation">
+                                <CompensationTab
+                                    setOpenDialog={setOpenDialog}
+                                ></CompensationTab>
+                            </TabsContent>
+                            <TabsContent value="deduction">
+                                <DeductionTab
+                                    setOpenDialog={setOpenDialog}
+                                ></DeductionTab>
                             </TabsContent>
                         </Tabs>
                     ),
                 },
                 {
                     tag: "2",
-                    name: "Delete",
-                    dialogtitle: cn("Are you sure you want to delete ", "?"),
+                    name: "View",
+                    dialogtitle: cn(
+                        "Payroll: ",
+                        rowData.payrollType,
+                        ":",
+                        rowData.payrollName
+                    ),
                     // dialogContent: (
                     //     <AppointmentDelete
                     //         rowId={rowData.appointment_code}
@@ -120,7 +144,7 @@ const columns: ColumnDef<payrollTypes>[] = [
             return (
                 <div>
                     <DropdownDialog
-                        dialogClassName="max-w-[800px]"
+                        dialogClassName="max-w-[800px] min-h-[500px]"
                         openDialog={openDialog}
                         setOpenDialog={setOpenDialog}
                         dialogs={dialogs}
@@ -215,6 +239,7 @@ export default function Payrolls() {
                         rowStyle="odd:bg-white even:bg-transparent text-center"
                     ></DataTable>
                 </div>
+                <PaginationTable table={table}></PaginationTable>
             </BodyContentLayout>
             <div></div>
         </AuthenticatedLayoutAdmin>

@@ -117,6 +117,58 @@
         "netAmount": 5300.00
     },
     {
+        "refNumber": 12353,
+        "fundCluster": "B3",
+        "payrollName": "June Payroll",
+                "payrollType": "General",
+        "startDate": "2025-06-01",
+        "endDate": "2025-06-30",
+        "paidDate": "2025-07-05",
+        "compensation": 5800.00,
+        "gross": 6300.00,
+        "deduction": 500.00,
+        "netAmount": 5300.00
+    },
+    {
+        "refNumber": 12353,
+        "fundCluster": "B3",
+        "payrollName": "June Payroll",
+                "payrollType": "General",
+        "startDate": "2025-06-01",
+        "endDate": "2025-06-30",
+        "paidDate": "2025-07-05",
+        "compensation": 5800.00,
+        "gross": 6300.00,
+        "deduction": 500.00,
+        "netAmount": 5300.00
+    },
+    {
+        "refNumber": 12353,
+        "fundCluster": "B3",
+        "payrollName": "June Payroll",
+                "payrollType": "General",
+        "startDate": "2025-06-01",
+        "endDate": "2025-06-30",
+        "paidDate": "2025-07-05",
+        "compensation": 5800.00,
+        "gross": 6300.00,
+        "deduction": 500.00,
+        "netAmount": 5300.00
+    },
+    {
+        "refNumber": 12353,
+        "fundCluster": "B3",
+        "payrollName": "June Payroll",
+                "payrollType": "General",
+        "startDate": "2025-06-01",
+        "endDate": "2025-06-30",
+        "paidDate": "2025-07-05",
+        "compensation": 5800.00,
+        "gross": 6300.00,
+        "deduction": 500.00,
+        "netAmount": 5300.00
+    },
+    {
         "refNumber": 12354,
         "fundCluster": "C3",
         "payrollName": "July Payroll",
