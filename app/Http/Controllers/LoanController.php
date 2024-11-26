@@ -33,7 +33,7 @@ class LoanController extends Controller
     ->get();
 
         // Return the data to an Inertia view
-        return Inertia::render('Loans', [
+        return Inertia::render('Payroll/Admin/Loans', [
             'employeeDetails' => $loans,
         ]);
         // //json
