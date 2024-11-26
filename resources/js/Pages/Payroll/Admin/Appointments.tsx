@@ -11,7 +11,7 @@ import {
     getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { MoreHorizontal, Plus } from "lucide-react";
+import { ChevronLeft, ChevronRight, MoreHorizontal, Plus } from "lucide-react";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
 import { AdminLinks } from "@/lib/payrollData";
@@ -20,6 +20,14 @@ import DropdownDialog from "@/Components/DropdownDialog";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { usePage } from "@inertiajs/react";
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+} from "@/Components/ui/pagination";
+import { Button } from "@/Components/ui/button";
 
 type appointmentTypes = {
     appointment_code: number;
@@ -149,6 +157,40 @@ export default function Appointments() {
                         table={table}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
                     ></DataTable>
+
+                    <Pagination className="flex justify-end items-end">
+                        <PaginationContent>
+                            <PaginationItem>
+                                <Button
+                                    onClick={table.previousPage}
+                                    className="bg-transparent text-black hover:bg-transparent w-30 p-2"
+                                    disabled={!table.getCanPreviousPage()}
+                                >
+                                    <ChevronLeft className="pr-1" />
+                                    Previous
+                                </Button>
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationEllipsis />
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationLink>
+                                    {table.getState().pagination.pageIndex + 1}
+                                </PaginationLink>
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationEllipsis />
+                            </PaginationItem>
+                            <Button
+                                onClick={table.nextPage}
+                                className="bg-transparent text-black hover:bg-transparent w-30 p-2"
+                                disabled={!table.getCanNextPage()}
+                            >
+                                Next
+                                <ChevronRight className="pl-1" />
+                            </Button>
+                        </PaginationContent>
+                    </Pagination>
                 </div>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin>
