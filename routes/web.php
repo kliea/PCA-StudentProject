@@ -1,47 +1,16 @@
 <?php
 
 use App\Http\Controllers\AdminPageController;
+use App\Http\Controllers\BioAdminPageController;
+use App\Http\Controllers\Biometric\DashboardController;
+use App\Http\Controllers\Biometric\AttendanceListController;
+use App\Http\Controllers\Biometric\AttendanceRecordController;
+use App\Http\Controllers\Biometric\ManageUserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\SalaryGradeController;
-use App\Services\AttendanceLogger;
 use App\Http\Controllers\DailyTimeEntryController;
-
-
-// for testing
-Route::get('/fetch-attendance', function () 
-{
-    $logger = new AttendanceLogger();
-    $logs = $logger->getLog();
-    
-
-    $pm = (new DateTime('01:00:00'))->format('H:i:s');
-    foreach($logs as $log => $k)
-    {
-        $kHours = (new DateTime($k[3]))->format('H:i:s');
-        if ($kHours > $pm) 
-        {
-            echo $log. " : " . $kHours . "\n". date('Y-m-d');
-        }
-    // echo $log. " : " . $kHours->format('H:i:s') . "\n";
-
-    // foreach($logs as $log)
-    // {
-    //     foreach($log as $per => $key)
-    //     {
-    //         echo "$per [". gettype($per) ."]: $key [". gettype($key)."]<br>";
-    //     }
-
-    // }
-   
-    // return response()->json([
-    //     'message' => 'Attendance logs fetched successfully',
-    //     'data' => $logs,
-    // ]);
-    }}
-    );
-
 
 Route::get('/', function () {
     return Inertia::render('Auth/Login', [
@@ -53,13 +22,7 @@ Route::get('/', function () {
 });
 
 
-
-Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'create'])->name('generate-DTRs');
-Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'create'])->name('generate-DTRs');
-// Route::put('/autogenerate-today', [DailyTimeEntryController::class, 'create'])->name('generate-DTRs');
-// Route::put('/autogenerate-today', DTREntryController::create());
-
-// Route for storing SSL data
+// // Route for storing SSL data
 // Route::post('/admin/ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
 
 // Route::get('/admin/dashboard', function () {
@@ -94,24 +57,48 @@ Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'create'])->
 //     return Inertia::render('Admin/Deductions');
 // })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.deductions');
 
-
 ////////////////////////////////bio routes
+// Route::domain('biometric.' . env('APP_URL'))->group(
+//     function () {
+//         Route::middleware(['auth'])->group(
+//             function () {
+//                 // Route::get('dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
+//                 Route::get('attendancelist', [AttendanceListController::class, 'index'])->name('bioadmin.attendancelist');
+//                 Route::get('attendancerecord', [AttendanceRecordController::class, 'index'])->name('bioadmin.attendancerecord');
+//                 Route::get('manageuser', [AttendanceRecordController::class, 'index'])->name('bioadmin.manageuser');
+//             }
+//         );
+//     }
+// );
+// Route::prefix('admin')->group(function () {
+//     Route::get('dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
+// });
 
-Route::get('/bioadmin/dashboard', function () {
-    return Inertia::render('BioAdmin/Dashboard');
-})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.dashboardb');
+// Route::prefix('bioadmin')->middleware(['auth'])->group(function () {
+//     Route::get('dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
+//     Route::get('attendancelist', [AttendanceListController::class, 'index'])->name('bioadmin.attendancelist');
+//     Route::get('attendancerecord', [AttendanceRecordController::class, 'index'])->name('bioadmin.attendancerecord');
+//     Route::get('manageuser', [AttendanceRecordController::class, 'index'])->name('bioadmin.manageuser');
+// });
+Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'create'])->name('generate-DTRs');
 
-Route::get('/bioadmin/attendancelist', function () {
-    return Inertia::render('BioAdmin/AttendanceList');
-})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.attendancelist');
+Route::middleware(['auth', 'usercheck:bioadmin'])->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
+    Route::get('attendancelists', [AttendanceListController::class, 'index'])->name('bioadmin.attendancelists');
+    Route::get('attendancerecords', [AttendanceRecordController::class, 'index'])->name('bioadmin.attendancerecords');
+    Route::get('manageusers', [ManageUserController::class, 'index'])->name('bioadmin.manageusers');
+});
+// Route::get('/dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
 
-Route::get('/bioadmin/attendancerecords', function () {
-    return Inertia::render('BioAdmin/AttendanceRecord');
-})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.attendancerecords');
 
-Route::get('/bioadmin/manageusers', function () {
-    return Inertia::render('BioAdmin/ManageUsers');
-})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.manageusers');
+
+
+// Route::get(
+//     'dashboard',
+//     function () {
+//         return Inertia::render('BioAdmin/Dashboard');
+//     }
+// )->name('bioadmin.dashboard');
 
 // Empoyee Routes
 
@@ -148,28 +135,36 @@ Route::get('/bioadmin/manageusers', function () {
 // })->middleware('auth', 'verified', 'usercheck:employee')->name('employee.deductions');
 
 
-// SUBDOMAIN FOR PAYROLL
-Route::domain('payroll.' . env('APP_URL'))->group(function () {
-    Route::prefix('admin')->group(function () {
-        Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
-        Route::get('payrolls', [AdminPageController::class, 'payrolls'])->name('admin.payrolls');
-        Route::get('loans', [AdminPageController::class, 'loans'])->name('admin.loans');
-        Route::get('employees', [AdminPageController::class, 'employees'])->name('admin.employees');
-        Route::get('compensations', [AdminPageController::class, 'compensations'])->name('admin.compensations');
-        Route::get('deductions', [AdminPageController::class, 'deductions'])->name('admin.deductions');
-        Route::get('governmentshare', [AdminPageController::class, 'governmentshare'])->name('admin.governmentshare');
-        Route::get('formats', [AdminPageController::class, 'format'])->name('admin.formats');
-        Route::get('appointments', [AdminPageController::class, 'appointments'])->name('admin.appointments');
-    });
 
-    // SSL CRUD
-    Route::prefix('admin')->group(function () {
-        Route::get('ssl', [SalaryGradeController::class, 'index'])->name('admin.ssl');
-        Route::post('ssl/store', [SalaryGradeController::class, 'store'])->name('store.ssl');
-        Route::put('/ssl/{grade}', [SalaryGradeController::class, 'update'])->name('update.ssl');
-        Route::delete('/ssl/{grade}', [SalaryGradeController::class, 'destroy'])->name('delete.ssl');
-    });
-});
+// Route::prefix('admin')->middleware(['auth', 'usercheck:admin'])->group(function () {
+//     Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
+//     Route::get('payrolls', [AdminPageController::class, 'payrolls'])->name('admin.payrolls');
+//     Route::get('loans', [AdminPageController::class, 'loans'])->name('admin.loans');
+//     Route::get('employees', [AdminPageController::class, 'employees'])->name('admin.employees');
+//     Route::get('compensations', [AdminPageController::class, 'compensations'])->name('admin.compensations');
+//     Route::get('deductions', [AdminPageController::class, 'deductions'])->name('admin.deductions');
+//     Route::get('governmentshare', [AdminPageController::class, 'governmentshare'])->name('admin.governmentshare');
+//     Route::get('formats', [AdminPageController::class, 'format'])->name('admin.formats');
+//     Route::get('appointments', [AdminPageController::class, 'appointments'])->name('admin.appointments');
+//     //bioadmins
+//     // Route::get('dashboardb', [AdminPageController::class, 'dashboardb'])->name('admin.dashboardb');
+//     // Route::get('attendancelist', [AdminPageController::class, 'attendancelist'])->name('admin.attendancelist');
+//     // Route::get('attendancerecords', [AdminPageController::class, 'attendancerecords'])->name('admin.attendancerecords');
+//     // Route::get('manageusers', [AdminPageController::class, 'manageusers'])->name('admin.manageusers');
+
+//     // Route::get('ssl', [AdminPageController::class, 'ssl'])->name('admin.ssl');
+//     // Route::post('ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
+//     // Route::put('/ssl/{salary_grade}', [AdminPageController::class, 'update'])->name('ssl.update');
+// });
+///
+
+
+// SSL CRUD
+// Route::prefix('admin')->group(function () {
+//     Route::get('ssl', [SSLController::class, 'index'])->name('admin.ssl');
+//     Route::post('ssl/store', [SSLController::class, 'store'])->name('store.ssl');
+//     Route::put('/ssl/{salary_grade}', [SSLController::class, 'update'])->name('update.ssl');
+// });
 
 
 require __DIR__ . '/auth.php';
