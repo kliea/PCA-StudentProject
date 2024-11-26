@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('compensation_types', function (Blueprint $table) {
             $table->id('compensation_code');
 
-			$table->string('compensation_name');
-			$table->string('shorthand');
+			$table->string('compensation_name')->unique();
+			$table->string('shorthand')->unique();
 			$table->double('amount');
 			$table->boolean('is_taxable');
 			$table->boolean('is_fixed');
