@@ -20,7 +20,7 @@ import { AdminLinks } from "@/lib/payrollData";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import DropdownDialog from "@/Components/DropdownDialog";
-import { EmployeeView } from "@/Components/CrudComponents/EmployeesCRUD";
+import { EmployeeEdit } from "@/Components/CrudComponents/EmployeesCRUD";
 
 type employeeTypes = {
     employee_number: number;
@@ -50,14 +50,16 @@ const columns: ColumnDef<employeeTypes>[] = [
                     tag: "1",
                     name: "Edit",
                     dialogtitle: cn(
-                        "Edit Information of Emplyee #",
-                        rowData.employee_number
+                        "Edit Employee: ",
+                        rowData.last_name,
+                        ",",
+                        rowData.first_name
                     ),
                     dialogContent: (
-                        <EmployeeView
-                            RowData={rowData}
-                            setOpenDialog={setOpenDialog}
-                        ></EmployeeView>
+                        <EmployeeEdit
+                        RowData={rowData}
+                        setOpenDialog={setOpenDialog}
+                        ></EmployeeEdit>
                     ),
                 },
             ];
