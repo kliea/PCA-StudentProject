@@ -20,7 +20,6 @@ class CompensationTypeController extends Controller
         return Inertia::render('Payroll/Admin/Compensations', ['data' => $data]);
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
