@@ -159,6 +159,9 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
 
         //Query routes
         Route::get('/loans/{employee_code}',[LoanController::class,'showEmployeeLoanDetails'])->name('admin.Loans');
+        Route::get('/summary', [SummaryController::class, 'Summary'])->name('admin.summary');
+        Route::get('employee/{employee_code}', [EmployeeController::class, 'get_employee_data'])->name('admin.employee_data');
+
 
     });
 });
