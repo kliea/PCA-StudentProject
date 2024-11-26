@@ -55,6 +55,7 @@ Route::get('/', function () {
 
 
 Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'create'])->name('generate-DTRs');
+Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'create'])->name('generate-DTRs');
 // Route::put('/autogenerate-today', [DailyTimeEntryController::class, 'create'])->name('generate-DTRs');
 // Route::put('/autogenerate-today', DTREntryController::create());
 

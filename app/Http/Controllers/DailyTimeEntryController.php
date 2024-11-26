@@ -18,7 +18,7 @@ class DailyTimeEntryController extends Controller
 		$allData = DailyTimeEntry::all();
 
 		/* Returning a success message to the user. */
-		return Inertia::render('Payroll/Admin/DTR', ['data' => $allData, 'message' => 'All the DTR entries have been retrieved successfully.']);
+		return Inertia::render('BioAdmin/AttendanceList', ['data' => $allData, 'message' => 'All the DTR entries have been retrieved successfully.']);
     }
 
     /* Generates a new batch of empty DTRs for all the employees in the system.
@@ -114,5 +114,28 @@ class DailyTimeEntryController extends Controller
 
 		/* Returning a success message to the user. */
         return redirect()->back()->with('success', 'Successfully deleted your chosen DTR entry.');
+    }
+
+    public function showDtrEntries(Request $request)
+    {
+        // Validate the incoming request
+        $validated = $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date', // Ensure end_date is after or equal to start_date
+        ]);
+
+        // Retrieve the start and end date from the request
+        $startDate = $validated['start_date'];
+        $endDate = $validated['end_date'];
+
+        // Query the DTR entries within the given date range
+        $dtrEntries = DailyTimeEntry::whereBetween('date', [$startDate, $endDate])
+                              ->orderBy('date', 'asc') // Optionally order by date
+                              ->get();
+
+        // Return the entries (you can return a view or JSON response based on your need)
+        return view('dtr.entries', compact('dtrEntries')); // For a Blade view
+        // or
+        // return response()->json($dtrEntries); // For an API response
     }
 }
