@@ -49,7 +49,7 @@ const columns: ColumnDef<agencyTypes>[] = [
                     tag: "1",
                     name: "Edit",
                     dialogtitle: cn(
-                        "Editing Appointment ",
+                        "Edit Appointment ",
                         rowData.agency_share_name
                     ),
                     dialogContent: (
@@ -132,10 +132,10 @@ export default function GovernmentShare() {
                             trigger={
                                 <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
                                     <Plus className="mr-2 h-6 w-auto" />
-                                    Add New Government Share Profile
+                                    New Government Share Profile
                                 </section>
                             }
-                            title="Add New Government Share Profile"
+                            title="New Government Share Profile"
                         >
                             <AgencyShareStore
                                 openDialog={() => setOpenDialog(!openDialog)}

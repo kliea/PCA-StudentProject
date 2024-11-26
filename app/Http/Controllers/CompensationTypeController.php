@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CompensationType;
 use Inertia\Inertia;
-use Inertia\Response;
-use PhpParser\Node\Expr\Cast\String_;
 
 class CompensationTypeController extends Controller
 {
@@ -59,7 +57,7 @@ class CompensationTypeController extends Controller
     public function destroy($compensation_code)
     {
         //Find the record by compensation_code
-        CompensationType::where('compenstation_code', $compensation_code)->delete();
+        CompensationType::where('compensation_code', $compensation_code)->delete();
         return redirect()->back()->with('success', 'Successfully deleted compensation!');
     }
 }

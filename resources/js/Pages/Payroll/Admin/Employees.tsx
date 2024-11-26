@@ -8,7 +8,7 @@ import {
 import { Input } from "@/Components/ui/input";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
-import { Head, usePage } from "@inertiajs/react";
+import { usePage } from "@inertiajs/react";
 import {
     ColumnDef,
     getCoreRowModel,
@@ -16,27 +16,26 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
-import Data from "@/Components/Constants/data7.json";
 import { AdminLinks } from "@/lib/payrollData";
 
 type employeeTypes = {
-    name: string;
-    id: string;
-    official_station: string;
-    position: string;
-    appointment: string;
-    sg: string;
-    step: string;
+    employee_number: number;
+    first_name: string;
+    middle_name: string;
+    last_name: string;
+    name_extension: string;
+    salary_type: number;
+    salary_step: number;
 };
 
 const columns: ColumnDef<employeeTypes>[] = [
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "id", header: "Id" },
-    { accessorKey: "official_station", header: "Official Station" },
-    { accessorKey: "position", header: "Position" },
-    { accessorKey: "appointment", header: "Appointment" },
-    { accessorKey: "sg", header: "SG" },
-    { accessorKey: "step", header: "Step" },
+    { accessorKey: "employee_number", header: "ID" },
+    { accessorKey: "first_name", header: "First Name" },
+    { accessorKey: "middle_name", header: "Middle Name" },
+    { accessorKey: "last_name", header: "Last Name" },
+    { accessorKey: "name_extension", header: "Name Extension" },
+    { accessorKey: "salary_type", header: "Salary Grade" },
+    { accessorKey: "salary_step", header: "Salary Step" },
     {
         id: "action",
         cell: ({ row }) => {

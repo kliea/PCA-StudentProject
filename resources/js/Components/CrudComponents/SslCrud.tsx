@@ -51,6 +51,7 @@ export function SslStore({ openDialog }: { openDialog: any }) {
                     "step7",
                     "step8"
                 );
+                openDialog(false)
             },
             onError: () => {
                 toast(
@@ -309,6 +310,7 @@ export function SslUpdate({
                     </div>,
                     { duration: 2000 }
                 );
+                setOpenDialog(false);
             },
             onError: () => {
                 toast(

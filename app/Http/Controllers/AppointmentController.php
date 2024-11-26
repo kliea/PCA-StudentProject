@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
+use App\Models\CompensationType;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
@@ -18,8 +19,10 @@ class AppointmentController extends Controller
         // Fetch data from the database
         $data = Appointment::all();
 
+        $compensationTypes = CompensationType::pluck('compensation_name');
+
         // Return the data to the frontend
-        return Inertia::render('Payroll/Admin/Appointments', ['data' => $data]);
+        return Inertia::render('Payroll/Admin/Appointments', ['data' => $data, 'compensationTypes' => $compensationTypes]);
     }
 
     /**

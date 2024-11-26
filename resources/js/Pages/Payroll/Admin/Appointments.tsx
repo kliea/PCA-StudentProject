@@ -45,11 +45,15 @@ const columns: ColumnDef<appointmentTypes>[] = [
                     tag: "1",
                     name: "Edit",
                     dialogtitle: cn(
-                        "Editing Appointment ",
+                        "Edit Appointment ",
                         rowData.appointment_type
                     ),
                     dialogContent: (
                         <AppointmentUpdate
+                            compensationTypes={
+                                usePage().props
+                                    .compensationTypes as Array<string>
+                            }
                             RowData={rowData}
                             setOpenDialog={setOpenDialog}
                         ></AppointmentUpdate>
@@ -128,10 +132,10 @@ export default function Appointments() {
                             trigger={
                                 <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
                                     <Plus className="mr-2 h-6 w-auto" />
-                                    Add New Appointment Profile
+                                    New Appointment Profile
                                 </section>
                             }
-                            title="Add New Appointment Profile"
+                            title="New Appointment Profile"
                         >
                             <AppointmentStore
                                 openDialog={() => setOpenDialog(!openDialog)}

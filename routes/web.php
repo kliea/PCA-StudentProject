@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\SalaryGradeController;
 use App\Http\Controllers\AgencyShareController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\CompensationTypeController;
 use App\Http\Controllers\DeductionTypeController;
 use App\Services\AttendanceLogger;
 use App\Http\Controllers\DailyTimeEntryController;
@@ -76,15 +77,15 @@ Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'create'])->
 
 Route::get('/bioadmin/dashboard', function () {
     return Inertia::render('BioAdmin/Dashboard');
-})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.dashboardb');
+})->name('admin.dashboardb');
 
 Route::get('/bioadmin/attendancelist', function () {
     return Inertia::render('BioAdmin/AttendanceList');
-})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.attendancelist');
+})->name('admin.attendancelist');
 
 Route::get('/bioadmin/attendancerecords', function () {
     return Inertia::render('BioAdmin/AttendanceRecord');
-})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.attendancerecords');
+})->name('admin.attendancerecords');
 
 Route::get('/bioadmin/manageusers', function () {
     return Inertia::render('BioAdmin/ManageUsers');
@@ -130,7 +131,10 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
         Route::get('payrolls', [AdminPageController::class, 'payrolls'])->name('admin.payrolls');
         Route::get('loans', [AdminPageController::class, 'loans'])->name('admin.loans');
-        Route::get('compensations', [AdminPageController::class, 'compensations'])->name('admin.compensations');
+        // COMPENSATION ROUTES
+        Route::get('compensations', [CompensationTypeController::class, 'index'])->name('admin.compensations');
+        Route::post('compensations/store', [CompensationTypeController::class, 'store'])->name('store.compensations');
+        Route::delete('compensations/{compensation_code}', [CompensationTypeController::class, 'destroy'])->name('delete.compensations');
         // AGENCY ROUTES
         Route::get('governmentshares', [AgencyShareController::class, 'index'])->name('admin.governmentshare');
         Route::post('governmentshares/store', [AgencyShareController::class, 'store'])->name('store.governmentshare');
@@ -146,7 +150,10 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         // DEDUCTIONS ROUTES
         Route::get('deductions', [DeductionTypeController::class, 'index'])->name('admin.deduction');
         Route::post('deductions/store', [DeductionTypeController::class, 'store'])->name('store.deduction');
+        Route::put('deductions/{deduction_code}', [DeductionTypeController::class, 'update'])->name('update.deduction');
+        Route::delete('deductions/{deduction_code}', [DeductionTypeController::class, 'destroy'])->name('delete.deduction');
 
+        // EMPLOYEES ROUTES
         Route::get('employees', [EmployeeController::class, 'index'])->name('admin.employee');
         // SSL ROUTES
         Route::get('ssl', [SalaryGradeController::class, 'index'])->name('admin.ssl');

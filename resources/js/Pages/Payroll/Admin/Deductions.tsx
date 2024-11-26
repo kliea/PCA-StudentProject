@@ -19,7 +19,13 @@ import { Input } from "@/Components/ui/input";
 import { AdminLinks } from "@/lib/payrollData";
 import DialogMenu from "@/Components/Dialog";
 import { useState } from "react";
-import { DeductionStore } from "@/Components/CrudComponents/DeductionCRUD";
+import {
+    DeductionStore,
+    DeductionsDelete,
+    DeductionUpdate,
+} from "@/Components/CrudComponents/DeductionCRUD";
+import { cn } from "@/lib/utils";
+import DropdownDialog from "@/Components/DropdownDialog";
 
 type deductionTypes = {
     deduction_code: number;
@@ -42,25 +48,53 @@ const columns: ColumnDef<deductionTypes>[] = [
     {
         id: "actions",
         cell: ({ row }) => {
-            const values = row.original;
-            return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <section>
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </section>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem>
-                            Edit Deduction Profile
-                        </DropdownMenuItem>
+            const [openDialog, setOpenDialog] = useState<string | null>(null);
+            const rowData = row.original;
+            const dialogs = [
+                {
+                    tag: "1",
+                    name: "Edit",
+                    dialogtitle: cn("Edit", rowData.deduction_name),
+                    dialogContent: (
+                        <DeductionUpdate
+                            RowData={rowData}
+                            setOpenDialog={setOpenDialog}
+                        ></DeductionUpdate>
+                    ),
+                },
+                {
+                    tag: "2",
+                    name: "Delete",
+                    dialogtitle: cn(
+                        "Are you sure you want to delete ",
+                        rowData.deduction_name,
+                        "?"
+                    ),
+                    dialogContent: (
+                        <DeductionsDelete
+                            rowId={rowData.deduction_code}
+                            setOpenDialog={setOpenDialog}
+                        ></DeductionsDelete>
+                    ),
+                    style: "text-red-600",
+                },
+            ];
 
-                        <DropdownMenuItem className="text-red-600">
-                            Delete
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+            return (
+                <div>
+                    <DropdownDialog
+                        openDialog={openDialog}
+                        setOpenDialog={setOpenDialog}
+                        dialogs={dialogs}
+                        trigger={
+                            <>
+                                <section>
+                                    <MoreHorizontal className="h-4 w-4" />
+                                </section>
+                            </>
+                        }
+                    ></DropdownDialog>
+                </div>
             );
         },
     },
@@ -69,6 +103,7 @@ const columns: ColumnDef<deductionTypes>[] = [
 export default function Deductions() {
     const pageData = (usePage().props.data as deductionTypes[]) || [];
     const data: deductionTypes[] = pageData;
+
     const table = useReactTable({
         data,
         columns,

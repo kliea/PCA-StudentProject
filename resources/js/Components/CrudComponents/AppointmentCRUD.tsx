@@ -55,6 +55,7 @@ export function AppointmentStore({ openDialog }: { openDialog: any }) {
                     "basic_pay_type",
                     "tax_type"
                 );
+                openDialog(false);
             },
             onError: () => {
                 toast(
@@ -197,11 +198,13 @@ export function AppointmentStore({ openDialog }: { openDialog: any }) {
 }
 
 export function AppointmentUpdate({
+    compensationTypes,
     RowData,
     setOpenDialog,
 }: {
     RowData: any;
     setOpenDialog: any;
+    compensationTypes: Array<string>;
 }) {
     const { data, put, processing, errors } = useForm({
         appointment_type: RowData.appointment_type,
@@ -236,6 +239,7 @@ export function AppointmentUpdate({
                     </div>,
                     { duration: 2000 }
                 );
+                setOpenDialog(false);
             },
             onError: () => {
                 toast(
@@ -255,6 +259,7 @@ export function AppointmentUpdate({
             },
         });
     };
+
     return (
         <div>
             <form onSubmit={submit} className="gap-4 flex flex-col">
@@ -270,7 +275,7 @@ export function AppointmentUpdate({
                             <SelectValue placeholder={data.basic_pay_type} />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="BASIC SALARY-CASUAL">
+                            {/* <SelectItem value="BASIC SALARY-CASUAL">
                                 BASIC SALARY-CASUAL
                             </SelectItem>
                             <SelectItem value="WAGES-JOB ORDER">
@@ -278,7 +283,10 @@ export function AppointmentUpdate({
                             </SelectItem>
                             <SelectItem value="BASIC SALARY-REGULAR">
                                 BASIC SALARY-REGULAR
-                            </SelectItem>
+                            </SelectItem> */}
+                            {compensationTypes.map((type) => (
+                                <SelectItem value={type}>{type}</SelectItem>
+                            ))}
                         </SelectContent>
                     </Select>
                     <InputError

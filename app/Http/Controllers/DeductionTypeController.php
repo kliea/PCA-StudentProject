@@ -31,10 +31,10 @@ class DeductionTypeController extends Controller
         $validated = $request->validate([
             'deduction_name' => 'required|string',
             'shorthand' => 'required|string',
-            'amount' => 'required|double',
+            'amount' => 'required|numeric',
             'is_mandatory' => 'required|boolean',
-            'remittance_percent' => 'required|double',
-            'ceiling_amount' => 'required|double'
+            'remittance_percent' => 'required|numeric',
+            'ceiling_amount' => 'required|numeric'
         ]);
 
         // Create a new profile record in the database
@@ -60,10 +60,10 @@ class DeductionTypeController extends Controller
         $validated = $request->validate([
             'deduction_name' => 'required|string',
             'shorthand' => 'required|string',
-            'amount' => 'required|double',
+            'amount' => 'required|numeric',
             'is_mandatory' => 'required|boolean',
-            'remittance_percent' => 'required|double',
-            'ceiling_amount' => 'required|double'
+            'remittance_percent' => 'required|numeric',
+            'ceiling_amount' => 'required|numeric'
         ]);
 
         DeductionType::where('deduction_code', $deduction_code)->update($validated);

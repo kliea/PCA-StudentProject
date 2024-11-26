@@ -58,6 +58,7 @@ export function AgencyShareStore({ openDialog }: { openDialog: any }) {
                     "remittance_percent",
                     "ceiling_amount"
                 );
+                openDialog(false);
             },
             onError: () => {
                 console.log(errors);
@@ -312,6 +313,7 @@ export function AgencyShareUpdate({
                     "remittance_percent",
                     "ceiling_amount"
                 );
+                setOpenDialog(false);
             },
             onError: () => {
                 console.log(errors);
