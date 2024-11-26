@@ -20,25 +20,21 @@ import { AdminLinks } from "@/lib/payrollData";
 import DialogMenu from "@/Components/Dialog";
 
 type deductionTypes = {
-    name: string;
-    amount: number;
-    code: number;
-    percent: number;
-    mandatory: boolean;
-    group: string;
-    type: string;
+    deduction_name: string;
     shorthand: string;
+    amount: number;
+    is_mandatory: boolean;
+    remittance_percent: number;
+    ceiling_amount: number;
 };
 
 const columns: ColumnDef<deductionTypes>[] = [
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "amount", header: "Amount" },
-    { accessorKey: "code", header: "Code" },
-    { accessorKey: "percent", header: "Percent" },
-    { accessorKey: "mandatory", header: "Mandatory" },
-    { accessorKey: "group", header: "group" },
-    { accessorKey: "type", header: "type" },
-    { accessorKey: "shorthand", header: "shorthand" },
+    { accessorKey: "deduction_name", header: "DEDUCTION NAME" },
+    { accessorKey: "shorthand", header: "SHORTHAND" },
+    { accessorKey: "amount", header: "AMOUNT" },
+    { accessorKey: "is_mandatory", header: "MANDATORY" },
+    { accessorKey: "remittance_percent", header: "REMITTANCE %" },
+    { accessorKey: "ceiling_amount", header: "CEILING AMOUNT" },
     {
         id: "actions",
         cell: ({ row }) => {

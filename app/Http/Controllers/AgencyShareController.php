@@ -31,8 +31,8 @@ class AgencyShareController extends Controller
 
         //validate user request
         $validate = $request->validate([
-            'agency_share_name' => 'unique|required|string|max:255',
-            'shorthand' => 'unique|required|string|max:50',
+            'agency_share_name' => 'required|string|max:255',
+            'shorthand' => 'required|string|max:50',
             'amount' => 'required|numeric',
             'is_mandatory' => 'required|boolean',
             'remittance_percent' => 'required|numeric',
@@ -76,10 +76,10 @@ class AgencyShareController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($agency_share_name)
+    public function destroy($agency_share_code)
     {
         //find the specific column
-        AgencyShare::where('agency_share_name', $agency_share_name)->delete();
+        AgencyShare::where('agency_share_code', $agency_share_code)->delete();
         return redirect()->back()->with('success', 'Successfully deleted government share');
     }
 }

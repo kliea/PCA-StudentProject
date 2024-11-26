@@ -21,21 +21,19 @@ import DialogMenu from "@/Components/Dialog";
 import { CompensationStore } from "@/Components/CrudComponents/CompensationCRUD";
 
 type compensationTypes = {
-    compensation_code: number;
-    name: string;
-    amount: number;
-    taxable: boolean;
+    compensation_name: string;
     shorthand: string;
+    amount: number;
+    is_taxable: boolean;
+    is_fixed: boolean;
 };
 
 const columns: ColumnDef<compensationTypes>[] = [
-    { accessorKey: "compensation_code", header: "ID" },
-    { accessorKey: "compensation_name", header: "NAME" },
+    { accessorKey: "compensation_name", header: "COMPENSATION NAME" },
     { accessorKey: "shorthand", header: "SHORTHAND" },
     { accessorKey: "amount", header: "AMOUNT" },
     { accessorKey: "is_taxable", header: "TAXABLE" },
     { accessorKey: "is_fixed", header: "FIXED" },
-    { accessorKey: "type", header: "type" },
     {
         id: "actions",
         cell: ({ row }) => {
@@ -66,6 +64,7 @@ const columns: ColumnDef<compensationTypes>[] = [
 export default function Compensation() {
     const pageData = (usePage().props.data as compensationTypes[]) || [];
     const data: compensationTypes[] = pageData;
+    console.log(usePage().props.data);
 
     const table = useReactTable({
         data,

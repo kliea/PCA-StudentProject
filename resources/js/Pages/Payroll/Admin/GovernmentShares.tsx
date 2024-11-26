@@ -1,9 +1,3 @@
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/Components/ui/dropdown-menu";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import {
@@ -12,48 +6,91 @@ import {
     getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { MoreHorizontal, Plus, View } from "lucide-react";
-import Data from "@/Components/Constants/data9.json";
+import { MoreHorizontal, Plus } from "lucide-react";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
 import DialogMenu from "@/Components/Dialog";
 import { AdminLinks } from "@/lib/payrollData";
-import { AgencyShareStore } from "@/Components/CrudComponents/AgencyShareCRUD";
+import {
+    AgencyShareStore,
+    AgencyShareUpdate,
+    AgencyShareDelete,
+} from "@/Components/CrudComponents/AgencyShareCRUD";
 import { usePage } from "@inertiajs/react";
+import { useState } from "react";
+import DropdownDialog from "@/Components/DropdownDialog";
+import { cn } from "@/lib/utils";
 
 type agencyTypes = {
-    name: string;
+    agency_share_code: number;
+    agency_share_name: string;
+    shorthand: number;
     amount: number;
-    percent: number;
-    mandatory: boolean;
-    shorthand: string;
+    is_mandatory: boolean;
+    remittance_percent: string;
+    ceiling_amount: number;
 };
 
 const columns: ColumnDef<agencyTypes>[] = [
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "amount", header: "Amount" },
-    { accessorKey: "percent", header: "Percent" },
-    { accessorKey: "mandatory", header: "Mandatory" },
-    { accessorKey: "shorthand", header: "Shorthand" },
+    { accessorKey: "agency_share_code", header: "ID" },
+    { accessorKey: "agency_share_name", header: "NAME OF AGENCY SHARE" },
+    { accessorKey: "shorthand", header: "SHORTHAND" },
+    { accessorKey: "amount", header: "AMOUNT" },
+    { accessorKey: "is_mandatory", header: "MANDATORY" },
+    { accessorKey: "remittance_percent", header: "REMITTANCE %" },
+    { accessorKey: "ceiling_amount", header: "CEILING AMOUNT" },
     {
         id: "actions",
         cell: ({ row }) => {
-            const values = row.original;
+            const [openDialog, setOpenDialog] = useState<string | null>(null);
+            const rowData = row.original;
+            const dialogs = [
+                {
+                    tag: "1",
+                    name: "Edit",
+                    dialogtitle: cn(
+                        "Editing Appointment ",
+                        rowData.agency_share_name
+                    ),
+                    dialogContent: (
+                        <AgencyShareUpdate
+                            RowData={rowData}
+                        ></AgencyShareUpdate>
+                    ),
+                },
+                {
+                    tag: "2",
+                    name: "Delete",
+                    dialogtitle: cn(
+                        "Are you sure you want to delete Agency Share:  ",
+                        rowData.agency_share_name,
+                        "?"
+                    ),
+                    dialogContent: (
+                        <AgencyShareDelete
+                            rowId={rowData.agency_share_code}
+                            setOpenDialog={setOpenDialog}
+                        ></AgencyShareDelete>
+                    ),
+                    style: "text-red-600",
+                },
+            ];
+
             return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <section>
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </section>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600">
-                            Delete
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <div>
+                    <DropdownDialog
+                        openDialog={openDialog}
+                        setOpenDialog={setOpenDialog}
+                        dialogs={dialogs}
+                        trigger={
+                            <>
+                                <section>
+                                    <MoreHorizontal className="h-4 w-4" />
+                                </section>
+                            </>
+                        }
+                    ></DropdownDialog>
+                </div>
             );
         },
     },

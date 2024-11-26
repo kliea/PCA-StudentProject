@@ -8,13 +8,11 @@ use Inertia\Inertia;
 // Controllers
 use App\Http\Controllers\SalaryGradeController;
 use App\Http\Controllers\AgencyShareController;
-use App\Http\Controllers\CompensationTypeController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DeductionTypeController;
-use App\Http\Controllers\EmployeeController;
 use App\Services\AttendanceLogger;
 use App\Http\Controllers\DailyTimeEntryController;
-use App\Models\DTREntry;
+use App\Http\Controllers\EmployeeController;
 
 Route::get('/', function () {
     return Inertia::render('Payroll/Auth/Login', [
@@ -135,7 +133,9 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::get('compensations', [AdminPageController::class, 'compensations'])->name('admin.compensations');
         // AGENCY ROUTES
         Route::get('governmentshares', [AgencyShareController::class, 'index'])->name('admin.governmentshare');
-        Route::post('governmentshares/store', [AgencyShareController::class, 'store'])->name('governmentshare.store');
+        Route::post('governmentshares/store', [AgencyShareController::class, 'store'])->name('store.governmentshare');
+        Route::put('governmentshares/{agency_share_name}', [AgencyShareController::class, 'update'])->name('update.governmentshare');
+        Route::delete('governmentshares/{agency_share_name}', [AgencyShareController::class, 'destroy'])->name('delete.governmentshare');
         Route::get('formats', [AdminPageController::class, 'format'])->name('admin.formats');
         // APPOINTMENT ROUTES
         Route::get('appointments', [AppointmentController::class, 'index'])->name('admin.appointment');
