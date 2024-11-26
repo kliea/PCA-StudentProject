@@ -145,7 +145,6 @@ Route::prefix('admin')->group(function () {
 Route::prefix('employee')->group(function () {
     Route::get('mydtr', [EmployeePageController::class, 'myDTR'])->name('employee.mydtr');
     Route::get('mypayslip', [EmployeePageController::class, 'myPayslip'])->name('employee.mypayslip');
-    Route::get('dashboard', [EmployeePageController::class, 'dashboard'])->name('employee.dashboard');
 });
 
 // SSL CRUD

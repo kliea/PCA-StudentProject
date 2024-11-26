@@ -15,9 +15,5 @@ class EmployeePageController extends Controller{
     {
         return Inertia::render('Payroll/Employee/MyPayslip');
     }
-
-    public function dashboard(): Response
-    {
-        return Inertia::render('Payroll/Employee/Dashboard');
-    }
+    
 }
