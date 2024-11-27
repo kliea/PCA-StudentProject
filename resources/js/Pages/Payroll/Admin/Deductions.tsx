@@ -128,6 +128,7 @@ export default function Deductions() {
 
                     <div>
                         <DialogMenu
+                            dialogClassName="max-w-[800px]"
                             open={openDialog}
                             openDialog={() => setOpenDialog(!openDialog)}
                             trigger={

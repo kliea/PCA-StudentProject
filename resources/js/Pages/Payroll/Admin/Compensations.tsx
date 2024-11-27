@@ -40,9 +40,23 @@ const columns: ColumnDef<compensationTypes>[] = [
     { accessorKey: "compensation_code", header: "ID" },
     { accessorKey: "compensation_name", header: "COMPENSATION NAME" },
     { accessorKey: "shorthand", header: "SHORTHAND" },
-    { accessorKey: "amount", header: "AMOUNT" },
-    { accessorKey: "is_taxable", header: "TAXABLE" },
-    { accessorKey: "is_fixed", header: "FIXED" },
+    {
+        accessorKey: "amount",
+        header: "AMOUNT",
+        cell: ({ row }) => {
+            const number = Number(row.getValue("amount"));
+            return row.original.is_fixed ? (
+                <p>₱{number.toLocaleString("en-US")}</p>
+            ) : (
+                "Basic Pay"
+            );
+        },
+    },
+    {
+        accessorKey: "is_taxable",
+        header: "TAXABLE",
+        cell: ({ row }) => (row.getValue("is_taxable") ? "Yes" : "No"),
+    },
     {
         id: "actions",
         cell: ({ row }) => {

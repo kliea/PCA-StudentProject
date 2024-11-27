@@ -35,6 +35,9 @@ export function CompensationStore({ openDialog }: { openDialog: any }) {
 
         if (data.compesation_variant === "BASIC PAY") {
             data.amount = "0";
+            data.is_fixed = false;
+        } else {
+            data.is_fixed = true;
         }
 
         post(route("store.compensations"), {
@@ -60,7 +63,8 @@ export function CompensationStore({ openDialog }: { openDialog: any }) {
                     "amount",
                     "is_taxable",
                     "compesation_variant",
-                    "ceiling_amount"
+                    "ceiling_amount",
+                    "is_fixed"
                 );
                 openDialog(false);
             },

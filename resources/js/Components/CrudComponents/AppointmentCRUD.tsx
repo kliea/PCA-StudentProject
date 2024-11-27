@@ -15,7 +15,13 @@ import {
 } from "@/Components/ui/select";
 import { Button } from "../ui/button";
 
-export function AppointmentStore({ openDialog }: { openDialog: any }) {
+export function AppointmentStore({
+    openDialog,
+    compensationTypes,
+}: {
+    openDialog: any;
+    compensationTypes: Array<string>;
+}) {
     const { data, setData, post, processing, errors, reset } = useForm({
         appointment_type: "",
         has_mandatory_deduction: false,
@@ -117,15 +123,9 @@ export function AppointmentStore({ openDialog }: { openDialog: any }) {
                             <SelectValue placeholder="SELECT BASIC PAY TYPE" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="BASIC SALARY-CASUAL">
-                                BASIC SALARY-CASUAL
-                            </SelectItem>
-                            <SelectItem value="WAGES-JOB ORDER">
-                                WAGES-JOB ORDER
-                            </SelectItem>
-                            <SelectItem value="BASIC SALARY-REGULAR">
-                                BASIC SALARY-REGULAR
-                            </SelectItem>
+                            {compensationTypes.map((type) => (
+                                <SelectItem value={type}>{type}</SelectItem>
+                            ))}
                         </SelectContent>
                     </Select>
                     <InputError
@@ -275,15 +275,6 @@ export function AppointmentUpdate({
                             <SelectValue placeholder={data.basic_pay_type} />
                         </SelectTrigger>
                         <SelectContent>
-                            {/* <SelectItem value="BASIC SALARY-CASUAL">
-                                BASIC SALARY-CASUAL
-                            </SelectItem>
-                            <SelectItem value="WAGES-JOB ORDER">
-                                WAGES-JOB ORDER
-                            </SelectItem>
-                            <SelectItem value="BASIC SALARY-REGULAR">
-                                BASIC SALARY-REGULAR
-                            </SelectItem> */}
                             {compensationTypes.map((type) => (
                                 <SelectItem value={type}>{type}</SelectItem>
                             ))}

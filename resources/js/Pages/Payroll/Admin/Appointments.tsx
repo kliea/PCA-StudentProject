@@ -145,6 +145,10 @@ export default function Appointments() {
                             title="New Appointment Profile"
                         >
                             <AppointmentStore
+                                compensationTypes={
+                                    usePage().props
+                                        .compensationTypes as Array<string>
+                                }
                                 openDialog={() => setOpenDialog(!openDialog)}
                             />
                         </DialogMenu>
