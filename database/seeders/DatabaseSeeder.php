@@ -56,7 +56,6 @@ class DatabaseSeeder extends Seeder
         // stations =============================================================
         $stations = [];
 
-        // Arrays for random station details
         $stationNames = [
             'Central Office', 'Regional Office', 'Field Station',
             'Research Hub', 'Monitoring Center', 'Training Facility',
@@ -77,10 +76,10 @@ class DatabaseSeeder extends Seeder
             $stations[] = [
                 'station_name' => $stationNames[array_rand($stationNames)] . " " . ($i + 1),
                 'street_address' => 'Street ' . random_int(1, 100) . ' ' . chr(random_int(65, 90)), // Random street (e.g., "Street 42 B")
-                'barangay' => 'Barangay ' . random_int(1, 500), // Random barangay
-                'city' => $cities[array_rand($cities)], // Random city from the list
-                'province' => $provinces[array_rand($provinces)], // Random province from the list
-                'postal_code' => random_int(8000, 8600) // Random postal code in a typical range
+                'barangay' => 'Barangay ' . random_int(1, 500),
+                'city' => $cities[array_rand($cities)],
+                'province' => $provinces[array_rand($provinces)],
+                'postal_code' => random_int(8000, 8600)
             ];
         }
         DB::table('stations')->insert($stations);
@@ -89,8 +88,6 @@ class DatabaseSeeder extends Seeder
 
         // Appointments ===========================================================================
         $appointments = [];
-
-        // Define unique appointment types
         $uniqueAppointmentTypes = [
             'Regular', 'Contractual', 'Casual', 'Temporary',
             'Job Order', 'Part-Time', 'Internship', 'Consultant',
@@ -102,10 +99,10 @@ class DatabaseSeeder extends Seeder
 
         foreach ($uniqueAppointmentTypes as $appointmentType) {
             $appointments[] = [
-                'appointment_type' => $appointmentType, // Unique appointment type
-                'has_mandatory_deduction' => (bool)random_int(0, 1), // Random boolean
-                'basic_pay_type' => $basicPayTypes[array_rand($basicPayTypes)], // Random basic pay type
-                'tax_type' => $taxTypes[array_rand($taxTypes)] // Random tax type
+                'appointment_type' => $appointmentType,
+                'has_mandatory_deduction' => (bool)random_int(0, 1),
+                'basic_pay_type' => $basicPayTypes[array_rand($basicPayTypes)],
+                'tax_type' => $taxTypes[array_rand($taxTypes)]
             ];
         }
         DB::table('appointments')->insert($appointments);
@@ -120,10 +117,10 @@ class DatabaseSeeder extends Seeder
         $holiday_types = ['National', 'Religious', 'Cultural', 'Historical'];
         for ($i = 0; $i < 10; $i++) {
             $holidays[] = [
-                'holiday_name' => $holidayNames[array_rand($holidayNames)], // Random holiday name
+                'holiday_name' => $holidayNames[array_rand($holidayNames)],
                 'date' => date('Y-m-d', strtotime('2024-01-01 +' . random_int(0, 364) . ' days')), // Random date in 2024
-                'type' => $holiday_types[array_rand($holiday_types)], // Random holiday type
-                'is_recurring' => (bool)random_int(0, 1) // Random boolean
+                'type' => $holiday_types[array_rand($holiday_types)],
+                'is_recurring' => (bool)random_int(0, 1)
             ];
         }
         DB::table('holidays')->insert($holidays);
@@ -133,10 +130,10 @@ class DatabaseSeeder extends Seeder
 
         // Generate 10 random income tax brackets
         for ($i = 0; $i < 10; $i++) {
-            $lowerbound = random_int(10000, 100000); // Random lower bound
-            $upperbound = $lowerbound + random_int(10000, 50000); // Ensure upper bound is higher
-            $base_amount = $lowerbound * 0.1; // Base amount as 10% of lower bound
-            $tax_rate = random_int(5, 30) + (random_int(0, 99) / 100); // Random tax rate between 5% and 30% with decimal
+            $lowerbound = random_int(10000, 100000);
+            $upperbound = $lowerbound + random_int(10000, 50000);
+            $base_amount = $lowerbound * 0.1;
+            $tax_rate = random_int(5, 30) + (random_int(0, 99) / 100);
 
             $incomeTaxes[] = [
                 'lowerbound' => $lowerbound,
@@ -149,21 +146,21 @@ class DatabaseSeeder extends Seeder
 
         // employees ========================================================================
         $employees = [];
-        $deviceBioIds = range(1, 100); // Assuming there are up to 100 unique device IDs
-        shuffle($deviceBioIds); // Randomize the order of device IDs
-        for ($i = 1; $i <= 50; $i++) { // Assuming we want to insert 50 employees
+        $deviceBioIds = range(1, 100);
+        shuffle($deviceBioIds);
+        for ($i = 1; $i <= 50; $i++) {
             $employees[] = [
-                'employee_number' => $faker->unique()->randomNumber(5), // Unique employee number
+                'employee_number' => $faker->unique()->randomNumber(5),
                 'first_name' => $faker->firstName,
                 'middle_name' => $faker->lastName,
                 'last_name' => $faker->lastName,
-                'name_extension' => $faker->optional(0.1)->suffix, // 10% chance to have a name extension
+                'name_extension' => $faker->optional(0.1)->suffix,
                 'salary_type' => $faker->randomElement(['Fixed', 'Hourly', 'Contract']),
                 'salary_step' => $faker->numberBetween(1, 8),
-                'device_bio_id' => array_pop($deviceBioIds), // Get a unique device_bio_id
-                'position_code' => $faker->numberBetween(1, 19), // Assuming there are 33 positions
-                'appointment_code' => $faker->numberBetween(1, 10), // Assuming there are 10 appointment types
-                'station_code' => $faker->numberBetween(1, 10), // Assuming there are 10 stations
+                'device_bio_id' => array_pop($deviceBioIds),
+                'position_code' => $faker->numberBetween(1, 19),
+                'appointment_code' => $faker->numberBetween(1, 10),
+                'station_code' => $faker->numberBetween(1, 10),
             ];
         }
 
@@ -182,8 +179,8 @@ class DatabaseSeeder extends Seeder
             $leaveType = $faker->randomElement($leaveTypes);
             $leaveDescription = $faker->boolean(80) ? $faker->sentence() : 'N/A'; // 80% chance of having a description
             $status = $faker->randomElement($statuses);
-            $employeeCode = random_int(1, 50); // Assuming there are 50 employees
-            $approverCode = random_int(1, 10); // Assuming there are 10 approvers
+            $employeeCode = random_int(1, 50);
+            $approverCode = random_int(1, 10);
 
             $leaveRequests[] = [
                 'date_filed' => $dateFiled,
@@ -201,7 +198,7 @@ class DatabaseSeeder extends Seeder
         // travel_orders =================================================
         $travelOrders = [];
 
-        for ($i = 1; $i <= 50; $i++) { // Generating 50 travel orders
+        for ($i = 1; $i <= 50; $i++) {
             $startDate = $faker->dateTimeBetween('-1 year', '+1 year'); // Start date within a year from now
             $endDate = (clone $startDate)->modify('+'. $faker->numberBetween(1, 14) .' days'); // End date 1-14 days later
 
@@ -220,7 +217,7 @@ class DatabaseSeeder extends Seeder
 
         // daily time entries ==================================================================
         $dailyTimeEntries = [];
-        for ($i = 0; $i < 50; $i++) { // Generate 50 random daily time entries
+        for ($i = 0; $i < 50; $i++) {
             $date = $faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d');
             $timeInAm = $faker->time('08:00:00', '10:00:00');
             $timeOutAm = (new DateTime($timeInAm))->modify('+' . $faker->numberBetween(60, 120) . ' minutes')->format('H:i:s');
@@ -228,7 +225,7 @@ class DatabaseSeeder extends Seeder
             $timeOutPm = (new DateTime($timeInPm))->modify('+' . $faker->numberBetween(60, 240) . ' minutes')->format('H:i:s');
             $tardyMinutes = $faker->numberBetween(0, 30);
             $totalMinutesWorked = (strtotime($timeOutAm) - strtotime($timeInAm)) / 60 + (strtotime($timeOutPm) - strtotime($timeInPm)) / 60;
-            $expectedDailyMinutes = 480; // Standard 8-hour workday
+            $expectedDailyMinutes = 480;
             $undertimeMinutes = max(0, $expectedDailyMinutes - $totalMinutesWorked - $tardyMinutes);
 
             $dailyTimeEntries[] = [
@@ -248,15 +245,9 @@ class DatabaseSeeder extends Seeder
         // Job orders =========================================================================
         $jobOrders = [];
         for ($i = 0; $i < 10; $i++) {
-            // Random employee code (you can adjust the range based on your employee data)
             $employeeCode = $faker->numberBetween(1, 50);
-
-            // Generate random start date between 1 month ago and today
             $startDate = $faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d');
-
-            // Generate random end date that is later than start date
             $endDate = (new DateTime($startDate))->modify('+' . $faker->numberBetween(1, 5) . ' days')->format('Y-m-d');
-
             $jobOrders[] = [
                 'start_date' => $startDate,
                 'end_date' => $endDate,
@@ -312,6 +303,20 @@ class DatabaseSeeder extends Seeder
         }
         DB::table('payroll_sheets')->insert($payrollSheets);
 
+        // compensation types ===============================================
+        $compensationTypes = [];
+
+        for ($i = 0; $i < 10; $i++) {
+            $compensationTypes[] = [
+                'compensation_name' => $faker->word,
+                'shorthand' => strtoupper($faker->word),
+                'amount' => $faker->randomFloat(2, 5000, 20000),
+                'is_taxable' => $faker->boolean,
+                'is_fixed' => $faker->boolean,
+            ];
+        }
+        DB::table('compensation_types')->insert($compensationTypes);
+
         // deduction_types==================================================
         $deductionTypes = [];
 
@@ -340,8 +345,84 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        // loan_types
-        
+        // loan types ============================================================
+        $loanTypes = [];
+        for ($i = 0; $i < 10; $i++) {
+            $loanTypes[] = [
+                'loan_name' => $faker->word . ' Loan'
+            ];
+        }
+        DB::table('loan_types')->insert($loanTypes);
 
+        // payroll entries====================================================
+        $payrollEntries = [];
+        for ($i = 1; $i <= 10; $i++) {
+            $payrollEntries[] = [
+                'current_position' => 'Project Manager ' . $faker->randomDigitNotNull,  // Random position with number
+                'employee_code' => $i,
+                'payroll_sheet_code' => $faker->numberBetween(1, 10),  // Random payroll sheet code (1-10)
+            ];
+        }
+        DB::table('payroll_entries')->insert($payrollEntries);
+
+        // applied_compensations===================================================================
+        $appliedCompensations = [];
+
+        for ($i = 1; $i <= 10; $i++) {
+            $appliedCompensations[] = [
+                'amount' => $faker->randomFloat(2, 50, 5000),
+                'employee_code' => $i,
+                'compensation_code' => $i
+            ];
+        }
+        DB::table('applied_compensations')->insert($appliedCompensations);
+
+        // applied deductions====================================================================
+        $appliedDeductions = [];
+
+        for ($i = 1; $i <= 10; $i++) {
+            $appliedDeductions[] = [
+                'amount' => $faker->randomFloat(2, 500, 5000),
+                'employee_code' => $i,
+                'deduction_code' => $faker->numberBetween(1, 5),
+            ];
+        }
+        DB::table('applied_deductions')->insert($appliedDeductions);
+
+        // applied shares ====================================================================
+        $appliedShares = [];
+        for ($i = 1; $i <= 10; $i++) {
+            $appliedShares[] = [
+                'amount' => $faker->randomFloat(2, 100, 5000),
+                'employee_code' => $i,
+                'agency_share_code' => $faker->numberBetween(1, 5),
+            ];
+        }
+        DB::table('applied_shares')->insert($appliedShares);
+
+        // applied loans====================================================================
+        $appliedLoans = [];
+
+        for ($i = 1; $i <= 10; $i++) {
+            $startDate = $faker->date();
+            $endDate = $faker->date();
+
+            while (strtotime($endDate) <= strtotime($startDate)) {
+                $endDate = $faker->date();
+            }
+
+            $appliedLoans[] = [
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+                'monthly_amount' => $faker->randomFloat(2, 50, 5000),  // Random monthly amount between 50 and 5000
+                'begin_balance' => $faker->randomFloat(2, 50, 5000),    // Random begin balance
+                'paid_amount' => $faker->randomFloat(2, 50, 5000),      // Random paid amount
+                'balance' => $faker->randomFloat(2, 50, 5000),          // Random balance
+                'previous_paid' => $faker->randomFloat(2, 50, 5000),    // Random previous paid amount
+                'employee_code' => $i,        // Random employee code between 1 and 10
+                'loan_code' => $faker->numberBetween(1, 5),             // Random loan code between 1 and 5
+            ];
+        }
+        DB::table('applied_loans')->insert($appliedLoans);
     }
 }
