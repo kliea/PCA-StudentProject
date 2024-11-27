@@ -21,6 +21,7 @@ return new class extends Migration
             $table->double('remittance_percent');
             $table->double('ceiling_amount');
             $table->string('compensation_links');
+            $table->string('compensation_links');
             $table->timestamps();
         });
     }
