@@ -28,18 +28,24 @@ class AgencyShareController extends Controller
      */
     public function store(Request $request)
     {
+        // Convert Array Input to String
+        $links = $request->input('compensation_links')
+            ? implode(", ", $request->input('compensation_links'))
+            : null;
 
-        //validate user request
+        // Validate user request
         $validate = $request->validate([
-            'agency_share_name' => 'required|string|unique|max:255',
+            'agency_share_name' => 'required|string|max:255',
             'shorthand' => 'required|string|max:50',
             'amount' => 'required|numeric',
             'is_mandatory' => 'required|boolean',
             'remittance_percent' => 'required|numeric',
             'ceiling_amount' => 'required|numeric',
-
+            'compensation_links' => 'array|nullable',
+            'compensation_links.*' => 'string|nullable',
         ]);
 
+        // Create new AgencyShare
         AgencyShare::create([
             'agency_share_name' => $validate['agency_share_name'],
             'shorthand' => $validate['shorthand'],
@@ -47,9 +53,10 @@ class AgencyShareController extends Controller
             'is_mandatory' => $validate['is_mandatory'],
             'remittance_percent' => $validate['remittance_percent'],
             'ceiling_amount' => $validate['ceiling_amount'],
+            'compensation_links' => $links,
         ]);
 
-        return redirect()->back()->with('success', 'Data recieved successfully!');
+        return redirect()->back()->with('success', 'Data received successfully!');
     }
 
     /**

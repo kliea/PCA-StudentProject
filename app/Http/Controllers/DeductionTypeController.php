@@ -34,7 +34,8 @@ class DeductionTypeController extends Controller
             'amount' => 'required|numeric',
             'is_mandatory' => 'required|boolean',
             'remittance_percent' => 'required|numeric',
-            'ceiling_amount' => 'required|numeric'
+            'ceiling_amount' => 'required|numeric',
+            'compensation_links' => 'nullable|string'
         ]);
 
         // Create a new profile record in the database
@@ -45,6 +46,7 @@ class DeductionTypeController extends Controller
             'is_mandatory' => $validated['is_mandatory'],
             'remittance_percent' => $validated['remittance_percent'],
             'ceiling_amount' => $validated['ceiling_amount'],
+            'compensation_links' => $validated['compensation_links']
         ]);
 
         // Redirect back or to a specific page after saving

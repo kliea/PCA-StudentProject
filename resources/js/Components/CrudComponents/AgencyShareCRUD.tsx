@@ -18,8 +18,8 @@ export function AgencyShareStore({ openDialog }: { openDialog: any }) {
         deductionType: "",
         remittance_percent: "",
         ceiling_amount: "",
+        compensation_links: ["Hello", "On"],
     });
-
     const changeDeductionType = (value: string) => {
         setData("deductionType", value);
     };

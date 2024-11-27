@@ -18,12 +18,6 @@ class AgencyShare extends Model
 		'ceiling_amount',
 		'compensation_links'
 	];
-
-	// Cast the array column
-	protected $casts = [
-		'compensation_links' => 'array',
-	];
-
 	public function appliedShare()
 	{
 		return $this->hasMany(AppliedShare::class);

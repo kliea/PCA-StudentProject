@@ -19,10 +19,6 @@ class DeductionType extends Model
 		'compensation_links'
 	];
 
-	// Cast the array column
-	protected $casts = [
-		'compensation_links' => 'array',
-	];
 
 	public function appliedDeduction()
 	{
