@@ -39,10 +39,26 @@ class DatabaseSeeder extends Seeder
         $positions = [];
 
         $jobTitles = [
-            'Developer', 'Analyst', 'Coordinator', 'Specialist', 'Manager',
-            'Engineer', 'Consultant', 'Technician', 'Officer', 'Administrator',
-            'Planner', 'Supervisor', 'Strategist', 'Director', 'Executive',
-            'Architect', 'Assistant', 'Lead', 'Trainer', 'Designer'
+            'Developer',
+            'Analyst',
+            'Coordinator',
+            'Specialist',
+            'Manager',
+            'Engineer',
+            'Consultant',
+            'Technician',
+            'Officer',
+            'Administrator',
+            'Planner',
+            'Supervisor',
+            'Strategist',
+            'Director',
+            'Executive',
+            'Architect',
+            'Assistant',
+            'Lead',
+            'Trainer',
+            'Designer'
         ];
 
         for ($i = 1; $i <= 19; $i++) {
@@ -57,19 +73,40 @@ class DatabaseSeeder extends Seeder
         $stations = [];
 
         $stationNames = [
-            'Central Office', 'Regional Office', 'Field Station',
-            'Research Hub', 'Monitoring Center', 'Training Facility',
-            'Operational Unit', 'Administrative Wing', 'Coordination Bureau', 'Satellite Office'
+            'Central Office',
+            'Regional Office',
+            'Field Station',
+            'Research Hub',
+            'Monitoring Center',
+            'Training Facility',
+            'Operational Unit',
+            'Administrative Wing',
+            'Coordination Bureau',
+            'Satellite Office'
         ];
         $cities = [
-            'Quezon City', 'Makati City', 'Davao City', 'Cebu City',
-            'Baguio City', 'Iloilo City', 'Butuan City', 'Zamboanga City',
-            'General Santos City', 'Tagaytay City'
+            'Quezon City',
+            'Makati City',
+            'Davao City',
+            'Cebu City',
+            'Baguio City',
+            'Iloilo City',
+            'Butuan City',
+            'Zamboanga City',
+            'General Santos City',
+            'Tagaytay City'
         ];
         $provinces = [
-            'Metro Manila', 'Davao del Sur', 'Cebu', 'Benguet',
-            'Iloilo', 'Agusan del Norte', 'Zamboanga del Sur',
-            'South Cotabato', 'Cavite', 'Misamis Oriental'
+            'Metro Manila',
+            'Davao del Sur',
+            'Cebu',
+            'Benguet',
+            'Iloilo',
+            'Agusan del Norte',
+            'Zamboanga del Sur',
+            'South Cotabato',
+            'Cavite',
+            'Misamis Oriental'
         ];
 
         for ($i = 0; $i < 10; $i++) {
@@ -89,9 +126,16 @@ class DatabaseSeeder extends Seeder
         // Appointments ===========================================================================
         $appointments = [];
         $uniqueAppointmentTypes = [
-            'Regular', 'Contractual', 'Casual', 'Temporary',
-            'Job Order', 'Part-Time', 'Internship', 'Consultant',
-            'Freelance', 'Seasonal'
+            'Regular',
+            'Contractual',
+            'Casual',
+            'Temporary',
+            'Job Order',
+            'Part-Time',
+            'Internship',
+            'Consultant',
+            'Freelance',
+            'Seasonal'
         ];
 
         $basicPayTypes = ['Basic', 'Gross', 'Net'];
@@ -110,9 +154,16 @@ class DatabaseSeeder extends Seeder
         // Holidays ==================================================================================
         $holidays = [];
         $holidayNames = [
-            'New Year\'s Day', 'Independence Day', 'Labor Day', 'Thanksgiving',
-            'Christmas', 'Easter', 'Valentine\'s Day', 'Halloween',
-            'Memorial Day', 'Veterans Day'
+            'New Year\'s Day',
+            'Independence Day',
+            'Labor Day',
+            'Thanksgiving',
+            'Christmas',
+            'Easter',
+            'Valentine\'s Day',
+            'Halloween',
+            'Memorial Day',
+            'Veterans Day'
         ];
         $holiday_types = ['National', 'Religious', 'Cultural', 'Historical'];
         for ($i = 0; $i < 10; $i++) {
@@ -200,7 +251,7 @@ class DatabaseSeeder extends Seeder
 
         for ($i = 1; $i <= 50; $i++) {
             $startDate = $faker->dateTimeBetween('-1 year', '+1 year'); // Start date within a year from now
-            $endDate = (clone $startDate)->modify('+'. $faker->numberBetween(1, 14) .' days'); // End date 1-14 days later
+            $endDate = (clone $startDate)->modify('+' . $faker->numberBetween(1, 14) . ' days'); // End date 1-14 days later
 
             $travelOrders[] = [
                 'date_filed' => $faker->dateTimeBetween('-1 year', 'now')->format('Y-m-d'), // Filed within the past year
@@ -327,7 +378,8 @@ class DatabaseSeeder extends Seeder
                 'amount' => $faker->randomFloat(2, 1000, 10000),  // Random amount between 1,000 and 10,000
                 'is_mandatory' => $faker->boolean,  // Random boolean value for mandatory status
                 'remittance_percent' => $faker->randomFloat(2, 5, 20),  // Random remittance percent between 5% and 20%
-                'ceiling_amount' => $faker->randomFloat(2, 0, 5000)  // Random ceiling amount between 0 and 5,000
+                'ceiling_amount' => $faker->randomFloat(2, 0, 5000),  // Random ceiling amount between 0 and 5,000
+                'compensation_links' => DB::raw('ARRAY[' . implode(',', $faker->randomElements([1, 2, 3, 4, 5], 3)) . ']'), // Random 3 values from 1-5
             ];
         }
         DB::table('deduction_types')->insert($deductionTypes);

@@ -21,11 +21,10 @@ return new class extends Migration
             $table->boolean('is_mandatory');
             $table->double('remittance_percent');
             $table->double('ceiling_amount');
-
             $table->timestamps();
         });
 
-        DB::statement('ALTER TABLE compensation_types ADD COLUMN compensation_links INTEGER[]');
+        DB::statement('ALTER TABLE deduction_types ADD COLUMN compensation_links INTEGER[]');
     }
 
     /**
