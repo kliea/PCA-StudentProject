@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Faker\Factory as Faker;
 
 class DemoSeeder extends Seeder
 {
@@ -177,14 +178,17 @@ class DemoSeeder extends Seeder
 			'ceiling_amount' => 0.0
 		]);
 
-		DB::table('agency_shares')->insert([
-			'agency_share_name' => 'GSIS',
-			'shorthand' => 'GSIS',
-			'amount' => 10000.0,
-			'is_mandatory' => true,
-			'remittance_percent' => 12.0,
-			'ceiling_amount' => 0.0
-		]);
+        for ($i = 0; $i < 10; $i++) {
+            DB::table('agency_shares')->insert([
+                'agency_share_name' => $faker->company . ' Share',
+                'shorthand' => strtoupper($faker->lexify('??')),
+                'amount' => $faker->randomFloat(2, 50, 500),
+                'is_mandatory' => $faker->boolean,
+                'remittance_percent' => $faker->randomFloat(2, 0.01, 0.15),
+                'ceiling_amount' => $faker->randomFloat(2, 10, 100),
+                'compensation_links' => DB::raw('ARRAY[' . implode(',', $faker->randomElements([1, 2, 3, 4, 5], 3)) . ']'),
+            ]);
+        }
 
 		DB::table('loan_types')->insert([
 			'loan_name' => 'House Loan'
