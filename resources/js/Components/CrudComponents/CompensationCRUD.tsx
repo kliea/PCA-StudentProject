@@ -366,7 +366,13 @@ export function CompensationUpdate({
                     <div className="flex max-w-96">
                         <Select onValueChange={changeCompensationSettings}>
                             <SelectTrigger>
-                                <SelectValue placeholder="SELECT COMPENSATION TYPE" />
+                                <SelectValue
+                                    placeholder={
+                                        data.is_fixed
+                                            ? "FIXED AMOUNT"
+                                            : "BASIC PAY"
+                                    }
+                                />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="BASIC PAY">

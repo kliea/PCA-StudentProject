@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\CompensationType;
 use App\Models\DeductionType;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -18,8 +19,10 @@ class DeductionTypeController extends Controller
         // Fetch data from the database
         $data = DeductionType::all();
 
+        $compensationTypes = CompensationType::pluck('compensation_name');
+
         // Return the data to the frontend
-        return Inertia::render('Payroll/Admin/Deductions', ['data' => $data]);
+        return Inertia::render('Payroll/Admin/Deductions', ['data' => $data, 'compensationTypes' => $compensationTypes]);
     }
 
     /**
@@ -27,6 +30,13 @@ class DeductionTypeController extends Controller
      */
     public function store(Request $request)
     {
+
+        // Convert Array Input to String
+        $links = $request->input('compensation_links')
+            ? implode(", ", $request->input('compensation_links'))
+            : null;
+
+
         /* Validating the user request. */
         $validated = $request->validate([
             'deduction_name' => 'required|string',
@@ -35,7 +45,8 @@ class DeductionTypeController extends Controller
             'is_mandatory' => 'required|boolean',
             'remittance_percent' => 'required|numeric',
             'ceiling_amount' => 'required|numeric',
-            'compensation_links' => 'nullable|string'
+            'compensation_links' => 'array|nullable',
+            'compensation_links.*' => 'string|nullable',
         ]);
 
         // Create a new profile record in the database
@@ -46,7 +57,7 @@ class DeductionTypeController extends Controller
             'is_mandatory' => $validated['is_mandatory'],
             'remittance_percent' => $validated['remittance_percent'],
             'ceiling_amount' => $validated['ceiling_amount'],
-            'compensation_links' => $validated['compensation_links']
+            'compensation_links' => $links,
         ]);
 
         // Redirect back or to a specific page after saving
@@ -58,6 +69,11 @@ class DeductionTypeController extends Controller
      */
     public function update(Request $request, string $deduction_code)
     {
+
+        $links = $request->input('compensation_links')
+            ? implode(", ", $request->input('compensation_links'))
+            : null;
+
         /* Validating the user request. */
         $validated = $request->validate([
             'deduction_name' => 'required|string',
@@ -65,8 +81,12 @@ class DeductionTypeController extends Controller
             'amount' => 'required|numeric',
             'is_mandatory' => 'required|boolean',
             'remittance_percent' => 'required|numeric',
-            'ceiling_amount' => 'required|numeric'
+            'ceiling_amount' => 'required|numeric',
+            'compensation_links' => 'array|nullable',
+            'compensation_links.*' => 'string|nullable',
         ]);
+
+        $validated['compensation_links'] = $links;
 
         DeductionType::where('deduction_code', $deduction_code)->update($validated);
         return redirect()->back()->with('success', 'Successfully stored ssl');

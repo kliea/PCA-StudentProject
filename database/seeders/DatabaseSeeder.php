@@ -379,7 +379,7 @@ class DatabaseSeeder extends Seeder
                 'is_mandatory' => $faker->boolean,  // Random boolean value for mandatory status
                 'remittance_percent' => $faker->randomFloat(2, 5, 20),  // Random remittance percent between 5% and 20%
                 'ceiling_amount' => $faker->randomFloat(2, 0, 5000),  // Random ceiling amount between 0 and 5,000
-                'compensation_links' => $faker->lexify('Link-??????'),
+                'compensation_links' => $faker->lexify('??????,???????,???????'),
             ];
         }
         DB::table('deduction_types')->insert($deductionTypes);
@@ -393,7 +393,7 @@ class DatabaseSeeder extends Seeder
                 'is_mandatory' => $faker->boolean,                // Random boolean (true/false)
                 'remittance_percent' => $faker->randomFloat(2, 0.01, 0.15), // Percent (0.01 to 0.15)
                 'ceiling_amount' => $faker->randomFloat(2, 10, 100),  // Ceiling amount (10 to 100)
-                'compensation_links' => $faker->lexify('Link-??????'),
+                'compensation_links' => $faker->lexify('???????,??????,?????,????'),
             ]);
         }
 

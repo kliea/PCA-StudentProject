@@ -28,6 +28,7 @@ import {
     PaginationLink,
 } from "@/Components/ui/pagination";
 import { Button } from "@/Components/ui/button";
+import PaginationTable from "@/Components/Pagination";
 
 type appointmentTypes = {
     appointment_code: number;
@@ -115,7 +116,7 @@ export default function Appointments() {
         getPaginationRowModel: getPaginationRowModel(),
         initialState: {
             pagination: {
-                pageSize: 12,
+                pageSize: 11,
             },
         },
     });
@@ -125,76 +126,45 @@ export default function Appointments() {
     return (
         <AuthenticatedLayoutAdmin title="Appointments" links={AdminLinks}>
             <BodyContentLayout headerName={"Appointments List"}>
-                <div className="flex  mb-5 gap-3">
-                    <Input
-                        type="text"
-                        placeholder="Search..."
-                        className="w-1/4 rounded-pca"
-                    />
+                <div className="h-full">
+                    <div className="flex  mb-5 gap-3">
+                        <Input
+                            type="text"
+                            placeholder="Search..."
+                            className="w-1/4 rounded-pca"
+                        />
 
-                    <div>
-                        <DialogMenu
-                            open={openDialog}
-                            openDialog={() => setOpenDialog(!openDialog)}
-                            trigger={
-                                <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
-                                    <Plus className="mr-2 h-6 w-auto" />
-                                    New Appointment Profile
-                                </section>
-                            }
-                            title="New Appointment Profile"
-                        >
-                            <AppointmentStore
-                                compensationTypes={
-                                    usePage().props
-                                        .compensationTypes as Array<string>
-                                }
+                        <div>
+                            <DialogMenu
+                                open={openDialog}
                                 openDialog={() => setOpenDialog(!openDialog)}
-                            />
-                        </DialogMenu>
+                                trigger={
+                                    <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
+                                        <Plus className="mr-2 h-6 w-auto" />
+                                        New Appointment Profile
+                                    </section>
+                                }
+                                title="New Appointment Profile"
+                            >
+                                <AppointmentStore
+                                    compensationTypes={
+                                        usePage().props
+                                            .compensationTypes as Array<string>
+                                    }
+                                    openDialog={() =>
+                                        setOpenDialog(!openDialog)
+                                    }
+                                />
+                            </DialogMenu>
+                        </div>
                     </div>
-                </div>
-                <div>
                     <DataTable
                         columns={columns}
                         table={table}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
                     ></DataTable>
-
-                    <Pagination className="flex justify-end items-end">
-                        <PaginationContent>
-                            <PaginationItem>
-                                <Button
-                                    onClick={table.previousPage}
-                                    className="bg-transparent text-black hover:bg-transparent w-30 p-2"
-                                    disabled={!table.getCanPreviousPage()}
-                                >
-                                    <ChevronLeft className="pr-1" />
-                                    Previous
-                                </Button>
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationEllipsis />
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationLink>
-                                    {table.getState().pagination.pageIndex + 1}
-                                </PaginationLink>
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationEllipsis />
-                            </PaginationItem>
-                            <Button
-                                onClick={table.nextPage}
-                                className="bg-transparent text-black hover:bg-transparent w-30 p-2"
-                                disabled={!table.getCanNextPage()}
-                            >
-                                Next
-                                <ChevronRight className="pl-1" />
-                            </Button>
-                        </PaginationContent>
-                    </Pagination>
                 </div>
+                <PaginationTable table={table}></PaginationTable>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin>
     );

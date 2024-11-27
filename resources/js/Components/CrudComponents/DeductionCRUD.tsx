@@ -1,6 +1,6 @@
 import { useForm } from "@inertiajs/react";
 import { CircleAlert, CircleCheck } from "lucide-react";
-import { FormEventHandler } from "react";
+import { FormEventHandler, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -15,8 +15,15 @@ import {
 } from "../ui/select";
 import { Button } from "../ui/button";
 import ConfirmCancelButton from "../ConfirmCancelButton";
+import { ScrollArea } from "../ui/scroll-area";
 
-export function DeductionStore({ openDialog }: { openDialog: any }) {
+export function DeductionStore({
+    openDialog,
+    compensationTypes,
+}: {
+    openDialog: any;
+    compensationTypes: Array<string>;
+}) {
     const { data, setData, post, processing, errors, reset } = useForm({
         deduction_name: "",
         shorthand: "",
@@ -25,6 +32,7 @@ export function DeductionStore({ openDialog }: { openDialog: any }) {
         remittance_percent: "",
         ceiling_amount: "",
         deductionType: "",
+        compensation_links: [] as Array<string>,
     });
 
     const changeDeductionType = (value: string) => {
@@ -69,7 +77,8 @@ export function DeductionStore({ openDialog }: { openDialog: any }) {
                     "is_mandatory",
                     "remittance_percent",
                     "ceiling_amount",
-                    "deductionType"
+                    "deductionType",
+                    "compensation_links"
                 );
                 openDialog(false);
             },
@@ -92,208 +101,272 @@ export function DeductionStore({ openDialog }: { openDialog: any }) {
         });
     };
 
+    const [compensationCopy, setCompensationCopy] = useState([
+        ...compensationTypes,
+    ]);
     return (
-        <div>
-            <form
-                onSubmit={submit}
-                className="bg-red-400 grid grid-cols-2 gap-5"
-            >
-                <div className="flex flex-col">
-                    <div>
-                        <div className="flex gap-3 pl-10">
-                            <div>
-                                <Label
-                                    htmlFor="deduction_name"
-                                    className={
-                                        errors.deduction_name && "text-red-600"
-                                    }
-                                >
-                                    DEDUCTION NAME
-                                </Label>
-                                <Input
-                                    id="deduction_name"
-                                    type="text"
-                                    name="deduction_name"
-                                    value={data.deduction_name}
-                                    onChange={(e) =>
-                                        setData(
-                                            "deduction_name",
-                                            e.target.value
-                                        )
-                                    }
-                                />
-                                <InputError
-                                    message={errors.deduction_name}
-                                    className="mt-2"
-                                />
-                            </div>
-                            <div>
-                                <Label
-                                    htmlFor="shorthand"
-                                    className={
-                                        errors.shorthand && "text-red-600"
-                                    }
-                                >
-                                    SHORTHAND
-                                </Label>
-                                <Input
-                                    id="shorthand"
-                                    type="text"
-                                    name="shorthand"
-                                    value={data.shorthand}
-                                    onChange={(e) =>
-                                        setData("shorthand", e.target.value)
-                                    }
-                                />
-                                <InputError
-                                    message={errors.shorthand}
-                                    className="mt-2"
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="pl-10">
-                        <Label
-                            className={
-                                (errors.remittance_percent || errors.amount) &&
-                                "text-red-600"
-                            }
-                        >
-                            DEDUCTION TYPE
-                        </Label>
-                        <div className="flex max-w-96">
-                            <Select onValueChange={changeDeductionType}>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="SELECT DEDUCTION TYPE" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="UNDERTIME">
-                                        UNDERTIME
-                                    </SelectItem>
-                                    <SelectItem value="FIXED AMOUNT">
-                                        FIXED AMOUNT
-                                    </SelectItem>
-                                    <SelectItem value="LOAN PAYMENT">
-                                        LOAN PAYMENT
-                                    </SelectItem>
-                                    <SelectItem value="REMITTANCE">
-                                        REMITTANCE %
-                                    </SelectItem>
-                                    <SelectItem value="TAX">TAX</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-                        {data.deductionType == "FIXED AMOUNT" && (
-                            <div className="max-w-96">
-                                <Label
-                                    className={errors.amount && "text-red-600"}
-                                >
-                                    AMOUNT
-                                </Label>
-                                <Input
-                                    min={0}
-                                    id="amount"
-                                    type="number"
-                                    name="amount"
-                                    step="any"
-                                    value={data.amount}
-                                    onChange={(e) =>
-                                        setData("amount", e.target.value)
-                                    }
-                                />
-                                <InputError
-                                    message={errors.amount}
-                                    className="mt-2"
-                                />
-                            </div>
-                        )}
-
-                        {data.deductionType == "REMITTANCE" && (
-                            <div className="flex gap-3">
-                                <div className="max-w-96">
-                                    <Label
-                                        className={
-                                            errors.remittance_percent &&
-                                            "text-red-600"
-                                        }
-                                    >
-                                        REMITTANCE %
-                                    </Label>
-
-                                    <Input
-                                        min={0}
-                                        id="remittance"
-                                        type="number"
-                                        name="remittance"
-                                        step="any"
-                                        value={data.remittance_percent}
-                                        onChange={(e) =>
-                                            setData(
-                                                "remittance_percent",
-                                                e.target.value
-                                            )
-                                        }
-                                    />
-
-                                    <InputError
-                                        message={errors.remittance_percent}
-                                        className="mt-2"
-                                    />
-                                </div>
-
-                                <div className="max-w-96">
-                                    <Label
-                                        className={
-                                            errors.ceiling_amount &&
-                                            "text-red-600"
-                                        }
-                                    >
-                                        CIELING AMOUNT
-                                    </Label>
-                                    <Input
-                                        min={0}
-                                        id="ceiling_amount"
-                                        type="number"
-                                        name="ceiling_amount"
-                                        step="any"
-                                        value={data.ceiling_amount}
-                                        onChange={(e) =>
-                                            setData(
-                                                "ceiling_amount",
-                                                e.target.value
-                                            )
-                                        }
-                                    />
-                                    <InputError
-                                        message={errors.ceiling_amount}
-                                        className="mt-2"
-                                    />
-                                </div>
-                            </div>
-                        )}
-                    </div>
-
-                    <div className="flex gap-3 pl-10">
+        <div className=" h-full">
+            <form onSubmit={submit} className="h-full grid grid-cols-2">
+                <div className="w-full flex justify-center">
+                    <div className="flex flex-col ">
                         <div>
-                            <Label>DEDUCTION SETTINGS</Label>
-                            <div className="flex items-center gap-3 pt-2">
-                                <Label htmlFor="is_mandatory">Mandatory</Label>
-                                <Switch
-                                    id="is_mandatory"
-                                    onCheckedChange={() => {
-                                        data.is_mandatory = !data.is_mandatory;
-                                    }}
-                                />
+                            <div className="flex gap-3">
+                                <div>
+                                    <Label
+                                        htmlFor="deduction_name"
+                                        className={
+                                            errors.deduction_name &&
+                                            "text-red-600"
+                                        }
+                                    >
+                                        DEDUCTION NAME
+                                    </Label>
+                                    <Input
+                                        id="deduction_name"
+                                        type="text"
+                                        name="deduction_name"
+                                        value={data.deduction_name}
+                                        onChange={(e) =>
+                                            setData(
+                                                "deduction_name",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                    <InputError
+                                        message={errors.deduction_name}
+                                        className="mt-2"
+                                    />
+                                </div>
+                                <div>
+                                    <Label
+                                        htmlFor="shorthand"
+                                        className={
+                                            errors.shorthand && "text-red-600"
+                                        }
+                                    >
+                                        SHORTHAND
+                                    </Label>
+                                    <Input
+                                        id="shorthand"
+                                        type="text"
+                                        name="shorthand"
+                                        value={data.shorthand}
+                                        onChange={(e) =>
+                                            setData("shorthand", e.target.value)
+                                        }
+                                    />
+                                    <InputError
+                                        message={errors.shorthand}
+                                        className="mt-2"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <Label
+                                className={
+                                    (errors.remittance_percent ||
+                                        errors.amount) &&
+                                    "text-red-600"
+                                }
+                            >
+                                DEDUCTION TYPE
+                            </Label>
+                            <div className="flex max-w-96">
+                                <Select
+                                    onValueChange={changeDeductionType}
+                                    required
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="SELECT DEDUCTION TYPE" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="UNDERTIME">
+                                            UNDERTIME
+                                        </SelectItem>
+                                        <SelectItem value="FIXED AMOUNT">
+                                            FIXED AMOUNT
+                                        </SelectItem>
+                                        <SelectItem value="LOAN PAYMENT">
+                                            LOAN PAYMENT
+                                        </SelectItem>
+                                        <SelectItem value="REMITTANCE">
+                                            REMITTANCE %
+                                        </SelectItem>
+                                        <SelectItem value="TAX">TAX</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            {data.deductionType == "FIXED AMOUNT" && (
+                                <div className="max-w-96">
+                                    <Label
+                                        className={
+                                            errors.amount && "text-red-600"
+                                        }
+                                    >
+                                        AMOUNT
+                                    </Label>
+                                    <Input
+                                        min={0}
+                                        id="amount"
+                                        type="number"
+                                        name="amount"
+                                        step="any"
+                                        value={data.amount}
+                                        onChange={(e) =>
+                                            setData("amount", e.target.value)
+                                        }
+                                    />
+                                    <InputError
+                                        message={errors.amount}
+                                        className="mt-2"
+                                    />
+                                </div>
+                            )}
+
+                            {data.deductionType == "REMITTANCE" && (
+                                <div className="flex gap-3">
+                                    <div className="max-w-96">
+                                        <Label
+                                            className={
+                                                errors.remittance_percent &&
+                                                "text-red-600"
+                                            }
+                                        >
+                                            REMITTANCE %
+                                        </Label>
+
+                                        <Input
+                                            min={0}
+                                            id="remittance"
+                                            type="number"
+                                            name="remittance"
+                                            step="any"
+                                            value={data.remittance_percent}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "remittance_percent",
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
+
+                                        <InputError
+                                            message={errors.remittance_percent}
+                                            className="mt-2"
+                                        />
+                                    </div>
+
+                                    <div className="max-w-96">
+                                        <Label
+                                            className={
+                                                errors.ceiling_amount &&
+                                                "text-red-600"
+                                            }
+                                        >
+                                            CIELING AMOUNT
+                                        </Label>
+                                        <Input
+                                            min={0}
+                                            id="ceiling_amount"
+                                            type="number"
+                                            name="ceiling_amount"
+                                            step="any"
+                                            value={data.ceiling_amount}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "ceiling_amount",
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
+                                        <InputError
+                                            message={errors.ceiling_amount}
+                                            className="mt-2"
+                                        />
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="flex gap-3">
+                            <div>
+                                <Label>DEDUCTION SETTINGS</Label>
+                                <div className="flex items-center gap-3 pt-2">
+                                    <Label htmlFor="is_mandatory">
+                                        Mandatory
+                                    </Label>
+                                    <Switch
+                                        id="is_mandatory"
+                                        checked={data.is_mandatory}
+                                        onCheckedChange={(checked) =>
+                                            setData("is_mandatory", checked)
+                                        }
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div>
-                    <Label>COMPENSATION LINKS</Label>
-                </div>
+                <div className="grid grid-cols-2">
+                    <div className="p-2">
+                        <Label>COMPENSATION LINKS:</Label>
+                        <ScrollArea className="h-[220px] rounded-md border p-4">
+                            {data.compensation_links.length === 0 && (
+                                <h1>EMPTY</h1>
+                            )}
+                            {data.compensation_links.map((types) => (
+                                <div
+                                    key={types}
+                                    className="cursor-pointer py-1"
+                                    onClick={() => {
+                                        compensationCopy.push(types);
+                                        setData("compensation_links", [
+                                            ...data.compensation_links.filter(
+                                                (item) => item !== types
+                                            ),
+                                        ]);
+                                    }}
+                                >
+                                    {types}
+                                </div>
+                            ))}
+                        </ScrollArea>
+                    </div>
 
+                    <div className="p-2">
+                        <Label>COMPENSATION TYPES:</Label>
+                        <ScrollArea className="h-[220px] rounded-md border p-4">
+                            {compensationCopy.length === 0 && (
+                                <h1 className="cursor-pointer">EMPTY</h1>
+                            )}
+                            {compensationCopy.map((types) => (
+                                <div
+                                    key={types}
+                                    className="cursor-pointer py-1"
+                                    onClick={() => {
+                                        data.compensation_links.includes(types)
+                                            ? console.log("Already Exist")
+                                            : setData("compensation_links", [
+                                                  ...data.compensation_links,
+                                                  types,
+                                              ]);
+                                        setCompensationCopy(
+                                            compensationCopy.filter(
+                                                (item) => item !== types
+                                            )
+                                        );
+                                    }}
+                                >
+                                    {types}
+                                </div>
+                            ))}
+                        </ScrollArea>
+                    </div>
+                </div>
                 <ConfirmCancelButton
                     processing={processing}
                     setOpenDialog={openDialog}
@@ -306,7 +379,9 @@ export function DeductionStore({ openDialog }: { openDialog: any }) {
 export function DeductionUpdate({
     RowData,
     setOpenDialog,
+    compensationTypes,
 }: {
+    compensationTypes: Array<string>;
     RowData: any;
     setOpenDialog: any;
 }) {
@@ -318,8 +393,17 @@ export function DeductionUpdate({
         remittance_percent: RowData.remittance_percent,
         ceiling_amount: RowData.ceiling_amount,
         deductionType: RowData.deductionType,
+        compensation_links: [] as Array<string>,
     });
 
+    useEffect(() => {
+        setData(
+            "compensation_links",
+            RowData.compensation_links
+                ? RowData.compensation_links.split(",")
+                : []
+        );
+    }, []);
     const changeDeductionType = (value: string) => {
         setData("deductionType", value);
     };
@@ -365,209 +449,279 @@ export function DeductionUpdate({
         });
     };
 
+    const [compensationCopy, setCompensationCopy] = useState(
+        RowData.compensation_links == null
+            ? compensationTypes
+            : compensationTypes.filter(
+                  (items) => !RowData.compensation_links.includes(items)
+              )
+    );
+
+    console.log(compensationCopy);
+
     return (
-        <div>
-            <form onSubmit={submit}>
-                <div>
-                    <div className="flex gap-3 pl-10">
+        <div className=" h-full">
+            <form onSubmit={submit} className="h-full grid grid-cols-2">
+                <div className="w-full flex justify-center">
+                    <div className="flex flex-col ">
+                        <div>
+                            <div className="flex gap-3">
+                                <div>
+                                    <Label
+                                        htmlFor="deduction_name"
+                                        className={
+                                            errors.deduction_name &&
+                                            "text-red-600"
+                                        }
+                                    >
+                                        DEDUCTION NAME
+                                    </Label>
+                                    <Input
+                                        id="deduction_name"
+                                        type="text"
+                                        name="deduction_name"
+                                        value={data.deduction_name}
+                                        onChange={(e) =>
+                                            setData(
+                                                "deduction_name",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                    <InputError
+                                        message={errors.deduction_name}
+                                        className="mt-2"
+                                    />
+                                </div>
+                                <div>
+                                    <Label
+                                        htmlFor="shorthand"
+                                        className={
+                                            errors.shorthand && "text-red-600"
+                                        }
+                                    >
+                                        SHORTHAND
+                                    </Label>
+                                    <Input
+                                        id="shorthand"
+                                        type="text"
+                                        name="shorthand"
+                                        value={data.shorthand}
+                                        onChange={(e) =>
+                                            setData("shorthand", e.target.value)
+                                        }
+                                    />
+                                    <InputError
+                                        message={errors.shorthand}
+                                        className="mt-2"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
                         <div>
                             <Label
-                                htmlFor="deduction_name"
                                 className={
-                                    errors.deduction_name && "text-red-600"
+                                    (errors.remittance_percent ||
+                                        errors.amount) &&
+                                    "text-red-600"
                                 }
                             >
-                                DEDUCTION NAME
+                                DEDUCTION TYPE
                             </Label>
-                            <Input
-                                id="deduction_name"
-                                type="text"
-                                name="deduction_name"
-                                value={data.deduction_name}
-                                onChange={(e) =>
-                                    setData("deduction_name", e.target.value)
-                                }
-                            />
-                            <InputError
-                                message={errors.deduction_name}
-                                className="mt-2"
-                            />
-                        </div>
-                        <div>
-                            <Label
-                                htmlFor="shorthand"
-                                className={errors.shorthand && "text-red-600"}
-                            >
-                                SHORTHAND
-                            </Label>
-                            <Input
-                                id="shorthand"
-                                type="text"
-                                name="shorthand"
-                                value={data.shorthand}
-                                onChange={(e) =>
-                                    setData("shorthand", e.target.value)
-                                }
-                            />
-                            <InputError
-                                message={errors.shorthand}
-                                className="mt-2"
-                            />
-                        </div>
-                    </div>
-                </div>
+                            <div className="flex max-w-96">
+                                <Select onValueChange={changeDeductionType}>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="SELECT DEDUCTION TYPE" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="UNDERTIME">
+                                            UNDERTIME
+                                        </SelectItem>
+                                        <SelectItem value="FIXED AMOUNT">
+                                            FIXED AMOUNT
+                                        </SelectItem>
+                                        <SelectItem value="LOAN PAYMENT">
+                                            LOAN PAYMENT
+                                        </SelectItem>
+                                        <SelectItem value="REMITTANCE">
+                                            REMITTANCE %
+                                        </SelectItem>
+                                        <SelectItem value="TAX">TAX</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            {data.deductionType == "FIXED AMOUNT" && (
+                                <div className="max-w-96">
+                                    <Label
+                                        className={
+                                            errors.amount && "text-red-600"
+                                        }
+                                    >
+                                        AMOUNT
+                                    </Label>
+                                    <Input
+                                        min={0}
+                                        id="amount"
+                                        type="number"
+                                        name="amount"
+                                        step="any"
+                                        value={data.amount}
+                                        onChange={(e) =>
+                                            setData("amount", e.target.value)
+                                        }
+                                    />
+                                    <InputError
+                                        message={errors.amount}
+                                        className="mt-2"
+                                    />
+                                </div>
+                            )}
 
-                <div className="pl-10">
-                    <Label
-                        className={
-                            (errors.remittance_percent || errors.amount) &&
-                            "text-red-600"
-                        }
-                    >
-                        DEDUCTION TYPE
-                    </Label>
-                    <div className="flex max-w-96">
-                        <Select onValueChange={changeDeductionType}>
-                            <SelectTrigger>
-                                <SelectValue placeholder="SELECT DEDUCTION " />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="UNDERTIME">
-                                    UNDERTIME
-                                </SelectItem>
-                                <SelectItem value="FIXED AMOUNT">
-                                    FIXED AMOUNT
-                                </SelectItem>
-                                <SelectItem value="LOAN PAYMENT">
-                                    LOAN PAYMENT
-                                </SelectItem>
-                                <SelectItem value="REMITTANCE">
-                                    REMITTANCE %
-                                </SelectItem>
-                                <SelectItem value="TAX">TAX</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    {data.deductionType == "FIXED AMOUNT" && (
-                        <div className="max-w-96">
-                            <Label className={errors.amount && "text-red-600"}>
-                                AMOUNT
-                            </Label>
-                            <Input
-                                min={0}
-                                id="amount"
-                                type="number"
-                                name="amount"
-                                step="any"
-                                value={data.amount}
-                                onChange={(e) =>
-                                    setData("amount", e.target.value)
-                                }
-                            />
-                            <InputError
-                                message={errors.amount}
-                                className="mt-2"
-                            />
-                        </div>
-                    )}
+                            {data.deductionType == "REMITTANCE" && (
+                                <div className="flex gap-3">
+                                    <div className="max-w-96">
+                                        <Label
+                                            className={
+                                                errors.remittance_percent &&
+                                                "text-red-600"
+                                            }
+                                        >
+                                            REMITTANCE %
+                                        </Label>
 
-                    {data.deductionType == "REMITTANCE" && (
+                                        <Input
+                                            min={0}
+                                            id="remittance"
+                                            type="number"
+                                            name="remittance"
+                                            step="any"
+                                            value={data.remittance_percent}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "remittance_percent",
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
+
+                                        <InputError
+                                            message={errors.remittance_percent}
+                                            className="mt-2"
+                                        />
+                                    </div>
+
+                                    <div className="max-w-96">
+                                        <Label
+                                            className={
+                                                errors.ceiling_amount &&
+                                                "text-red-600"
+                                            }
+                                        >
+                                            CIELING AMOUNT
+                                        </Label>
+                                        <Input
+                                            min={0}
+                                            id="ceiling_amount"
+                                            type="number"
+                                            name="ceiling_amount"
+                                            step="any"
+                                            value={data.ceiling_amount}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "ceiling_amount",
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
+                                        <InputError
+                                            message={errors.ceiling_amount}
+                                            className="mt-2"
+                                        />
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
                         <div className="flex gap-3">
-                            <div className="max-w-96">
-                                <Label
-                                    className={
-                                        errors.remittance_percent &&
-                                        "text-red-600"
-                                    }
-                                >
-                                    REMITTANCE %
-                                </Label>
-
-                                <Input
-                                    min={0}
-                                    id="remittance"
-                                    type="number"
-                                    name="remittance"
-                                    step="any"
-                                    value={data.remittance_percent}
-                                    onChange={(e) =>
-                                        setData(
-                                            "remittance_percent",
-                                            e.target.value
-                                        )
-                                    }
-                                />
-
-                                <InputError
-                                    message={errors.remittance_percent}
-                                    className="mt-2"
-                                />
+                            <div>
+                                <Label>DEDUCTION SETTINGS</Label>
+                                <div className="flex items-center gap-3 pt-2">
+                                    <Label htmlFor="is_mandatory">
+                                        Mandatory
+                                    </Label>
+                                    <Switch
+                                        id="is_mandatory"
+                                        onCheckedChange={() => {
+                                            data.is_mandatory =
+                                                !data.is_mandatory;
+                                        }}
+                                    />
+                                </div>
                             </div>
-
-                            <div className="max-w-96">
-                                <Label
-                                    className={
-                                        errors.ceiling_amount && "text-red-600"
-                                    }
-                                >
-                                    CIELING AMOUNT
-                                </Label>
-                                <Input
-                                    min={0}
-                                    id="ceiling_amount"
-                                    type="number"
-                                    name="ceiling_amount"
-                                    step="any"
-                                    value={data.ceiling_amount}
-                                    onChange={(e) =>
-                                        setData(
-                                            "ceiling_amount",
-                                            e.target.value
-                                        )
-                                    }
-                                />
-                                <InputError
-                                    message={errors.ceiling_amount}
-                                    className="mt-2"
-                                />
-                            </div>
-                        </div>
-                    )}
-                </div>
-
-                <div className="flex gap-3 pl-10">
-                    <div>
-                        <Label>DEDUCTION SETTINGS</Label>
-                        <div className="flex items-center gap-3 pt-2">
-                            <Label htmlFor="is_mandatory">Mandatory</Label>
-                            <Switch
-                                defaultChecked={data.is_mandatory}
-                                id="is_mandatory"
-                                onCheckedChange={() => {
-                                    data.is_mandatory = !data.is_mandatory;
-                                }}
-                            />
                         </div>
                     </div>
                 </div>
 
-                <div className="flex gap-3 justify-end pl-5">
-                    <Button
-                        className="mt-5 w-full max-w-32"
-                        type="button"
-                        onClick={() => setOpenDialog(false)}
-                        variant="ghost"
-                    >
-                        Cancel
-                    </Button>
-                    <Button
-                        className="mt-5 w-full max-w-32"
-                        disabled={processing}
-                        type="submit"
-                    >
-                        Confirm
-                    </Button>
+                <div className="grid grid-cols-2">
+                    <div className="p-2">
+                        <Label>COMPENSATION LINKS:</Label>
+                        <ScrollArea className="h-[220px] rounded-md border p-4">
+                            {data.compensation_links.length === 0 && (
+                                <h1>EMPTY</h1>
+                            )}
+                            {data.compensation_links.map((types) => (
+                                <div
+                                    key={types}
+                                    className="cursor-pointer py-1"
+                                    onClick={() => {
+                                        compensationCopy.push(types);
+                                        setData("compensation_links", [
+                                            ...data.compensation_links.filter(
+                                                (item) => item !== types
+                                            ),
+                                        ]);
+                                        console.log(data.compensation_links);
+                                    }}
+                                >
+                                    {types}
+                                </div>
+                            ))}
+                        </ScrollArea>
+                    </div>
+
+                    <div className="p-2">
+                        <Label>COMPENSATION TYPES:</Label>
+                        <ScrollArea className="h-[220px] rounded-md border p-4">
+                            {compensationCopy.length === 0 && <h1>EMPTY</h1>}
+                            {compensationCopy.map((types) => (
+                                <div
+                                    key={types}
+                                    className="cursor-pointer py-1"
+                                    onClick={() => {
+                                        data.compensation_links.includes(types)
+                                            ? console.log("Already Exist")
+                                            : setData("compensation_links", [
+                                                  ...data.compensation_links,
+                                                  types,
+                                              ]);
+                                        setCompensationCopy(
+                                            compensationCopy.filter(
+                                                (item) => item !== types
+                                            )
+                                        );
+                                    }}
+                                >
+                                    {types}
+                                </div>
+                            ))}
+                        </ScrollArea>
+                    </div>
                 </div>
+                <ConfirmCancelButton
+                    processing={processing}
+                    setOpenDialog={setOpenDialog}
+                ></ConfirmCancelButton>
             </form>
         </div>
     );

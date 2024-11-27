@@ -10,6 +10,7 @@ import { Head, usePage } from "@inertiajs/react";
 import {
     ColumnDef,
     getCoreRowModel,
+    getFilteredRowModel,
     getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
@@ -48,14 +49,14 @@ const columns: ColumnDef<compensationTypes>[] = [
             return row.original.is_fixed ? (
                 <p>₱{number.toLocaleString("en-US")}</p>
             ) : (
-                "Basic Pay"
+                "BASIC PAY"
             );
         },
     },
     {
         accessorKey: "is_taxable",
         header: "TAXABLE",
-        cell: ({ row }) => (row.getValue("is_taxable") ? "Yes" : "No"),
+        cell: ({ row }) => (row.getValue("is_taxable") ? "YES" : "NO"),
     },
     {
         id: "actions",
@@ -118,7 +119,7 @@ const columns: ColumnDef<compensationTypes>[] = [
 export default function Compensations() {
     const pageData = (usePage().props.data as compensationTypes[]) || [];
     const data: compensationTypes[] = pageData;
-
+    const [globalFilter, setGlobalFilter] = useState<any>([]);
     const table = useReactTable({
         data,
         columns,
@@ -129,6 +130,12 @@ export default function Compensations() {
                 pageSize: 12,
             },
         },
+        getFilteredRowModel: getFilteredRowModel(),
+        globalFilterFn: "auto",
+        state: {
+            globalFilter,
+        },
+        onGlobalFilterChange: setGlobalFilter,
     });
     const [openDialog, setOpenDialog] = useState(false);
     return (
@@ -139,6 +146,7 @@ export default function Compensations() {
                         type="text"
                         placeholder="Search..."
                         className="w-1/4 rounded-pca"
+                        onChange={(e) => setGlobalFilter(e.target.value || "")}
                     />
 
                     <div>

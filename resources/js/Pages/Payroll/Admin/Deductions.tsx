@@ -1,9 +1,3 @@
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/Components/ui/dropdown-menu";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import { Head, usePage } from "@inertiajs/react";
@@ -26,6 +20,7 @@ import {
 } from "@/Components/CrudComponents/DeductionCRUD";
 import { cn } from "@/lib/utils";
 import DropdownDialog from "@/Components/DropdownDialog";
+import PaginationTable from "@/Components/Pagination";
 
 type deductionTypes = {
     deduction_code: number;
@@ -57,6 +52,10 @@ const columns: ColumnDef<deductionTypes>[] = [
                     dialogtitle: cn("Edit", rowData.deduction_name),
                     dialogContent: (
                         <DeductionUpdate
+                            compensationTypes={
+                                usePage().props
+                                    .compensationTypes as Array<string>
+                            }
                             RowData={rowData}
                             setOpenDialog={setOpenDialog}
                         ></DeductionUpdate>
@@ -83,6 +82,7 @@ const columns: ColumnDef<deductionTypes>[] = [
             return (
                 <div>
                     <DropdownDialog
+                        dialogClassName="max-w-[1000px] min-h-[400px]"
                         openDialog={openDialog}
                         setOpenDialog={setOpenDialog}
                         dialogs={dialogs}
@@ -128,7 +128,7 @@ export default function Deductions() {
 
                     <div>
                         <DialogMenu
-                            dialogClassName="max-w-[800px]"
+                            dialogClassName="max-w-[1000px] min-h-[400px]"
                             open={openDialog}
                             openDialog={() => setOpenDialog(!openDialog)}
                             trigger={
@@ -140,6 +140,10 @@ export default function Deductions() {
                             title="New Deduction Profile"
                         >
                             <DeductionStore
+                                compensationTypes={
+                                    usePage().props
+                                        .compensationTypes as Array<string>
+                                }
                                 openDialog={() => setOpenDialog(!openDialog)}
                             ></DeductionStore>
                         </DialogMenu>
@@ -151,6 +155,8 @@ export default function Deductions() {
                         table={table}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
                     ></DataTable>
+
+                    <PaginationTable table={table}></PaginationTable>
                 </div>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin>

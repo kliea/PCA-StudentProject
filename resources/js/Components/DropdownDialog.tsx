@@ -57,7 +57,9 @@ const DropdownDialog = ({
             </DropdownMenu>
             {dialogs.map((dialog: any) => (
                 <Dialog
-                    dialogClassName={dialogClassName}
+                    dialogClassName={
+                        dialog.name == "Delete" ? "" : dialogClassName
+                    }
                     key={dialog.tag}
                     title={dialog.dialogtitle}
                     open={openDialog === dialog.tag}
