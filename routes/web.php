@@ -80,7 +80,7 @@ Route::get('/', function () {
 //     Route::get('attendancerecord', [AttendanceRecordController::class, 'index'])->name('bioadmin.attendancerecord');
 //     Route::get('manageuser', [AttendanceRecordController::class, 'index'])->name('bioadmin.manageuser');
 // });
-Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'create'])->name('generate-DTRs');
+Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'generateNewBatch'])->name('generate-DTRs');
 
 Route::middleware(['auth', 'usercheck:bioadmin'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');

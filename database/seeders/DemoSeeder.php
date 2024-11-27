@@ -87,8 +87,8 @@ class DemoSeeder extends Seeder
 		]);
 
 		DB::table('employees')->insert([
-			'employee_number' => '123',
-			'first_name' => 'Earl James Williams',
+			'employee_number' => '8',
+			'first_name' => 'Clads',
 			'middle_name' => 'Arshad',
 			'last_name' => 'Alingasa',
 			'name_extension' => NULL,

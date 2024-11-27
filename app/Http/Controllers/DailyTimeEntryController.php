@@ -9,9 +9,11 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Exception;
 use DateTime;
+use App\Libraries\ZKLibrary;
 
 class DailyTimeEntryController extends Controller
 {
+
 	/* Retrieves all the current DTRs within the system. */
     public function index(): Response {
 		/* Fetching all the entries stored within the database. */
@@ -23,46 +25,98 @@ class DailyTimeEntryController extends Controller
 
     /* Generates a new batch of empty DTRs for all the employees in the system.
 		If there are no employees, or if the date has not changed, then a new batch is not made. */
-    public function generateNewBatch() {
-		$currentDate = date('Y-m-d');
-		$recentDate = NULL;
 
-		/* Attempting to retrieve the latest daily_time_entries record. */
-		try {
-			$recentDate = DailyTimeEntry::latest()->first()->date;
-		} catch (Exception $e) {
-			$recentDate = (new DateTime())->setTimestamp(0);
-		}
+		protected $zk;
 
-		/* Checking to see if today matches the most recent DTR entry. */
-		if ($recentDate == $currentDate) {
-			return;
-		}
+public function generateNewBatch()
+{
+    $this->zk = new ZKLibrary(env('BIOM_IP'), env('BIOM_PORT'));
 
-		$employees = Employee::all();
+    $currentDate = date('Y-m-d');
+    $recentDate = DailyTimeEntry::latest()->first()->date ?? null;
 
-		if (sizeof($employees) == 0) {
-			return;
-		}
-
-		/* Creating a new DTR entry for the day, for every employee. */
-		foreach ($employees as $employee) {
-			DailyTimeEntry::create([
-				'dtr_entry_code' => 1,
-				'date' => $currentDate,
-				'time_in_am' => null,
-				'time_out_am' => null,
-				'time_in_pm' => null,
-				'time_out_pm' => null,
-				'tardy_minutes' => 0,
-				'undertime_minutes' => 0,
-				'work_minutes' => 0,
-				'employee_code' => $employee->employee_code
-			]);
-		}
-
-		return;
+    /* Checking if today matches the most recent DTR entry */
+    if ($recentDate == $currentDate) {
+        return;
     }
+
+    try {
+        $this->zk->connect();
+        $this->zk->disableDevice();
+
+        // Fetch all logs from the device
+        $logs = $this->zk->getAttendance();
+
+        // Time range boundaries
+        $morningStart = new DateTime('08:00:00');
+        $morningEnd = new DateTime('12:00:00');
+        $afternoonStart = new DateTime('13:00:00');
+        $afternoonEnd = new DateTime('17:00:00');
+
+        foreach ($logs as $log) {
+            try {
+                // Extract log details
+                $employeeNumber = $log[1];
+                $logDateTime = new DateTime($log[3]);
+                $logTime = $logDateTime->format('H:i:s');
+                $logDate = $logDateTime->format('Y-m-d');
+                $logType = $log[2]; // 0, 1, 4, 5
+
+                // Find the employee by number
+                $employee = Employee::where('employee_number', $employeeNumber)->first();
+
+                if (!$employee) {
+                    throw new Exception("Employee with employee_number {$employeeNumber} not found.");
+                }
+
+                // Find or create the time entry for this employee on this date
+                $timeEntry = DailyTimeEntry::firstOrNew([
+                    'date' => $logDate,
+                    'employee_code' => $employee->employee_code
+                ]);
+
+								// Set default values for required fields
+                if (!$timeEntry->exists) {
+									$timeEntry->tardy_minutes = 1; // Default value
+									$timeEntry->undertime_minutes = 0;
+									$timeEntry->work_minutes = 0;
+							}
+
+                // Determine the field to update based on the log type and time
+                if (in_array($logType, [0, 4])) { // Time in
+                    if ($logTime >= $morningStart->format('H:i:s') && $logTime <= $morningEnd->format('H:i:s')) {
+                        $timeEntry->time_in_am = $logTime;
+                    } elseif ($logTime >= $afternoonStart->format('H:i:s') && $logTime <= $afternoonEnd->format('H:i:s')) {
+                        $timeEntry->time_in_pm = $logTime;
+                    }
+                } elseif (in_array($logType, [1, 5])) { // Time out
+                    if ($logTime >= $morningStart->format('H:i:s') && $logTime <= $morningEnd->format('H:i:s')) {
+                        $timeEntry->time_out_am = $logTime;
+                    } elseif ($logTime >= $afternoonStart->format('H:i:s') && $logTime <= $afternoonEnd->format('H:i:s')) {
+                        $timeEntry->time_out_pm = $logTime;
+                    }
+                }
+
+                // Save the time entry
+                $timeEntry->save();
+
+            } catch (Exception $e) {
+                // Log errors for this specific log entry
+                echo "Error processing log entry: " . $e->getMessage() . "\n";
+                continue;
+            }
+        }
+
+        $this->zk->enableDevice();
+        $this->zk->disconnect();
+    } catch (Exception $e) {
+        // Handle connection or device-related errors
+        echo "Device error: " . $e->getMessage() . "\n";
+    }
+
+    return;
+}
+
 
 	/* Creates and stores a single new daily_time_entries record. */
 	public function store(Request $request) {
