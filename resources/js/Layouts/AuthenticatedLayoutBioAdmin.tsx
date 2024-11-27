@@ -171,7 +171,7 @@ export default function Authenticated({
                                         My Account
                                     </DropdownMenuLabel>
                                     <DropdownMenuSeparator />
-                                    <DropdownMenuItem>
+                                    {/* <DropdownMenuItem>
                                         <Link href="#" className="flex">
                                             <User className="w-5 pr-1" />
                                             Profile
@@ -182,7 +182,7 @@ export default function Authenticated({
                                             <Cog className="w-5 pr-1" />
                                             Settings
                                         </Link>
-                                    </DropdownMenuItem>
+                                    </DropdownMenuItem> */}
                                     <DropdownMenuItem>
                                         <Link
                                             href={route("logout")}
