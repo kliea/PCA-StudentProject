@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -14,15 +15,17 @@ return new class extends Migration
         Schema::create('deduction_types', function (Blueprint $table) {
             $table->id('deduction_code');
 
-			$table->string('deduction_name');
-			$table->string('shorthand');
-			$table->double('amount');
-			$table->boolean('is_mandatory');
-			$table->double('remittance_percent');
-			$table->double('ceiling_amount');
+            $table->string('deduction_name');
+            $table->string('shorthand');
+            $table->double('amount');
+            $table->boolean('is_mandatory');
+            $table->double('remittance_percent');
+            $table->double('ceiling_amount');
 
             $table->timestamps();
         });
+
+        DB::statement('ALTER TABLE compensation_types ADD COLUMN compensation_links INTEGER[]');
     }
 
     /**

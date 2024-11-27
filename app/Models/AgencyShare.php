@@ -15,7 +15,13 @@ class AgencyShare extends Model
 		'amount',
 		'is_mandatory',
 		'remittance_percent',
-		'ceiling_amount'
+		'ceiling_amount',
+		'compensation_links'
+	];
+
+	// Cast the array column
+	protected $casts = [
+		'compensation_links' => 'array',
 	];
 
 	public function appliedShare()
