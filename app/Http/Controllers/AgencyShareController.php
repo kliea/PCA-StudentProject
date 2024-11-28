@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\AgencyShare;
+use App\Models\CompensationType;
 use Inertia\Inertia;
 use Inertia\Response;
 use PhpParser\Node\Expr\Cast\String_;
@@ -18,8 +19,10 @@ class AgencyShareController extends Controller
         //fetch data from the database
         $data = AgencyShare::all();
 
+        $compensationTypes = CompensationType::pluck('compensation_name');
+
         //return data to front end
-        return Inertia::render('Payroll/Admin/GovernmentShares', ['data' => $data]);
+        return Inertia::render('Payroll/Admin/GovernmentShares', ['data' => $data, 'compensationTypes' => $compensationTypes]);
     }
 
 
@@ -64,7 +67,11 @@ class AgencyShareController extends Controller
      */
     public function update(Request $request, string $agency_share_name)
     {
-        //
+        $links = $request->input('compensation_links')
+            ? implode(", ", $request->input('compensation_links'))
+            : null;
+
+
         //validate user request
         $validate = $request->validate([
             'agency_share_name' => 'required|string|max:255',
@@ -73,9 +80,12 @@ class AgencyShareController extends Controller
             'is_mandatory' => 'required|boolean',
             'remittance_percent' => 'required|numeric',
             'ceiling_amount' => 'required|numeric',
+            'compensation_links' => 'array|nullable',
+            'compensation_links.*' => 'string|nullable',
 
         ]);
 
+        $validate['compensation_links'] = $links;
         AgencyShare::where('agency_share_name', $agency_share_name)->update($validate);
         return redirect()->back()->with('success', 'successfully stored Government Share!');
     }

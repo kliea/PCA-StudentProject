@@ -1,17 +1,23 @@
+import { Button } from "@/Components/ui/button";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
-import { EmployeeEdit } from "@/Components/CrudComponents/EmployeesCRUD";
+
 import { AdminLinks } from "@/lib/payrollData";
-import {
-    ContextMenu,
-    ContextMenuContent,
-    ContextMenuItem,
-    ContextMenuTrigger,
-} from "@/Components/ui/context-menu";
+
+import { useForm } from "@inertiajs/react";
 
 export default function Formats() {
+    const { get } = useForm();
+
+    const fetchLoans = () => {
+        get(route("admin.loans"), {
+            onSuccess: (page) => {
+                console.log(page);
+            },
+        });
+    };
     return (
         <AuthenticatedLayoutAdmin title="Test" links={AdminLinks}>
-            <div>{/* <EmployeeEdit></EmployeeEdit> */}</div>
+            <Button onClick={fetchLoans}>Fetch</Button>
         </AuthenticatedLayoutAdmin>
     );
 }

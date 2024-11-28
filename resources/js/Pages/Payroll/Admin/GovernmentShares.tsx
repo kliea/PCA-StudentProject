@@ -3,6 +3,7 @@ import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import {
     ColumnDef,
     getCoreRowModel,
+    getFilteredRowModel,
     getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
@@ -54,6 +55,10 @@ const columns: ColumnDef<agencyTypes>[] = [
                     ),
                     dialogContent: (
                         <AgencyShareUpdate
+                            compensationTypes={
+                                usePage().props
+                                    .compensationTypes as Array<string>
+                            }
                             setOpenDialog={setOpenDialog}
                             RowData={rowData}
                         ></AgencyShareUpdate>
@@ -80,6 +85,7 @@ const columns: ColumnDef<agencyTypes>[] = [
             return (
                 <div>
                     <DropdownDialog
+                        dialogClassName="max-w-[1000px] min-h-[400px]"
                         openDialog={openDialog}
                         setOpenDialog={setOpenDialog}
                         dialogs={dialogs}
@@ -100,6 +106,7 @@ const columns: ColumnDef<agencyTypes>[] = [
 export default function GovernmentShare() {
     const pageData = (usePage().props.data as agencyTypes[]) || [];
     const data: agencyTypes[] = pageData;
+    const [globalFilter, setGlobalFilter] = useState<any>([]);
 
     const table = useReactTable({
         data,
@@ -111,6 +118,13 @@ export default function GovernmentShare() {
                 pageSize: 12,
             },
         },
+
+        getFilteredRowModel: getFilteredRowModel(),
+        globalFilterFn: "auto",
+        state: {
+            globalFilter,
+        },
+        onGlobalFilterChange: setGlobalFilter,
     });
 
     const [openDialog, setOpenDialog] = useState(false);
@@ -120,6 +134,7 @@ export default function GovernmentShare() {
             <BodyContentLayout headerName={"Government Shares"}>
                 <div className="flex  mb-5 gap-3">
                     <Input
+                        onChange={(e) => setGlobalFilter(e.target.value || "")}
                         type="text"
                         placeholder="Search..."
                         className="w-1/4 rounded-pca"
@@ -127,6 +142,7 @@ export default function GovernmentShare() {
 
                     <div>
                         <DialogMenu
+                            dialogClassName="max-w-[1000px] min-h-[400px]"
                             open={openDialog}
                             openDialog={() => setOpenDialog(!openDialog)}
                             trigger={
@@ -138,6 +154,10 @@ export default function GovernmentShare() {
                             title="New Government Share Profile"
                         >
                             <AgencyShareStore
+                                compensationTypes={
+                                    usePage().props
+                                        .compensationTypes as Array<string>
+                                }
                                 openDialog={() => setOpenDialog(!openDialog)}
                             ></AgencyShareStore>
                         </DialogMenu>

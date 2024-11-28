@@ -38,29 +38,29 @@ export function EmployeeEdit({
                 <div className="flex gap-3">
                     <div className="w-full">
                         <Label>LAST NAME</Label>
-                        <Input disabled></Input>
+                        <Input disabled value={RowData.last_name}></Input>
                     </div>
 
                     <div className="w-full">
                         <Label>FIRST NAME</Label>
-                        <Input disabled></Input>
+                        <Input disabled value={RowData.first_name}></Input>
                     </div>
 
                     <div className="w-full">
                         <Label>MIDDLE NAME</Label>
-                        <Input disabled></Input>
+                        <Input disabled value={RowData.middle_name}></Input>
                     </div>
 
                     <div className="w-full">
                         <Label>EXT. NAME</Label>
-                        <Input disabled></Input>
+                        <Input disabled value={RowData.name_extension}></Input>
                     </div>
                 </div>
 
                 <div className="flex gap-3">
                     <div className="w-full">
                         <Label>EMPLOYEE NUMBER</Label>
-                        <Input></Input>
+                        <Input disabled value={RowData.employee_number}></Input>
                     </div>
 
                     <div className="w-full">

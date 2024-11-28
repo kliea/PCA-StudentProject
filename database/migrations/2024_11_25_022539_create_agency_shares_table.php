@@ -20,7 +20,7 @@ return new class extends Migration
             $table->boolean('is_mandatory');
             $table->double('remittance_percent');
             $table->double('ceiling_amount');
-            $table->string('compensation_links');
+            $table->string('compensation_links')->nullable();
             $table->timestamps();
         });
     }

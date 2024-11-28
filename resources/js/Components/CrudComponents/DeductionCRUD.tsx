@@ -410,6 +410,7 @@ export function DeductionUpdate({
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
+        console.log(data.compensation_links);
 
         put(route("update.deduction", RowData), {
             onSuccess: () => {
@@ -456,8 +457,6 @@ export function DeductionUpdate({
                   (items) => !RowData.compensation_links.includes(items)
               )
     );
-
-    console.log(compensationCopy);
 
     return (
         <div className=" h-full">

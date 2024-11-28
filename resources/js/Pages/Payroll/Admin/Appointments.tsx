@@ -8,10 +8,11 @@ import {
 import {
     ColumnDef,
     getCoreRowModel,
+    getFilteredRowModel,
     getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { ChevronLeft, ChevronRight, MoreHorizontal, Plus } from "lucide-react";
+import { MoreHorizontal, Plus } from "lucide-react";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
 import { AdminLinks } from "@/lib/payrollData";
@@ -20,14 +21,6 @@ import DropdownDialog from "@/Components/DropdownDialog";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { usePage } from "@inertiajs/react";
-import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-} from "@/Components/ui/pagination";
-import { Button } from "@/Components/ui/button";
 import PaginationTable from "@/Components/Pagination";
 
 type appointmentTypes = {
@@ -109,6 +102,8 @@ const columns: ColumnDef<appointmentTypes>[] = [
 export default function Appointments() {
     const pageData = (usePage().props.data as appointmentTypes[]) || [];
     const data: appointmentTypes[] = pageData;
+
+    const [globalFilter, setGlobalFilter] = useState<any>([]);
     const table = useReactTable({
         data,
         columns,
@@ -119,6 +114,13 @@ export default function Appointments() {
                 pageSize: 11,
             },
         },
+
+        getFilteredRowModel: getFilteredRowModel(),
+        globalFilterFn: "auto",
+        state: {
+            globalFilter,
+        },
+        onGlobalFilterChange: setGlobalFilter,
     });
 
     const [openDialog, setOpenDialog] = useState(false);
@@ -129,6 +131,9 @@ export default function Appointments() {
                 <div className="h-full">
                     <div className="flex  mb-5 gap-3">
                         <Input
+                            onChange={(e) =>
+                                setGlobalFilter(e.target.value || "")
+                            }
                             type="text"
                             placeholder="Search..."
                             className="w-1/4 rounded-pca"

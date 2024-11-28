@@ -1,10 +1,4 @@
 import { DataTable } from "@/Components/DataTable";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/Components/ui/dropdown-menu";
 import { Input } from "@/Components/ui/input";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
@@ -12,6 +6,7 @@ import { usePage } from "@inertiajs/react";
 import {
     ColumnDef,
     getCoreRowModel,
+    getFilteredRowModel,
     getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
@@ -57,8 +52,8 @@ const columns: ColumnDef<employeeTypes>[] = [
                     ),
                     dialogContent: (
                         <EmployeeEdit
-                        RowData={rowData}
-                        setOpenDialog={setOpenDialog}
+                            RowData={rowData}
+                            setOpenDialog={setOpenDialog}
                         ></EmployeeEdit>
                     ),
                 },
@@ -88,7 +83,7 @@ const columns: ColumnDef<employeeTypes>[] = [
 export default function Employees() {
     const pageData = (usePage().props.data as employeeTypes[]) || [];
     const data: employeeTypes[] = pageData;
-
+    const [globalFilter, setGlobalFilter] = useState<any>([]);
     const table = useReactTable({
         data,
         columns,
@@ -99,12 +94,19 @@ export default function Employees() {
                 pageSize: 12,
             },
         },
+        getFilteredRowModel: getFilteredRowModel(),
+        globalFilterFn: "auto",
+        state: {
+            globalFilter,
+        },
+        onGlobalFilterChange: setGlobalFilter,
     });
     return (
         <AuthenticatedLayoutAdmin title="Employees" links={AdminLinks}>
             <BodyContentLayout headerName={"Employee List"}>
                 <div className="flex  mb-5 gap-3">
                     <Input
+                        onChange={(e) => setGlobalFilter(e.target.value || "")}
                         type="text"
                         placeholder="Search..."
                         className="w-1/4 rounded-pca"

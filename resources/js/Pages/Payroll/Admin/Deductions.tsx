@@ -4,6 +4,7 @@ import { Head, usePage } from "@inertiajs/react";
 import {
     ColumnDef,
     getCoreRowModel,
+    getFilteredRowModel,
     getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
@@ -103,6 +104,7 @@ const columns: ColumnDef<deductionTypes>[] = [
 export default function Deductions() {
     const pageData = (usePage().props.data as deductionTypes[]) || [];
     const data: deductionTypes[] = pageData;
+    const [globalFilter, setGlobalFilter] = useState<any>([]);
 
     const table = useReactTable({
         data,
@@ -114,6 +116,12 @@ export default function Deductions() {
                 pageSize: 12,
             },
         },
+        getFilteredRowModel: getFilteredRowModel(),
+        globalFilterFn: "auto",
+        state: {
+            globalFilter,
+        },
+        onGlobalFilterChange: setGlobalFilter,
     });
     const [openDialog, setOpenDialog] = useState(false);
     return (
@@ -121,6 +129,7 @@ export default function Deductions() {
             <BodyContentLayout headerName={"Deductions"}>
                 <div className="flex  mb-5 gap-3">
                     <Input
+                        onChange={(e) => setGlobalFilter(e.target.value || "")}
                         type="text"
                         placeholder="Search..."
                         className="w-1/4 rounded-pca"
