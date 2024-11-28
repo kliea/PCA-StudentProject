@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactNode, useState } from "react";
+import { PropsWithChildren, ReactNode, useState, useEffect } from "react";
 import {
     Sidenavbar,
     Sidenavbargroup,
@@ -91,10 +91,12 @@ export default function Authenticated({
     const [navStatus, setnavStatus] = useState(false);
     const [email, setEmail] = useState<string>('');
 
-	useState( () => {
-		if (localStorage.getItem('email') != null)
+	useEffect( () => {
+		let display_email = localStorage.getItem('email');
+
+		if (display_email)
 		{
-			setEmail((localStorage.getItem('email')).toString());
+			setEmail(display_email);
 		}
 	});
 
