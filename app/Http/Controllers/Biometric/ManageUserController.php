@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Biometric;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\User;
 
 class ManageUserController extends Controller
 {
@@ -13,7 +14,7 @@ class ManageUserController extends Controller
      */
     public function index()
     {
-        return Inertia::render('BioAdmin/Dashboard');
+        return Inertia::render('BioAdmin/ManageUsers');
     }
 
     /**
@@ -37,9 +38,17 @@ class ManageUserController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
+        // Retrieve user by ID with position details
+        $user = User::with('position')->findOrFail($id);
 
+        // Format the response
+        return response()->json([
+            'employee_id' => $user->employee_id,
+            'name' => $user->name,
+            'position_code' => $user->positioncode,
+            'position_title' => $user->position->position_title ?? 'N/A', // Handle if position is not found
+        ]);
+    }
     /**
      * Show the form for editing the specified resource.
      */
