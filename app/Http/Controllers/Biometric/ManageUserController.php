@@ -13,7 +13,7 @@ class ManageUserController extends Controller
      */
     public function index()
     {
-        return Inertia::render('BioAdmin/Dashboard');
+        return Inertia::render('BioAdmin/ManageUsers');
     }
 
     /**
