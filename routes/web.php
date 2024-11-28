@@ -136,7 +136,7 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
 
         // LOANS ROUTES
         // Route::get('loans', [AdminPageController::class, 'loans'])->name('admin.loans');
-        Route::get('loans', [LoanController::class, 'showEmployeeLoanDetails'])->name('eb');
+        Route::get('loans', [LoanController::class, 'showEmployeeLoanDetails'])->name('admin.loans');
         // COMPENSATION ROUTES
         Route::get('compensations', [CompensationTypeController::class, 'index'])->name('admin.compensations');
         Route::post('compensations/store', [CompensationTypeController::class, 'store'])->name('store.compensations');
