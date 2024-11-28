@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import DropdownDialog from "@/Components/DropdownDialog";
 import { EmployeeEdit } from "@/Components/CrudComponents/EmployeesCRUD";
+import PaginationTable from "@/Components/Pagination";
 
 type employeeTypes = {
     employee_number: number;
@@ -118,6 +119,7 @@ export default function Employees() {
                         table={table}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
                     ></DataTable>
+                    <PaginationTable table={table}></PaginationTable>
                 </div>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin>

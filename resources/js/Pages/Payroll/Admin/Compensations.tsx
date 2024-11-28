@@ -1,4 +1,3 @@
-
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import { Head, usePage } from "@inertiajs/react";
@@ -22,6 +21,7 @@ import {
 } from "@/Components/CrudComponents/CompensationCRUD";
 import { cn } from "@/lib/utils";
 import DropdownDialog from "@/Components/DropdownDialog";
+import PaginationTable from "@/Components/Pagination";
 
 type compensationTypes = {
     compensation_code: number;
@@ -168,6 +168,7 @@ export default function Compensations() {
                         table={table}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
                     ></DataTable>
+                    <PaginationTable table={table}></PaginationTable>
                 </div>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin>

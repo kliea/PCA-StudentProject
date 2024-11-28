@@ -171,8 +171,7 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::delete('ssl/{grade}', [SalaryGradeController::class, 'destroy'])->name('delete.ssl');
 
         //Query routes
-
-        Route::get('employee/{employee_code}', [EmployeeController::class, 'get_employee_data'])->name('admin.employee_data');
+        Route::get('employee_data', [EmployeeController::class, 'get_employee_data'])->name('admin.employee_data');
     });
 });
 

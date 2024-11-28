@@ -14,7 +14,14 @@ const Appointments = ["Worker", "Tigtrabaho", "Tighugas Plato"];
 const positions = ["Pos1", "Pos2", "Pos3", "Pos4", "Pos5"];
 const salaryGrade = ["SG1", "SG2", "SG3", "SG4", "SG5"];
 const step = ["Step1", "Step2", "Step3", "Step4", "Step5"];
-const salary_type = ["Per Month", "Bi-Monthly", "Quarterly", "Annually"];
+const salary_type = [
+    "Weekly",
+    "Monthly",
+    "Bi-Monthly",
+    "Quarterly",
+    "Annually",
+    "Other",
+];
 export function EmployeeEdit({
     RowData,
     setOpenDialog,

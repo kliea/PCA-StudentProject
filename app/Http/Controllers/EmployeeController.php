@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Appointment;
 use App\Models\Employee;
+use App\Models\Position;
+use App\Models\SalaryGrade;
+use App\Models\Station;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
@@ -19,6 +23,10 @@ class EmployeeController extends Controller
         // Fetch data from the database
         $data = Employee::all();
 
+        $stations = Station::pluck('station_name');
+        $appointments = Appointment::pluck('appointment_type');
+        $position = Position::pluck('position_title');
+        $employee = Employee::pluck('salary_type');
         // Return the data to the frontend
         return Inertia::render('Payroll/Admin/Employees', ['data' => $data]);
     }
@@ -94,25 +102,26 @@ class EmployeeController extends Controller
     }
 
     // custom query function
-    public function get_employee_data($employee_code){
+    public function get_employee_data()
+    {
         $data = DB::table('employees as e')
-        ->join('stations as s', 'e.station_code', '=', 's.station_code')
-        ->join('appointments as a', 'e.appointment_code', '=', 'a.appointment_code')
-        ->join('positions as p', 'e.position_code', '=', 'p.position_code')
-        ->join('salary_grades as sg', 'p.salary_grade_code', '=', 'sg.salary_grade_code')
-        ->select(
-            'e.last_name',
-            'e.first_name',
-            'e.middle_name',
-            'e.name_extension',
-            's.station_name',
-            'a.appointment_type',
-            'p.position_title',
-            'e.salary_type',
-            'e.employee_number',
-            'sg.grade',
-            'e.salary_step',
-            DB::raw("
+            ->join('stations as s', 'e.station_code', '=', 's.station_code')
+            ->join('appointments as a', 'e.appointment_code', '=', 'a.appointment_code')
+            ->join('positions as p', 'e.position_code', '=', 'p.position_code')
+            ->join('salary_grades as sg', 'p.salary_grade_code', '=', 'sg.salary_grade_code')
+            ->select(
+                'e.last_name',
+                'e.first_name',
+                'e.middle_name',
+                'e.name_extension',
+                's.station_name',
+                'a.appointment_type',
+                'p.position_title',
+                'e.salary_type',
+                'e.employee_number',
+                'sg.grade',
+                'e.salary_step',
+                DB::raw("
                 CASE
                     WHEN e.salary_step = '1' THEN sg.step1
                     WHEN e.salary_step = '2' THEN sg.step2
@@ -125,18 +134,15 @@ class EmployeeController extends Controller
                     ELSE NULL
                 END AS salary
             ")
-        )
-        ->where('e.employee_code', $employee_code)
-        ->get();
+            )->get();
 
 
-        return Inertia::render('Payroll/Admin/Employees', [
-            'employee_data' => $data
+        // return Inertia::render('Payroll/Admin/Employees', [
+        //     'employee_data' => $data
+        // ]);
+
+        return response()->json([
+            'data' => $data
         ]);
-
-            // json tester
-            // return response()->json([
-                // 'data' => $data
-            // ]);
     }
 }

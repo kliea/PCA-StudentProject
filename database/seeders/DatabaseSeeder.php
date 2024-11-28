@@ -354,24 +354,56 @@ class DatabaseSeeder extends Seeder
         }
         DB::table('payroll_sheets')->insert($payrollSheets);
 
-        // compensation types ===============================================
+        // compensation types
+        $compensation_names = [
+            'basic_salary',
+            'regular',
+            'flexy',
+            'pera',
+            'athletic allowance',
+            'honorarium',
+            'cash gift',
+            'overtime pay',
+            'teaching overload',
+            'tax refund 101',
+            'tax refund 163',
+        ];
+
         $compensationTypes = [];
+
+        // Initialize Faker instance
+        $faker = \Faker\Factory::create();
 
         for ($i = 0; $i < 10; $i++) {
             $compensationTypes[] = [
-                'compensation_name' => $faker->word,
-                'shorthand' => strtoupper($faker->word),
-                'amount' => $faker->randomFloat(2, 5000, 20000),
-                'is_taxable' => $faker->boolean,
-                'is_fixed' => $faker->boolean,
+                'compensation_name' => $compensation_names[$i], // Correctly reference each name
+                'shorthand' => strtoupper($faker->word),        // Generate random uppercase word
+                'amount' => $faker->randomFloat(2, 5000, 20000), // Random amount between 5000 and 20000
+                'is_taxable' => $faker->boolean,               // Random boolean
+                'is_fixed' => $faker->boolean,                 // Random boolean
             ];
         }
+
+        // Insert into the table
         DB::table('compensation_types')->insert($compensationTypes);
+
 
         // deduction_types==================================================
         $deductionTypes = [];
 
         for ($i = 0; $i < 10; $i++) {
+
+            // Get three random keys
+            $randomKeys = array_rand($compensation_names, 3);
+
+            // Extract the random names using the keys
+            $three_random = array_map(function ($key) use ($compensation_names) {
+                return $compensation_names[$key];
+            }, $randomKeys);
+
+            // Combine into a single string separated by commas
+            $randomString = implode(', ', $three_random);
+
             $deductionTypes[] = [
                 'deduction_name' => $faker->word . ' Deduction',  // Random deduction name
                 'shorthand' => strtoupper($faker->word),  // Random shorthand, uppercase
@@ -379,13 +411,27 @@ class DatabaseSeeder extends Seeder
                 'is_mandatory' => $faker->boolean,  // Random boolean value for mandatory status
                 'remittance_percent' => $faker->randomFloat(2, 5, 20),  // Random remittance percent between 5% and 20%
                 'ceiling_amount' => $faker->randomFloat(2, 0, 5000),  // Random ceiling amount between 0 and 5,000
-                'compensation_links' => $faker->lexify('??????,???????,???????'),
+                'compensation_links' => $randomString,
             ];
         }
         DB::table('deduction_types')->insert($deductionTypes);
 
         // agency_shares =============================================================
         for ($i = 0; $i < 10; $i++) {
+
+
+            // Get three random keys
+            $randomKeys = array_rand($compensation_names, 3);
+
+            // Extract the random names using the keys
+            $three_random = array_map(function ($key) use ($compensation_names) {
+                return $compensation_names[$key];
+            }, $randomKeys);
+
+            // Combine into a single string separated by commas
+            $randomString = implode(', ', $three_random);
+
+
             DB::table('agency_shares')->insert([
                 'agency_share_name' => $faker->company . ' Share',  // Random company share name
                 'shorthand' => strtoupper($faker->lexify('??')),   // Random shorthand (2 letters)
@@ -393,7 +439,7 @@ class DatabaseSeeder extends Seeder
                 'is_mandatory' => $faker->boolean,                // Random boolean (true/false)
                 'remittance_percent' => $faker->randomFloat(2, 0.01, 0.15), // Percent (0.01 to 0.15)
                 'ceiling_amount' => $faker->randomFloat(2, 10, 100),  // Ceiling amount (10 to 100)
-                'compensation_links' => $faker->lexify('???????,??????,?????,????'),
+                'compensation_links' => $randomString,
             ]);
         }
 

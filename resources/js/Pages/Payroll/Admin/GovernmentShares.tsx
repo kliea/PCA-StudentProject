@@ -21,6 +21,7 @@ import { usePage } from "@inertiajs/react";
 import { useState } from "react";
 import DropdownDialog from "@/Components/DropdownDialog";
 import { cn } from "@/lib/utils";
+import PaginationTable from "@/Components/Pagination";
 
 type agencyTypes = {
     agency_share_code: number;
@@ -169,6 +170,7 @@ export default function GovernmentShare() {
                         table={table}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
                     ></DataTable>
+                    <PaginationTable table={table}></PaginationTable>
                 </div>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin>
