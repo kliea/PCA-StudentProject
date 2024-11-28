@@ -15,9 +15,6 @@ class DailyTimeEntry extends Model
 		'time_out_am',
 		'time_in_pm',
 		'time_out_pm',
-		'tardy_minutes',
-		'undertime_minutes',
-		'work_minutes',
 		'employee_code'
 	];
 
