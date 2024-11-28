@@ -184,20 +184,7 @@ export default function Authenticated({
                                             Settings
                                         </Link>
                                     </DropdownMenuItem> */}
-                                    <DropdownMenuItem>
-                                        {/* <Link
-                                            href={route("admin.dashboard")} // Updated to match the named route
-                                            className="flex"
-                                            method="get"
-                                        >
-                                            <HandCoins className="w-5 pr-1" />
-                                            Payroll
-                                        </Link> */}
-                                        <NavLink href={route("admin.dashboard")}>
-                                            <HandCoins className="w-5 pr-1" />
-                                            Payroll
-                                        </NavLink>
-                                    </DropdownMenuItem>
+
                                     <DropdownMenuItem>
                                         <Link
                                             href={route("logout")}
@@ -212,8 +199,9 @@ export default function Authenticated({
                             </DropdownMenu>
                         </div>
                     </div>
-                </header>
-            )}
+                </header >
+            )
+            }
             <main
                 className={cn(
                     "transition-all duration-100 px-10 pt-5",
@@ -222,6 +210,6 @@ export default function Authenticated({
             >
                 {children}
             </main>
-        </div>
+        </div >
     );
 }

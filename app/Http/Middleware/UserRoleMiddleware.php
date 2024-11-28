@@ -24,15 +24,15 @@ class UserRoleMiddleware
             return $next($request);
         }
 
-        if (Auth::user()->user_level === "admin") {
+        if (Auth::check() && Auth::user()->user_level === "admin") {
             return redirect()->route('admin.dashboard');
         }
 
-        if (Auth::user()->user_level === "employee") {
+        if (Auth::check() && Auth::user()->user_level === "employee") {
             return redirect()->route('employee.dashboard');
         }
 
-        if (Auth::user()->user_level === "bioemployee") {
+        if (Auth::check() && Auth::user()->user_level === "bioemployee") {
             return redirect()->route('bioemployee.dashboard');
         }
 

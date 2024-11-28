@@ -25,7 +25,6 @@ Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'create'])->
 // SUBDOMAIN FOR BIOADMIN
 Route::domain('bioadmin.' . env('APP_URL'))->group(
     function () {
-        // Route::prefix('admin')->middleware(['auth', 'usercheck:bioadmin'])->group(
         Route::prefix('admin')->middleware(['auth'])->group(
             function () {
                 Route::get('dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
