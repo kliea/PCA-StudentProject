@@ -51,14 +51,6 @@ type columnTypes = {
     deduction: number;
     gross_amount: number;
 };
-type heads = {
-    date: number;
-    am: number;
-    pm: number;
-    tardy: number;
-    undertime: number;
-};
-
 // Generate the headers for the columns
 const columns: ColumnDef<columnTypes>[] = [
     { accessorKey: "gross_amount", header: "No." },
