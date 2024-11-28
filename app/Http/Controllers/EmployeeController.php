@@ -138,7 +138,7 @@ class EmployeeController extends Controller
 
 
         // return Inertia::render('Payroll/Admin/Employees', [
-        //     'employee_data' => $data
+        //     'data' => $data
         // ]);
 
         return response()->json([

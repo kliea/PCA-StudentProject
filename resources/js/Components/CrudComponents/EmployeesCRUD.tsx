@@ -30,14 +30,21 @@ export function EmployeeEdit({
     setOpenDialog: any;
 }) {
     const { data, setData, processing, put, reset, errors } = useForm({
+        appointment_type: RowData.appointment_type,
         employee_number: RowData.employee_number,
         first_name: RowData.first_name,
-        middle_name: RowData.middle_name,
+        grade: RowData.grade,
         last_name: RowData.last_name,
+        middle_name: RowData.middle_name,
         name_extension: RowData.name_extension,
-        salary_type: RowData.salary_type,
+        position_title: RowData.position_title,
+        salary: RowData.salary,
         salary_step: RowData.salary_step,
+        salary_type: RowData.salary_type,
+        station_name: RowData.station_name,
     });
+
+    console.log(data.appointment_type);
 
     return (
         <div>
@@ -60,7 +67,14 @@ export function EmployeeEdit({
 
                     <div className="w-full">
                         <Label>EXT. NAME</Label>
-                        <Input disabled value={RowData.name_extension}></Input>
+                        <Input
+                            disabled
+                            value={
+                                RowData.name_extension
+                                    ? RowData.name_extension
+                                    : ""
+                            }
+                        ></Input>
                     </div>
                 </div>
 
@@ -88,12 +102,16 @@ export function EmployeeEdit({
 
                     <div className="w-full">
                         <Label>APPOINTMENT</Label>
-                        <Select>
+                        <Select
+                            onValueChange={(value: string) =>
+                                setData("appointment_type", value)
+                            }
+                        >
                             <SelectTrigger>
-                                <SelectValue placeholder="SELECT APPOINTMENT " />
+                                <SelectValue placeholder="SELECT APPOINTMENT" />
                             </SelectTrigger>
                             <SelectContent>
-                                {Appointments.map((Appointment) => (
+                                {Appointments.map((Appointment: string) => (
                                     <SelectItem
                                         value={Appointment}
                                         key={Appointment}

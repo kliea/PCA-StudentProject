@@ -13,10 +13,11 @@ import {
 import { MoreHorizontal } from "lucide-react";
 import { AdminLinks } from "@/lib/payrollData";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DropdownDialog from "@/Components/DropdownDialog";
 import { EmployeeEdit } from "@/Components/CrudComponents/EmployeesCRUD";
 import PaginationTable from "@/Components/Pagination";
+import axios from "axios";
 
 type employeeTypes = {
     employee_number: number;
@@ -82,8 +83,28 @@ const columns: ColumnDef<employeeTypes>[] = [
 ];
 
 export default function Employees() {
-    const pageData = (usePage().props.data as employeeTypes[]) || [];
-    const data: employeeTypes[] = pageData;
+    const [employees, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        axios
+            .get(route("admin.employee_data"))
+            .then((response) => {
+                setData(response.data.data);
+                setLoading(false);
+            })
+            .catch((err) => {
+                setError(err.message);
+                setLoading(false);
+            });
+    }, []);
+
+    const data = employees;
+
+    // const pageData = (usePage().props.data as employeeTypes[]) || [];
+    // const data: employeeTypes[] = pageData;
+
     const [globalFilter, setGlobalFilter] = useState<any>([]);
     const table = useReactTable({
         data,
@@ -119,7 +140,7 @@ export default function Employees() {
                         table={table}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
                     ></DataTable>
-                    <PaginationTable table={table}></PaginationTable>
+                    {/* <PaginationTable table={table}></PaginationTable> */}
                 </div>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin>
