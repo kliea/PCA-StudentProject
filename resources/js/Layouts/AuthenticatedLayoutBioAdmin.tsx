@@ -26,6 +26,7 @@ import { Link, usePage } from "@inertiajs/react";
 import { LucideProps } from "lucide-react";
 import { Separator } from "@/Components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
+import NavLink from "@/Components/NavLink";
 
 import {
     DropdownMenu,
@@ -183,6 +184,20 @@ export default function Authenticated({
                                             Settings
                                         </Link>
                                     </DropdownMenuItem> */}
+                                    <DropdownMenuItem>
+                                        {/* <Link
+                                            href={route("admin.dashboard")} // Updated to match the named route
+                                            className="flex"
+                                            method="get"
+                                        >
+                                            <HandCoins className="w-5 pr-1" />
+                                            Payroll
+                                        </Link> */}
+                                        <NavLink href={route("admin.dashboard")}>
+                                            <HandCoins className="w-5 pr-1" />
+                                            Payroll
+                                        </NavLink>
+                                    </DropdownMenuItem>
                                     <DropdownMenuItem>
                                         <Link
                                             href={route("logout")}
