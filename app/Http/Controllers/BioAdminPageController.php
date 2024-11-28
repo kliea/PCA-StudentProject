@@ -14,6 +14,4 @@ class BioAdminPageController extends Controller
     {
         return Inertia::render('BioAdmin/Dashboard');
     }
-
-   
 }

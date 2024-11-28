@@ -19,9 +19,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\SummaryController;
 
-
-// '/' to be render 
-// store the user info in local storage
+Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'generateNewBatch'])->name('generate-DTRs');
 
 // SUBDOMAIN FOR BIOADMIN
 Route::domain('bioadmin.' . env('APP_URL'))->group(
