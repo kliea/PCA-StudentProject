@@ -15,6 +15,7 @@ use App\Services\AttendanceLogger;
 use App\Http\Controllers\DailyTimeEntryController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\PayrollSheetController;
 use App\Http\Controllers\SummaryController;
 
 Route::get('/', function () {
@@ -132,8 +133,8 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
         // PAYROLL ROUTES
-        Route::get('payroll', [SummaryController::class, 'Summary'])->name('admin.payrolls');
-
+        // Route::get('payroll', [SummaryController::class, 'Summary'])->name('admin.payrolls');
+        Route::get('payrolls',[PayrollSheetController::class,'index'])->name('admin.payrolls');
         // LOANS ROUTES
         // Route::get('loans', [AdminPageController::class, 'loans'])->name('admin.loans');
         Route::get('loans', [LoanController::class, 'showEmployeeLoanDetails'])->name('admin.loans');
