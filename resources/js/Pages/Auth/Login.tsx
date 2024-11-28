@@ -4,10 +4,12 @@ import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head, useForm, usePage } from "@inertiajs/react";
+import { userInfo } from "os";
 import { FormEventHandler } from "react";
 
 export default function Login({ status }: { status?: string }) {
     const { data, setData, post, processing, errors, reset } = useForm({
+		name: "",
         email: "",
         password: "",
     });
@@ -17,7 +19,13 @@ export default function Login({ status }: { status?: string }) {
         e.preventDefault();
 
         post(route("login"), {
-            onFinish: () => reset("password"),
+            onFinish: () => {
+				reset("password"),
+				localStorage.setItem('email', data.email);
+				localStorage.setItem('password', data.password);
+				console.log(data);
+				console.log(localStorage.length);
+			},
         });
     };
 

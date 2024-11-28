@@ -89,6 +89,14 @@ export default function Authenticated({
     // State para sa collapsabe navbar
 
     const [navStatus, setnavStatus] = useState(false);
+    const [email, setEmail] = useState<string>('');
+
+	useState( () => {
+		if (localStorage.getItem('email') != null)
+		{
+			setEmail((localStorage.getItem('email')).toString());
+		}
+	});
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -154,7 +162,7 @@ export default function Authenticated({
                         <div className="flex items-center gap-3">
                             {/* TODO : Add a welcome to the user : Dili nata mag search bar kay taga page tag duha duha nag search bar niya no scroll man ato page*/}
                             <h1 className="hidden lg:block">
-                                Welcome User Name
+                                Welcome {email}
                             </h1>
                             <Separator orientation="vertical" />
                             <DropdownMenu>

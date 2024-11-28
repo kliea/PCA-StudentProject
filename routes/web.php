@@ -19,8 +19,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\SummaryController;
 
-
-Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'create'])->name('generate-DTRs');
+Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'generateNewBatch'])->name('generate-DTRs');
 
 // SUBDOMAIN FOR BIOADMIN
 Route::domain('bioadmin.' . env('APP_URL'))->group(
