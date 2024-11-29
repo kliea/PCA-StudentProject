@@ -20,7 +20,7 @@ class DailyTimeEntryController extends Controller
 		$allData = DailyTimeEntry::all();
 
 		/* Returning a success message to the user. */
-		return Inertia::render('BioAdmin/AttendanceList', ['data' => $allData, 'message' => 'All the DTR entries have been retrieved successfully.']);
+		return Inertia::render('BioAdmin/AttendanceList', ['allData' => $allData, 'message' => 'All the DTR entries have been retrieved successfully.']);
     }
 
     /* Generates a new batch of empty DTRs for all the employees in the system.
@@ -172,6 +172,7 @@ public function generateNewBatch()
 
     public function showDtrEntries(Request $request)
     {
+
         // Validate the incoming request
         $validated = $request->validate([
             'start_date' => 'required|date',

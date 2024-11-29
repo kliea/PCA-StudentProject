@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Biometric;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\DailyTimeEntry;
 
 class AttendanceListController extends Controller
 {
@@ -13,9 +14,12 @@ class AttendanceListController extends Controller
      */
     public function index()
     {
-        return Inertia::render('BioAdmin/AttendanceList');
-    }
+		/* Fetching all the entries stored within the database. */
+		$allData = DailyTimeEntry::all();
 
+		/* Returning a success message to the user. */
+		return Inertia::render('BioAdmin/AttendanceList', ['allData' => $allData, 'message' => 'All the DTR entries have been retrieved successfully.']);
+    }
     /**
      * Show the form for creating a new resource.
      */
