@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Biometric;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\DailyTimeEntry;
 
 class DashboardController extends Controller
 {
@@ -13,8 +14,11 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return Inertia::render('BioAdmin/Dashboard');
-    }
+        $allData = DailyTimeEntry::all();
+
+		/* Returning a success message to the user. */
+		return Inertia::render('BioAdmin/Dashboard', ['allData' => $allData, 'message' => 'All the DTR entries have been retrieved successfully.']);
+     }
 
     /**
      * Show the form for creating a new resource.

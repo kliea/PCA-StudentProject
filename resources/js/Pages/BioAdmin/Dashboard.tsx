@@ -19,6 +19,7 @@ import {
     getCoreRowModel,
     getPaginationRowModel,
     useReactTable,
+    
 } from "@tanstack/react-table";
 import { DataTable } from "@/Components/DataTable";
 import { DatePickerWithRange } from "@/Components/DateRangePicker";
@@ -28,62 +29,58 @@ import loanData from "@/Components/Constants/data4.json";
 import React from "react";
 import { DateRange } from "react-day-picker";
 import { addDays, format } from "date-fns";
+import Dashboardb from './Dashboard';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
-type recentPayrolls = {
-    period: string;
-    name: string;
-    employee_id: string;
-    position: string;
-    deduction: number;
-    compensation: number;
+
+type ColumnType = {
+    date: string;
+    time_in_am: string;
+    time_out_am: string;
+    time_in_pm: string;
+    time_out_pm: string;
+    tardy_minutes: number;
+    undertime_minutes: number;
+    work_minutes: number;
+    employee_code: number;
 };
 
-type recentRequest = {
-    id: number;
-    name: string;
-    loan_details: string;
-};
-
-// Column definition for Recent Payroll Table
-const rpcolumns: ColumnDef<recentPayrolls>[] = [
-    { accessorKey: "gross_amount", header: "No." },
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "rate", header: "AM Arrival" },
-    { accessorKey: "quantity", header: "AM Departure" },
-    { accessorKey: "type", header: "PM Arrival" },
-    { accessorKey: "position", header: "PM Departure" },
-    { accessorKey: "tardiness", header: "Tardiness" },
-    { accessorKey: "compensation", header: "Undertime" },
-    { accessorKey: "deduction", header: "Date" },
+// Generate the headers for the columns
+const columns: ColumnDef<ColumnType>[] = [
+    { accessorKey: "date", header: "Date" },
+    { accessorKey: "time_in_am", header: "AM Time in" },
+    { accessorKey: "time_out_am", header: "AM Time out" },
+    { accessorKey: "time_in_pm", header: "PM Time in" },
+    { accessorKey: "time_out_pm", header: "AM Time out" },
+    { accessorKey: "tardy_minutes", header: "Tardy Minutes" },
+    { accessorKey: "undertime_minutes", header: "Undertime" },
+    { accessorKey: "work_minutes", header: "Work Time" },
+    { accessorKey: "employee_code", header: "Employee ID" },
 
 ];
 
 
 
-export default function Dashboardb() {
-    // Naga infinite re render ang mga useTable. Akong na figure out kay kung ang emply iyang array mag sege siyag re render . Need Backend route for testing
-    const recentPayrollData = payrollData;
-    const recentLoansData = loanData;
-    const rpData: recentPayrolls[] = recentPayrollData;
-    const rlData: recentRequest[] = recentLoansData;
 
-    const rpTable = useReactTable({
-        data: rpData,
-        columns: rpcolumns,
-        getPaginationRowModel: getPaginationRowModel(),
-        // Adjust Limit content after database has beeen set
-        initialState: {
-            pagination: {
-                pageSize: 7,
+    export default function dashboardb() {
+        const { allData } = usePage<{ allData: columntTypes[] }>().props
+        
+
+        const table = useReactTable({
+            data: allData,
+            columns,
+            getCoreRowModel: getCoreRowModel(),
+            getPaginationRowModel: getPaginationRowModel(),
+            initialState: {
+                pagination: {
+                    pageSize: 12,
+                },
             },
-        },
-        getCoreRowModel: getCoreRowModel(),
-    });
+        });
 
     const [date, setDate] = React.useState<DateRange | undefined>({
         from: new Date(),
@@ -146,9 +143,9 @@ export default function Dashboardb() {
                             className=" mt-5 h-fit shadow-md"
                         >
                             <DataTable
-                                columns={rpcolumns}
+                                columns={columns}
                                 rowStyle="odd:bg-white even:bg-transparent text-center"
-                                table={rpTable}
+                                table={table}
                                 className="lg:h-[450px]"
                             />
                         </BodyContentLayout>
