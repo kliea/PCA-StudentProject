@@ -5,7 +5,7 @@ import { DataTable } from "@/Components/DataTable";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutBioAdmin";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import { Head } from "@inertiajs/react";
-import { ColumnDef, useReactTable, getCoreRowModel, getPaginationRowModel } from "@tanstack/react-table";
+import { ColumnDef, useReactTable, getCoreRowModel, getPaginationRowModel,    getFilteredRowModel } from "@tanstack/react-table";
 
 type EmployeeType = {
     appointment_code: number;
@@ -38,18 +38,13 @@ const columns: ColumnDef<EmployeeType>[] = [
 
 export default function ManageUsers() {
     const { employees } = usePage<{ employees: EmployeeType[] }>().props;
-    const [searchQuery, setSearchQuery] = useState("");
+    const [globalFilter, setGlobalFilter] = useState<any>([]);
 
-    // Filter data based on the search query
-    const filteredData = employees.filter(employee => {
-        const fullName = `${employee.first_name} ${employee.middle_name ? employee.middle_name + ' ' : ''}${employee.last_name}${employee.name_extension ? ' ' + employee.name_extension : ''}`;
-        return fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            employee.employee_number.toString().includes(searchQuery);
-    });
+    
 
     // React Table setup
     const table = useReactTable({
-        data: filteredData,
+        data: employees,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
@@ -58,6 +53,12 @@ export default function ManageUsers() {
                 pageSize: 12,
             },
         },
+        getFilteredRowModel: getFilteredRowModel(),
+        globalFilterFn: "auto",
+        state: {
+            globalFilter,
+        },
+        onGlobalFilterChange: setGlobalFilter,
     });
 
     return (
@@ -71,8 +72,9 @@ export default function ManageUsers() {
                     <Input
                         type="text"
                         placeholder="Search..."
-                        value={searchQuery}
-                        onInput={(e) => setSearchQuery(e.target.value)}
+                        onChange={(e) =>
+                            setGlobalFilter(e.target.value || "")
+                        }
                         className="w-1/4 rounded-[10px] ml-auto"
                     />
                 </div>
