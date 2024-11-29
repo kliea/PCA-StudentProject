@@ -12,6 +12,7 @@ import {
     getCoreRowModel,
     getPaginationRowModel,
     useReactTable,
+    getFilteredRowModel,
 } from "@tanstack/react-table";
 import { File, FolderUp, MoreHorizontal } from "lucide-react";
 import { DataTable } from "@/Components/DataTable";
@@ -78,7 +79,7 @@ const columns: ColumnDef<ColumnType>[] = [
 
 export default function ShowAttendance() {
     const { allData } = usePage<{ allData: columntTypes[] }>().props
-    // const [searchQuery, setSearchQuery] = useState("");
+    const [globalFilter, setGlobalFilter] = useState<any>([]);
     
 
     const table = useReactTable({
@@ -91,6 +92,12 @@ export default function ShowAttendance() {
                 pageSize: 12,
             },
         },
+        getFilteredRowModel: getFilteredRowModel(),
+        globalFilterFn: "auto",
+        state: {
+            globalFilter,
+        },
+        onGlobalFilterChange: setGlobalFilter,
     });
 
 
@@ -173,6 +180,9 @@ export default function ShowAttendance() {
                     <section className="flex gap-7 w-full justify-end">
                         <Input
                             type="text"
+                            onChange={(e) =>
+                                setGlobalFilter(e.target.value || "")
+                            }
                             placeholder="Search..."
                             className="w-1/2 rounded-[10px]"
                         />
