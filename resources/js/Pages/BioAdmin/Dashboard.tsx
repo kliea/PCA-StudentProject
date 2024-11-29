@@ -77,7 +77,7 @@ const columns: ColumnDef<ColumnType>[] = [
             getPaginationRowModel: getPaginationRowModel(),
             initialState: {
                 pagination: {
-                    pageSize: 12,
+                    pageSize: 5,
                 },
             },
         });
