@@ -28,7 +28,7 @@ Route::domain('bioadmin.' . env('APP_URL'))->group(
             function () {
                 Route::get('dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
                 Route::get('attendancelists', [AttendanceListController::class, 'index'])->name('bioadmin.attendancelists');
-                Route::get('autogenerate-today', [DailyTimeEntryController::class, 'generateNewBatch'])->name('generate-DTRs');
+                // Route::get('autogenerate-today', [DailyTimeEntryController::class, 'generateNewBatch'])->name('generate-DTRs');
                 Route::get('attendancerecords', [AttendanceRecordController::class, 'index'])->name('bioadmin.attendancerecords');
                 Route::get('manageusers', [ManageUserController::class, 'index'])->name('bioadmin.manageusers');
             }

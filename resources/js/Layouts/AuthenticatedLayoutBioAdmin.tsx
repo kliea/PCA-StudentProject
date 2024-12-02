@@ -59,7 +59,7 @@ export default function Authenticated({
     // or if gusto mo lain pag butang rag or sa icon sa Item nga interface
     const links: link[] = [
         {
-            title: "BIOMETRICS SYSTEM",
+            title: "EMPLOYEE MNGT SYSTEM",
             items: [
                 {
                     label: "Dashboard",
@@ -91,14 +91,13 @@ export default function Authenticated({
     const [navStatus, setnavStatus] = useState(false);
     const [email, setEmail] = useState<string>('');
 
-	useEffect( () => {
-		let display_email = localStorage.getItem('email');
+    useEffect(() => {
+        let display_email = localStorage.getItem('email');
 
-		if (display_email)
-		{
-			setEmail(display_email);
-		}
-	});
+        if (display_email) {
+            setEmail(display_email);
+        }
+    });
 
     return (
         <div className="min-h-screen bg-gray-100">

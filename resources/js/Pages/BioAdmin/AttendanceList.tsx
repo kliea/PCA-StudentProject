@@ -68,7 +68,7 @@ const columns: ColumnDef<ColumnType>[] = [
     { accessorKey: "time_in_am", header: "AM Time in" },
     { accessorKey: "time_out_am", header: "AM Time out" },
     { accessorKey: "time_in_pm", header: "PM Time in" },
-    { accessorKey: "time_out_pm", header: "AM Time out" },
+    { accessorKey: "time_out_pm", header: "PM Time out" },
     { accessorKey: "tardy_minutes", header: "Tardy Minutes" },
     { accessorKey: "undertime_minutes", header: "Undertime" },
     { accessorKey: "work_minutes", header: "Work Time" },
@@ -79,7 +79,7 @@ const columns: ColumnDef<ColumnType>[] = [
 export default function ShowAttendance() {
     const { allData } = usePage<{ allData: columntTypes[] }>().props
     // const [searchQuery, setSearchQuery] = useState("");
-    
+
 
     const table = useReactTable({
         data: allData,
@@ -95,10 +95,10 @@ export default function ShowAttendance() {
 
 
     const [date, setDate] = useState<DateRange | undefined>
-    ({
-        from: new Date(),
-        to: addDays(new Date(), 20),
-    });
+        ({
+            from: new Date(),
+            to: addDays(new Date(), 20),
+        });
     return (
         <AuthenticatedLayoutAdmin
             header={<h2>{usePage().component.split("/")[1]}</h2>}
@@ -107,18 +107,18 @@ export default function ShowAttendance() {
 
             <BodyContentLayout headerName={"Employee Attendance List"}>
 
-                
+
                 <div className="flex  mb-5 justify-between">
                     <section className="flex gap-5 w-full">
-                    <div>
+                        <div>
                             <DatePickerWithRange
                                 className=""
                                 date={date}
                                 setDate={setDate}
                             ></DatePickerWithRange>
-                    </div>
-                    
-                    <Dialog>
+                        </div>
+
+                        <Dialog>
                             <DialogTrigger>
                                 <section className="flex gap-1 bg-secondaryGreen text-white items-center justify-center p-2 rounded-[10px] pl-3 pr-3">
                                     View List
@@ -133,14 +133,14 @@ export default function ShowAttendance() {
                             </DialogContent>
                         </Dialog>
                     </section>
-                    
-                    
+
+
                 </div>
-                
+
                 <div className="flex mb-5 justify-between">
                     <section className="flex gap-7 w-full justify-left">
-                    <div>
-                        <Select>
+                        <div>
+                            <Select>
                                 <SelectTrigger className="w-[180px]">
                                     <SelectValue placeholder="Show Entries" />
                                 </SelectTrigger>
@@ -176,8 +176,8 @@ export default function ShowAttendance() {
                             placeholder="Search..."
                             className="w-1/2 rounded-[10px]"
                         />
-                        </section>
-            
+                    </section>
+
                 </div>
                 <div>
                     <DataTable

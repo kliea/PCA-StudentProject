@@ -18,7 +18,8 @@ class DailyTimeEntry extends Model
 		'employee_code'
 	];
 
-	public function employee() {
+	public function employee()
+	{
 		return $this->belongsTo(Employee::class);
 	}
 }
