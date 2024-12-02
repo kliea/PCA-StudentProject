@@ -1,5 +1,4 @@
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
-import { Head, usePage } from "@inertiajs/react";
 import StatusCard from "@/Components/StatusCard";
 import {
     Banknote,

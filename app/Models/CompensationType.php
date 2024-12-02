@@ -17,7 +17,8 @@ class CompensationType extends Model
 		'is_fixed'
 	];
 
-	public function appliedCompensation() {
+	public function appliedCompensation()
+	{
 		return $this->hasMany(AppliedCompensation::class);
 	}
 }

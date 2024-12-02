@@ -15,10 +15,13 @@ class DeductionType extends Model
 		'amount',
 		'is_mandatory',
 		'remittance_percent',
-		'ceiling_amount'
+		'ceiling_amount',
+		'compensation_links'
 	];
 
-	public function appliedDeduction() {
+
+	public function appliedDeduction()
+	{
 		return $this->hasMany(AppliedDeduction::class);
 	}
 }

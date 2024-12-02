@@ -1,68 +1,109 @@
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/Components/ui/dropdown-menu";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
-import { Head, usePage } from "@inertiajs/react";
+import {
+    AppointmentStore,
+    AppointmentDelete,
+    AppointmentUpdate,
+} from "@/Components/CrudComponents/AppointmentCRUD";
 import {
     ColumnDef,
     getCoreRowModel,
+    getFilteredRowModel,
     getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
 import { MoreHorizontal, Plus } from "lucide-react";
-import Data from "@/Components/Constants/data10.json";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
 import { AdminLinks } from "@/lib/payrollData";
 import DialogMenu from "@/Components/Dialog";
+import DropdownDialog from "@/Components/DropdownDialog";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { usePage } from "@inertiajs/react";
+import PaginationTable from "@/Components/Pagination";
 
-type columnTypes = {
-    type: string;
-    mandatory_deduction: boolean;
-    basic_pay: number;
-    compensation: number;
-    tax: number;
-    deduction: number;
+type appointmentTypes = {
+    appointment_code: number;
+    appointment_type: string;
+    basic_pay_type: string;
+    tax_type: string;
+    has_mandatory_deduction: boolean;
 };
 
-const columns: ColumnDef<columnTypes>[] = [
-    { accessorKey: "type", header: "Type" },
-    { accessorKey: "mandatory_deduction", header: "Mandatory Deduction" },
-    { accessorKey: "basic_pay", header: "Basic Pay" },
-    { accessorKey: "compensation", header: "Compensation" },
-    { accessorKey: "tax", header: "Tax" },
-    { accessorKey: "deduction", header: "Deduction" },
+const columns: ColumnDef<appointmentTypes>[] = [
+    { accessorKey: "appointment_code", header: "ID" },
+    { accessorKey: "appointment_type", header: "TYPE" },
+    { accessorKey: "basic_pay_type", header: "BASIC PAY TYPE" },
+    { accessorKey: "tax_type", header: "TAX TYPE" },
+    { accessorKey: "has_mandatory_deduction", header: "MANDATORY DEDUCTION" },
     {
         id: "actions",
         cell: ({ row }) => {
-            const values = row.original;
+            const [openDialog, setOpenDialog] = useState<string | null>(null);
+            const rowData = row.original;
+            const dialogs = [
+                {
+                    tag: "1",
+                    name: "Edit",
+                    dialogtitle: cn(
+                        "Edit Appointment ",
+                        rowData.appointment_type
+                    ),
+                    dialogContent: (
+                        <AppointmentUpdate
+                            compensationTypes={
+                                usePage().props
+                                    .compensationTypes as Array<string>
+                            }
+                            RowData={rowData}
+                            setOpenDialog={setOpenDialog}
+                        ></AppointmentUpdate>
+                    ),
+                },
+                {
+                    tag: "2",
+                    name: "Delete",
+                    dialogtitle: cn(
+                        "Are you sure you want to delete ",
+                        rowData.appointment_type,
+                        "?"
+                    ),
+                    dialogContent: (
+                        <AppointmentDelete
+                            rowId={rowData.appointment_code}
+                            setOpenDialog={setOpenDialog}
+                        ></AppointmentDelete>
+                    ),
+                    style: "text-red-600",
+                },
+            ];
+
             return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <section>
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </section>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600">
-                            Delete
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <div>
+                    <DropdownDialog
+                        openDialog={openDialog}
+                        setOpenDialog={setOpenDialog}
+                        dialogs={dialogs}
+                        trigger={
+                            <>
+                                <section>
+                                    <MoreHorizontal className="h-4 w-4" />
+                                </section>
+                            </>
+                        }
+                    ></DropdownDialog>
+                </div>
             );
         },
     },
 ];
 
 export default function Appointments() {
-    const data: columnTypes[] = Data;
+    const pageData = (usePage().props.data as appointmentTypes[]) || [];
+    const data: appointmentTypes[] = pageData;
 
+    const [globalFilter, setGlobalFilter] = useState<any>([]);
     const table = useReactTable({
         data,
         columns,
@@ -70,39 +111,65 @@ export default function Appointments() {
         getPaginationRowModel: getPaginationRowModel(),
         initialState: {
             pagination: {
-                pageSize: 12,
+                pageSize: 11,
             },
         },
+
+        getFilteredRowModel: getFilteredRowModel(),
+        globalFilterFn: "auto",
+        state: {
+            globalFilter,
+        },
+        onGlobalFilterChange: setGlobalFilter,
     });
+
+    const [openDialog, setOpenDialog] = useState(false);
+
     return (
         <AuthenticatedLayoutAdmin title="Appointments" links={AdminLinks}>
             <BodyContentLayout headerName={"Appointments List"}>
-                <div className="flex  mb-5 gap-3">
-                    <Input
-                        type="text"
-                        placeholder="Search..."
-                        className="w-1/4 rounded-pca"
-                    />
-
-                    <div>
-                        <DialogMenu
-                            trigger={
-                                <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
-                                    <Plus className="mr-2 h-6 w-auto" />
-                                    Add New Appointment Profile
-                                </section>
+                <div className="h-full">
+                    <div className="flex  mb-5 gap-3">
+                        <Input
+                            onChange={(e) =>
+                                setGlobalFilter(e.target.value || "")
                             }
-                            title="Add New Appointment Profile"
-                        ></DialogMenu>
+                            type="text"
+                            placeholder="Search..."
+                            className="w-1/4 rounded-pca"
+                        />
+
+                        <div>
+                            <DialogMenu
+                                open={openDialog}
+                                openDialog={() => setOpenDialog(!openDialog)}
+                                trigger={
+                                    <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
+                                        <Plus className="mr-2 h-6 w-auto" />
+                                        New Appointment Profile
+                                    </section>
+                                }
+                                title="New Appointment Profile"
+                            >
+                                <AppointmentStore
+                                    compensationTypes={
+                                        usePage().props
+                                            .compensationTypes as Array<string>
+                                    }
+                                    openDialog={() =>
+                                        setOpenDialog(!openDialog)
+                                    }
+                                />
+                            </DialogMenu>
+                        </div>
                     </div>
-                </div>
-                <div>
                     <DataTable
                         columns={columns}
                         table={table}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
                     ></DataTable>
                 </div>
+                <PaginationTable table={table}></PaginationTable>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin>
     );

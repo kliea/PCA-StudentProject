@@ -6,7 +6,7 @@ import {
 } from "@/Components/ui/dropdown-menu";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
-import { Head, usePage } from "@inertiajs/react";
+import { usePage } from "@inertiajs/react";
 import {
     ColumnDef,
     getCoreRowModel,
@@ -14,13 +14,12 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import { MoreHorizontal, View } from "lucide-react";
-import Data from "@/Components/Constants/data6.json";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
 import { AdminLinks } from "@/lib/payrollData";
 
-type columnTypes = {
+type loanTypes = {
     name: string;
     id: string;
     monthly_ammount: number;
@@ -29,7 +28,7 @@ type columnTypes = {
     paid_amount: number;
 };
 
-const columns: ColumnDef<columnTypes>[] = [
+const columns: ColumnDef<loanTypes>[] = [
     { accessorKey: "name", header: "Name" },
     { accessorKey: "id", header: "Id Number" },
     { accessorKey: "monthly_amount", header: "Monthly Amount" },
@@ -67,7 +66,10 @@ const columns: ColumnDef<columnTypes>[] = [
 ];
 
 export default function Loans() {
-    const data: columnTypes[] = Data;
+    const pageData = (usePage().props.data as loanTypes[]) || [];
+    const data: loanTypes[] = pageData;
+
+    console.log(usePage().props.employeeDetails);
 
     const table = useReactTable({
         data,

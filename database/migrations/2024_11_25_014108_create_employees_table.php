@@ -30,7 +30,7 @@ return new class extends Migration
 			$table->foreignId('position_code')->constrained('positions')->references('position_code');
 			$table->foreignId('appointment_code')->constrained('appointments')->references('appointment_code');
 			$table->foreignId('station_code')->constrained('stations')->references('station_code');
-
+            $table->foreignId('signatory_code')->constrained('signatories')->references('signatory_code');
             $table->timestamps();
         });
     }

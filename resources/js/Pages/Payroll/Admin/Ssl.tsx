@@ -1,5 +1,5 @@
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
-import { Head, usePage } from "@inertiajs/react";
+import { usePage } from "@inertiajs/react";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import {
     ColumnDef,
@@ -11,23 +11,10 @@ import {
 import { DataTable } from "@/Components/DataTable";
 import { useState } from "react";
 import { Input } from "@/Components/ui/input";
-import { Button } from "@/Components/ui/button";
-import {
-    ChevronLeft,
-    ChevronRight,
-    FolderDown,
-    FolderUp,
-    MoreHorizontal,
-    PlusIcon,
-} from "lucide-react";
+import { FolderDown, FolderUp, MoreHorizontal, PlusIcon } from "lucide-react";
 
-import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-} from "@/Components/ui/pagination";
+import Pagination from "@/Components/Pagination";
+
 import {
     SslDelete,
     SslStore,
@@ -99,7 +86,12 @@ const columns: ColumnDef<sslProfile>[] = [
                     tag: "1",
                     name: "Edit",
                     dialogtitle: cn("Editing Salary Grade ", rowData.grade),
-                    dialogContent: <SslUpdate RowData={rowData}></SslUpdate>,
+                    dialogContent: (
+                        <SslUpdate
+                            RowData={rowData}
+                            setOpenDialog={setOpenDialog}
+                        ></SslUpdate>
+                    ),
                 },
                 {
                     tag: "2",
@@ -165,9 +157,12 @@ const Ssl = () => {
     const [openDialog, setOpenDialog] = useState(false);
     return (
         <div>
-            <AuthenticatedLayoutAdmin title="SSL" links={AdminLinks}>
+            <AuthenticatedLayoutAdmin
+                title="Salary Standard Law"
+                links={AdminLinks}
+            >
                 <BodyContentLayout
-                    headerName="SSL"
+                    headerName="Salary Standard Law List"
                     className="h-[800px]"
                     contentStyle="h-[650px]"
                 >
@@ -201,7 +196,7 @@ const Ssl = () => {
                                         </section>
                                     }
                                     title="New SSL Profile"
-                                    description="Add New SSL Profile"
+                                    description=""
                                 >
                                     <SslStore
                                         openDialog={() =>
@@ -240,40 +235,7 @@ const Ssl = () => {
                             rowStyle="odd:bg-white even:bg-transparent text-center"
                             table={table}
                         ></DataTable>
-                        <Pagination className="flex justify-end items-end">
-                            <PaginationContent>
-                                <PaginationItem>
-                                    <Button
-                                        onClick={table.previousPage}
-                                        className="bg-transparent text-black hover:bg-transparent w-30 p-2"
-                                        disabled={!table.getCanPreviousPage()}
-                                    >
-                                        <ChevronLeft className="pr-1" />
-                                        Previous
-                                    </Button>
-                                </PaginationItem>
-                                <PaginationItem>
-                                    <PaginationEllipsis />
-                                </PaginationItem>
-                                <PaginationItem>
-                                    <PaginationLink>
-                                        {table.getState().pagination.pageIndex +
-                                            1}
-                                    </PaginationLink>
-                                </PaginationItem>
-                                <PaginationItem>
-                                    <PaginationEllipsis />
-                                </PaginationItem>
-                                <Button
-                                    onClick={table.nextPage}
-                                    className="bg-transparent text-black hover:bg-transparent w-30 p-2"
-                                    disabled={!table.getCanNextPage()}
-                                >
-                                    Next
-                                    <ChevronRight className="pl-1" />
-                                </Button>
-                            </PaginationContent>
-                        </Pagination>
+                        <Pagination table={table}></Pagination>
                     </div>
                 </BodyContentLayout>
             </AuthenticatedLayoutAdmin>

@@ -1,66 +1,90 @@
 import { DataTable } from "@/Components/DataTable";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/Components/ui/dropdown-menu";
 import { Input } from "@/Components/ui/input";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
-import { Head, usePage } from "@inertiajs/react";
+import { usePage } from "@inertiajs/react";
 import {
     ColumnDef,
     getCoreRowModel,
+    getFilteredRowModel,
     getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
-import Data from "@/Components/Constants/data7.json";
 import { AdminLinks } from "@/lib/payrollData";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
+import DropdownDialog from "@/Components/DropdownDialog";
+import { EmployeeEdit } from "@/Components/CrudComponents/EmployeesCRUD";
+import PaginationTable from "@/Components/Pagination";
 
-type columnTypes = {
-    name: string;
-    id: string;
-    official_station: string;
-    position: string;
-    appointment: string;
-    sg: string;
-    step: string;
+type employeeTypes = {
+    employee_number: number;
+    first_name: string;
+    middle_name: string;
+    last_name: string;
+    name_extension: string;
+    salary_type: number;
+    salary_step: number;
 };
 
-const columns: ColumnDef<columnTypes>[] = [
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "id", header: "Id" },
-    { accessorKey: "official_station", header: "Official Station" },
-    { accessorKey: "position", header: "Position" },
-    { accessorKey: "appointment", header: "appointment" },
-    { accessorKey: "sg", header: "SG" },
-    { accessorKey: "step", header: "Step" },
+const columns: ColumnDef<employeeTypes>[] = [
+    { accessorKey: "employee_number", header: "ID" },
+    { accessorKey: "first_name", header: "First Name" },
+    { accessorKey: "middle_name", header: "Middle Name" },
+    { accessorKey: "last_name", header: "Last Name" },
+    { accessorKey: "name_extension", header: "Name Extension" },
+    { accessorKey: "salary_type", header: "Salary Grade" },
+    { accessorKey: "salary_step", header: "Salary Step" },
     {
-        id: "action",
+        id: "actions",
         cell: ({ row }) => {
-            const values = row.original;
+            const [openDialog, setOpenDialog] = useState<string | null>(null);
+            const rowData = row.original;
+            const dialogs = [
+                {
+                    tag: "1",
+                    name: "Edit",
+                    dialogtitle: cn(
+                        "Edit Employee: ",
+                        rowData.last_name,
+                        ",",
+                        rowData.first_name
+                    ),
+                    dialogContent: (
+                        <EmployeeEdit
+                            RowData={rowData}
+                            setOpenDialog={setOpenDialog}
+                        ></EmployeeEdit>
+                    ),
+                },
+            ];
+
             return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <section>
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </section>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem>View</DropdownMenuItem>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <div>
+                    <DropdownDialog
+                        dialogClassName="max-w-[1000px]"
+                        openDialog={openDialog}
+                        setOpenDialog={setOpenDialog}
+                        dialogs={dialogs}
+                        trigger={
+                            <>
+                                <section>
+                                    <MoreHorizontal className="h-4 w-4" />
+                                </section>
+                            </>
+                        }
+                    ></DropdownDialog>
+                </div>
             );
         },
     },
 ];
 
 export default function Employees() {
-    const data: columnTypes[] = Data;
+    const pageData = (usePage().props.data as employeeTypes[]) || [];
+    const data: employeeTypes[] = pageData;
+    const [globalFilter, setGlobalFilter] = useState<any>([]);
     const table = useReactTable({
         data,
         columns,
@@ -71,12 +95,19 @@ export default function Employees() {
                 pageSize: 12,
             },
         },
+        getFilteredRowModel: getFilteredRowModel(),
+        globalFilterFn: "auto",
+        state: {
+            globalFilter,
+        },
+        onGlobalFilterChange: setGlobalFilter,
     });
     return (
         <AuthenticatedLayoutAdmin title="Employees" links={AdminLinks}>
             <BodyContentLayout headerName={"Employee List"}>
                 <div className="flex  mb-5 gap-3">
                     <Input
+                        onChange={(e) => setGlobalFilter(e.target.value || "")}
                         type="text"
                         placeholder="Search..."
                         className="w-1/4 rounded-pca"
@@ -88,6 +119,7 @@ export default function Employees() {
                         table={table}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
                     ></DataTable>
+                    <PaginationTable table={table}></PaginationTable>
                 </div>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin>

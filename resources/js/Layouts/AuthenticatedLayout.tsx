@@ -84,7 +84,7 @@ export default function AuthenticatedLayoutAdmin({
                     ))}
                 </SidebarContent>
             </Sidebar>
-            <main className="overflow-hidden">
+            <main className="overflow-x-hidden">
                 <header className="w-screen shadow h-14 py-4 flex gap-3 items-center pl-5">
                     <SidebarTrigger />
                     <Separator orientation="vertical" />

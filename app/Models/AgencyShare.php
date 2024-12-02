@@ -15,10 +15,11 @@ class AgencyShare extends Model
 		'amount',
 		'is_mandatory',
 		'remittance_percent',
-		'ceiling_amount'
+		'ceiling_amount',
+		'compensation_links'
 	];
-
-	public function appliedShare() {
+	public function appliedShare()
+	{
 		return $this->hasMany(AppliedShare::class);
 	}
 }

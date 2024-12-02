@@ -9,6 +9,8 @@ use App\Http\Controllers\Biometric\ManageUserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+// Controllers
 use App\Http\Controllers\SalaryGradeController;
 use App\Http\Controllers\DailyTimeEntryController;
 use App\Http\Controllers\AgencyShareController;
@@ -84,6 +86,5 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::get('employee/{employee_code}', [EmployeeController::class, 'get_employee_data'])->name('admin.employee_data');
     });
 });
-
 
 require __DIR__ . '/auth.php';

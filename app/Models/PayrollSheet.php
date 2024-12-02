@@ -20,7 +20,9 @@ class PayrollSheet extends Model
 		'prepared_by',
 		'recommended_by',
 		'certified_by',
-		'approved_by'
+		'approved_by',
+		'fund_cluster',
+		'include_deduction',
 	];
 	public function payrollEntry() {
 		return $this->hasMany(PayrollEntry::class);

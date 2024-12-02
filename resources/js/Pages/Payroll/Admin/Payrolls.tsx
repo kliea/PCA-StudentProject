@@ -6,18 +6,16 @@ import {
 } from "@/Components/ui/dropdown-menu";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
-import { Head, usePage } from "@inertiajs/react";
 import {
     ColumnDef,
     getCoreRowModel,
     getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { File, FolderUp, MoreHorizontal } from "lucide-react";
-import Data from "@/Components/Constants/data5.json";
+import { File, MoreHorizontal } from "lucide-react";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
-
+import dummyData from "@/Components/Constants/DataTest/payrollTestData.json";
 import {
     Select,
     SelectContent,
@@ -27,9 +25,8 @@ import {
 } from "@/Components/ui/select";
 import { DatePickerWithRange } from "@/Components/DateRangePicker";
 import { addDays } from "date-fns";
-import React from "react";
+import React, { useState } from "react";
 import { DateRange } from "react-day-picker";
-import { Button } from "@/Components/ui/button";
 import {
     Dialog,
     DialogContent,
@@ -38,60 +35,136 @@ import {
     DialogTrigger,
 } from "@/Components/ui/dialog";
 import { AdminLinks } from "@/lib/payrollData";
-
+import { usePage } from "@inertiajs/react";
+import DropdownDialog from "@/Components/DropdownDialog";
+import { cn } from "@/lib/utils";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
+import PayrollProperties from "@/Components/CrudComponents/PayrollTabs/Properties";
+import PaginationTable from "@/Components/Pagination";
+import Signatories from "@/Components/CrudComponents/PayrollTabs/Signatories";
+import CompensationTab from "@/Components/CrudComponents/PayrollTabs/CompensationTab";
+import DeductionTab from "@/Components/CrudComponents/PayrollTabs/DeductionTab";
 //  Set accepted column types
 
-type columnTypes = {
-    name: string;
-    rate: number;
-    quantity: number;
-    type: string;
-    position: string;
-    tardiness: number;
+type payrollTypes = {
+    refNumber: number;
+    fundCluster: string;
+    payrollName: string;
+    payrollType: string;
+    startDate: string;
+    endDate: string;
+    paidDate: string;
     compensation: number;
+    gross: number;
     deduction: number;
-    gross_amount: number;
+    netAmount: number;
 };
 
 // Generate the headers for the columns
-const columns: ColumnDef<columnTypes>[] = [
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "rate", header: "Rate" },
-    { accessorKey: "quantity", header: "Quantity" },
-    { accessorKey: "type", header: "Type" },
-    { accessorKey: "position", header: "Position" },
-    { accessorKey: "tardiness", header: "Tardiness" },
+const columns: ColumnDef<payrollTypes>[] = [
+    { accessorKey: "refNumber", header: "Ref No." },
+    { accessorKey: "fundCluster", header: "Fund" },
+    { accessorKey: "payrollName", header: "Name" },
+    { accessorKey: "payrollType", header: "Type" },
+    { accessorKey: "startDate", header: "Start Date" },
+    { accessorKey: "endDate", header: "End Date" },
     { accessorKey: "compensation", header: "Compensation" },
+    { accessorKey: "gross", header: "Gross" },
     { accessorKey: "deduction", header: "Deduction" },
-    { accessorKey: "gross_amount", header: "Gross Amount" },
+    { accessorKey: "netAmount", header: "Net Amount" },
     {
-        // Action button for table
         id: "actions",
         cell: ({ row }) => {
-            const values = row.original;
+            const [openDialog, setOpenDialog] = useState<string | null>(null);
+            const rowData = row.original;
+            const dialogs = [
+                {
+                    tag: "1",
+                    name: "Edit",
+                    dialogtitle: cn("Edit Payroll"),
+                    dialogContent: (
+                        <Tabs defaultValue="properties" className="w-full">
+                            <TabsList className="grid w-full grid-cols-4">
+                                <TabsTrigger value="properties">
+                                    Properties
+                                </TabsTrigger>
+                                <TabsTrigger value="signatories">
+                                    Signatories
+                                </TabsTrigger>
+                                <TabsTrigger value="compensation">
+                                    Compensation
+                                </TabsTrigger>
+                                <TabsTrigger value="deduction">
+                                    Deduction
+                                </TabsTrigger>
+                            </TabsList>
+                            <TabsContent value="properties">
+                                <PayrollProperties
+                                    setOpenDialog={setOpenDialog}
+                                    RowData={rowData}
+                                />
+                            </TabsContent>
+                            <TabsContent value="signatories">
+                                <Signatories
+                                    setOpenDialog={setOpenDialog}
+                                ></Signatories>
+                            </TabsContent>
+                            <TabsContent value="compensation">
+                                <CompensationTab
+                                    setOpenDialog={setOpenDialog}
+                                ></CompensationTab>
+                            </TabsContent>
+                            <TabsContent value="deduction">
+                                <DeductionTab
+                                    setOpenDialog={setOpenDialog}
+                                ></DeductionTab>
+                            </TabsContent>
+                        </Tabs>
+                    ),
+                },
+                {
+                    tag: "2",
+                    name: "View",
+                    dialogtitle: cn(
+                        "Payroll: ",
+                        rowData.payrollType,
+                        ":",
+                        rowData.payrollName
+                    ),
+                    // dialogContent: (
+                    //     <AppointmentDelete
+                    //         rowId={rowData.appointment_code}
+                    //         setOpenDialog={setOpenDialog}
+                    //     ></AppointmentDelete>
+                    // ),
+                    // style: "text-red-600",
+                },
+            ];
+
             return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <section>
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </section>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem>View Details</DropdownMenuItem>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600">
-                            Delete
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <div>
+                    <DropdownDialog
+                        dialogClassName="max-w-[800px] min-h-[500px]"
+                        openDialog={openDialog}
+                        setOpenDialog={setOpenDialog}
+                        dialogs={dialogs}
+                        trigger={
+                            <>
+                                <section>
+                                    <MoreHorizontal className="h-4 w-4" />
+                                </section>
+                            </>
+                        }
+                    ></DropdownDialog>
+                </div>
             );
         },
     },
 ];
 
 export default function Payrolls() {
-    const data: columnTypes[] = Data;
+    const pageData = (usePage().props.data as payrollTypes[]) || [];
+    const data: payrollTypes[] = dummyData;
 
     const table = useReactTable({
         data,
@@ -166,7 +239,9 @@ export default function Payrolls() {
                         rowStyle="odd:bg-white even:bg-transparent text-center"
                     ></DataTable>
                 </div>
+                <PaginationTable table={table}></PaginationTable>
             </BodyContentLayout>
+            <div></div>
         </AuthenticatedLayoutAdmin>
     );
 }
