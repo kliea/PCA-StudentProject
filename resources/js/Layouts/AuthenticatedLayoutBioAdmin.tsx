@@ -85,17 +85,17 @@ export default function Authenticated({
                 },
                 {
                     label: "T.O. Requests",
-                    url: "bioadmin.manageusers",
+                    url: "bioadmin.travelorder",
                     icon: FileText,
                 },
                 {
                     label: "L.O. Requests",
-                    url: "bioadmin.manageusers",
+                    url: "bioadmin.leaveorder",
                     icon: FileText,
                 },
                 {
                     label: "Holiday Creation",
-                    url: "bioadmin.manageusers",
+                    url: "bioadmin.holidaycreation",
                     icon: CalendarDays,
                 },
             ],
