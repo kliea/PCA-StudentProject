@@ -6,8 +6,10 @@ import {
 } from "@/Components/Sidenavbar";
 import {
     BookOpen,
+    CalendarDays,
     Cog,
     Files,
+    FileText,
     HandCoins,
     HeartHandshake,
     LayoutDashboard,
@@ -67,12 +69,12 @@ export default function Authenticated({
                     icon: LayoutDashboard,
                 },
                 {
-                    label: "Attendance List",
+                    label: "Attendance Report",
                     url: "bioadmin.attendancelists",
                     icon: Users,
                 },
                 {
-                    label: "Attendance Records",
+                    label: "Employee DTR",
                     url: "bioadmin.attendancerecords",
                     icon: Files,
                 },
@@ -80,6 +82,21 @@ export default function Authenticated({
                     label: "Manage Users",
                     url: "bioadmin.manageusers",
                     icon: Users,
+                },
+                {
+                    label: "T.O. Requests",
+                    url: "bioadmin.manageusers",
+                    icon: FileText,
+                },
+                {
+                    label: "L.O. Requests",
+                    url: "bioadmin.manageusers",
+                    icon: FileText,
+                },
+                {
+                    label: "Holiday Creation",
+                    url: "bioadmin.manageusers",
+                    icon: CalendarDays,
                 },
             ],
         },
