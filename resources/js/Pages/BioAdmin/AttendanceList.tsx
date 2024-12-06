@@ -1,20 +1,11 @@
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/Components/ui/dropdown-menu";
+
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutBioAdmin";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import { Head, usePage } from "@inertiajs/react";
 import {
-    ColumnDef,
-    getCoreRowModel,
-    getPaginationRowModel,
-    useReactTable,
-    getFilteredRowModel,
+    ColumnDef
 } from "@tanstack/react-table";
-import { File, FolderUp, MoreHorizontal } from "lucide-react";
+import { File } from "lucide-react";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
 
@@ -26,11 +17,9 @@ import {
     SelectValue,
 } from "@/Components/ui/select";
 import { DatePickerWithRange } from "@/Components/DateRangePicker";
-import { addDays } from "date-fns";
-import React from "react";
-import { DateRange } from "react-day-picker";
-import { Button } from "@/Components/ui/button";
-import { useState } from "react";
+import { useDateRange } from "@/hooks/BioAdmin/useDateRange";
+import { useTable } from "@/hooks/BioAdmin/useTable";
+
 import {
     Dialog,
     DialogContent,
@@ -38,7 +27,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/Components/ui/dialog";
-import Employees from "../Payroll/Admin/Employees";
 
 //  Set accepted column types
 
@@ -53,6 +41,7 @@ import Employees from "../Payroll/Admin/Employees";
 
 type ColumnType = {
     date: string;
+    employee_code: number;
     time_in_am: string;
     time_out_am: string;
     time_in_pm: string;
@@ -60,12 +49,12 @@ type ColumnType = {
     tardy_minutes: number;
     undertime_minutes: number;
     work_minutes: number;
-    employee_code: number;
 };
 
 // Generate the headers for the columns
 const columns: ColumnDef<ColumnType>[] = [
     { accessorKey: "date", header: "Date" },
+    { accessorKey: "employee_code", header: "Employee ID" },
     { accessorKey: "time_in_am", header: "AM Time in" },
     { accessorKey: "time_out_am", header: "AM Time out" },
     { accessorKey: "time_in_pm", header: "PM Time in" },
@@ -73,39 +62,19 @@ const columns: ColumnDef<ColumnType>[] = [
     { accessorKey: "tardy_minutes", header: "Tardy Minutes" },
     { accessorKey: "undertime_minutes", header: "Undertime" },
     { accessorKey: "work_minutes", header: "Work Time" },
-    { accessorKey: "employee_code", header: "Employee ID" },
 
 ];
 
 export default function ShowAttendance() {
-    const { allData } = usePage<{ allData: columntTypes[] }>().props
-    const [globalFilter, setGlobalFilter] = useState<any>([]);
+    const { allData } = usePage<{ allData: ColumnType[] }>().props
 
-
-    const table = useReactTable({
+    const { table, globalFilter, setGlobalFilter } = useTable({
         data: allData,
         columns,
-        getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        initialState: {
-            pagination: {
-                pageSize: 12,
-            },
-        },
-        getFilteredRowModel: getFilteredRowModel(),
-        globalFilterFn: "auto",
-        state: {
-            globalFilter,
-        },
-        onGlobalFilterChange: setGlobalFilter,
     });
+    const { dateRange, setDateRange } = useDateRange();
 
 
-    const [date, setDate] = useState<DateRange | undefined>
-        ({
-            from: new Date(),
-            to: addDays(new Date(), 20),
-        });
     return (
         <AuthenticatedLayoutAdmin
             header={<h2>{usePage().component.split("/")[1]}</h2>}
@@ -120,8 +89,8 @@ export default function ShowAttendance() {
                         <div>
                             <DatePickerWithRange
                                 className=""
-                                date={date}
-                                setDate={setDate}
+                                date={dateRange}
+                                setDate={setDateRange}
                             ></DatePickerWithRange>
                         </div>
 
@@ -180,6 +149,7 @@ export default function ShowAttendance() {
                     <section className="flex gap-7 w-full justify-end">
                         <Input
                             type="text"
+                            value={globalFilter || ""}
                             onChange={(e) =>
                                 setGlobalFilter(e.target.value || "")
                             }
