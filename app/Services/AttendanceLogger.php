@@ -7,7 +7,7 @@ use Exception;
 
 class AttendanceLogger
 {
-    public $zk;
+    protected $zk;
 
     public function __construct()
     {
@@ -20,7 +20,7 @@ class AttendanceLogger
       date_default_timezone_set("Asia/Manila");
       $t = date("Y-m-d, H:i:s");
       try {
-
+        
         $this->zk->connect();
         $this->zk->disableDevice();
         $this->zk->testVoice();
@@ -28,10 +28,11 @@ class AttendanceLogger
         $this->zk->setTime($t);
         $logs = $this->zk->getAttendance();
 
-        foreach ($logs as $log) {
-			$logState = $log[2];
-			$logTime = $log[3];
+        foreach ($logs as $log => $key) {
+			  $logState = $log[2];
+			  $logTime = $log[3];
         }
+
 
         $this->zk->enableDevice();
         $this->zk->disconnect();

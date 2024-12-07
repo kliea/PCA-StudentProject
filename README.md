@@ -1,8 +1,8 @@
-INSTALLATION INSTRUCTIONS : 
+INSTALLATION INSTRUCTIONS :
 
 
 
-ADD THE DEPENDENCIES : 
+ADD THE DEPENDENCIES :
 - Node.js
 - Composer
 - XAMPP or Laragon (Optional)
@@ -22,7 +22,7 @@ BACK END
 - php artisan key:generate
 - php artisan migrate
 
-NOTE: 
+NOTE:
 
 FOR Members that were added before 23/10/2024 . Run git remote set-url origin https://github.com/jlibdev/PCA-StudentProject.git before starting.
 Repo has been renamed

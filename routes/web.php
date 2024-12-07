@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminPageController;
+use App\Http\Controllers\BioAdminPageController;
+use App\Http\Controllers\Biometric\DashboardController;
+use App\Http\Controllers\Biometric\AttendanceListController;
+use App\Http\Controllers\Biometric\AttendanceRecordController;
+use App\Http\Controllers\Biometric\ManageUserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Services\AttendanceLogger;
@@ -20,53 +26,32 @@ use App\Http\Controllers\Payroll\SummaryController;
 use App\Http\Controllers\Biometrics\DailyTimeEntryController;
 
 
-Route::get('/', function () {
-    return Inertia::render('Payroll/Auth/Login', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'generateNewBatch'])->name('generate-DTRs');
 
-Route::get('/fetch-attendance', function () {
-    $logger = new AttendanceLogger();
-    $logs = $logger->getLog();
-
-    return response()->json([
-        'message' => 'Attendance logs fetched successfully',
-        'data' => $logs,
-    ]);
-});
-
-// Route::put('/autogenerate-today', DTREntryController::create());
-Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'create'])->name('generate-DTRs');
-
-
-// BIOmetrics routes
-
-Route::get('/bioadmin/dashboard', function () {
-    return Inertia::render('BioAdmin/Dashboard');
-})->name('admin.dashboardb');
-
-Route::get('/bioadmin/attendancelist', function () {
-    return Inertia::render('BioAdmin/AttendanceList');
-})->name('admin.attendancelist');
-
-Route::get('/bioadmin/attendancerecords', function () {
-    return Inertia::render('BioAdmin/AttendanceRecord');
-})->name('admin.attendancerecords');
-
+// SUBDOMAIN FOR BIOADMIN
+Route::domain('bioadmin.' . env('APP_URL'))->group(
+    function () {
+        Route::prefix('admin')->middleware(['auth'])->group(
+            function () {
+                Route::get('dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
+                Route::get('attendancelists', [AttendanceListController::class, 'index'])->name('bioadmin.attendancelists');
+                Route::get('autogenerate-today', [DailyTimeEntryController::class, 'generateNewBatch'])->name('generate-DTRs');
+                Route::get('attendancerecords', [AttendanceRecordController::class, 'index'])->name('bioadmin.attendancerecords');
+                Route::get('manageusers', [ManageUserController::class, 'index'])->name('bioadmin.manageusers');
+            }
+        );
+    }
+);
 
 // SUBDOMAIN FOR PAYROLL
 Route::domain('payroll.' . env('APP_URL'))->group(function () {
-    Route::prefix('admin')->group(function () {
+    Route::prefix('admin')->middleware(['auth'])->group(function () {
         Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
-        // PAYROLL ROUTES
+        // // PAYROLL ROUTES
         Route::get('payroll', [SummaryController::class, 'Summary'])->name('admin.payrolls');
 
-        // LOANS ROUTES
-        // Route::get('loans', [AdminPageController::class, 'loans'])->name('admin.loans');
+        // // LOANS ROUTES
+        Route::get('loans', [AdminPageController::class, 'loans'])->name('admin.loans');
         Route::get('loans', [LoanController::class, 'showEmployeeLoanDetails'])->name('admin.loans');
 
 
@@ -104,7 +89,8 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::delete('ssl/{grade}', [SalaryGradeController::class, 'destroy'])->name('delete.ssl');
 
         //Query routes
-        Route::get('employee_data', [EmployeeController::class, 'get_employee_data'])->name('admin.employee_data');
+
+        Route::get('employee/{employee_code}', [EmployeeController::class, 'get_employee_data'])->name('admin.employee_data');
     });
 });
 

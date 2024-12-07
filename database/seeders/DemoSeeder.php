@@ -88,8 +88,8 @@ class DemoSeeder extends Seeder
 		]);
 
 		DB::table('employees')->insert([
-			'employee_number' => '123',
-			'first_name' => 'Earl James Williams',
+			'employee_number' => '8',
+			'first_name' => 'Clads',
 			'middle_name' => 'Arshad',
 			'last_name' => 'Alingasa',
 			'name_extension' => NULL,
@@ -125,6 +125,39 @@ class DemoSeeder extends Seeder
 
 		DB::table('daily_time_entries')->insert([
 			'date' => '2024-01-01',
+			'time_in_am' => '10:00:00',
+			'time_out_am' => '10:00:00',
+			'time_in_pm' => '10:00:00',
+			'time_out_pm' => '10:00:00',
+			'tardy_minutes' => 10,
+			'undertime_minutes' => 10,
+			'work_minutes' => 10,
+			'employee_code' => 1
+		]);
+		DB::table('daily_time_entries')->insert([
+			'date' => '2024-01-01',
+			'time_in_am' => '10:00:00',
+			'time_out_am' => '10:00:00',
+			'time_in_pm' => '10:00:00',
+			'time_out_pm' => '10:00:00',
+			'tardy_minutes' => 10,
+			'undertime_minutes' => 10,
+			'work_minutes' => 10,
+			'employee_code' => 1
+		]);
+		DB::table('daily_time_entries')->insert([
+			'date' => '2022-01-01',
+			'time_in_am' => '10:00:00',
+			'time_out_am' => '10:00:00',
+			'time_in_pm' => '10:00:00',
+			'time_out_pm' => '10:00:00',
+			'tardy_minutes' => 10,
+			'undertime_minutes' => 10,
+			'work_minutes' => 10,
+			'employee_code' => 1
+		]);
+		DB::table('daily_time_entries')->insert([
+			'date' => '2023-01-01',
 			'time_in_am' => '10:00:00',
 			'time_out_am' => '10:00:00',
 			'time_in_pm' => '10:00:00',

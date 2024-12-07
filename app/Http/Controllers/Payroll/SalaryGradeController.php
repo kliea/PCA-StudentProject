@@ -10,26 +10,27 @@ use Illuminate\Http\Request;
 
 class SalaryGradeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    /* Retrieves all the salary grade records. */
     public function index(): Response
     {
-        // Fetch data from the database
+        /* Fetching all the entries stored within the database. */
         $data = SalaryGrade::all();
 
+<<<<<<< HEAD
+        /* Returning a success message to the user. */
+        return Inertia::render('Payroll/Admin/Ssl', ['data' => $data, 'message' => 'All the Standardization Law values have been retrieved successfully.']);
+=======
         // Return the data to the frontend
         return Inertia::render('Payroll/Admin/Ssl', ['data' => $data]);
+>>>>>>> origin/AddedsheetAndSign
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    /* Creates and stores a new salary grade record. */
     public function store(Request $request)
     {
-        /* Validating the user request. */
+        /* Validating the request entries. */
         $validated = $request->validate([
-            'grade' => 'required|numeric|unique:salary_grades|min:0',
+            'grade' => 'required|numeric|unique:salary_grades|min:1',
             'step1' => 'required|numeric|min:0',
             'step2' => 'required|numeric|min:0',
             'step3' => 'required|numeric|min:0',
@@ -40,7 +41,7 @@ class SalaryGradeController extends Controller
             'step8' => 'required|numeric|min:0',
         ]);
 
-        // Create a new profile record in the database
+        /* Creating a new profile for the record. */
         SalaryGrade::create([
             'grade' => $validated['grade'],
             'step1' => $validated['step1'],
@@ -53,17 +54,23 @@ class SalaryGradeController extends Controller
             'step8' => $validated['step8'],
         ]);
 
-        // Redirect back or to a specific page after saving
+        /* Returning a success message to the user. */
         return redirect()->back()->with('success', 'Data saved successfully!');
     }
 
+<<<<<<< HEAD
+    /* Finds and updates a single salary grade. */
+    public function update(Request $request, int $salary_grade_code)
+=======
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $grade)
+>>>>>>> origin/AddedsheetAndSign
     {
-        // validate requets first
+		/* Validating the request entries. */
         $validated = $request->validate([
+			'grade' => 'required|numeric|unique:salary_grades|min:1',
             'step1' => 'required|numeric|min:0',
             'step2' => 'required|numeric|min:0',
             'step3' => 'required|numeric|min:0',
@@ -74,6 +81,18 @@ class SalaryGradeController extends Controller
             'step8' => 'required|numeric|min:0',
         ]);
 
+<<<<<<< HEAD
+		/* Finding and updating the record within the database. */
+        SalaryGrade::where('salary_grade_code', $salary_grade_code)->update($validated);
+
+		/* Returning a success message to the user. */
+        return redirect()->back()->with('success', 'Successfully stored ssl');
+    }
+
+
+    /* Deletes all the information for a single salary grade. */
+    public function destroy($salary_grade_code)
+=======
         SalaryGrade::where('grade', $grade)->update($validated);
         return redirect()->back()->with('success', 'Successfully stored ssl');
     }
@@ -82,9 +101,12 @@ class SalaryGradeController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($grade)
+>>>>>>> origin/AddedsheetAndSign
     {
-        // Find the record by salary_grade
-        SalaryGrade::where('grade', $grade)->delete();
-        return redirect()->back()->with('success', 'Successfully deleted ssl');
+       	/* Finding and deleting the record within the database. */
+        SalaryGrade::where('salary_grade_code', $salary_grade_code)->delete();
+
+		/* Returning a success message to the user. */
+        return redirect()->back()->with('success', 'Success');
     }
 }

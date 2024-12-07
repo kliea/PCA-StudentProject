@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->foreignId('salary_grade_code')->constrained('salary_grades')->references('salary_grade_code');
 
-            $table->timestamps();
+            $table->timestamps();//
         });
     }
 

@@ -50,7 +50,8 @@ class CompensationTypeController extends Controller
     }
 
 
-    public function update(Request $request,string $compensation_code){
+    public function update(Request $request, string $compensation_code)
+    {
 
         $validate = $request->validate([
             'compensation_name' => 'string|max:255',
@@ -61,7 +62,7 @@ class CompensationTypeController extends Controller
 
         ]);
 
-        CompensationType::where('compensation_code',$compensation_code)->update($validate);
+        CompensationType::where('compensation_code', $compensation_code)->update($validate);
         return redirect()->back()->with('success', 'Successfully stored');
     }
 

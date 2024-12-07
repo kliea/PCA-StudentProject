@@ -19,9 +19,9 @@ return new class extends Migration
 			$table->time('time_out_am')->nullable();
 			$table->time('time_in_pm')->nullable();
 			$table->time('time_out_pm')->nullable();
-			$table->integer('tardy_minutes');
-			$table->integer('undertime_minutes');
-			$table->integer('work_minutes');
+			$table->integer('tardy_minutes')->nullable();
+			$table->integer('undertime_minutes')->nullable();
+			$table->integer('work_minutes')->nullable();
 
 			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');
 
