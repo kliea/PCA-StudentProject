@@ -17,7 +17,7 @@ return new class extends Migration
 			$table->string('holiday_name')->unique();
 			$table->date('date');
 			$table->string('type');
-			$table->boolean('is_recurring');
+			$table->boolean('is_recurring')->default(true);
 
             $table->timestamps();
         });

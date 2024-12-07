@@ -6,63 +6,15 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-<<<<<<< HEAD
-=======
 use Faker\Factory as Faker;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use \DateTime;
->>>>>>> origin/AddedsheetAndSign
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-<<<<<<< HEAD
-        User::factory(10)->create();
-        User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'bioadmin',
-            'email' => 'admin@example.com',
-            'password' => '0000'
-        ]);
-        DB::table('employees')->insert([
-            'employee_number' => '102',
-            'first_name' => 'John',
-            'middle_name' => 'Michael',
-            'last_name' => 'Doe',
-            'name_extension' => 'Jr.',
-            'salary_type' => 'Fixed',
-            'salary_step' => 3,
-            'device_bio_id' => '15',
-            'position_code' => 1,  // assuming a position code exists for 'Manager'
-            'appointment_code' => 1,  // assuming this is a standard appointment type
-            'station_code' => 1  // assuming this corresponds to a station location
-        ]);
-
-        DB::table('employees')->insert([
-            'employee_number' => '203',
-            'first_name' => 'Sarah',
-            'middle_name' => 'Elizabeth',
-            'last_name' => 'Smith',
-            'name_extension' => NULL,
-            'salary_type' => 'Hourly',
-            'salary_step' => 4,
-            'device_bio_id' => '22',
-            'position_code' => 1,  // assuming 'Clerk' position
-            'appointment_code' => 1,  // assuming this is for a temporary appointment
-            'station_code' => 1  // assuming station 1 is where this employee works
-        ]);
-
-        // User::factory()->create([
-        //     'name' => 'admin',
-        //     'email' => 'test@example.com',
-        //     'password' => '0000',
-        //     'user_level' => 'admin'
-
-        // ]);
-=======
         // for fakeh data
         $faker = Faker::create();
 
@@ -216,7 +168,7 @@ class DatabaseSeeder extends Seeder
         $holiday_types = ['National', 'Religious', 'Cultural', 'Historical'];
         for ($i = 0; $i < 10; $i++) {
             $holidays[] = [
-                'holiday_name' => $holidayNames[array_rand($holidayNames)],
+                'holiday_name' => $holidayNames[$i],
                 'date' => date('Y-m-d', strtotime('2024-01-01 +' . random_int(0, 364) . ' days')), // Random date in 2024
                 'type' => $holiday_types[array_rand($holiday_types)],
                 'is_recurring' => (bool)random_int(0, 1)
@@ -626,6 +578,5 @@ class DatabaseSeeder extends Seeder
             ];
         }
         DB::table('applied_loans')->insert($appliedLoans);
->>>>>>> origin/AddedsheetAndSign
     }
 }
