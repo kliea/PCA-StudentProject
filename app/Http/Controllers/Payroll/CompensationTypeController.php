@@ -69,6 +69,7 @@ class CompensationTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    // TODO: APILON OG DELETE ANG COMPENSATION_CODE SA TABLE APPLIED_COMPENSATIONS
     public function destroy($compensation_code)
     {
         //Find the record by compensation_code

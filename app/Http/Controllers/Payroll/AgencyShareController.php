@@ -94,6 +94,7 @@ class AgencyShareController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    // TODO: NEED I APIL OG DELETE ANG SA APPLIED_SHARES (AGENCY_SHARE_CODE)
     public function destroy($agency_share_code)
     {
         //find the specific column

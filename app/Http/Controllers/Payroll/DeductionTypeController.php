@@ -96,6 +96,7 @@ class DeductionTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    // TODO: APILON PUD DELETE ANG FOREIGN KEY SA TABLE NGA APPLIED_DEDUCTIONS (DEDUCTION_CODE)
     public function destroy($deduction_code)
     {
         // Find the record by salary_grade

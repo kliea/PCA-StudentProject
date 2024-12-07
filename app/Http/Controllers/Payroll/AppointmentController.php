@@ -72,7 +72,7 @@ class AppointmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    // [x]: NEED PUD I DELETE ANG FOREING KEY NGA 
+    // TODO: NEED PUD I DELETE ANG FOREING KEY NGA NAA SA EMPLOYEES (APPOINTMENT_TYPE)
     public function destroy($appointment_code)
     {
         // Find the record by salary_grade
