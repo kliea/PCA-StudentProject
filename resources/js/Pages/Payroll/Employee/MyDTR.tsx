@@ -1,3 +1,5 @@
+// TODO: CLEAN UP UNUSED IMPORT PARA DILI BUG AT ANG COMPONENT ON RENDER
+
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import AuthenticatedLayoutEmployee from "@/Layouts/AuthenticatedLayoutEmployees";
 import { Head, usePage } from "@inertiajs/react";
@@ -43,7 +45,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/Components/ui/dialog";
-
 
 type recentPayrolls = {
     period: string;
@@ -93,7 +94,6 @@ const dtrcolumns: ColumnDef<dtrDetails>[] = [
     },
 ];
 
-
 export default function MyDTR() {
     const dtrEmployeeData = dtrData;
     const DTRdata: dtrDetails[] = dtrEmployeeData;
@@ -116,7 +116,7 @@ export default function MyDTR() {
     });
     return (
         <AuthenticatedLayoutEmployee>
-            <Dialog >
+            <Dialog>
                 <div className="flex justify-between">
                     <DatePickerWithRange
                         className=""
@@ -184,7 +184,10 @@ export default function MyDTR() {
 
             <div className=" h-full">
                 <div>
-                    <BodyContentLayout headerName="DTR Details" className=" mt-5 h-fit shadow-md" >
+                    <BodyContentLayout
+                        headerName="DTR Details"
+                        className=" mt-5 h-fit shadow-md"
+                    >
                         <DataTable
                             columns={dtrcolumns}
                             rowStyle="odd:bg-white even:bg-transparent text-center"
@@ -194,8 +197,6 @@ export default function MyDTR() {
                     </BodyContentLayout>
                 </div>
             </div>
-            
-            
         </AuthenticatedLayoutEmployee>
     );
 }

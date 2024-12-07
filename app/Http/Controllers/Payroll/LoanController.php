@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
-
+// TODO : ADD CRUD FOR LOAN CONTROLLER 
 class LoanController extends Controller
 {
     //

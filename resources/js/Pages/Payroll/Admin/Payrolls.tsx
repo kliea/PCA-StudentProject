@@ -1,9 +1,7 @@
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/Components/ui/dropdown-menu";
+// TODO: PRINT PAYROLLS DAPAT KAY OPTION SIYA PER PAYROLL SHEET
+// TODO: PAYSLIP LIST AND MGA EMPLOYEES NGA NAKA APPLY ANI NGA PAYROLL
+// TODO: SEARCHING AND SORTING
+// TODO: CELL FORMATTING
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import {

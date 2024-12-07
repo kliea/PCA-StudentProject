@@ -1,3 +1,6 @@
+// TODO: BUHAT UG COMPONENT FOR ADDING LOAN TYPES
+// TODO: TABLE NGA MU CHECK FOR LOAN REQEUST SA MGA EMPLOYEES -> FUNCTIONALITY DILI PA SURE UNSAY IPANG BUTANG
+
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -92,19 +95,19 @@ export default function Loans() {
                         className="w-1/4 rounded-pca"
                     />
 
-                  <Button className="flex gap-1">
-                      <View size={20} />
-                      View Loan Types
-                  </Button>
-              </div>
-              <div>
-                  <DataTable
-                      columns={columns}
-                      table={table}
-                      rowStyle="odd:bg-white even:bg-transparent text-center"
-                  ></DataTable>
-              </div>
-          </BodyContentLayout>
-      </AuthenticatedLayoutAdmin>
-  );
+                    <Button className="flex gap-1">
+                        <View size={20} />
+                        View Loan Types
+                    </Button>
+                </div>
+                <div>
+                    <DataTable
+                        columns={columns}
+                        table={table}
+                        rowStyle="odd:bg-white even:bg-transparent text-center"
+                    ></DataTable>
+                </div>
+            </BodyContentLayout>
+        </AuthenticatedLayoutAdmin>
+    );
 }

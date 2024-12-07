@@ -80,7 +80,7 @@ export default function MyDTR() {
                             table={dtrTable}
                             className="lg:h-[450px]"
                         /> */}
-
+{/* TODO: GAMIT UG TABLE SA REACT OR IF DILI, PAG BUHAT UG COMPONENT TAPOS E MAP RA ANG DATAS */}
                         <div className="h-[70vh] overflow-x-hidden overflow-y-scroll scrollbar scrollbar-thumb-gray-400 scrollbar-track-gray-200">
                             <div className=" h-[270px] drop-shadow-custom  rounded px-5">
                                 <div className="flex justify-start gap-56">

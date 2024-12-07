@@ -49,7 +49,7 @@ class CompensationTypeController extends Controller
         return redirect()->back()->with('success', 'Data saved successfully!');
     }
 
-
+    //  TODO: SA PAG UPDATE SA MGA DAPAT NAKA UNIQUE LIKE SHORTHAND DAPAT MA ADDRESS
     public function update(Request $request, string $compensation_code)
     {
 
