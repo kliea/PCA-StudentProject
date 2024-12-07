@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Biometrics;
 
+use App\Http\Controllers\Controller;
 use App\Models\SSLModel;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -15,5 +15,4 @@ class BioAdminPageController extends Controller
         return Inertia::render('BioAdmin/Dashboard');
     }
 
-   
 }

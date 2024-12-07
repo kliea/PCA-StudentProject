@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Payroll;
 
+use App\Http\Controllers\Controller;
 use App\Models\SalaryGrade;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -56,7 +57,7 @@ class AdminPageController extends Controller
     {
         return Inertia::render('BioAdmin/ManageUsers');
     }
-    
+
 
     public function ssl(): Response
     {

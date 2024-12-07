@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Payroll;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CompensationType;
 use Inertia\Inertia;
@@ -64,7 +65,7 @@ class CompensationTypeController extends Controller
         return redirect()->back()->with('success', 'Successfully stored');
     }
 
-    
+
 
 
 
