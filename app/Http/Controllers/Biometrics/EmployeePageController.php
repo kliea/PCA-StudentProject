@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Biometrics;
 
+use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -15,5 +16,5 @@ class EmployeePageController extends Controller{
     {
         return Inertia::render('Payroll/Employee/MyPayslip');
     }
-    
+
 }

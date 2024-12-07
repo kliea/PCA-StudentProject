@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Payroll;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AgencyShare;
 use App\Models\CompensationType;
@@ -100,3 +101,4 @@ class AgencyShareController extends Controller
         return redirect()->back()->with('success', 'Successfully deleted government share');
     }
 }
+

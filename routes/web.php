@@ -1,21 +1,24 @@
 <?php
 
-use App\Http\Controllers\AdminPageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Services\AttendanceLogger;
 use Inertia\Inertia;
 
-// Controllers
-use App\Http\Controllers\SalaryGradeController;
-use App\Http\Controllers\AgencyShareController;
-use App\Http\Controllers\AppointmentController;
-use App\Http\Controllers\CompensationTypeController;
-use App\Http\Controllers\DeductionTypeController;
-use App\Services\AttendanceLogger;
-use App\Http\Controllers\DailyTimeEntryController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\LoanController;
-use App\Http\Controllers\SummaryController;
+// Controllers: Payroll
+use App\Http\Controllers\Payroll\AdminPageController;
+use App\Http\Controllers\Payroll\SalaryGradeController;
+use App\Http\Controllers\Payroll\AgencyShareController;
+use App\Http\Controllers\Payroll\AppointmentController;
+use App\Http\Controllers\Payroll\CompensationTypeController;
+use App\Http\Controllers\Payroll\DeductionTypeController;
+use App\Http\Controllers\Payroll\EmployeeController;
+use App\Http\Controllers\Payroll\LoanController;
+use App\Http\Controllers\Payroll\SummaryController;
+
+// Controllers: Biometrics
+use App\Http\Controllers\Biometrics\DailyTimeEntryController;
+
 
 Route::get('/', function () {
     return Inertia::render('Payroll/Auth/Login', [
