@@ -78,7 +78,7 @@ export default function ManageUsers() {
                         className="w-1/4 rounded-[10px] ml-auto"
                     />
                 </div>
-                <div>
+                <div>   
                     <DataTable
                         columns={columns}
                         table={table}
