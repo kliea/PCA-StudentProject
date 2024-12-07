@@ -194,19 +194,6 @@ class DatabaseSeeder extends Seeder
             ];
         }
         DB::table('income_taxes')->insert($incomeTaxes);
-        //Signatory =========================================================================
-        $signatoryData=[];
-        for($i = 1; $i<= 7;$i++){
-            $signatoryData[] = [
-                'signatory_template'=>"S$i",
-                'signatory_A'=>$faker->name(),
-                'signatory_B'=>$faker->name(),
-                'signatory_C'=>$faker->name(),
-                'signatory_D'=>$faker->name(),
-
-            ];
-        }
-        DB::table('signatories')->insert($signatoryData);
 
         // employees ========================================================================
         $employees = [];
@@ -225,12 +212,37 @@ class DatabaseSeeder extends Seeder
                 'position_code' => $faker->numberBetween(1, 19),
                 'appointment_code' => $faker->numberBetween(1, 10),
                 'station_code' => $faker->numberBetween(1, 10),
-                'signatory_code' => $faker->numberBetween(1,7)
             ];
         }
-
         // Insert into the employees table
         DB::table('employees')->insert($employees);
+
+        //Signatory =========================================================================
+        $signatoryData=[];
+        for($i = 1; $i<= 7;$i++){
+            $signatoryData[] = [
+                'signatory_template'=>"S$i",
+                'prepared_by'=>$faker->name(),
+                'recommended_by'=>$faker->name(),
+                'certificate_by'=>$faker->name(),
+                'approved_by'=>$faker->name(),
+                
+                'employee_code'=>$faker->numberBetween(1,49)
+
+                // $table->id('signatory_code');
+                // $table->string('signatory_template');
+                // $table->string('prepared_by  ');
+                // $table->string('recommended_by');
+                // $table->string('certificate_by');
+                // $table->string('approved_by');
+                
+                // $table->foreignId('employee_code')->constrained('employees')->references('employee_code');
+    
+                // $table->timestamps();
+
+            ];
+        }
+        DB::table('signatories')->insert($signatoryData);
 
         // leave_requests =========================================================================
         $leaveRequests = [];
@@ -375,17 +387,13 @@ class DatabaseSeeder extends Seeder
 
              // Combine into a single string separated by commas
             $randomString = implode(', ', $three_random);
-            $payrollName = $faker->word . ' Payroll';
+            $payrollName = $faker->word. ' Payroll';
             $payrollType = $faker->randomElement(['Regular', 'Overtime', 'Bonus', 'Holiday']);
             $startDate = $faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d');
             $endDate = (new DateTime($startDate))->modify('+' . $faker->numberBetween(1, 5) . ' days')->format('Y-m-d');
             $dateCreated = $faker->dateTimeBetween($startDate, $endDate)->format('Y-m-d');
             $datePosted = $faker->dateTimeBetween($dateCreated, $dateCreated)->format('Y-m-d');
             $datePaid = $faker->dateTimeBetween($datePosted, $datePosted)->format('Y-m-d');
-            $preparedBy = $faker->name;
-            $recommendedBy = $faker->name;
-            $certifiedBy = $faker->name;
-            $approvedBy = $faker->name;
             $fund_cluster = $fund_cluster_name[$i % count($fund_cluster_name)];
             $include_deduction = $faker->boolean;
             $signatory_code = $faker->numberBetween(1, 7);
@@ -398,10 +406,6 @@ class DatabaseSeeder extends Seeder
                 'date_created' => $dateCreated,
                 'date_posted' => $datePosted,
                 'date_paid' => $datePaid,
-                'prepared_by' => $preparedBy,
-                'recommended_by' => $recommendedBy,
-                'certified_by' => $certifiedBy,
-                'approved_by' => $approvedBy,
                 'fund_cluster' => $fund_cluster,
                 'include_deduction' => $include_deduction,
                 'signatory_code' => $signatory_code,

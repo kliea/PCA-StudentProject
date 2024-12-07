@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('signatories', function (Blueprint $table) {
             $table->id('signatory_code');
             $table->string('signatory_template');
-            $table->string('signatory_A');
-            $table->string('signatory_B');
-            $table->string('signatory_C');
-            $table->string('signatory_D');
-    
+            $table->string('prepared_by');
+            $table->string('recommended_by');
+            $table->string('certificate_by');
+            $table->string('approved_by');
+            
+            $table->foreignId('employee_code')->constrained('employees')->references('employee_code');
+
             $table->timestamps();
         });
     }

@@ -21,10 +21,6 @@ return new class extends Migration
 			$table->date('date_created');
 			$table->date('date_posted');
 			$table->date('date_paid');
-			$table->string('prepared_by');
-			$table->string('recommended_by');
-			$table->string('certified_by');
-			$table->string('approved_by');
             $table->string('fund_cluster');
             $table->boolean('include_deduction');
             $table->string('compensation_links');
