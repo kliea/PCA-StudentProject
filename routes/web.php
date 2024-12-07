@@ -75,7 +75,7 @@ Route::get('/admin/deductions', function () {
 })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.deductions');
 
 
-////////////////////////////////bio routes
+// BIOmetrics routes
 
 Route::get('/bioadmin/dashboard', function () {
     return Inertia::render('BioAdmin/Dashboard');
@@ -88,10 +88,6 @@ Route::get('/bioadmin/attendancelist', function () {
 Route::get('/bioadmin/attendancerecords', function () {
     return Inertia::render('BioAdmin/AttendanceRecord');
 })->name('admin.attendancerecords');
-
-// Route::get('/bioadmin/manageusers', function () {
-//     return Inertia::render('BioAdmin/ManageUsers');
-// })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.manageusers');
 
 // Empoyee Routes
 
