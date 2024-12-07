@@ -222,12 +222,10 @@ class DatabaseSeeder extends Seeder
         for($i = 1; $i<= 7;$i++){
             $signatoryData[] = [
                 'signatory_template'=>"S$i",
-                'prepared_by'=>$faker->name(),
-                'recommended_by'=>$faker->name(),
-                'certificate_by'=>$faker->name(),
-                'approved_by'=>$faker->name(),
-                
-                'employee_code'=>$faker->numberBetween(1,49)
+                'prepared_by'=>$faker->numberBetween(1,49),
+                'recommended_by'=>$faker->numberBetween(1,49),
+                'certificate_by'=>$faker->numberBetween(1,49),
+                'approved_by'=>$faker->numberBetween(1,49)
 
                 // $table->id('signatory_code');
                 // $table->string('signatory_template');
@@ -386,7 +384,7 @@ class DatabaseSeeder extends Seeder
             }, $randomKeys);
 
              // Combine into a single string separated by commas
-            $randomString = implode(', ', $three_random);
+
             $payrollName = $faker->word. ' Payroll';
             $payrollType = $faker->randomElement(['Regular', 'Overtime', 'Bonus', 'Holiday']);
             $startDate = $faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d');
@@ -409,7 +407,6 @@ class DatabaseSeeder extends Seeder
                 'fund_cluster' => $fund_cluster,
                 'include_deduction' => $include_deduction,
                 'signatory_code' => $signatory_code,
-                'compensation_links' => $randomString,
             ];
         }
         DB::table('payroll_sheets')->insert($payrollSheets);

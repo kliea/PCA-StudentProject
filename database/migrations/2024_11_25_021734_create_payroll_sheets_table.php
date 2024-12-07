@@ -23,7 +23,6 @@ return new class extends Migration
 			$table->date('date_paid');
             $table->string('fund_cluster');
             $table->boolean('include_deduction');
-            $table->string('compensation_links');
 			/* There is no need to record the employee numbers or codes of the signatories. */
             $table->timestamps();
 
