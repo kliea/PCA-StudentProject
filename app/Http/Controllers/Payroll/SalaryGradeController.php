@@ -16,13 +16,8 @@ class SalaryGradeController extends Controller
         /* Fetching all the entries stored within the database. */
         $data = SalaryGrade::all();
 
-<<<<<<< HEAD
         /* Returning a success message to the user. */
         return Inertia::render('Payroll/Admin/Ssl', ['data' => $data, 'message' => 'All the Standardization Law values have been retrieved successfully.']);
-=======
-        // Return the data to the frontend
-        return Inertia::render('Payroll/Admin/Ssl', ['data' => $data]);
->>>>>>> origin/AddedsheetAndSign
     }
 
     /* Creates and stores a new salary grade record. */
@@ -58,19 +53,12 @@ class SalaryGradeController extends Controller
         return redirect()->back()->with('success', 'Data saved successfully!');
     }
 
-<<<<<<< HEAD
     /* Finds and updates a single salary grade. */
     public function update(Request $request, int $salary_grade_code)
-=======
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $grade)
->>>>>>> origin/AddedsheetAndSign
     {
-		/* Validating the request entries. */
+        /* Validating the request entries. */
         $validated = $request->validate([
-			'grade' => 'required|numeric|unique:salary_grades|min:1',
+            'grade' => 'required|numeric|unique:salary_grades|min:1',
             'step1' => 'required|numeric|min:0',
             'step2' => 'required|numeric|min:0',
             'step3' => 'required|numeric|min:0',
@@ -81,32 +69,21 @@ class SalaryGradeController extends Controller
             'step8' => 'required|numeric|min:0',
         ]);
 
-<<<<<<< HEAD
-		/* Finding and updating the record within the database. */
+        /* Finding and updating the record within the database. */
         SalaryGrade::where('salary_grade_code', $salary_grade_code)->update($validated);
 
-		/* Returning a success message to the user. */
+        /* Returning a success message to the user. */
         return redirect()->back()->with('success', 'Successfully stored ssl');
     }
 
 
     /* Deletes all the information for a single salary grade. */
     public function destroy($salary_grade_code)
-=======
-        SalaryGrade::where('grade', $grade)->update($validated);
-        return redirect()->back()->with('success', 'Successfully stored ssl');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($grade)
->>>>>>> origin/AddedsheetAndSign
     {
-       	/* Finding and deleting the record within the database. */
+        /* Finding and deleting the record within the database. */
         SalaryGrade::where('salary_grade_code', $salary_grade_code)->delete();
 
-		/* Returning a success message to the user. */
+        /* Returning a success message to the user. */
         return redirect()->back()->with('success', 'Success');
     }
 }

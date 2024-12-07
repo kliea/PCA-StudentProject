@@ -1,15 +1,11 @@
 <?php
 
-use App\Http\Controllers\AdminPageController;
-use App\Http\Controllers\BioAdminPageController;
 use App\Http\Controllers\Biometric\DashboardController;
 use App\Http\Controllers\Biometric\AttendanceListController;
 use App\Http\Controllers\Biometric\AttendanceRecordController;
 use App\Http\Controllers\Biometric\ManageUserController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use App\Services\AttendanceLogger;
-use Inertia\Inertia;
+
 
 // Controllers: Payroll
 use App\Http\Controllers\Payroll\AdminPageController;
@@ -26,8 +22,6 @@ use App\Http\Controllers\Payroll\SummaryController;
 use App\Http\Controllers\Biometrics\DailyTimeEntryController;
 
 
-Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'generateNewBatch'])->name('generate-DTRs');
-
 // SUBDOMAIN FOR BIOADMIN
 Route::domain('bioadmin.' . env('APP_URL'))->group(
     function () {
@@ -43,9 +37,11 @@ Route::domain('bioadmin.' . env('APP_URL'))->group(
     }
 );
 
+// ->middleware(['auth'])
+
 // SUBDOMAIN FOR PAYROLL
 Route::domain('payroll.' . env('APP_URL'))->group(function () {
-    Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::prefix('admin')->group(function () {
         Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
         // // PAYROLL ROUTES
         Route::get('payroll', [SummaryController::class, 'Summary'])->name('admin.payrolls');

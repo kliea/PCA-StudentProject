@@ -87,18 +87,18 @@ export default function Employees() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        axios
-            .get(route("admin.employee_data"))
-            .then((response) => {
-                setData(response.data.data);
-                setLoading(false);
-            })
-            .catch((err) => {
-                setError(err.message);
-                setLoading(false);
-            });
-    }, []);
+    // useEffect(() => {
+    //     axios
+    //         .get(route("admin.employee_data"))
+    //         .then((response) => {
+    //             setData(response.data.data);
+    //             setLoading(false);
+    //         })
+    //         .catch((err) => {
+    //             setError(err.message);
+    //             setLoading(false);
+    //         });
+    // }, []);
 
     const data = employees;
 
