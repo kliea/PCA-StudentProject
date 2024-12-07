@@ -40,39 +40,39 @@ Route::get('/fetch-attendance', function () {
 Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'create'])->name('generate-DTRs');
 
 // Route for storing SSL data
-// Route::post('/admin/ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
+Route::post('/admin/ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
 
-// Route::get('/admin/dashboard', function () {
-//     return Inertia::render('Admin/Dashboard');
-// })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.dashboard');
+Route::get('/admin/dashboard', function () {
+    return Inertia::render('Admin/Dashboard');
+})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.dashboard');
 
-// Route::get('/admin/salary', function () {
-//     return Inertia::render('Admin/Salary');
-// })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.salary');
+Route::get('/admin/salary', function () {
+    return Inertia::render('Admin/Salary');
+})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.salary');
 
-// Route::get('/admin/benefits', function () {
-//     return Inertia::render('Admin/Benefits');
-// })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.benefits');
+Route::get('/admin/benefits', function () {
+    return Inertia::render('Admin/Benefits');
+})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.benefits');
 
-// Route::get('/admin/loans', function () {
-//     return Inertia::render('Admin/Loans');
-// })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.loans');
+Route::get('/admin/loans', function () {
+    return Inertia::render('Admin/Loans');
+})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.loans');
 
-// Route::get('/admin/records', function () {
-//     return Inertia::render('Admin/Records');
-// })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.records');
+Route::get('/admin/records', function () {
+    return Inertia::render('Admin/Records');
+})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.records');
 
-// Route::get('/admin/designations', function () {
-//     return Inertia::render('Admin/Designations');
-// })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.designations');
+Route::get('/admin/designations', function () {
+    return Inertia::render('Admin/Designations');
+})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.designations');
 
-// Route::get('/admin/compensations', function () {
-//     return Inertia::render('Admin/Compensations');
-// })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.compensations');
+Route::get('/admin/compensations', function () {
+    return Inertia::render('Admin/Compensations');
+})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.compensations');
 
-// Route::get('/admin/deductions', function () {
-//     return Inertia::render('Admin/Deductions');
-// })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.deductions');
+Route::get('/admin/deductions', function () {
+    return Inertia::render('Admin/Deductions');
+})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.deductions');
 
 
 ////////////////////////////////bio routes
@@ -89,9 +89,9 @@ Route::get('/bioadmin/attendancerecords', function () {
     return Inertia::render('BioAdmin/AttendanceRecord');
 })->name('admin.attendancerecords');
 
-Route::get('/bioadmin/manageusers', function () {
-    return Inertia::render('BioAdmin/ManageUsers');
-})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.manageusers');
+// Route::get('/bioadmin/manageusers', function () {
+//     return Inertia::render('BioAdmin/ManageUsers');
+// })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.manageusers');
 
 // Empoyee Routes
 
