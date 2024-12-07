@@ -50,25 +50,21 @@ class CompensationTypeController extends Controller
     }
 
     //  TODO: SA PAG UPDATE SA MGA DAPAT NAKA UNIQUE LIKE SHORTHAND DAPAT MA ADDRESS
-    public function update(Request $request, string $compensation_code)
+    // [x]: MANA NI BAAAAI
+    public function update(Request $request, $compensation_code)
     {
 
         $validate = $request->validate([
-            'compensation_name' => 'string|max:255',
-            'shorthand' => 'string|max:255',
+            'compensation_name' => 'string|max:255|unique:compensation_types,compensation_name,'.$compensation_code.',compensation_code',
+            'shorthand' => 'string|max:255|unique:compensation_types,shorthand,'.$compensation_code.',compensation_code',
             'amount' => 'numeric',
             'is_taxable' => 'boolean',
             'is_fixed' => 'boolean',
-
         ]);
 
         CompensationType::where('compensation_code', $compensation_code)->update($validate);
         return redirect()->back()->with('success', 'Successfully stored');
     }
-
-
-
-
 
     /**
      * Remove the specified resource from storage.

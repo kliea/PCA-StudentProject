@@ -21,7 +21,6 @@ use App\Http\Controllers\Payroll\SummaryController;
 // Controllers: Biometrics
 use App\Http\Controllers\Biometrics\DailyTimeEntryController;
 
-
 // SUBDOMAIN FOR BIOADMIN
 Route::domain('bioadmin.' . env('APP_URL'))->group(
     function () {
@@ -48,8 +47,7 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
 
         // // LOANS ROUTES
         Route::get('loans', [AdminPageController::class, 'loans'])->name('admin.loans');
-        Route::get('loans', [LoanController::class, 'showEmployeeLoanDetails'])->name('admin.loans');
-
+        Route::get('loans', [LoanController::class, 'index'])->name('admin.loans');
 
         // COMPENSATION ROUTES
         Route::get('compensations', [CompensationTypeController::class, 'index'])->name('admin.compensations');

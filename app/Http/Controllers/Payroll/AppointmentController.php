@@ -54,10 +54,12 @@ class AppointmentController extends Controller
      * Update the specified resource in storage.
      */
     //  TODO: SA PAG UPDATE SA MGA DAPAT NAKA UNIQUE LIKE SHORTHAND DAPAT MA ADDRESS
-    public function update(Request $request, string $appointment_code)
+    // [x]: MANA SAB BAIII
+    public function update(Request $request, $appointment_code)
     {
         /* Validating the user request. */
         $validated = $request->validate([
+            'appointment_type' => 'required|string|unique:appointments,appointment_type,'.$appointment_code.',appointment_code',
             'has_mandatory_deduction' => 'required|boolean',
             'basic_pay_type' => 'required|string',
             'tax_type' => 'required|string'
@@ -70,6 +72,7 @@ class AppointmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    // [x]: NEED PUD I DELETE ANG FOREING KEY NGA 
     public function destroy($appointment_code)
     {
         // Find the record by salary_grade
