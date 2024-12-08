@@ -80,9 +80,9 @@ export default function ShowAttendance() {
         <AuthenticatedLayoutAdmin
             header={<h2>{usePage().component.split("/")[1]}</h2>}
         >
-            <Head title="Employee Attendance List" />
+            <Head title="Employee Attendance Report" />
 
-            <BodyContentLayout headerName={"Employee Attendance List"}>
+            <BodyContentLayout headerName={"Employee Attendance Report"}>
 
 
                 <div className="flex  mb-5 justify-between">
