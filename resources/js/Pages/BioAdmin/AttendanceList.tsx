@@ -5,7 +5,7 @@ import { Head, usePage } from "@inertiajs/react";
 import {
     ColumnDef
 } from "@tanstack/react-table";
-import { File } from "lucide-react";
+import { File, Globe, Import } from "lucide-react";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
 
@@ -27,6 +27,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/Components/ui/dialog";
+import { Button, buttonVariants } from "@/Components/ui/button";
 
 //  Set accepted column types
 
@@ -85,8 +86,8 @@ export default function ShowAttendance() {
 
 
                 <div className="flex  mb-5 justify-between">
-                    <section className="flex gap-5 w-full">
-                        <div>
+                    <section className="flex gap-5 w-full justify-between">
+                        <div className="flex gap-5"><div>
                             <DatePickerWithRange
                                 className=""
                                 date={dateRange}
@@ -94,70 +95,22 @@ export default function ShowAttendance() {
                             ></DatePickerWithRange>
                         </div>
 
-                        <Dialog>
-                            <DialogTrigger>
-                                <section className="flex gap-1 bg-secondaryGreen text-white items-center justify-center p-2 rounded-[10px] pl-3 pr-3">
-                                    View List
-                                </section>
-                            </DialogTrigger>
-                            <DialogContent>
-                                <DialogHeader>
-                                    <DialogTitle>
-                                        Feature Under Development
-                                    </DialogTitle>
-                                </DialogHeader>
-                            </DialogContent>
-                        </Dialog>
+                            <Dialog>
+                                <DialogTrigger>
+                                    <section className="flex gap-1 bg-secondaryGreen text-white items-center justify-center p-2 rounded-[10px] pl-3 pr-3">
+                                        View List
+                                    </section>
+                                </DialogTrigger>
+                                <DialogContent>
+                                    <DialogHeader>
+                                        <DialogTitle>
+                                            Feature Under Development
+                                        </DialogTitle>
+                                    </DialogHeader>
+                                </DialogContent>
+                            </Dialog></div>
+                        <div><Button variant="update">Update Log<Import /></Button></div>
                     </section>
-
-
-                </div>
-
-                <div className="flex mb-5 justify-between">
-                    <section className="flex gap-7 w-full justify-left">
-                        <div>
-                            <Select>
-                                <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="Show Entries" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="all">All</SelectItem>
-                                    <SelectItem value="flexi">Dark</SelectItem>
-                                    <SelectItem value="regular">
-                                        Regular
-                                    </SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-
-                        <Dialog>
-                            <DialogTrigger>
-                                <section className="flex gap-1 bg-baseYellow text-black items-center justify-center p-2 rounded-[10px] pl-3 pr-5">
-                                    <File size={15} />
-                                    Generate Report
-                                </section>
-                            </DialogTrigger>
-                            <DialogContent>
-                                <DialogHeader>
-                                    <DialogTitle>
-                                        Feature Under Development
-                                    </DialogTitle>
-                                </DialogHeader>
-                            </DialogContent>
-                        </Dialog>
-                    </section>
-                    <section className="flex gap-7 w-full justify-end">
-                        <Input
-                            type="text"
-                            value={globalFilter || ""}
-                            onChange={(e) =>
-                                setGlobalFilter(e.target.value || "")
-                            }
-                            placeholder="Search..."
-                            className="w-1/2 rounded-[10px]"
-                        />
-                    </section>
-
                 </div>
                 <div>
                     <DataTable
@@ -166,7 +119,7 @@ export default function ShowAttendance() {
                         rowStyle="odd:bg-white even:bg-transparent text-center"
                     ></DataTable>
                 </div>
-            </BodyContentLayout>
-        </AuthenticatedLayoutAdmin>
+            </BodyContentLayout >
+        </AuthenticatedLayoutAdmin >
     );
 }

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Biometric;
 
 use App\Http\Controllers\Controller;
+use App\Models\DailyTimeEntry;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Employee;
+
 
 class AttendanceRecordController extends Controller
 {
@@ -13,7 +16,16 @@ class AttendanceRecordController extends Controller
      */
     public function index()
     {
-        return Inertia::render('BioAdmin/AttendanceRecord');
+        /* Fetching all the entries stored within the database. */
+        $tableData = DailyTimeEntry::all();
+        $employees = Employee::with('position')->get();
+        dd($employees);
+
+        return Inertia::render('BioAdmin/AttendanceRecord', [
+            'tableData' => $tableData,
+            'employees' => $employees,
+            'message' => 'All the DTR entries have been retrieved successfully.'
+        ]);
     }
 
     /**
