@@ -82,18 +82,12 @@ const columns: ColumnDef<payrollTypes>[] = [
                     dialogtitle: cn("Edit Payroll"),
                     dialogContent: (
                         <Tabs defaultValue="properties" className="w-full">
-                            <TabsList className="grid w-full grid-cols-4">
+                            <TabsList className="grid w-full grid-cols-2">
                                 <TabsTrigger value="properties">
                                     Properties
                                 </TabsTrigger>
                                 <TabsTrigger value="signatories">
                                     Signatories
-                                </TabsTrigger>
-                                <TabsTrigger value="compensation">
-                                    Compensation
-                                </TabsTrigger>
-                                <TabsTrigger value="deduction">
-                                    Deduction
                                 </TabsTrigger>
                             </TabsList>
                             <TabsContent value="properties">
@@ -106,16 +100,6 @@ const columns: ColumnDef<payrollTypes>[] = [
                                 <Signatories
                                     setOpenDialog={setOpenDialog}
                                 ></Signatories>
-                            </TabsContent>
-                            <TabsContent value="compensation">
-                                <CompensationTab
-                                    setOpenDialog={setOpenDialog}
-                                ></CompensationTab>
-                            </TabsContent>
-                            <TabsContent value="deduction">
-                                <DeductionTab
-                                    setOpenDialog={setOpenDialog}
-                                ></DeductionTab>
                             </TabsContent>
                         </Tabs>
                     ),
@@ -136,6 +120,14 @@ const columns: ColumnDef<payrollTypes>[] = [
                     //     ></AppointmentDelete>
                     // ),
                     // style: "text-red-600",
+                },
+                {
+                    tag: "3",
+                    name: "Print Payroll Sheet",
+                    dialogtitle: cn(
+                        "Print Payroll Sheet: ",
+                        rowData.payrollName
+                    ),
                 },
             ];
 
