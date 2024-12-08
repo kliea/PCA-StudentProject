@@ -1,11 +1,13 @@
-import { useState } from "react";
 import { usePage } from "@inertiajs/react";
 import { Input } from "@/Components/ui/input";
 import { DataTable } from "@/Components/DataTable";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutBioAdmin";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import { Head } from "@inertiajs/react";
-import { ColumnDef, useReactTable, getCoreRowModel, getPaginationRowModel,    getFilteredRowModel } from "@tanstack/react-table";
+import { ColumnDef } from "@tanstack/react-table";
+import { useTable } from "@/hooks/BioAdmin/useTable";
+
+
 
 type EmployeeType = {
     appointment_code: number;
@@ -38,27 +40,9 @@ const columns: ColumnDef<EmployeeType>[] = [
 
 export default function ManageUsers() {
     const { employees } = usePage<{ employees: EmployeeType[] }>().props;
-    const [globalFilter, setGlobalFilter] = useState<any>([]);
-
-    
-
-    // React Table setup
-    const table = useReactTable({
+    const { table, globalFilter, setGlobalFilter } = useTable({
         data: employees,
         columns,
-        getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        initialState: {
-            pagination: {
-                pageSize: 12,
-            },
-        },
-        getFilteredRowModel: getFilteredRowModel(),
-        globalFilterFn: "auto",
-        state: {
-            globalFilter,
-        },
-        onGlobalFilterChange: setGlobalFilter,
     });
 
     return (
@@ -78,7 +62,7 @@ export default function ManageUsers() {
                         className="w-1/4 rounded-[10px] ml-auto"
                     />
                 </div>
-                <div>   
+                <div>
                     <DataTable
                         columns={columns}
                         table={table}
