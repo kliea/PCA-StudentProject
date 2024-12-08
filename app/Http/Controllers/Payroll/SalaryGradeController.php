@@ -54,11 +54,12 @@ class SalaryGradeController extends Controller
     }
 
     /* Finds and updates a single salary grade. */
-    public function update(Request $request, int $salary_grade_code)
+    // [x]: FIXED SSL UPDATE
+    public function update(Request $request,$salary_grade_code)
     {
         /* Validating the request entries. */
         $validated = $request->validate([
-            'grade' => 'required|numeric|unique:salary_grades|min:1',
+            'grade' => 'required|numeric|min:1|unique:salary_grades,grade,'.$salary_grade_code.',salary_grade_code',
             'step1' => 'required|numeric|min:0',
             'step2' => 'required|numeric|min:0',
             'step3' => 'required|numeric|min:0',

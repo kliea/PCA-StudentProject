@@ -66,17 +66,17 @@ class AgencyShareController extends Controller
      */
 
     //  TODO: SA PAG UPDATE SA MGA DAPAT NAKA UNIQUE LIKE SHORTHAND DAPAT MA ADDRESS
-    public function update(Request $request, string $agency_share_name)
+    // [x]: MANA BAIIII
+    public function update(Request $request, $agency_share_name)
     {
         $links = $request->input('compensation_links')
             ? implode(", ", $request->input('compensation_links'))
             : null;
 
-
         //validate user request
         $validate = $request->validate([
             'agency_share_name' => 'required|string|max:255',
-            'shorthand' => 'required|string|max:50',
+            'shorthand' => 'required|string|max:50|unique:agency_shares,shorthand,'. $agency_share_name .',agency_share_name',
             'amount' => 'required|numeric',
             'is_mandatory' => 'required|boolean',
             'remittance_percent' => 'required|numeric',
@@ -94,6 +94,7 @@ class AgencyShareController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    // TODO: NEED I APIL OG DELETE ANG SA APPLIED_SHARES (AGENCY_SHARE_CODE)
     public function destroy($agency_share_code)
     {
         //find the specific column
