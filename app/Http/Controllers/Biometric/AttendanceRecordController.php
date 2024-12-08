@@ -19,7 +19,6 @@ class AttendanceRecordController extends Controller
         /* Fetching all the entries stored within the database. */
         $tableData = DailyTimeEntry::all();
         $employees = Employee::with('position')->get();
-        dd($employees);
 
         return Inertia::render('BioAdmin/AttendanceRecord', [
             'tableData' => $tableData,
