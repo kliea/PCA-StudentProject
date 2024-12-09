@@ -18,7 +18,8 @@ return new class extends Migration
 
 			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');
 			$table->foreignId('deduction_code')->constrained('deduction_types')->references('deduction_code');
-
+            $table->foreignId('payroll_sheet_code')->constrained('payroll_sheets')->references('payroll_sheet_code');
+            
             $table->timestamps();
         });
     }

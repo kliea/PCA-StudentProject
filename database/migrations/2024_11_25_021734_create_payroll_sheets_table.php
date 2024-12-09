@@ -20,7 +20,7 @@ return new class extends Migration
 			$table->date('end_date');
 			$table->date('date_created');
 			$table->date('date_posted');
-			$table->date('date_paid');
+			$table->date('date_paid')->nullable();
             $table->string('fund_cluster');
             $table->boolean('include_deduction');
 			/* There is no need to record the employee numbers or codes of the signatories. */

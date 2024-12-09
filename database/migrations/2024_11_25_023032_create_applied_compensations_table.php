@@ -18,6 +18,7 @@ return new class extends Migration
 
 			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');
 			$table->foreignId('compensation_code')->constrained('compensation_types')->references('compensation_code');
+            $table->foreignId('payroll_sheet_code')->constrained('payroll_sheets')->references('payroll_sheet_code');
 
             $table->timestamps();
         });

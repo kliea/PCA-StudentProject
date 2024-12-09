@@ -527,7 +527,8 @@ class DatabaseSeeder extends Seeder
             $appliedCompensations[] = [
                 'amount' => $faker->randomFloat(2, 50, 5000),
                 'employee_code' => $i,
-                'compensation_code' => $i
+                'compensation_code' => $i,
+                'payroll_sheet_code' => $faker->numberBetween(1, 10)
             ];
         }
         DB::table('applied_compensations')->insert($appliedCompensations);
@@ -540,6 +541,7 @@ class DatabaseSeeder extends Seeder
                 'amount' => $faker->randomFloat(2, 500, 5000),
                 'employee_code' => $i,
                 'deduction_code' => $faker->numberBetween(1, 5),
+                'payroll_sheet_code' => $faker->numberBetween(1, 10)
             ];
         }
         DB::table('applied_deductions')->insert($appliedDeductions);
@@ -551,6 +553,7 @@ class DatabaseSeeder extends Seeder
                 'amount' => $faker->randomFloat(2, 100, 5000),
                 'employee_code' => $i,
                 'agency_share_code' => $faker->numberBetween(1, 5),
+                'payroll_sheet_code' => $faker->numberBetween(1, 10)
             ];
         }
         DB::table('applied_shares')->insert($appliedShares);
@@ -576,6 +579,7 @@ class DatabaseSeeder extends Seeder
                 'previous_paid' => $faker->randomFloat(2, 50, 5000),    // Random previous paid amount
                 'employee_code' => $i,        // Random employee code between 1 and 10
                 'loan_code' => $faker->numberBetween(1, 5),             // Random loan code between 1 and 5
+                'payroll_sheet_code' => $faker->numberBetween(1, 10)
             ];
         }
         DB::table('applied_loans')->insert($appliedLoans);

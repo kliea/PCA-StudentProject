@@ -16,6 +16,7 @@ return new class extends Migration
 			$table->double('amount');
 			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');
 			$table->foreignId('agency_share_code')->constrained('agency_shares')->references('agency_share_code');
+            $table->foreignId('payroll_sheet_code')->constrained('payroll_sheets')->references('payroll_sheet_code');
             $table->timestamps();
         });
     }
