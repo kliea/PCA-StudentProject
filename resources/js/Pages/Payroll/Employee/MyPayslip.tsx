@@ -97,13 +97,13 @@ export default function MyDTR() {;
                                         </div>
                                     </div>
                                     <div>
-                                        <span className="font-semibold">Basic Salary:</span>
+                                        <span className="font-semibold">Pera:</span>
                                         <div className='pt-2'>
                                             <input type="text" placeholder='₱20,000.00' className='border-1 border-black rounded-sm w-80' />
                                         </div>
                                     </div>
                                     <div>
-                                        <span className="font-semibold">Basic Salary:</span>
+                                        <span className="font-semibold">Tax:</span>
                                         <div className='pt-2'>
                                             <input type="text" placeholder='₱20,000.00' className='border-1 border-black rounded-sm w-80' />
                                         </div>

@@ -14,7 +14,7 @@ export default {
     theme: {
     	extend: {
 			dropShadow: {
-				'customized': '0 0.3px 6px rgba(0, 0, 0, 0.5)', // Custom shadow
+				'customized': '0px 1px 3px rgba(0, 0, 0, 0.4)', // Custom shadow
 			},
 			borderRadius: {
 				'pca' : '10px'
@@ -31,6 +31,7 @@ export default {
     			'popover-content': 'var(--radix-popover-content-available-height)'
     		},
     		fontFamily: {
+				poppins: ['Poppins', 'sans-serif'],
     			sans: ['Figtree', ...defaultTheme.fontFamily.sans]
     		},
     		borderRadius: {

@@ -9,7 +9,6 @@ use Inertia\Response;
 
 class AdminPageController extends Controller
 {
-
     public function index(): Response
     {
         return Inertia::render('Payroll/Admin/Dashboard');
@@ -53,6 +52,12 @@ class AdminPageController extends Controller
     {
         return Inertia::render('Payroll/Admin/Payrolls');
     }
+    public function payroll_login(): Response
+    {
+        return Inertia::render('Payroll/Admin/Payroll_Login');
+    }
+
+
     public function dashboardb(): Response
     {
         return Inertia::render('BioAdmin/Dashboard');

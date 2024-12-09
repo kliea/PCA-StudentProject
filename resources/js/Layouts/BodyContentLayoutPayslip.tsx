@@ -21,7 +21,7 @@ export default function ({
 }) {
     return (
         <div className={cn("relative bg-white rounded-pca", className)}>
-            <div className="w-full h-[44px] bg-secondaryGreen flex items-center justify-center px-5 rounded-t-[10px] drop-shadow-customized">
+            <div className="w-full h-[44px] bg-secondaryGreen flex items-center overflow-y-hidden justify-center px-5 rounded-t-[10px] drop-shadow-customized">
                 <h1 className="text-white font-bold ">{headerName}</h1>
             </div>
             <div className="w-full h-[60px] bg-secondaryGreen flex items-center justify-around px-5 rounded-b-[10px] ">
