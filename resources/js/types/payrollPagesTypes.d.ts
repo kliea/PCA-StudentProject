@@ -22,3 +22,46 @@ export interface appointmentTypes {
     tax_type: string;
     has_mandatory_deduction: boolean;
 };
+
+export interface agencyTypes {
+    agency_share_code: number;
+    agency_share_name: string;
+    shorthand: number;
+    amount: number;
+    is_mandatory: boolean;
+    remittance_percent: string;
+    ceiling_amount: number;
+};
+
+export interface deductionTypes {
+    deduction_code: number;
+    deduction_name: string;
+    shorthand: string;
+    amount: number;
+    is_mandatory: boolean;
+    remittance_percent: number;
+    ceiling_amount: number;
+};
+
+export interface compensationTypes {
+    compensation_code: number;
+    compensation_name: string;
+    shorthand: string;
+    amount: number;
+    is_taxable: boolean;
+    is_fixed: number;
+};
+
+export interface employeeTypes {
+    employee_code: number;
+    first_name: string;
+    middle_name: string;
+    last_name: string;
+    name_entension: string;
+    station_name : string;
+    appointment_type: string;
+    position_title: string;
+    grade: number;
+    step : number;
+    salary: number;
+}

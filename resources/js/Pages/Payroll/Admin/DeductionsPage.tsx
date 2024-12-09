@@ -1,13 +1,13 @@
 import {
-    AppointmentDelete,
-    AppointmentStore,
-    AppointmentUpdate,
-} from "@/Components/CrudComponents/AppointmentCRUD";
+    DeductionsDelete,
+    DeductionStore,
+    DeductionUpdate,
+} from "@/Components/CrudComponents/DeductionCRUD";
 import DropdownDialog from "@/Components/DropdownDialog";
 import AuthenticatedLayout from "@/Components/Layouts/Common/AuthenticatedLayout";
 import { Input } from "@/Components/ui/input";
 import { cn } from "@/lib/utils";
-import { appointmentTypes } from "@/types/payrollPagesTypes";
+import { deductionTypes } from "@/types/payrollPagesTypes";
 import { usePage } from "@inertiajs/react";
 import {
     ColumnDef,
@@ -20,15 +20,16 @@ import {
 import { MoreHorizontal, Plus } from "lucide-react";
 import { useState } from "react";
 import DialogMenu from "@/Components/Dialog";
-import { Button } from "@/Components/ui/button";
-import { Label } from "@/Components/ui/label";
 import { DataTable } from "@/Components/DataTable";
 import PaginationTable from "@/Components/Pagination";
+import { Button } from "@/Components/ui/button";
+import { Label } from "@/Components/ui/label";
 
-const AppointmentsPage = () => {
-    const data = (usePage().props.data as appointmentTypes[]) || [];
-    const [openDialog, setOpenDialog] = useState(false);
+const DeductionsPage = () => {
+    const data = (usePage().props.data as deductionTypes[]) || [];
     const [globalFilter, setGlobalFilter] = useState<string>("");
+    const [openDialog, setOpenDialog] = useState(false);
+
     const table = useReactTable({
         data,
         columns,
@@ -47,15 +48,16 @@ const AppointmentsPage = () => {
             },
             sorting: [
                 {
-                    id: "appointment_code",
+                    id: "deduction_code",
                     desc: false,
                 },
             ],
         },
     });
+
     return (
         <AuthenticatedLayout
-            pageTitle="Appointments"
+            pageTitle="Deductions"
             navigationType="payrollAdmin"
         >
             <div className="h-full flex flex-col">
@@ -68,57 +70,70 @@ const AppointmentsPage = () => {
                     />
                     <div className="grid grid-cols-1 gap-5 w-1/4">
                         <DialogMenu
+                            dialogClassName="max-w-[1000px] min-h-[400px]"
                             open={openDialog}
                             openDialog={() => setOpenDialog(!openDialog)}
                             trigger={
                                 <Button
                                     className="gap-2 rounded-pca"
-                                    aria-label="New Appointment Profile"
+                                    aria-label="Add Salary Grade "
                                 >
                                     <Plus size={20} />
-                                    <Label>Add Appointment Profile</Label>
+                                    <Label>Add Deduction Profile</Label>
                                 </Button>
                             }
-                            title="Add Appointment Profile"
-                            description=""
+                            title="New Deduction Profile"
                         >
-                            <AppointmentStore
+                            <DeductionStore
                                 compensationTypes={
                                     usePage().props
                                         .compensationTypes as Array<string>
                                 }
                                 openDialog={() => setOpenDialog(!openDialog)}
-                            />
+                            ></DeductionStore>
                         </DialogMenu>
                     </div>
                 </div>
                 <DataTable
                     {...{
                         table,
-                        rowStyle: "odd:bg-white even:bg-transparent",
+                        rowStyle: "odd:bg-white even:bg-transparent ",
                     }}
                 />
-
                 <PaginationTable table={table}></PaginationTable>
             </div>
         </AuthenticatedLayout>
     );
 };
 
-export default AppointmentsPage;
+export default DeductionsPage;
 
-const columns: ColumnDef<appointmentTypes>[] = [
-    { accessorKey: "appointment_code", header: "ID", enableSorting: true },
-    { accessorKey: "appointment_type", header: "TYPE" },
-    { accessorKey: "basic_pay_type", header: "BASIC PAY TYPE" },
-    { accessorKey: "tax_type", header: "TAX TYPE" },
+const columns: ColumnDef<deductionTypes>[] = [
+    { accessorKey: "deduction_code", header: "ID" },
+    { accessorKey: "deduction_name", header: "DEDUCTION NAME" },
+    { accessorKey: "shorthand", header: "SHORTHAND" },
     {
-        accessorKey: "has_mandatory_deduction",
-        header: "MANDATORY DEDUCTION",
+        accessorKey: "amount",
+        header: "AMOUNT",
         cell: ({ row }) => {
-            return row.getValue("has_mandatory_deduction") == true
-                ? "Yes"
-                : "No";
+            const number = Number(row.getValue("amount"));
+            return <p>₱ {number.toLocaleString("en-US")}</p>;
+        },
+    },
+    {
+        accessorKey: "is_mandatory",
+        header: "MANDATORY",
+        cell: ({ row }) => {
+            return row.getValue("is_mandatory") == true ? "Yes" : "No";
+        },
+    },
+    { accessorKey: "remittance_percent", header: "REMITTANCE %" },
+    {
+        accessorKey: "ceiling_amount",
+        header: "CEILING AMOUNT",
+        cell: ({ row }) => {
+            const number = Number(row.getValue("ceiling_amount"));
+            return <p>₱ {number.toLocaleString("en-US")}</p>;
         },
     },
     {
@@ -130,19 +145,16 @@ const columns: ColumnDef<appointmentTypes>[] = [
                 {
                     tag: "1",
                     name: "Edit",
-                    dialogtitle: cn(
-                        "Edit Appointment ",
-                        rowData.appointment_type
-                    ),
+                    dialogtitle: cn("Edit", rowData.deduction_name),
                     dialogContent: (
-                        <AppointmentUpdate
+                        <DeductionUpdate
                             compensationTypes={
                                 usePage().props
                                     .compensationTypes as Array<string>
                             }
                             RowData={rowData}
                             setOpenDialog={setOpenDialog}
-                        ></AppointmentUpdate>
+                        ></DeductionUpdate>
                     ),
                 },
                 {
@@ -150,14 +162,14 @@ const columns: ColumnDef<appointmentTypes>[] = [
                     name: "Delete",
                     dialogtitle: cn(
                         "Are you sure you want to delete ",
-                        rowData.appointment_type,
+                        rowData.deduction_name,
                         "?"
                     ),
                     dialogContent: (
-                        <AppointmentDelete
-                            rowId={rowData.appointment_code}
+                        <DeductionsDelete
+                            rowId={rowData.deduction_code}
                             setOpenDialog={setOpenDialog}
-                        ></AppointmentDelete>
+                        ></DeductionsDelete>
                     ),
                     style: "text-red-600",
                 },
@@ -166,6 +178,7 @@ const columns: ColumnDef<appointmentTypes>[] = [
             return (
                 <div>
                     <DropdownDialog
+                        dialogClassName="max-w-[1000px] min-h-[400px]"
                         openDialog={openDialog}
                         setOpenDialog={setOpenDialog}
                         dialogs={dialogs}

@@ -66,6 +66,7 @@ const SslPage = () => {
                         className="w-1/4 rounded-pca"
                         placeholder="Search...."
                     />
+                    
                     <div className="grid grid-cols-3 gap-5 w-1/4">
                         <DialogMenu
                             open={openDialog}

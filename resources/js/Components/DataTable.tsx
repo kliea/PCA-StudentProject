@@ -14,7 +14,7 @@ import { ColumnDef, flexRender, Table } from "@tanstack/react-table";
 interface DataTableProps<TData, TValue> {
     headerStyle?: string;
     rowStyle?: string;
-    table: Table<sslProfileTypes>;
+    table: Table<any>;
     className?: string;
 }
 
@@ -30,14 +30,14 @@ export function DataTable<TData, TValue>({
                 className={cn("rounded-[5px] border shadow-md overflow-hidden")}
             >
                 <CnTable className={cn("bg-baseGrey h-full ", className)}>
-                    <TableHeader className={headerStyle}>
+                    <TableHeader>
                         {table.getHeaderGroups().map((headerGroup: any) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header: any) => {
                                     return (
                                         <TableHead
                                             key={header.id}
-                                            className="text-left"
+                                            className={headerStyle}
                                         >
                                             {header.isPlaceholder
                                                 ? null
