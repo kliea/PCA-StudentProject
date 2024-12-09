@@ -241,7 +241,7 @@ export function SslStore({ openDialog }: { openDialog: any }) {
                     disabled={processing}
                     type="button"
                     onClick={() => openDialog(false)}
-                >
+>
                     Cancel
                 </Button>
             </form>

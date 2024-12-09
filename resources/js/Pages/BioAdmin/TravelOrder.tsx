@@ -14,11 +14,11 @@ import {
     getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { File, FolderUp, MoreHorizontal } from "lucide-react";
+import { File, FolderUp, MoreHorizontal, PlusIcon } from "lucide-react";
 import Data from "@/Components/Constants/data14.json";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
-
+import DialogMenu from "@/Components/Dialog";
 import {
     Select,
     SelectContent,
@@ -38,6 +38,11 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/Components/ui/dialog";
+import {
+    OrderDelete,
+    OrderStore,
+    OrderUpdate,
+} from "@/Components/CrudComponents/OrderCrud";
 
 //  Set accepted column types
 type columnTypes = {
@@ -91,6 +96,10 @@ const columns: ColumnDef<columnTypes>[] = [
 export default function TravelOrder() {
     const data: columnTypes[] = Data;
     const [globalFilter, setGlobalFilter] = useState<any>([]);
+    const [statusFilter, setStatusFilter] = useState<string>("all");  
+  
+
+    
 
     const table = useReactTable({
         data,
@@ -109,11 +118,13 @@ export default function TravelOrder() {
         },
         onGlobalFilterChange: setGlobalFilter,
     });
-
+    
+    const [openDialog, setOpenDialog] = useState(false);
     const [date, setDate] = React.useState<DateRange | undefined>({
         from: new Date(),
         to: addDays(new Date(), 20),
     });
+    
     return (
         <AuthenticatedLayoutAdmin
             header={<h2>{usePage().component.split("/")[1]}</h2>}
@@ -138,32 +149,38 @@ export default function TravelOrder() {
                         </section>
                         <section className="flex gap-7 w-full justify-end">
                         <div>
-                            <Select>
+                            <Select value={statusFilter} onValueChange={setStatusFilter}>
                                 <SelectTrigger className="w-[180px]">
                                     <SelectValue placeholder="Travel Order Status" />
-                                </SelectTrigger>
-                                <SelectContent>
+                                    </SelectTrigger>
+                                    <SelectContent>
                                     <SelectItem value="all">All</SelectItem>
-                                    <SelectItem value="flexi">Dark</SelectItem>
-                                    <SelectItem value="regular">Regular</SelectItem>
+                                    <SelectItem value="pending">Pending</SelectItem>
+                                    <SelectItem value="approved">Approved</SelectItem>
+                                    <SelectItem value="declined">Declined</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
-                        <Dialog>
-                            <DialogTrigger>
-                                <section className="flex gap-1 bg-baseYellow text-black items-center justify-right p-2 rounded-[10px] pl-3 pr-5">
-                                    <File size={15} />
-                                    Create Travel Order
-                                </section>
-                            </DialogTrigger>
-                            <DialogContent>
-                                <DialogHeader>
-                                    <DialogTitle>
-                                        Feature Under Development
-                                    </DialogTitle>
-                                </DialogHeader>
-                            </DialogContent>
-                        </Dialog>
+                        <DialogMenu
+                                    open={openDialog}
+                                    openDialog={() =>
+                                        setOpenDialog(!openDialog)
+                                    }
+                                    trigger={
+                                        <section className="flex gap-1 bg-baseYellow text-black items-center justify-right p-2 rounded-[10px] pl-3 pr-5">
+                                        <File size={15} />
+                                        Create Travel Order
+                                        </section>
+                                    }
+                                    title="New Travel Order"
+                                    description="Add New Travel Order"
+                                >
+                                    <OrderStore
+                                        openDialog={() =>
+                                            setOpenDialog(!openDialog)
+                                        }
+                                    />
+                                </DialogMenu>
                         </section>
                     </section>
             </div>

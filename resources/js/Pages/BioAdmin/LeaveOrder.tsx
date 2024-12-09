@@ -38,7 +38,12 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/Components/ui/dialog";
-
+import {
+    OrderDelete,
+    OrderStore,
+    OrderUpdate,
+} from "@/Components/CrudComponents/OrderCrud";
+import DialogMenu from "@/Components/Dialog";
 //  Set accepted column types
 type columnTypes = {
     employeeid: string;
@@ -105,7 +110,7 @@ export default function LeaveOrder() {
         },
         onGlobalFilterChange: setGlobalFilter,
     });
-
+    const [openDialog, setOpenDialog] = useState(false);
     const [date, setDate] = React.useState<DateRange | undefined>({
         from: new Date(),
         to: addDays(new Date(), 20),
@@ -145,21 +150,26 @@ export default function LeaveOrder() {
                                 </SelectContent>
                             </Select>
                         </div>
-                        <Dialog>
-                            <DialogTrigger>
-                                <section className="flex gap-1 bg-baseYellow text-black items-center justify-right p-2 rounded-[10px] pl-3 pr-5">
-                                    <File size={15} />
-                                    Create Leave
-                                </section>
-                            </DialogTrigger>
-                            <DialogContent>
-                                <DialogHeader>
-                                    <DialogTitle>
-                                        Feature Under Development
-                                    </DialogTitle>
-                                </DialogHeader>
-                            </DialogContent>
-                        </Dialog>
+                        <DialogMenu
+                                    open={openDialog}
+                                    openDialog={() =>
+                                        setOpenDialog(!openDialog)
+                                    }
+                                    trigger={
+                                        <section className="flex gap-1 bg-baseYellow text-black items-center justify-right p-2 rounded-[10px] pl-3 pr-5">
+                                        <File size={15} />
+                                        Create Leave Order
+                                        </section>
+                                    }
+                                    title="New Leave Order"
+                                    description="Add New Leave Order"
+                                >
+                                    <OrderStore
+                                        openDialog={() =>
+                                            setOpenDialog(!openDialog,)
+                                        }
+                                    />
+                                </DialogMenu>
                         </section>
                     </section>
             </div>
