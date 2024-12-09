@@ -1,8 +1,11 @@
 import {
+    Sidebar,
+    SidebarContent,
     SidebarFooter,
     SidebarGroup,
     SidebarGroupContent,
     SidebarGroupLabel,
+    SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
@@ -10,28 +13,26 @@ import {
     SidebarSeparator,
     SidebarTrigger,
 } from "@/Components/ui/sidebar";
-import {
-    Sidebar,
-    SidebarContent,
-    SidebarHeader,
-} from "@/Components/ui/sidebar";
+import { cn } from "@/lib/utils";
+import { AuthenticatedLayoutAdminProps } from "@/types/payrollLayoutTypes";
+import { PAYROLLADMIN, PAYROLLEMPLOYEE } from "@/Constants/Navigations";
 import NavLink from "@/Components/NavLink";
 import { Separator } from "@/Components/ui/separator";
 import { Head } from "@inertiajs/react";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { navigationLinks } from "@/types/payroll";
-
-export default function AuthenticatedLayoutAdmin({
+const AuthenticatedLayout = ({
     children,
-    title,
-    links,
-}: {
-    children: React.ReactNode;
-    title: string;
-    links: navigationLinks[];
-}) {
+    pageTitle,
+    navigationType,
+}: AuthenticatedLayoutAdminProps) => {
     const [open, setOpen] = useState(true);
+
+    // Add Navigation in respecive page @/Constants/Navigations
+    
+    const navigation =
+        navigationType == "payrollAdmin" ? PAYROLLADMIN : PAYROLLEMPLOYEE;
+
+
     return (
         <SidebarProvider open={open} onOpenChange={() => setOpen(!open)}>
             <Sidebar variant="sidebar" collapsible="icon">
@@ -50,14 +51,14 @@ export default function AuthenticatedLayoutAdmin({
                     </div>
                 </SidebarHeader>
                 <SidebarContent className="bg-baseGreen scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-white scrollbar-track-transparent overflow-y overflow-x-hidden">
-                    {links.map((link) => (
+                    {navigation.map((link) => (
                         <SidebarGroup key={link.title}>
                             <SidebarGroupLabel className="text-white">
                                 {link.title}
                             </SidebarGroupLabel>
                             <SidebarGroupContent className="mb-3">
                                 <SidebarMenu>
-                                    {link.items.map((item) => (
+                                    {link.links.map((item) => (
                                         <SidebarMenuItem key={item.label}>
                                             <SidebarMenuButton
                                                 variant="pca"
@@ -85,15 +86,18 @@ export default function AuthenticatedLayoutAdmin({
                     ))}
                 </SidebarContent>
             </Sidebar>
+
             <main className="overflow-x-hidden">
                 <header className="w-screen shadow h-14 py-4 flex gap-3 items-center pl-5">
                     <SidebarTrigger />
                     <Separator orientation="vertical" />
-                    {title}
-                    <Head title={title}></Head>
+                    {pageTitle}
+                    <Head title={pageTitle}></Head>
                 </header>
                 <div className={cn("h-header p-5")}>{children}</div>
             </main>
         </SidebarProvider>
     );
-}
+};
+
+export default AuthenticatedLayout;

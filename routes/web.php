@@ -20,6 +20,7 @@ use App\Http\Controllers\Payroll\SummaryController;
 
 // Controllers: Biometrics
 use App\Http\Controllers\Biometrics\DailyTimeEntryController;
+use App\Http\Controllers\PageController;
 
 // SUBDOMAIN FOR BIOADMIN
 Route::domain('bioadmin.' . env('APP_URL'))->group(
@@ -87,5 +88,7 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::get('employee/{employee_code}', [EmployeeController::class, 'get_employee_data'])->name('admin.employee_data');
     });
 });
+
+Route::get('/test', [PageController::class, 'testingPage']);
 
 require __DIR__ . '/auth.php';

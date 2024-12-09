@@ -37,99 +37,6 @@ type sslProfile = {
     step8: number;
 };
 
-const columns: ColumnDef<sslProfile>[] = [
-    {
-        accessorKey: "grade",
-        header: "SG",
-    },
-    {
-        accessorKey: "step1",
-        header: "STEP 1",
-    },
-    {
-        accessorKey: "step2",
-        header: "STEP 2",
-    },
-    {
-        accessorKey: "step3",
-        header: "STEP 3",
-    },
-    {
-        accessorKey: "step4",
-        header: "STEP 4",
-    },
-    {
-        accessorKey: "step5",
-        header: "STEP 5",
-    },
-    {
-        accessorKey: "step6",
-        header: "STEP 6",
-    },
-    {
-        accessorKey: "step7",
-        header: "STEP 7",
-    },
-    {
-        accessorKey: "step8",
-        header: "STEP 8",
-    },
-
-    // Action Button for the Tables .
-    {
-        id: "actions",
-        cell: ({ row }) => {
-            const [openDialog, setOpenDialog] = useState<string | null>(null);
-            const rowData = row.original;
-            const dialogs = [
-                {
-                    tag: "1",
-                    name: "Edit",
-                    dialogtitle: cn("Editing Salary Grade ", rowData.grade),
-                    dialogContent: (
-                        <SslUpdate
-                            RowData={rowData}
-                            setOpenDialog={setOpenDialog}
-                        ></SslUpdate>
-                    ),
-                },
-                {
-                    tag: "2",
-                    name: "Delete",
-                    dialogtitle: cn(
-                        "Are you sure you want to delete Salary Grade",
-                        rowData.grade,
-                        "?"
-                    ),
-                    dialogContent: (
-                        <SslDelete
-                            rowId={rowData.grade}
-                            setOpenDialog={setOpenDialog}
-                        ></SslDelete>
-                    ),
-                    style: "text-red-600",
-                },
-            ];
-
-            return (
-                <div>
-                    <DropdownDialog
-                        openDialog={openDialog}
-                        setOpenDialog={setOpenDialog}
-                        dialogs={dialogs}
-                        trigger={
-                            <>
-                                <section>
-                                    <MoreHorizontal className="h-4 w-4" />
-                                </section>
-                            </>
-                        }
-                    ></DropdownDialog>
-                </div>
-            );
-        },
-    },
-];
 
 const Ssl = () => {
     const pageData = (usePage().props.data as sslProfile[]) || [];
@@ -244,3 +151,98 @@ const Ssl = () => {
 };
 
 export default Ssl;
+
+
+const columns: ColumnDef<sslProfile>[] = [
+    {
+        accessorKey: "grade",
+        header: "SG",
+    },
+    {
+        accessorKey: "step1",
+        header: "STEP 1",
+    },
+    {
+        accessorKey: "step2",
+        header: "STEP 2",
+    },
+    {
+        accessorKey: "step3",
+        header: "STEP 3",
+    },
+    {
+        accessorKey: "step4",
+        header: "STEP 4",
+    },
+    {
+        accessorKey: "step5",
+        header: "STEP 5",
+    },
+    {
+        accessorKey: "step6",
+        header: "STEP 6",
+    },
+    {
+        accessorKey: "step7",
+        header: "STEP 7",
+    },
+    {
+        accessorKey: "step8",
+        header: "STEP 8",
+    },
+
+    // Action Button for the Tables .
+    {
+        id: "actions",
+        cell: ({ row }) => {
+            const [openDialog, setOpenDialog] = useState<string | null>(null);
+            const rowData = row.original;
+            const dialogs = [
+                {
+                    tag: "1",
+                    name: "Edit",
+                    dialogtitle: cn("Editing Salary Grade ", rowData.grade),
+                    dialogContent: (
+                        <SslUpdate
+                            RowData={rowData}
+                            setOpenDialog={setOpenDialog}
+                        ></SslUpdate>
+                    ),
+                },
+                {
+                    tag: "2",
+                    name: "Delete",
+                    dialogtitle: cn(
+                        "Are you sure you want to delete Salary Grade",
+                        rowData.grade,
+                        "?"
+                    ),
+                    dialogContent: (
+                        <SslDelete
+                            rowId={rowData.grade}
+                            setOpenDialog={setOpenDialog}
+                        ></SslDelete>
+                    ),
+                    style: "text-red-600",
+                },
+            ];
+
+            return (
+                <div>
+                    <DropdownDialog
+                        openDialog={openDialog}
+                        setOpenDialog={setOpenDialog}
+                        dialogs={dialogs}
+                        trigger={
+                            <>
+                                <section>
+                                    <MoreHorizontal className="h-4 w-4" />
+                                </section>
+                            </>
+                        }
+                    ></DropdownDialog>
+                </div>
+            );
+        },
+    },
+];
