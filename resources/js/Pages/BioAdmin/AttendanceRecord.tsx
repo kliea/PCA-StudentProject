@@ -51,7 +51,7 @@ import { useMemo, useState } from "react";
 
 // ];
 interface MyComponentProps {
-  data: any; // Type this appropriately
+    data: any; // Type this appropriately
 }
 type ColumnType = {
     date: string;
@@ -112,9 +112,9 @@ export default function AttendanceRecord() {
         >
             <Head title="AttendanceRecord" />
 
-          
+
             <BodyContentLayout headerName={"Employee Attendance Record"}>
-            <div className="flex items-center justify-center h-full">
+                <div className="flex items-center justify-center h-full">
                     {selectedEmployee ? (
                         <BodyContentLayout headerName="Employee Information" className="mt-5 h-fit shadow-md lg:w-2/4">
                             <div className="p-5 bg-white rounded-lg shadow-md">
@@ -145,14 +145,18 @@ export default function AttendanceRecord() {
                             </div>
                         </BodyContentLayout>
                     ) : (
-                        <div className="text-center mt-5">No employee found or selected</div>
+                        <BodyContentLayout headerName="Employee Information" className="mt-5 h-fit shadow-md lg:w-2/4">
+                            <div className="p-5 bg-white text-center">
+                                <h1>No employee selected</h1>
+                            </div>
+                        </BodyContentLayout>
                     )}
                 </div>
 
 
 
                 <div className="flex mb-5 justify-between">
-                <section className="flex gap-7 mt-5 w-full justify-right">
+                    <section className="flex gap-7 mt-5 w-full justify-right">
                         <section className="flex gap-7 w-1/4 justify-left">
                             <Input
                                 type="text"
@@ -190,16 +194,16 @@ export default function AttendanceRecord() {
                 </div>
 
                 <div>
-                {selectedEmployee ? (
-                       <DataTable
-                       columns={columns}
-                       table={table}
-                       rowStyle="odd:bg-white even:bg-transparent text-center"
-                   ></DataTable>
+                    {selectedEmployee ? (
+                        <DataTable
+                            columns={columns}
+                            table={table}
+                            rowStyle="odd:bg-white even:bg-transparent text-center"
+                        ></DataTable>
                     ) : (
                         <div className="text-center mt-5">No employee found or selected</div>
                     )}
-    
+
                 </div>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin>
