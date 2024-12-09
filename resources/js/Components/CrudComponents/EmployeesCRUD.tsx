@@ -13,7 +13,7 @@ import ConfirmCancelButton from "../ConfirmCancelButton";
 const officialStation = ["Surigao", "Agusan", "Del", "Sur", "Office"];
 const Appointments = ["Worker", "Tigtrabaho", "Regular"];
 const positions = ["Pos1", "Pos2", "Pos3", "Pos4", "Pos5", "Agriculturist"];
-const salaryGrade = [1, 2, 4, 5];
+const salaryGrade: Array<number> = [1, 2, 4, 5];
 const step = [1, 2, 3, 4, 5];
 // TODO : Route para sa steps only for selection -> JSON
 // TODO : Route para sa mga available salary Gardes -> JSON
@@ -176,7 +176,7 @@ export function EmployeeEdit({
                             </SelectTrigger>
                             <SelectContent>
                                 {salaryGrade.map((sg) => (
-                                    <SelectItem value={sg} key={sg}>
+                                    <SelectItem value={sg.toString()} key={sg}>
                                         {sg}
                                     </SelectItem>
                                 ))}
@@ -192,7 +192,7 @@ export function EmployeeEdit({
                             </SelectTrigger>
                             <SelectContent>
                                 {step.map((sg) => (
-                                    <SelectItem value={sg} key={sg}>
+                                    <SelectItem value={sg.toString()} key={sg}>
                                         {sg}
                                     </SelectItem>
                                 ))}
