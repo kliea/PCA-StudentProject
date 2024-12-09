@@ -23,6 +23,7 @@ import {
 } from "@/Components/ui/dialog";
 import { DatePickerWithRange } from "@/Components/DateRangePicker";
 import { useTable } from "@/hooks/BioAdmin/useTable";
+import { useMemo, useState } from "react";
 
 //  Set accepted column types
 // type columnTypes = {
@@ -49,6 +50,9 @@ import { useTable } from "@/hooks/BioAdmin/useTable";
 //     { accessorKey: "deduction", header: "Date" },
 
 // ];
+interface MyComponentProps {
+  data: any; // Type this appropriately
+}
 type ColumnType = {
     date: string;
     employee_code: number;
@@ -77,7 +81,7 @@ const columns: ColumnDef<ColumnType>[] = [
 
 
 export default function AttendanceRecord() {
-    const { tableData } = usePage<{ tableData: columnTypes[] }>().props
+    const { tableData } = usePage<{ tableData: ColumnType[] }>().props
 
     const { table, globalFilter, setGlobalFilter } = useTable({
         data: tableData,
@@ -86,23 +90,70 @@ export default function AttendanceRecord() {
 
     const { dateRange, setDateRange } = useDateRange();
 
+    // State to manage selected employee
+    const [selectedEmployee, setSelectedEmployee] = useState<ColumnType | null>(null);
+
+    // Filter data based on search input
+    const filteredEmployee = useMemo(() => {
+        if (!globalFilter) return null;
+        return tableData.find((employee) =>
+            employee.employee_code.toString().includes(globalFilter)
+        );
+    }, [globalFilter, tableData]);
+
+    useMemo(() => {
+        setSelectedEmployee(filteredEmployee || null);
+    }, [filteredEmployee]);
+
+
     return (
         <AuthenticatedLayoutAdmin
             header={<h2>{usePage().component.split("/")[1]}</h2>}
         >
             <Head title="AttendanceRecord" />
 
+          
             <BodyContentLayout headerName={"Employee Attendance Record"}>
-                <div className="flex items-center justify-center h-full">
-                    <BodyContentLayout headerName="Employee Informations" className="mt-5  h-fit shadow-md lg:w-2/4">
-                    </BodyContentLayout>
+            <div className="flex items-center justify-center h-full">
+                    {selectedEmployee ? (
+                        <BodyContentLayout headerName="Employee Information" className="mt-5 h-fit shadow-md lg:w-2/4">
+                            <div className="p-5 bg-white rounded-lg shadow-md">
+                                <div className="mb-4">
+                                    <h3 className="text-lg font-bold mb-2">{selectedEmployee.date}</h3>
+                                    <p className="text-sm text-gray-600">Employee ID: {selectedEmployee.employee_code}</p>
+                                    <p className="text-sm text-gray-600">Work Hours: {selectedEmployee.work_minutes / 60} hrs</p>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="flex flex-col items-center bg-blue-100 p-3 rounded-md">
+                                        <p className="text-lg font-bold">{selectedEmployee.work_minutes / 60} hrs</p>
+                                        <p className="text-xs text-gray-600">Work Hours</p>
+                                    </div>
+                                    <div className="flex flex-col items-center bg-green-100 p-3 rounded-md">
+                                        <p className="text-lg font-bold">{selectedEmployee.tardy_minutes} mins</p>
+                                        <p className="text-xs text-gray-600">Tardiness</p>
+                                    </div>
+                                    <div className="flex flex-col items-center bg-yellow-100 p-3 rounded-md">
+                                        <p className="text-lg font-bold">{selectedEmployee.undertime_minutes} mins</p>
+                                        <p className="text-xs text-gray-600">Undertime</p>
+                                    </div>
+                                    <div className="flex flex-col items-center bg-red-100 p-3 rounded-md">
+                                        <p className="text-lg font-bold">N/A</p>
+                                        <p className="text-xs text-gray-600">Absences</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </BodyContentLayout>
+                    ) : (
+                        <div className="text-center mt-5">No employee found or selected</div>
+                    )}
                 </div>
 
 
-                <div className="flex mb-5 justify-between">
-                    <section className="flex gap-7 mt-5 w-full justify-right">
-                        <section className="flex gap-7 w-1/4 justify-left">
 
+                <div className="flex mb-5 justify-between">
+                <section className="flex gap-7 mt-5 w-full justify-right">
+                        <section className="flex gap-7 w-1/4 justify-left">
                             <Input
                                 type="text"
                                 value={globalFilter || ""}
@@ -139,11 +190,16 @@ export default function AttendanceRecord() {
                 </div>
 
                 <div>
-                    <DataTable
-                        columns={columns}
-                        table={table}
-                        rowStyle="odd:bg-white even:bg-transparent text-center"
-                    ></DataTable>
+                {selectedEmployee ? (
+                       <DataTable
+                       columns={columns}
+                       table={table}
+                       rowStyle="odd:bg-white even:bg-transparent text-center"
+                   ></DataTable>
+                    ) : (
+                        <div className="text-center mt-5">No employee found or selected</div>
+                    )}
+    
                 </div>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin>
