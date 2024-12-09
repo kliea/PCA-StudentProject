@@ -1,3 +1,5 @@
+
+
 // SSL types
 export interface sslProfileTypes {
     grade: number;
@@ -11,3 +13,12 @@ export interface sslProfileTypes {
     step8: number;
 }
 
+
+
+export interface appointmentTypes {
+    appointment_code: number;
+    appointment_type: string;
+    basic_pay_type: string;
+    tax_type: string;
+    has_mandatory_deduction: boolean;
+};

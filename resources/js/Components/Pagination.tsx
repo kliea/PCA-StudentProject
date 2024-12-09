@@ -10,7 +10,7 @@ import {
 
 const PaginationTable = ({ table }: { table: any }) => {
     return (
-        <Pagination className="flex justify-end items-end">
+        <Pagination className="flex justify-end items-end mb-3">
             <PaginationContent>
                 <PaginationItem>
                     <Button

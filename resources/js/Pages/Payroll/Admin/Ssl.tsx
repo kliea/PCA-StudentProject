@@ -37,7 +37,6 @@ type sslProfile = {
     step8: number;
 };
 
-
 const Ssl = () => {
     const pageData = (usePage().props.data as sslProfile[]) || [];
     const data: sslProfile[] = pageData;
@@ -138,7 +137,6 @@ const Ssl = () => {
                             </div>
                         </div>
                         <DataTable
-                            columns={columns}
                             rowStyle="odd:bg-white even:bg-transparent text-center"
                             table={table}
                         ></DataTable>
@@ -151,7 +149,6 @@ const Ssl = () => {
 };
 
 export default Ssl;
-
 
 const columns: ColumnDef<sslProfile>[] = [
     {

@@ -28,10 +28,9 @@ const AuthenticatedLayout = ({
     const [open, setOpen] = useState(true);
 
     // Add Navigation in respecive page @/Constants/Navigations
-    
+
     const navigation =
         navigationType == "payrollAdmin" ? PAYROLLADMIN : PAYROLLEMPLOYEE;
-
 
     return (
         <SidebarProvider open={open} onOpenChange={() => setOpen(!open)}>
@@ -87,7 +86,7 @@ const AuthenticatedLayout = ({
                 </SidebarContent>
             </Sidebar>
 
-            <main className="overflow-x-hidden">
+            <main className="sm:overflow-x-hidden">
                 <header className="w-screen shadow h-14 py-4 flex gap-3 items-center pl-5">
                     <SidebarTrigger />
                     <Separator orientation="vertical" />

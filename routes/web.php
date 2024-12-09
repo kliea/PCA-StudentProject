@@ -33,7 +33,7 @@ Route::domain('bioadmin.' . env('APP_URL'))->group(
                 Route::get('attendancerecords', [AttendanceRecordController::class, 'index'])->name('bioadmin.attendancerecords');
                 Route::get('manageusers', [ManageUserController::class, 'index'])->name('bioadmin.manageusers');
             }
-        );
+    );
     }
 );
 
@@ -84,11 +84,11 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::delete('ssl/{grade}', [SalaryGradeController::class, 'destroy'])->name('delete.ssl');
 
         //Query routes
-
+        Route::get('/test', [PageController::class, 'testingPage']);
         Route::get('employee/{employee_code}', [EmployeeController::class, 'get_employee_data'])->name('admin.employee_data');
     });
 });
 
-Route::get('/test', [PageController::class, 'testingPage']);
+
 
 require __DIR__ . '/auth.php';

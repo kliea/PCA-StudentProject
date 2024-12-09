@@ -1,14 +1,7 @@
-import AuthenticatedLayout from "@/Components/Layouts/Common/AuthenticatedLayout";
+import Ssl from "./Payroll/Admin/Ssl";
 
 const TestingPage = () => {
-    return (
-        <AuthenticatedLayout
-            pageTitle="Testing Page"
-            navigationType="payrollAdmin"
-        >
-            <div></div>
-        </AuthenticatedLayout>
-    );
+    return <Ssl></Ssl>;
 };
 
 export default TestingPage;
