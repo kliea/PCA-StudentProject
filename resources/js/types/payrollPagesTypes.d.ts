@@ -35,7 +35,7 @@ export interface agencyTypes {
 };
 
 export interface deductionTypes {
-    deduction_code: number;
+    deduction_code?: number;
     deduction_name: string;
     shorthand: string;
     amount: number;

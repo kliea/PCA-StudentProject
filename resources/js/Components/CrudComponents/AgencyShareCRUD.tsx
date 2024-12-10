@@ -130,7 +130,7 @@ export function AgencyShareUpdate({
         e.preventDefault();
 
         data.compensation_links = [...selectedItems];
-        console.log(data.compensation_links);
+
         put(route("update.governmentshare", RowData), {
             onSuccess: () => {
                 toast(
@@ -178,8 +178,12 @@ export function AgencyShareUpdate({
         });
     };
     if (RowData.compensation_links != null) {
-        data.compensation_links = RowData.compensation_links.split(",");
+        data.compensation_links = RowData.compensation_links
+            .split(",")
+            .map((item: string) => item.trim());
     } else data.compensation_links = [];
+
+    console.log(data.compensation_links);
 
     const [baseItems, setBaseItems] = useState<Array<string>>([
         ...compensationTypes,
