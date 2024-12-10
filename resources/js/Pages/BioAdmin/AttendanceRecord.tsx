@@ -23,7 +23,7 @@ import {
 } from "@/Components/ui/dialog";
 import { DatePickerWithRange } from "@/Components/DateRangePicker";
 import { useTable } from "@/hooks/BioAdmin/useTable";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 //  Set accepted column types
 // type columnTypes = {
@@ -87,24 +87,38 @@ export default function AttendanceRecord() {
         data: tableData,
         columns,
     });
+    const { employees } = usePage<{ employees: ColumnType[] }>().props
 
     const { dateRange, setDateRange } = useDateRange();
 
     // State to manage selected employee
-    const [selectedEmployee, setSelectedEmployee] = useState<ColumnType | null>(null);
-
+    const [selectedEmployee, setSelectedEmployee] = useState<{
+        fromTableData: ColumnType | null;
+        fromEmployees: ColumnType | null;
+    } | null>(null);
     // Filter data based on search input
     const filteredEmployee = useMemo(() => {
         if (!globalFilter) return null;
-        return tableData.find((employee) =>
+
+        // Find the employee in tableData
+        const fromTableData = tableData.find((employee) =>
             employee.employee_code.toString().includes(globalFilter)
-        );
-    }, [globalFilter, tableData]);
+        ) || null;
 
-    useMemo(() => {
-        setSelectedEmployee(filteredEmployee || null);
+        // Find the employee in employees
+        const fromEmployees = employees.find((employee) =>
+            employee.employee_code.toString().includes(globalFilter)
+        ) || null;
+
+        // Merge information from both sources
+        return { fromTableData, fromEmployees };
+    }, [globalFilter, tableData, employees]);
+    console.log(selectedEmployee?.fromEmployees);
+
+    // Update selected employee when filteredEmployee changes
+    useEffect(() => {
+        setSelectedEmployee(filteredEmployee);
     }, [filteredEmployee]);
-
 
     return (
         <AuthenticatedLayoutAdmin
@@ -115,31 +129,32 @@ export default function AttendanceRecord() {
 
             <BodyContentLayout headerName={"Employee Attendance Record"}>
                 <div className="flex items-center justify-center h-full">
-                    {selectedEmployee ? (
+                    {selectedEmployee?.fromEmployees ? (
                         <BodyContentLayout headerName="Employee Information" className="mt-5 h-fit shadow-md lg:w-2/4">
-                            <div className="p-5 bg-white rounded-lg shadow-md">
-                                <div className="mb-4">
-                                    <h3 className="text-lg font-bold mb-2">{selectedEmployee.date}</h3>
-                                    <p className="text-sm text-gray-600">Employee ID: {selectedEmployee.employee_code}</p>
-                                    <p className="text-sm text-gray-600">Work Hours: {selectedEmployee.work_minutes / 60} hrs</p>
-                                </div>
+                            <div className="grid grid-cols-4 gap-4">
+                                <div className="col-span-2">
+                                    <div className="grid grid-cols-2 gap-4 items-center">
+                                        <h3 className="text-lg font-bold mb-2">Name </h3>
+                                        <p className="rounded bg-[#848484] border-[#979797] border-2 bg-opacity-20 text-center text-xs text-black p-2 pr-5 mb-3">{selectedEmployee.fromEmployees.first_name} {selectedEmployee.fromEmployees.middle_name ? selectedEmployee.fromEmployees.middle_name + ' ' : ''}{selectedEmployee.fromEmployees.last_name}{selectedEmployee.fromEmployees.name_extension ? ' ' + selectedEmployee.fromEmployees.name_extension : ''}</p>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4 items-center">
+                                        <h3 className=" font-bold mb-2">Employee ID </h3>
+                                        <p className="rounded bg-[#848484] border-[#979797] border-2 bg-opacity-20 text-center text-xs text-black p-2 pr-5 mb-3">{selectedEmployee.fromEmployees.employee_code}</p>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4 items-center">
+                                        <h3 className=" font-bold mb-2">Email </h3>
+                                        <p className="rounded bg-[#848484] border-[#979797] border-2 bg-opacity-20 text-center text-xs text-black p-2 pr-5 mb-3">no email db</p>
+                                    </div>
 
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="flex flex-col items-center bg-blue-100 p-3 rounded-md">
-                                        <p className="text-lg font-bold">{selectedEmployee.work_minutes / 60} hrs</p>
-                                        <p className="text-xs text-gray-600">Work Hours</p>
+                                </div>
+                                <div className="col-span-2">
+                                    <div className="grid grid-cols-2 gap-4 items-center">
+                                        <h3 className=" font-bold mb-2">Job Title</h3>
+                                        <p className="rounded bg-[#848484] border-[#979797] border-2 bg-opacity-20 text-center text-xs text-black p-2 pr-5 mb-3">{selectedEmployee.fromEmployees.position_code}</p>
                                     </div>
-                                    <div className="flex flex-col items-center bg-green-100 p-3 rounded-md">
-                                        <p className="text-lg font-bold">{selectedEmployee.tardy_minutes} mins</p>
-                                        <p className="text-xs text-gray-600">Tardiness</p>
-                                    </div>
-                                    <div className="flex flex-col items-center bg-yellow-100 p-3 rounded-md">
-                                        <p className="text-lg font-bold">{selectedEmployee.undertime_minutes} mins</p>
-                                        <p className="text-xs text-gray-600">Undertime</p>
-                                    </div>
-                                    <div className="flex flex-col items-center bg-red-100 p-3 rounded-md">
-                                        <p className="text-lg font-bold">N/A</p>
-                                        <p className="text-xs text-gray-600">Absences</p>
+                                    <div className="grid grid-cols-2 gap-4 items-center">
+                                        <h3 className=" font-bold mb-2">Leave Credits</h3>
+                                        <p className="rounded bg-[#848484] border-[#979797] border-2 bg-opacity-20 text-center text-xs text-black p-2 pr-5 mb-3">no leave credits db</p>
                                     </div>
                                 </div>
                             </div>
