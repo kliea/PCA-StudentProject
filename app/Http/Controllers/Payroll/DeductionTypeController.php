@@ -22,7 +22,7 @@ class DeductionTypeController extends Controller
         $compensationTypes = CompensationType::pluck('compensation_name');
 
         // Return the data to the frontend
-        return Inertia::render('Payroll/Admin/Deductions', ['data' => $data, 'compensationTypes' => $compensationTypes]);
+        return Inertia::render('Payroll/Admin/DeductionsPage', ['data' => $data, 'compensationTypes' => $compensationTypes]);
     }
 
     /**

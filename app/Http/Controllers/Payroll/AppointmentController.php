@@ -22,7 +22,7 @@ class AppointmentController extends Controller
         $compensationTypes = CompensationType::pluck('compensation_name');
 
         // Return the data to the frontend
-        return Inertia::render('Payroll/Admin/Appointments', ['data' => $data, 'compensationTypes' => $compensationTypes]);
+        return Inertia::render('Payroll/Admin/AppointmentsPage', ['data' => $data, 'compensationTypes' => $compensationTypes]);
     }
 
     /**
@@ -59,7 +59,7 @@ class AppointmentController extends Controller
     {
         /* Validating the user request. */
         $validated = $request->validate([
-            'appointment_type' => 'required|string|unique:appointments,appointment_type,'.$appointment_code.',appointment_code',
+            'appointment_type' => 'required|string|unique:appointments,appointment_type,' . $appointment_code . ',appointment_code',
             'has_mandatory_deduction' => 'required|boolean',
             'basic_pay_type' => 'required|string',
             'tax_type' => 'required|string'

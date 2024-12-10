@@ -17,7 +17,7 @@ class SalaryGradeController extends Controller
         $data = SalaryGrade::all();
 
         /* Returning a success message to the user. */
-        return Inertia::render('Payroll/Admin/Ssl', ['data' => $data, 'message' => 'All the Standardization Law values have been retrieved successfully.']);
+        return Inertia::render('Payroll/Admin/SslPage', ['data' => $data]);
     }
 
     /* Creates and stores a new salary grade record. */
@@ -55,11 +55,11 @@ class SalaryGradeController extends Controller
 
     /* Finds and updates a single salary grade. */
     // [x]: FIXED SSL UPDATE
-    public function update(Request $request,$salary_grade_code)
+    public function update(Request $request, $salary_grade_code)
     {
         /* Validating the request entries. */
         $validated = $request->validate([
-            'grade' => 'required|numeric|min:1|unique:salary_grades,grade,'.$salary_grade_code.',salary_grade_code',
+            'grade' => 'required|numeric|min:1|unique:salary_grades,grade,' . $salary_grade_code . ',salary_grade_code',
             'step1' => 'required|numeric|min:0',
             'step2' => 'required|numeric|min:0',
             'step3' => 'required|numeric|min:0',

@@ -21,7 +21,7 @@ class AgencyShareController extends Controller
         $compensationTypes = CompensationType::pluck('compensation_name');
 
         //return data to front end
-        return Inertia::render('Payroll/Admin/GovernmentShares', ['data' => $data, 'compensationTypes' => $compensationTypes]);
+        return Inertia::render('Payroll/Admin/GovernmentSharesPage', ['data' => $data, 'compensationTypes' => $compensationTypes]);
     }
 
 
@@ -76,7 +76,7 @@ class AgencyShareController extends Controller
         //validate user request
         $validate = $request->validate([
             'agency_share_name' => 'required|string|max:255',
-            'shorthand' => 'required|string|max:50|unique:agency_shares,shorthand,'. $agency_share_name .',agency_share_name',
+            'shorthand' => 'required|string|max:50|unique:agency_shares,shorthand,' . $agency_share_name . ',agency_share_name',
             'amount' => 'required|numeric',
             'is_mandatory' => 'required|boolean',
             'remittance_percent' => 'required|numeric',
@@ -102,4 +102,3 @@ class AgencyShareController extends Controller
         return redirect()->back()->with('success', 'Successfully deleted government share');
     }
 }
-

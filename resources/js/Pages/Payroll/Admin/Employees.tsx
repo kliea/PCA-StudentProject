@@ -2,7 +2,6 @@ import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
-import { usePage } from "@inertiajs/react";
 import {
     ColumnDef,
     getCoreRowModel,
@@ -16,8 +15,6 @@ import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import DropdownDialog from "@/Components/DropdownDialog";
 import { EmployeeEdit } from "@/Components/CrudComponents/EmployeesCRUD";
-import PaginationTable from "@/Components/Pagination";
-import axios from "axios";
 
 type employeeTypes = {
     employee_number: number;

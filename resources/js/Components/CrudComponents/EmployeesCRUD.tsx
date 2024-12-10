@@ -8,12 +8,21 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../ui/select";
+import ConfirmCancelButton from "../ConfirmCancelButton";
 
-const officialStation = ["Surigao", "Agusan", "Del", "Sur"];
-const Appointments = ["Worker", "Tigtrabaho", "Tighugas Plato"];
-const positions = ["Pos1", "Pos2", "Pos3", "Pos4", "Pos5"];
-const salaryGrade = ["SG1", "SG2", "SG3", "SG4", "SG5"];
-const step = ["Step1", "Step2", "Step3", "Step4", "Step5"];
+const officialStation = ["Surigao", "Agusan", "Del", "Sur", "Office"];
+const Appointments = ["Worker", "Tigtrabaho", "Regular"];
+const positions = ["Pos1", "Pos2", "Pos3", "Pos4", "Pos5", "Agriculturist"];
+const salaryGrade: Array<number> = [1, 2, 4, 5];
+const step = [1, 2, 3, 4, 5];
+// TODO : Route para sa steps only for selection -> JSON
+// TODO : Route para sa mga available salary Gardes -> JSON
+// TODO : Route para sa mga available Positions -> JSON
+// TODO : Route para sa mga available nga appointments -> JSON
+// TODO: Route para sa mga available nga official Stations -> JSON
+
+//
+
 const salary_type = [
     "Weekly",
     "Monthly",
@@ -22,6 +31,8 @@ const salary_type = [
     "Annually",
     "Other",
 ];
+
+// TODO: Table mu accept dapat ug salary type . Debatable pero ingon si sir e include ni
 export function EmployeeEdit({
     RowData,
     setOpenDialog,
@@ -30,21 +41,20 @@ export function EmployeeEdit({
     setOpenDialog: any;
 }) {
     const { data, setData, processing, put, reset, errors } = useForm({
-        appointment_type: RowData.appointment_type,
-        employee_number: RowData.employee_number,
+        employee_code: RowData.employee_code,
         first_name: RowData.first_name,
-        grade: RowData.grade,
-        last_name: RowData.last_name,
         middle_name: RowData.middle_name,
+        last_name: RowData.last_name,
         name_extension: RowData.name_extension,
-        position_title: RowData.position_title,
-        salary: RowData.salary,
-        salary_step: RowData.salary_step,
-        salary_type: RowData.salary_type,
         station_name: RowData.station_name,
+        appointment_type: RowData.appointment_type,
+        position_title: RowData.position_title,
+        grade: RowData.grade,
+        step: RowData.step,
+        salary: RowData.salary,
     });
 
-    console.log(data.appointment_type);
+    console.log(data.station_name);
 
     return (
         <div>
@@ -52,17 +62,17 @@ export function EmployeeEdit({
                 <div className="flex gap-3">
                     <div className="w-full">
                         <Label>LAST NAME</Label>
-                        <Input disabled value={RowData.last_name}></Input>
+                        <Input disabled value={data.last_name}></Input>
                     </div>
 
                     <div className="w-full">
                         <Label>FIRST NAME</Label>
-                        <Input disabled value={RowData.first_name}></Input>
+                        <Input disabled value={data.first_name}></Input>
                     </div>
 
                     <div className="w-full">
                         <Label>MIDDLE NAME</Label>
-                        <Input disabled value={RowData.middle_name}></Input>
+                        <Input disabled value={data.middle_name}></Input>
                     </div>
 
                     <div className="w-full">
@@ -70,9 +80,9 @@ export function EmployeeEdit({
                         <Input
                             disabled
                             value={
-                                RowData.name_extension
-                                    ? RowData.name_extension
-                                    : ""
+                                data.name_extension
+                                    ? data.name_extension
+                                    : "N/A"
                             }
                         ></Input>
                     </div>
@@ -81,14 +91,14 @@ export function EmployeeEdit({
                 <div className="flex gap-3">
                     <div className="w-full">
                         <Label>EMPLOYEE NUMBER</Label>
-                        <Input disabled value={RowData.employee_number}></Input>
+                        <Input disabled value={data.employee_code}></Input>
                     </div>
 
                     <div className="w-full">
                         <Label>OFFICIAL STATION</Label>
-                        <Select>
+                        <Select defaultValue={data.station_name}>
                             <SelectTrigger>
-                                <SelectValue placeholder="SELECT STATION " />
+                                <SelectValue placeholder="SELECT STATION" />
                             </SelectTrigger>
                             <SelectContent>
                                 {officialStation.map((station) => (
@@ -103,6 +113,7 @@ export function EmployeeEdit({
                     <div className="w-full">
                         <Label>APPOINTMENT</Label>
                         <Select
+                            defaultValue={data.appointment_type}
                             onValueChange={(value: string) =>
                                 setData("appointment_type", value)
                             }
@@ -125,7 +136,7 @@ export function EmployeeEdit({
 
                     <div className="w-full">
                         <Label>POSITION</Label>
-                        <Select>
+                        <Select defaultValue={data.position_title}>
                             <SelectTrigger>
                                 <SelectValue placeholder="SELECT POSITION " />
                             </SelectTrigger>
@@ -159,13 +170,13 @@ export function EmployeeEdit({
 
                     <div className="w-full">
                         <Label>SALARY GRADE</Label>
-                        <Select>
+                        <Select defaultValue={data.grade}>
                             <SelectTrigger>
                                 <SelectValue placeholder="SELECT SALARY GRADE" />
                             </SelectTrigger>
                             <SelectContent>
                                 {salaryGrade.map((sg) => (
-                                    <SelectItem value={sg} key={sg}>
+                                    <SelectItem value={sg.toString()} key={sg}>
                                         {sg}
                                     </SelectItem>
                                 ))}
@@ -175,13 +186,13 @@ export function EmployeeEdit({
 
                     <div className="w-full">
                         <Label>STEP</Label>
-                        <Select>
+                        <Select defaultValue={data.step}>
                             <SelectTrigger>
                                 <SelectValue placeholder="SELECT STEP" />
                             </SelectTrigger>
                             <SelectContent>
                                 {step.map((sg) => (
-                                    <SelectItem value={sg} key={sg}>
+                                    <SelectItem value={sg.toString()} key={sg}>
                                         {sg}
                                     </SelectItem>
                                 ))}
@@ -191,27 +202,13 @@ export function EmployeeEdit({
 
                     <div className="w-full">
                         <Label>SALARY</Label>
-                        <Input></Input>
+                        <Input defaultValue={data.salary}></Input>
                     </div>
                 </div>
-
-                {/* <div className="flex gap-3 justify-end pl-5">
-                    <Button
-                        className="mt-5 w-full max-w-32"
-                        type="button"
-                        onClick={() => setOpenDialog(false)}
-                        variant="ghost"
-                    >
-                        Cancel
-                    </Button>
-                    <Button
-                        className="mt-5 w-full max-w-32"
-                        disabled={processing}
-                        type="submit"
-                    >
-                        Confirm
-                    </Button>
-                </div> */}
+                <ConfirmCancelButton
+                    setOpenDialog={setOpenDialog}
+                    processing={processing}
+                ></ConfirmCancelButton>
             </form>
         </div>
     );

@@ -37,7 +37,7 @@ export default function ({
 }) {
     return (
         <Dialog open={open} onOpenChange={openDialog}>
-            <DialogTrigger>{trigger}</DialogTrigger>
+            <DialogTrigger asChild>{trigger}</DialogTrigger>
             <DialogContent className={dialogClassName}>
                 <DialogHeader>
                     <DialogTitle>{title}</DialogTitle>

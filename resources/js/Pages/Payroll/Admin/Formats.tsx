@@ -1,37 +1,30 @@
+import IncludeExcludeBox from "@/Components/IncludeExcludeBox";
 import { Button } from "@/Components/ui/button";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
 
 import { AdminLinks } from "@/lib/payrollData";
-
-import { useForm } from "@inertiajs/react";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Formats() {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        axios
-            .get(route("admin.employee"))
-            .then((response) => {
-                setData(response.data);
-                setLoading(false);
-                console.log("Fin");
-            })
-            .catch((err) => {
-                setError(err.message);
-                setLoading(false);
-            });
-    }, []);
-
-    console.log(data);
-
+    const [baseItems, setBaseItems] = useState<Array<string>>([
+        "Regular",
+        "Basic",
+        "Flexi",
+    ]);
+    const [selectedItems, setSelectedItems] = useState<Array<string>>([
+        "Regular",
+    ]);
     return (
         <AuthenticatedLayoutAdmin title="Test" links={AdminLinks}>
-            {/* <Button onClick={fetchLoans}>Fetch</Button> */}
-            <div></div>
+            <IncludeExcludeBox
+                baseItems={baseItems}
+                selectedItems={selectedItems}
+                setBaseItems={setBaseItems}
+                setSelectedItems={setSelectedItems}
+                selectedItemsName="Compensation Links"
+                baseItemsName="Compensation Types"
+                className="h-48"
+            />
         </AuthenticatedLayoutAdmin>
     );
 }

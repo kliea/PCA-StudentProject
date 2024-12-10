@@ -28,7 +28,7 @@ class EmployeeController extends Controller
         $position = Position::pluck('position_title');
         $employee = Employee::pluck('salary_type');
         // Return the data to the frontend
-        return Inertia::render('Payroll/Admin/Employees', ['data' => $data]);
+        return Inertia::render('Payroll/Admin/EmployeesPage', ['data' => $data]);
     }
 
     /**

@@ -18,7 +18,7 @@ class CompensationTypeController extends Controller
         $data = CompensationType::all();
 
         //return data to front end
-        return Inertia::render('Payroll/Admin/Compensations', ['data' => $data]);
+        return Inertia::render('Payroll/Admin/CompensationsPage', ['data' => $data]);
     }
 
     /**
@@ -55,8 +55,8 @@ class CompensationTypeController extends Controller
     {
 
         $validate = $request->validate([
-            'compensation_name' => 'string|max:255|unique:compensation_types,compensation_name,'.$compensation_code.',compensation_code',
-            'shorthand' => 'string|max:255|unique:compensation_types,shorthand,'.$compensation_code.',compensation_code',
+            'compensation_name' => 'string|max:255|unique:compensation_types,compensation_name,' . $compensation_code . ',compensation_code',
+            'shorthand' => 'string|max:255|unique:compensation_types,shorthand,' . $compensation_code . ',compensation_code',
             'amount' => 'numeric',
             'is_taxable' => 'boolean',
             'is_fixed' => 'boolean',
