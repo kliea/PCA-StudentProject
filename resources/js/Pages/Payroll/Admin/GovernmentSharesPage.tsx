@@ -68,7 +68,7 @@ const GovernmentSharesPage = () => {
                     />
                     <div className="grid grid-cols-1 gap-5 w-1/4">
                         <DialogMenu
-                            dialogClassName="max-w-[1000px] min-h-[420px]"
+                            dialogClassName="max-w-[1000px] min-h-[450px]"
                             open={openDialog}
                             openDialog={() => setOpenDialog(!openDialog)}
                             trigger={
@@ -117,11 +117,7 @@ const columns: ColumnDef<agencyTypes>[] = [
         header: "AMOUNT",
         cell: ({ row }) => {
             const number = Number(row.getValue("amount"));
-            return row.getValue("amount") != 0 ? (
-                <p>₱ {number.toLocaleString("en-US")}</p>
-            ) : (
-                "N/A"
-            );
+            return <p>₱ {number.toLocaleString("en-US")}</p>;
         },
     },
     {
@@ -145,11 +141,7 @@ const columns: ColumnDef<agencyTypes>[] = [
         header: "CEILING AMOUNT",
         cell: ({ row }) => {
             const number = Number(row.getValue("ceiling_amount"));
-            return row.getValue("amount") != null ? (
-                "N/A"
-            ) : (
-                <p>₱ {number.toLocaleString("en-US")}</p>
-            );
+            return <p>₱ {number.toLocaleString("en-US")}</p>;
         },
     },
     {
@@ -199,7 +191,7 @@ const columns: ColumnDef<agencyTypes>[] = [
             return (
                 <div>
                     <DropdownDialog
-                        dialogClassName="max-w-[1000px] min-h-[420px]"
+                        dialogClassName="max-w-[1000px] min-h-[450px]"
                         openDialog={openDialog}
                         setOpenDialog={setOpenDialog}
                         dialogs={dialogs}
