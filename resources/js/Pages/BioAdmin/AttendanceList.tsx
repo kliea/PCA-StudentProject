@@ -49,6 +49,7 @@ type ColumnType = {
     time_out_pm: string;
     tardy_minutes: number;
     undertime_minutes: number;
+    overtime_minutes: number;
     work_minutes: number;
 };
 
@@ -62,6 +63,7 @@ const columns: ColumnDef<ColumnType>[] = [
     { accessorKey: "time_out_pm", header: "PM Time out" },
     { accessorKey: "tardy_minutes", header: "Tardy Minutes" },
     { accessorKey: "undertime_minutes", header: "Undertime" },
+    { accessorKey: "overtime_minutes", header: "Overtime"},
     { accessorKey: "work_minutes", header: "Work Time" },
 
 ];

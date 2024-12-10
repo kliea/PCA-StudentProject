@@ -21,6 +21,7 @@ return new class extends Migration
             $table->time('time_out_pm')->nullable();
             $table->integer('tardy_minutes')->nullable();
             $table->integer('undertime_minutes')->nullable();
+            $table->integer('overtime_minutes')->nullable(); //added
             $table->integer('work_minutes')->nullable();
 
             $table->foreignId('employee_code')->constrained('employees')->references('employee_code');

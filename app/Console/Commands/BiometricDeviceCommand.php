@@ -21,7 +21,7 @@ class BiometricDeviceCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Set time';
     protected $zk;
 
     /**
@@ -31,6 +31,10 @@ class BiometricDeviceCommand extends Command
     {
         $this->zk = new ZKLibrary(env('BIOM_IP'), env('BIOM_PORT'));
         $this->zk->connect();
+        $this->zk->disabledevice();
         $this->zk->setTime(now()->format("Y-m-d, H:i:s"));
+        $this->zk->enableDevice();
+        $this->zk->disconnect();
+
     }
 }

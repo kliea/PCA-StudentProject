@@ -14,8 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
-        User::factory(10)->create();
+        // User::factory(10)->create();
+        // User::factory(10)->create();
 
         User::factory()->create([
             'name' => 'bioadmin',
@@ -38,13 +38,13 @@ class DatabaseSeeder extends Seeder
 
         DB::table('employees')->insert([
             'employee_number' => '203',
-            'first_name' => 'Sarah',
+            'first_name' => 'Klinth',
             'middle_name' => 'Elizabeth',
             'last_name' => 'Smith',
             'name_extension' => NULL,
             'salary_type' => 'Hourly',
             'salary_step' => 4,
-            'device_bio_id' => '22',
+            'device_bio_id' => '8',
             'position_code' => 1,  // assuming 'Clerk' position
             'appointment_code' => 1,  // assuming this is for a temporary appointment
             'station_code' => 1  // assuming station 1 is where this employee works

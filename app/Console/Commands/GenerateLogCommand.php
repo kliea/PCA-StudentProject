@@ -24,7 +24,7 @@ class GenerateLogCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Add logs from the device to db';
     protected $zk;
 
     /**
@@ -42,13 +42,13 @@ class GenerateLogCommand extends Command
             return;
         }
 
-        date_default_timezone_set("Asia/Manila");
-        $t = date("Y-m-d, H:i:s");
+        // date_default_timezone_set("Asia/Manila");
+        // $t = date("Y-m-d, H:i:s");
 
         try {
             $this->zk->connect();
             $this->zk->disableDevice();
-            $this->zk->setTime($t);
+            // $this->zk->setTime($t);
 
 
             // Fetch all logs from the device
@@ -84,23 +84,48 @@ class GenerateLogCommand extends Command
 
                     // Set default values for required fields
                     if (!$timeEntry->exists) {
-                        $timeEntry->tardy_minutes = 1; // Default value
-                        $timeEntry->undertime_minutes = 0;
+                        // $timeEntry->tardy_minutes = 1; // Default value
+                        // $timeEntry->undertime_minutes = 0;
                         $timeEntry->work_minutes = 0;
+                        $timeEntry->overtime_minutes = 0;
                     }
+                    
+
+                    // For calculations
+                    $timeDiff = null;
+                    $tardyMins = null;
+                    $undertimeMins = null;
 
                     // Determine the field to update based on the log type and time
                     if (in_array($logType, [0, 4])) { // Time in
                         if ($logTime >= $morningStart->format('H:i:s') && $logTime <= $morningEnd->format('H:i:s')) {
                             $timeEntry->time_in_am = $logTime;
+                            $timeDiff = date_diff($morningStart, $logDateTime);
+                            $tardyMins += $timeDiff->h * 60;
+                            $tardyMins += $timeDiff->i;
+                            $timeEntry->tardy_minutes = $tardyMins;
+
                         } elseif ($logTime >= $afternoonStart->format('H:i:s') && $logTime <= $afternoonEnd->format('H:i:s')) {
                             $timeEntry->time_in_pm = $logTime;
+                            $timeDiff = date_diff($afternoonStart, $logDateTime);
+                            $tardyMins += $timeDiff->h * 60;
+                            $tardyMins += $timeDiff->i;
+                            $timeEntry->tardy_minutes += $tardyMins;
                         }
                     } elseif (in_array($logType, [1, 5])) { // Time out
                         if ($logTime >= $morningStart->format('H:i:s') && $logTime <= $morningEnd->format('H:i:s')) {
                             $timeEntry->time_out_am = $logTime;
+                            $timeDiff = date_diff($logDateTime, $morningEnd);
+                            $undertimeMins += $timeDiff->h * 60;
+                            $undertimeMins += $timeDiff->i;
+                            $timeEntry->undertime_minutes += $undertimeMins;
+                            
                         } elseif ($logTime >= $afternoonStart->format('H:i:s') && $logTime <= $afternoonEnd->format('H:i:s')) {
                             $timeEntry->time_out_pm = $logTime;
+                            $timeDiff = date_diff($logDateTime, $afternoonEnd);
+                            $undertimeMins += $timeDiff->h * 60;
+                            $undertimeMins += $timeDiff->i;
+                            $timeEntry->undertime_minutes += $undertimeMins;
                         }
                     }
 

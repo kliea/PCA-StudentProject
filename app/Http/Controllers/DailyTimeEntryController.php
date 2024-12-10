@@ -139,6 +139,7 @@ class DailyTimeEntryController extends Controller
             'time_out_pm' => $validatedRequest['time_out_pm'],
             'tardy_minutes' => $validatedRequest['tardy_minutes'],
             'undertime_minutes' => $validatedRequest['undertime_minutes'],
+            'overtime_minutes' => $validatedRequest['overtime_minutes'], //added
             'work_minutes' => $validatedRequest['work_minutes'],
             'employee_code' => $validatedRequest['employee_code']
         ]);
