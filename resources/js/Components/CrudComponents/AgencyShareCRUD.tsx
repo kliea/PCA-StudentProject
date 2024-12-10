@@ -1,27 +1,13 @@
 import { useForm } from "@inertiajs/react";
 import { CircleAlert, CircleCheck } from "lucide-react";
-import { FormEventHandler, useEffect, useState } from "react";
+import { FormEventHandler, useState } from "react";
 import { toast } from "sonner";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import InputError from "../InputError";
-import { Switch } from "../ui/switch";
 import { Button } from "../ui/button";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "../ui/select";
-import { ScrollArea } from "../ui/scroll-area";
 import ConfirmCancelButton from "../ConfirmCancelButton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import IncludeExcludeBox from "../IncludeExcludeBox";
 import GovernmentShareStore from "../GovernmentShareStore";
 import ToastError from "../ToastError";
-import { agencyTypes } from "@/types/payrollPagesTypes";
-import { Row } from "react-day-picker";
 
 export function AgencyShareStore({
     openDialog,
