@@ -68,6 +68,7 @@ const GovernmentSharesPage = () => {
                     />
                     <div className="grid grid-cols-1 gap-5 w-1/4">
                         <DialogMenu
+                            dialogClassName="max-w-[1000px] min-h-[420px]"
                             open={openDialog}
                             openDialog={() => setOpenDialog(!openDialog)}
                             trigger={
@@ -79,7 +80,7 @@ const GovernmentSharesPage = () => {
                                     <Label>Add Government Share</Label>
                                 </Button>
                             }
-                            title="Add Salary Grade"
+                            title="New Government Share"
                             description=""
                         >
                             <AgencyShareStore
@@ -116,7 +117,7 @@ const columns: ColumnDef<agencyTypes>[] = [
         header: "AMOUNT",
         cell: ({ row }) => {
             const number = Number(row.getValue("amount"));
-            return row.getValue("amount") != null ? (
+            return row.getValue("amount") != 0 ? (
                 <p>₱ {number.toLocaleString("en-US")}</p>
             ) : (
                 "N/A"
@@ -134,9 +135,9 @@ const columns: ColumnDef<agencyTypes>[] = [
         accessorKey: "remittance_percent",
         header: "REMITTANCE %",
         cell: ({ row }) => {
-            return row.getValue("amount") != null
+            return row.getValue("amount") != 0
                 ? "N/A"
-                : row.getValue("remittance_percent");
+                : row.getValue("remittance_percent") + "%";
         },
     },
     {
@@ -183,6 +184,8 @@ const columns: ColumnDef<agencyTypes>[] = [
                         rowData.agency_share_name,
                         "?"
                     ),
+                    // TODO : Apply Type error handling
+                    // TODO: UPDATE CONTROLLERS
                     dialogContent: (
                         <AgencyShareDelete
                             rowId={rowData.agency_share_code}
@@ -196,7 +199,7 @@ const columns: ColumnDef<agencyTypes>[] = [
             return (
                 <div>
                     <DropdownDialog
-                        dialogClassName="max-w-[1000px] min-h-[400px]"
+                        dialogClassName="max-w-[1000px] min-h-[420px]"
                         openDialog={openDialog}
                         setOpenDialog={setOpenDialog}
                         dialogs={dialogs}

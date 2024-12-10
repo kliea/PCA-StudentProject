@@ -79,7 +79,7 @@ const AppointmentsPage = () => {
                                     <Label>Add Appointment Profile</Label>
                                 </Button>
                             }
-                            title="Add Appointment Profile"
+                            title="New Appointment"
                             description=""
                         >
                             <AppointmentStore

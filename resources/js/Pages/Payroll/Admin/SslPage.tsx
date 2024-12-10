@@ -66,7 +66,7 @@ const SslPage = () => {
                         className="w-1/4 rounded-pca"
                         placeholder="Search...."
                     />
-                    
+
                     <div className="grid grid-cols-3 gap-5 w-1/4">
                         <DialogMenu
                             open={openDialog}
@@ -77,7 +77,7 @@ const SslPage = () => {
                                     aria-label="Add Salary Grade "
                                 >
                                     <Plus size={20} />
-                                    <Label>Add SSL</Label>
+                                    <Label>Add SG</Label>
                                 </Button>
                             }
                             title="Add Salary Grade"
