@@ -81,8 +81,6 @@ const columns: ColumnDef<columnTypes>[] = [
 
 export default function LeaveOrder() {
     const { leaveData } = usePage<{ leaveData: ColumnType[] }>().props
-
-    console.log(leaveData);
     const { table, globalFilter, setGlobalFilter } = useTable({
         data: leaveData,
         columns,

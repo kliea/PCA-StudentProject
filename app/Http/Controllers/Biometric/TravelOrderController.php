@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Biometric;
 
 use App\Http\Controllers\Controller;
+use App\Models\TravelOrder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,7 +14,11 @@ class TravelOrderController extends Controller
      */
     public function index()
     {
-        return Inertia::render('BioAdmin/TravelOrder');
+        $travelOrderData = TravelOrder::all();
+        return Inertia::render('BioAdmin/TravelOrder', [
+            'travelOrderData' => $travelOrderData,
+            'message' => 'All the travel order data have been retrieved successfully.'
+        ]);
     }
 
     /**
