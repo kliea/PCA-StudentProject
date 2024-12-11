@@ -113,7 +113,6 @@ export default function AttendanceRecord() {
         // Merge information from both sources
         return { fromTableData, fromEmployees };
     }, [globalFilter, tableData, employees]);
-    console.log(selectedEmployee?.fromEmployees);
 
     // Update selected employee when filteredEmployee changes
     useEffect(() => {
