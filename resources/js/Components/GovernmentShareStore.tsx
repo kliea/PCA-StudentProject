@@ -3,13 +3,14 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import InputError from "./InputError";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { useState } from "react";
 import { Switch } from "./ui/switch";
 
 const GovernmentShareStore = ({
     data,
     setData,
     errors,
+    selected,
+    setSelected,
 }: {
     data: agencyTypes;
     setData: any;
@@ -25,9 +26,9 @@ const GovernmentShareStore = ({
             string
         >
     >;
+    selected: string;
+    setSelected: React.Dispatch<React.SetStateAction<string>>;
 }) => {
-    const [selected, setSelected] = useState<string>();
-
     function handleRadioSelect(value: string) {
         setSelected(value);
     }
@@ -80,7 +81,7 @@ const GovernmentShareStore = ({
             <RadioGroup
                 required
                 onValueChange={handleRadioSelect}
-                defaultValue={data.amount > 0 ? "Fixed" : "Remittance"}
+                value={selected}
             >
                 <Label>Deduction Type</Label>
                 <div className="grid grid-cols-2 gap-5">
