@@ -16,7 +16,7 @@ class PayrollSheetController extends Controller
     {
         $payrollSheets = PayrollSheet::all();
 
-        return Inertia::render('Payroll/Admin/payrollsheet', ['data' => $payrollSheets]);
+        return Inertia::render('Payroll/Admin/PayrollsPage/PayrollsPage', ['data' => $payrollSheets]);
     }
 
     /**
@@ -54,22 +54,22 @@ class PayrollSheetController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,string $payroll_name)
+    public function update(Request $request, string $payroll_name)
     {
         $validated = $request->validate([
-            'payroll_name' =>'required|string|max:255',
-            'payroll_type'=>'required|string|max:255',
-            'start_date'=>'required|date',
-            'end_date'=>'required|date|after_or_equal:start_date',
-            'date_created'=>'nullable|date',
-            'date_posted'=>'nullable|date',
-            'date_paid'=>'nullable|date',
-            'prepared_by'=>'string|required',
-            'recommended_by'=>'string|required',
-            'certified_by'=>'string|required',
-            'approved_by'=>'string|required',
-            'fund_cluster'=>'string',
-            'include_deduction'=>'boolean',
+            'payroll_name' => 'required|string|max:255',
+            'payroll_type' => 'required|string|max:255',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'date_created' => 'nullable|date',
+            'date_posted' => 'nullable|date',
+            'date_paid' => 'nullable|date',
+            'prepared_by' => 'string|required',
+            'recommended_by' => 'string|required',
+            'certified_by' => 'string|required',
+            'approved_by' => 'string|required',
+            'fund_cluster' => 'string',
+            'include_deduction' => 'boolean',
         ]);
 
         PayrollSheet::where('payroll_name', $payroll_name)->update($validated);

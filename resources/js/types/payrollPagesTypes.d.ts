@@ -13,6 +13,16 @@ export interface sslProfileTypes {
     step8: number;
 }
 
+export interface payrollIndexTypes {
+    payroll_sheet_code?: number;
+    fund_cluster: string;
+    payroll_name : string;
+    payroll_type : string;
+    compensations: number;
+    deductions : number;
+    net_pay_amount_due: number;
+}
+
 
 
 export interface appointmentTypes {

@@ -2,7 +2,7 @@ import {
     CompensationDelete,
     CompensationStore,
     CompensationUpdate,
-} from "@/Components/CrudComponents/CompensationCRUD";
+} from "@/Pages/Payroll/Admin/CompensationsPage/CompensationCRUD";
 import DropdownDialog from "@/Components/DropdownDialog";
 import AuthenticatedLayout from "@/Components/Layouts/Common/AuthenticatedLayout";
 import { Input } from "@/Components/ui/input";
@@ -160,6 +160,7 @@ const columns: ColumnDef<compensationTypes>[] = [
             return (
                 <div>
                     <DropdownDialog
+                        dialogClassName="max-w-[1000px] min-h-[450px]"
                         openDialog={openDialog}
                         setOpenDialog={setOpenDialog}
                         dialogs={dialogs}

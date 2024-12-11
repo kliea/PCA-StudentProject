@@ -1,13 +1,15 @@
 import {
-    AppointmentDelete,
-    AppointmentStore,
-    AppointmentUpdate,
-} from "@/Components/CrudComponents/AppointmentCRUD";
+    AgencyShareDelete,
+    AgencyShareStore,
+    AgencyShareUpdate,
+} from "@/Pages/Payroll/Admin/GovernmentSharesPage/AgencyShareCRUD";
+import { DataTable } from "@/Components/DataTable";
 import DropdownDialog from "@/Components/DropdownDialog";
 import AuthenticatedLayout from "@/Components/Layouts/Common/AuthenticatedLayout";
-import { Input } from "@/Components/ui/input";
+import PaginationTable from "@/Components/Pagination";
+import { Button } from "@/Components/ui/button";
 import { cn } from "@/lib/utils";
-import { appointmentTypes } from "@/types/payrollPagesTypes";
+import { agencyTypes } from "@/types/payrollPagesTypes";
 import { usePage } from "@inertiajs/react";
 import {
     ColumnDef,
@@ -20,13 +22,11 @@ import {
 import { MoreHorizontal, Plus } from "lucide-react";
 import { useState } from "react";
 import DialogMenu from "@/Components/Dialog";
-import { Button } from "@/Components/ui/button";
+import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
-import { DataTable } from "@/Components/DataTable";
-import PaginationTable from "@/Components/Pagination";
 
-const AppointmentsPage = () => {
-    const data = (usePage().props.data as appointmentTypes[]) || [];
+const GovernmentSharesPage = () => {
+    const data = (usePage().props.data as agencyTypes[]) || [];
     const [openDialog, setOpenDialog] = useState(false);
     const [globalFilter, setGlobalFilter] = useState<string>("");
     const table = useReactTable({
@@ -47,7 +47,7 @@ const AppointmentsPage = () => {
             },
             sorting: [
                 {
-                    id: "appointment_code",
+                    id: "agency_share_code",
                     desc: false,
                 },
             ],
@@ -55,7 +55,7 @@ const AppointmentsPage = () => {
     });
     return (
         <AuthenticatedLayout
-            pageTitle="Appointments"
+            pageTitle="Government Shares"
             navigationType="payrollAdmin"
         >
             <div className="h-full flex flex-col">
@@ -68,21 +68,22 @@ const AppointmentsPage = () => {
                     />
                     <div className="grid grid-cols-1 gap-5 w-1/4">
                         <DialogMenu
+                            dialogClassName="max-w-[1000px] min-h-[450px]"
                             open={openDialog}
                             openDialog={() => setOpenDialog(!openDialog)}
                             trigger={
                                 <Button
                                     className="gap-2 rounded-pca"
-                                    aria-label="New Appointment Profile"
+                                    aria-label="Add Salary Grade "
                                 >
                                     <Plus size={20} />
-                                    <Label>Add Appointment Profile</Label>
+                                    <Label>Add Government Share</Label>
                                 </Button>
                             }
-                            title="New Appointment"
+                            title="New Government Share"
                             description=""
                         >
-                            <AppointmentStore
+                            <AgencyShareStore
                                 compensationTypes={
                                     usePage().props
                                         .compensationTypes as Array<string>
@@ -95,7 +96,7 @@ const AppointmentsPage = () => {
                 <DataTable
                     {...{
                         table,
-                        rowStyle: "odd:bg-white even:bg-transparent",
+                        rowStyle: "odd:bg-white even:bg-transparent ",
                     }}
                 />
 
@@ -105,20 +106,42 @@ const AppointmentsPage = () => {
     );
 };
 
-export default AppointmentsPage;
+export default GovernmentSharesPage;
 
-const columns: ColumnDef<appointmentTypes>[] = [
-    { accessorKey: "appointment_code", header: "ID", enableSorting: true },
-    { accessorKey: "appointment_type", header: "TYPE" },
-    { accessorKey: "basic_pay_type", header: "BASIC PAY TYPE" },
-    { accessorKey: "tax_type", header: "TAX TYPE" },
+const columns: ColumnDef<agencyTypes>[] = [
+    { accessorKey: "agency_share_code", header: "ID" },
+    { accessorKey: "agency_share_name", header: "NAME OF AGENCY SHARE" },
+    { accessorKey: "shorthand", header: "SHORTHAND" },
     {
-        accessorKey: "has_mandatory_deduction",
-        header: "MANDATORY DEDUCTION",
+        accessorKey: "amount",
+        header: "AMOUNT",
         cell: ({ row }) => {
-            return row.getValue("has_mandatory_deduction") == true
-                ? "Yes"
-                : "No";
+            const number = Number(row.getValue("amount"));
+            return <p>₱ {number.toLocaleString("en-US")}</p>;
+        },
+    },
+    {
+        accessorKey: "is_mandatory",
+        header: "MANDATORY",
+        cell: ({ row }) => {
+            return row.getValue("is_mandatory") == true ? "Yes" : "No";
+        },
+    },
+    {
+        accessorKey: "remittance_percent",
+        header: "REMITTANCE %",
+        cell: ({ row }) => {
+            return row.getValue("amount") != 0
+                ? "N/A"
+                : row.getValue("remittance_percent") + "%";
+        },
+    },
+    {
+        accessorKey: "ceiling_amount",
+        header: "CEILING AMOUNT",
+        cell: ({ row }) => {
+            const number = Number(row.getValue("ceiling_amount"));
+            return <p>₱ {number.toLocaleString("en-US")}</p>;
         },
     },
     {
@@ -132,32 +155,34 @@ const columns: ColumnDef<appointmentTypes>[] = [
                     name: "Edit",
                     dialogtitle: cn(
                         "Edit Appointment ",
-                        rowData.appointment_type
+                        rowData.agency_share_name
                     ),
                     dialogContent: (
-                        <AppointmentUpdate
+                        <AgencyShareUpdate
                             compensationTypes={
                                 usePage().props
                                     .compensationTypes as Array<string>
                             }
-                            RowData={rowData}
                             setOpenDialog={setOpenDialog}
-                        ></AppointmentUpdate>
+                            RowData={rowData}
+                        ></AgencyShareUpdate>
                     ),
                 },
                 {
                     tag: "2",
                     name: "Delete",
                     dialogtitle: cn(
-                        "Are you sure you want to delete ",
-                        rowData.appointment_type,
+                        "Are you sure you want to delete Agency Share:  ",
+                        rowData.agency_share_name,
                         "?"
                     ),
+                    // TODO : Apply Type error handling
+                    // TODO: UPDATE CONTROLLERS
                     dialogContent: (
-                        <AppointmentDelete
-                            rowId={rowData.appointment_code}
+                        <AgencyShareDelete
+                            rowId={rowData.agency_share_code}
                             setOpenDialog={setOpenDialog}
-                        ></AppointmentDelete>
+                        ></AgencyShareDelete>
                     ),
                     style: "text-red-600",
                 },
@@ -166,6 +191,7 @@ const columns: ColumnDef<appointmentTypes>[] = [
             return (
                 <div>
                     <DropdownDialog
+                        dialogClassName="max-w-[1000px] min-h-[450px]"
                         openDialog={openDialog}
                         setOpenDialog={setOpenDialog}
                         dialogs={dialogs}

@@ -22,7 +22,7 @@ class AppointmentController extends Controller
         $compensationTypes = CompensationType::pluck('compensation_name');
 
         // Return the data to the frontend
-        return Inertia::render('Payroll/Admin/AppointmentsPage', ['data' => $data, 'compensationTypes' => $compensationTypes]);
+        return Inertia::render('Payroll/Admin/AppointmentsPage/AppointmentsPage', ['data' => $data, 'compensationTypes' => $compensationTypes]);
     }
 
     /**

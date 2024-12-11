@@ -1,13 +1,13 @@
 import {
-    SslDelete,
-    SslStore,
-    SslUpdate,
-} from "@/Components/CrudComponents/SslCrud";
-import { DataTable } from "@/Components/DataTable";
+    DeductionsDelete,
+    DeductionStore,
+    DeductionUpdate,
+} from "@/Pages/Payroll/Admin/DeductionsPage/DeductionCRUD";
 import DropdownDialog from "@/Components/DropdownDialog";
 import AuthenticatedLayout from "@/Components/Layouts/Common/AuthenticatedLayout";
+import { Input } from "@/Components/ui/input";
 import { cn } from "@/lib/utils";
-import { sslProfileTypes } from "@/types/payrollPagesTypes";
+import { deductionTypes } from "@/types/payrollPagesTypes";
 import { usePage } from "@inertiajs/react";
 import {
     ColumnDef,
@@ -17,18 +17,19 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { FileDownIcon, FileUpIcon, MoreHorizontal, Plus } from "lucide-react";
+import { MoreHorizontal, Plus } from "lucide-react";
 import { useState } from "react";
 import DialogMenu from "@/Components/Dialog";
+import { DataTable } from "@/Components/DataTable";
+import PaginationTable from "@/Components/Pagination";
 import { Button } from "@/Components/ui/button";
 import { Label } from "@/Components/ui/label";
-import { Input } from "@/Components/ui/input";
-import PaginationTable from "@/Components/Pagination";
 
-const SslPage = () => {
-    const data = (usePage().props.data as sslProfileTypes[]) || [];
-    const [openDialog, setOpenDialog] = useState(false);
+const DeductionsPage = () => {
+    const data = (usePage().props.data as deductionTypes[]) || [];
     const [globalFilter, setGlobalFilter] = useState<string>("");
+    const [openDialog, setOpenDialog] = useState(false);
+
     const table = useReactTable({
         data,
         columns,
@@ -47,15 +48,16 @@ const SslPage = () => {
             },
             sorting: [
                 {
-                    id: "grade",
+                    id: "deduction_code",
                     desc: false,
                 },
             ],
         },
     });
+
     return (
         <AuthenticatedLayout
-            pageTitle="Salary Standard Law"
+            pageTitle="Deductions"
             navigationType="payrollAdmin"
         >
             <div className="h-full flex flex-col">
@@ -66,9 +68,9 @@ const SslPage = () => {
                         className="w-1/4 rounded-pca"
                         placeholder="Search...."
                     />
-
-                    <div className="grid grid-cols-3 gap-5 w-1/4">
+                    <div className="grid grid-cols-1 gap-5 w-1/4">
                         <DialogMenu
+                            dialogClassName="max-w-[1000px] min-h-[450px]"
                             open={openDialog}
                             openDialog={() => setOpenDialog(!openDialog)}
                             trigger={
@@ -77,41 +79,19 @@ const SslPage = () => {
                                     aria-label="Add Salary Grade "
                                 >
                                     <Plus size={20} />
-                                    <Label>Add SG</Label>
+                                    <Label>Add Deduction Profile</Label>
                                 </Button>
                             }
-                            title="Add Salary Grade"
-                            description=""
+                            title="New Deduction Profile"
                         >
-                            <SslStore
+                            <DeductionStore
+                                compensationTypes={
+                                    usePage().props
+                                        .compensationTypes as Array<string>
+                                }
                                 openDialog={() => setOpenDialog(!openDialog)}
-                            />
+                            ></DeductionStore>
                         </DialogMenu>
-                        <DialogMenu
-                            trigger={
-                                <Button
-                                    className="gap-2 rounded-pca"
-                                    aria-label="Add SSL"
-                                >
-                                    <FileDownIcon size={20} />
-                                    <Label>Import</Label>
-                                </Button>
-                            }
-                            title="Feature Under Development"
-                        />
-
-                        <DialogMenu
-                            trigger={
-                                <Button
-                                    className="gap-2 rounded-pca"
-                                    aria-label="Add SSL"
-                                >
-                                    <FileUpIcon size={20} />
-                                    <Label>Export</Label>
-                                </Button>
-                            }
-                            title="Feature Under Development"
-                        />
                     </div>
                 </div>
                 <DataTable
@@ -120,87 +100,42 @@ const SslPage = () => {
                         rowStyle: "odd:bg-white even:bg-transparent ",
                     }}
                 />
-
                 <PaginationTable table={table}></PaginationTable>
             </div>
         </AuthenticatedLayout>
     );
 };
 
-export default SslPage;
+export default DeductionsPage;
 
-const columns: ColumnDef<sslProfileTypes>[] = [
+const columns: ColumnDef<deductionTypes>[] = [
+    { accessorKey: "deduction_code", header: "ID" },
+    { accessorKey: "deduction_name", header: "DEDUCTION NAME" },
+    { accessorKey: "shorthand", header: "SHORTHAND" },
     {
-        accessorKey: "grade",
-        header: "SG",
-        enableSorting: true,
-    },
-    {
-        accessorKey: "step1",
-        header: "STEP 1",
+        accessorKey: "amount",
+        header: "AMOUNT",
         cell: ({ row }) => {
-            const number = Number(row.getValue("step1"));
+            const number = Number(row.getValue("amount"));
             return <p>₱ {number.toLocaleString("en-US")}</p>;
         },
     },
     {
-        accessorKey: "step2",
-        header: "STEP 2",
+        accessorKey: "is_mandatory",
+        header: "MANDATORY",
         cell: ({ row }) => {
-            const number = Number(row.getValue("step2"));
-            return <p>₱ {number.toLocaleString("en-US")}</p>;
+            return row.getValue("is_mandatory") == true ? "Yes" : "No";
         },
     },
+    { accessorKey: "remittance_percent", header: "REMITTANCE %" },
     {
-        accessorKey: "step3",
-        header: "STEP 3",
+        accessorKey: "ceiling_amount",
+        header: "CEILING AMOUNT",
         cell: ({ row }) => {
-            const number = Number(row.getValue("step3"));
+            const number = Number(row.getValue("ceiling_amount"));
             return <p>₱ {number.toLocaleString("en-US")}</p>;
         },
     },
-    {
-        accessorKey: "step4",
-        header: "STEP 4",
-        cell: ({ row }) => {
-            const number = Number(row.getValue("step4"));
-            return <p>₱ {number.toLocaleString("en-US")}</p>;
-        },
-    },
-    {
-        accessorKey: "step5",
-        header: "STEP 5",
-        cell: ({ row }) => {
-            const number = Number(row.getValue("step5"));
-            return <p>₱ {number.toLocaleString("en-US")}</p>;
-        },
-    },
-    {
-        accessorKey: "step6",
-        header: "STEP 6",
-        cell: ({ row }) => {
-            const number = Number(row.getValue("step6"));
-            return <p>₱ {number.toLocaleString("en-US")}</p>;
-        },
-    },
-    {
-        accessorKey: "step7",
-        header: "STEP 7",
-        cell: ({ row }) => {
-            const number = Number(row.getValue("step7"));
-            return <p>₱ {number.toLocaleString("en-US")}</p>;
-        },
-    },
-    {
-        accessorKey: "step8",
-        header: "STEP 8",
-        cell: ({ row }) => {
-            const number = Number(row.getValue("step8"));
-            return <p>₱ {number.toLocaleString("en-US")}</p>;
-        },
-    },
-
-    // Action Button for the Tables .
     {
         id: "actions",
         cell: ({ row }) => {
@@ -210,27 +145,31 @@ const columns: ColumnDef<sslProfileTypes>[] = [
                 {
                     tag: "1",
                     name: "Edit",
-                    dialogtitle: cn("Editing Salary Grade ", rowData.grade),
+                    dialogtitle: cn("Edit", rowData.deduction_name),
                     dialogContent: (
-                        <SslUpdate
+                        <DeductionUpdate
+                            compensationTypes={
+                                usePage().props
+                                    .compensationTypes as Array<string>
+                            }
                             RowData={rowData}
                             setOpenDialog={setOpenDialog}
-                        ></SslUpdate>
+                        ></DeductionUpdate>
                     ),
                 },
                 {
                     tag: "2",
                     name: "Delete",
                     dialogtitle: cn(
-                        "Are you sure you want to delete Salary Grade",
-                        rowData.grade,
+                        "Are you sure you want to delete ",
+                        rowData.deduction_name,
                         "?"
                     ),
                     dialogContent: (
-                        <SslDelete
-                            rowId={rowData.grade}
+                        <DeductionsDelete
+                            rowId={rowData.deduction_code}
                             setOpenDialog={setOpenDialog}
-                        ></SslDelete>
+                        ></DeductionsDelete>
                     ),
                     style: "text-red-600",
                 },
@@ -239,6 +178,7 @@ const columns: ColumnDef<sslProfileTypes>[] = [
             return (
                 <div>
                     <DropdownDialog
+                        dialogClassName="max-w-[1000px] min-h-[450px]"
                         openDialog={openDialog}
                         setOpenDialog={setOpenDialog}
                         dialogs={dialogs}

@@ -2,9 +2,9 @@ import { useForm } from "@inertiajs/react";
 import { CircleAlert, CircleCheck } from "lucide-react";
 import { FormEventHandler } from "react";
 import { toast } from "sonner";
-import { Button } from "../ui/button";
-import CompensationStoreDialog from "../CompensationStoreDialog";
-import ConfirmCancelButton from "../ConfirmCancelButton";
+import { Button } from "../../../../Components/ui/button";
+import ConfirmCancelButton from "../../../../Components/ConfirmCancelButton";
+import CompensationStoreDialog from "./CompensationStoreDialog";
 
 export function CompensationStore({ openDialog }: { openDialog: any }) {
     const { data, setData, post, processing, errors, reset } = useForm({

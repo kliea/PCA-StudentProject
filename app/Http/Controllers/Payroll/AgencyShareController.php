@@ -21,7 +21,7 @@ class AgencyShareController extends Controller
         $compensationTypes = CompensationType::pluck('compensation_name');
 
         //return data to front end
-        return Inertia::render('Payroll/Admin/GovernmentSharesPage', ['data' => $data, 'compensationTypes' => $compensationTypes]);
+        return Inertia::render('Payroll/Admin/GovernmentSharesPage/GovernmentSharesPage', ['data' => $data, 'compensationTypes' => $compensationTypes]);
     }
 
 

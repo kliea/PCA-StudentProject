@@ -33,7 +33,7 @@ Route::domain('bioadmin.' . env('APP_URL'))->group(
                 Route::get('attendancerecords', [AttendanceRecordController::class, 'index'])->name('bioadmin.attendancerecords');
                 Route::get('manageusers', [ManageUserController::class, 'index'])->name('bioadmin.manageusers');
             }
-    );
+        );
     }
 );
 
@@ -43,10 +43,10 @@ Route::domain('bioadmin.' . env('APP_URL'))->group(
 Route::domain('payroll.' . env('APP_URL'))->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
-        // // PAYROLL ROUTES
+        // PAYROLL ROUTES
         Route::get('payroll', [SummaryController::class, 'Summary'])->name('admin.payrolls');
 
-        // // LOANS ROUTES
+        // LOANS ROUTES
         Route::get('loans', [AdminPageController::class, 'loans'])->name('admin.loans');
         Route::get('loans', [LoanController::class, 'index'])->name('admin.loans');
 

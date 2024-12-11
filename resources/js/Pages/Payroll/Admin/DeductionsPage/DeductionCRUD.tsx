@@ -2,11 +2,16 @@ import { useForm } from "@inertiajs/react";
 import { CircleAlert, CircleCheck } from "lucide-react";
 import { FormEventHandler, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Button } from "../ui/button";
-import ConfirmCancelButton from "../ConfirmCancelButton";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import IncludeExcludeBox from "../IncludeExcludeBox";
-import DeductionsStoreDialog from "../DeductionsStoreDialog";
+import { Button } from "../../../../Components/ui/button";
+import ConfirmCancelButton from "../../../../Components/ConfirmCancelButton";
+import {
+    Tabs,
+    TabsContent,
+    TabsList,
+    TabsTrigger,
+} from "../../../../Components/ui/tabs";
+import IncludeExcludeBox from "../../../../Components/IncludeExcludeBox";
+import DeductionsStoreDialog from "./DeductionsStoreDialog";
 
 export function DeductionStore({
     openDialog,

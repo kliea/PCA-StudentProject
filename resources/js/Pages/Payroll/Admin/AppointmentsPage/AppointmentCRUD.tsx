@@ -1,11 +1,8 @@
 import { useForm } from "@inertiajs/react";
-import { Switch } from "../ui/switch";
-import { Label } from "../ui/label";
 import { CircleAlert, CircleCheck } from "lucide-react";
 import { toast } from "sonner";
 import { FormEventHandler } from "react";
-import InputError from "../InputError";
-import { Input } from "../ui/input";
+
 import {
     Select,
     SelectContent,
@@ -13,7 +10,12 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/Components/ui/select";
-import { Button } from "../ui/button";
+import { Label } from "@/Components/ui/label";
+import { Input } from "@/Components/ui/input";
+import InputError from "@/Components/InputError";
+import { Switch } from "@/Components/ui/switch";
+import { Button } from "@/Components/ui/button";
+import ConfirmCancelButton from "@/Components/ConfirmCancelButton";
 
 export function AppointmentStore({
     openDialog,
@@ -173,25 +175,10 @@ export function AppointmentStore({
                         }}
                     />
                 </div>
-                <div className="flex gap-3 justify-end pl-5">
-                    <Button
-                        variant="ghost"
-                        className="mt-5 w-full max-w-32"
-                        disabled={processing}
-                        type="button"
-                        onClick={() => openDialog(false)}
-                    >
-                        Cancel
-                    </Button>
-
-                    <Button
-                        className="mt-5 w-full max-w-32"
-                        disabled={processing}
-                        type="submit"
-                    >
-                        Submit
-                    </Button>
-                </div>
+                <ConfirmCancelButton
+                    processing={processing}
+                    setOpenDialog={openDialog}
+                ></ConfirmCancelButton>
             </form>
         </div>
     );

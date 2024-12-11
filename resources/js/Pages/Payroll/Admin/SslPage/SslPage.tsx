@@ -1,15 +1,9 @@
-import {
-    AgencyShareDelete,
-    AgencyShareStore,
-    AgencyShareUpdate,
-} from "@/Components/CrudComponents/AgencyShareCRUD";
+
 import { DataTable } from "@/Components/DataTable";
 import DropdownDialog from "@/Components/DropdownDialog";
 import AuthenticatedLayout from "@/Components/Layouts/Common/AuthenticatedLayout";
-import PaginationTable from "@/Components/Pagination";
-import { Button } from "@/Components/ui/button";
 import { cn } from "@/lib/utils";
-import { agencyTypes } from "@/types/payrollPagesTypes";
+import { sslProfileTypes } from "@/types/payrollPagesTypes";
 import { usePage } from "@inertiajs/react";
 import {
     ColumnDef,
@@ -19,14 +13,17 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { MoreHorizontal, Plus } from "lucide-react";
+import { FileDownIcon, FileUpIcon, MoreHorizontal, Plus } from "lucide-react";
 import { useState } from "react";
 import DialogMenu from "@/Components/Dialog";
-import { Input } from "@/Components/ui/input";
+import { Button } from "@/Components/ui/button";
 import { Label } from "@/Components/ui/label";
+import { Input } from "@/Components/ui/input";
+import PaginationTable from "@/Components/Pagination";
+import { SslDelete, SslStore, SslUpdate } from "./SslCrud";
 
-const GovernmentSharesPage = () => {
-    const data = (usePage().props.data as agencyTypes[]) || [];
+const SslPage = () => {
+    const data = (usePage().props.data as sslProfileTypes[]) || [];
     const [openDialog, setOpenDialog] = useState(false);
     const [globalFilter, setGlobalFilter] = useState<string>("");
     const table = useReactTable({
@@ -47,7 +44,7 @@ const GovernmentSharesPage = () => {
             },
             sorting: [
                 {
-                    id: "agency_share_code",
+                    id: "grade",
                     desc: false,
                 },
             ],
@@ -55,7 +52,7 @@ const GovernmentSharesPage = () => {
     });
     return (
         <AuthenticatedLayout
-            pageTitle="Government Shares"
+            pageTitle="Salary Standard Law"
             navigationType="payrollAdmin"
         >
             <div className="h-full flex flex-col">
@@ -66,9 +63,9 @@ const GovernmentSharesPage = () => {
                         className="w-1/4 rounded-pca"
                         placeholder="Search...."
                     />
-                    <div className="grid grid-cols-1 gap-5 w-1/4">
+
+                    <div className="grid grid-cols-3 gap-5 w-1/4">
                         <DialogMenu
-                            dialogClassName="max-w-[1000px] min-h-[450px]"
                             open={openDialog}
                             openDialog={() => setOpenDialog(!openDialog)}
                             trigger={
@@ -77,21 +74,41 @@ const GovernmentSharesPage = () => {
                                     aria-label="Add Salary Grade "
                                 >
                                     <Plus size={20} />
-                                    <Label>Add Government Share</Label>
+                                    <Label>Add SG</Label>
                                 </Button>
                             }
-                            title="New Government Share"
+                            title="Add Salary Grade"
                             description=""
                         >
-                            
-                            <AgencyShareStore
-                                compensationTypes={
-                                    usePage().props
-                                        .compensationTypes as Array<string>
-                                }
+                            <SslStore
                                 openDialog={() => setOpenDialog(!openDialog)}
                             />
                         </DialogMenu>
+                        <DialogMenu
+                            trigger={
+                                <Button
+                                    className="gap-2 rounded-pca"
+                                    aria-label="Add SSL"
+                                >
+                                    <FileDownIcon size={20} />
+                                    <Label>Import</Label>
+                                </Button>
+                            }
+                            title="Feature Under Development"
+                        />
+
+                        <DialogMenu
+                            trigger={
+                                <Button
+                                    className="gap-2 rounded-pca"
+                                    aria-label="Add SSL"
+                                >
+                                    <FileUpIcon size={20} />
+                                    <Label>Export</Label>
+                                </Button>
+                            }
+                            title="Feature Under Development"
+                        />
                     </div>
                 </div>
                 <DataTable
@@ -107,44 +124,80 @@ const GovernmentSharesPage = () => {
     );
 };
 
-export default GovernmentSharesPage;
+export default SslPage;
 
-const columns: ColumnDef<agencyTypes>[] = [
-    { accessorKey: "agency_share_code", header: "ID" },
-    { accessorKey: "agency_share_name", header: "NAME OF AGENCY SHARE" },
-    { accessorKey: "shorthand", header: "SHORTHAND" },
+const columns: ColumnDef<sslProfileTypes>[] = [
     {
-        accessorKey: "amount",
-        header: "AMOUNT",
+        accessorKey: "grade",
+        header: "SG",
+        enableSorting: true,
+    },
+    {
+        accessorKey: "step1",
+        header: "STEP 1",
         cell: ({ row }) => {
-            const number = Number(row.getValue("amount"));
+            const number = Number(row.getValue("step1"));
             return <p>₱ {number.toLocaleString("en-US")}</p>;
         },
     },
     {
-        accessorKey: "is_mandatory",
-        header: "MANDATORY",
+        accessorKey: "step2",
+        header: "STEP 2",
         cell: ({ row }) => {
-            return row.getValue("is_mandatory") == true ? "Yes" : "No";
-        },
-    },
-    {
-        accessorKey: "remittance_percent",
-        header: "REMITTANCE %",
-        cell: ({ row }) => {
-            return row.getValue("amount") != 0
-                ? "N/A"
-                : row.getValue("remittance_percent") + "%";
-        },
-    },
-    {
-        accessorKey: "ceiling_amount",
-        header: "CEILING AMOUNT",
-        cell: ({ row }) => {
-            const number = Number(row.getValue("ceiling_amount"));
+            const number = Number(row.getValue("step2"));
             return <p>₱ {number.toLocaleString("en-US")}</p>;
         },
     },
+    {
+        accessorKey: "step3",
+        header: "STEP 3",
+        cell: ({ row }) => {
+            const number = Number(row.getValue("step3"));
+            return <p>₱ {number.toLocaleString("en-US")}</p>;
+        },
+    },
+    {
+        accessorKey: "step4",
+        header: "STEP 4",
+        cell: ({ row }) => {
+            const number = Number(row.getValue("step4"));
+            return <p>₱ {number.toLocaleString("en-US")}</p>;
+        },
+    },
+    {
+        accessorKey: "step5",
+        header: "STEP 5",
+        cell: ({ row }) => {
+            const number = Number(row.getValue("step5"));
+            return <p>₱ {number.toLocaleString("en-US")}</p>;
+        },
+    },
+    {
+        accessorKey: "step6",
+        header: "STEP 6",
+        cell: ({ row }) => {
+            const number = Number(row.getValue("step6"));
+            return <p>₱ {number.toLocaleString("en-US")}</p>;
+        },
+    },
+    {
+        accessorKey: "step7",
+        header: "STEP 7",
+        cell: ({ row }) => {
+            const number = Number(row.getValue("step7"));
+            return <p>₱ {number.toLocaleString("en-US")}</p>;
+        },
+    },
+    {
+        accessorKey: "step8",
+        header: "STEP 8",
+        cell: ({ row }) => {
+            const number = Number(row.getValue("step8"));
+            return <p>₱ {number.toLocaleString("en-US")}</p>;
+        },
+    },
+
+    // Action Button for the Tables .
     {
         id: "actions",
         cell: ({ row }) => {
@@ -154,36 +207,27 @@ const columns: ColumnDef<agencyTypes>[] = [
                 {
                     tag: "1",
                     name: "Edit",
-                    dialogtitle: cn(
-                        "Edit Appointment ",
-                        rowData.agency_share_name
-                    ),
+                    dialogtitle: cn("Editing Salary Grade ", rowData.grade),
                     dialogContent: (
-                        <AgencyShareUpdate
-                            compensationTypes={
-                                usePage().props
-                                    .compensationTypes as Array<string>
-                            }
-                            setOpenDialog={setOpenDialog}
+                        <SslUpdate
                             RowData={rowData}
-                        ></AgencyShareUpdate>
+                            setOpenDialog={setOpenDialog}
+                        ></SslUpdate>
                     ),
                 },
                 {
                     tag: "2",
                     name: "Delete",
                     dialogtitle: cn(
-                        "Are you sure you want to delete Agency Share:  ",
-                        rowData.agency_share_name,
+                        "Are you sure you want to delete Salary Grade",
+                        rowData.grade,
                         "?"
                     ),
-                    // TODO : Apply Type error handling
-                    // TODO: UPDATE CONTROLLERS
                     dialogContent: (
-                        <AgencyShareDelete
-                            rowId={rowData.agency_share_code}
+                        <SslDelete
+                            rowId={rowData.grade}
                             setOpenDialog={setOpenDialog}
-                        ></AgencyShareDelete>
+                        ></SslDelete>
                     ),
                     style: "text-red-600",
                 },
@@ -192,7 +236,6 @@ const columns: ColumnDef<agencyTypes>[] = [
             return (
                 <div>
                     <DropdownDialog
-                        dialogClassName="max-w-[1000px] min-h-[450px]"
                         openDialog={openDialog}
                         setOpenDialog={setOpenDialog}
                         dialogs={dialogs}
