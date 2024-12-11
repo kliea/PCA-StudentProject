@@ -9,13 +9,9 @@ import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import { Head, usePage } from "@inertiajs/react";
 import {
     ColumnDef,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    useReactTable,
+
 } from "@tanstack/react-table";
-import { File, FolderUp, MoreHorizontal } from "lucide-react";
-import Data from "@/Components/Constants/data13.json";
+import { File, MoreHorizontal } from "lucide-react";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
 
@@ -26,39 +22,33 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/Components/ui/select";
-import { DatePickerWithRange } from "@/Components/DateRangePicker";
 import { addDays } from "date-fns";
 import React, { useState } from "react";
 import { DateRange } from "react-day-picker";
-import { Button } from "@/Components/ui/button";
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/Components/ui/dialog";
 import {
     OrderDelete,
     OrderStore,
     OrderUpdate,
 } from "@/Components/CrudComponents/OrderCrud";
 import DialogMenu from "@/Components/Dialog";
+import { useTable } from "@/hooks/BioAdmin/useTable";
 //  Set accepted column types
 type columnTypes = {
-    employeeid: string;
-    name: string;
-    leavetype: string;
-    appliedon: string;
-    status:string;
+    employee_code: string;
+    // name: string;
+    leave_request_type: string;
+    date_filed: string;
+    leave_request_status: string;
 };
 // Generate the headers for the columns
 const columns: ColumnDef<columnTypes>[] = [
-    { accessorKey: "employeeid", header: "Employee ID" },
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "leavetype", header: "Leave Type" },
-    { accessorKey: "appliedon", header: "Applied On" },
-    { accessorKey: "status", header: "Status" },
+    { accessorKey: "employee_code", header: "Employee ID" },
+    // { accessorKey: "name", header: "Name" },
+    {
+        accessorKey: "leave_request_type", header: "Leave Type"
+    },
+    { accessorKey: "date_filed", header: "Applied On" },
+    { accessorKey: "leave_request_status", header: "Status" },
     {
         id: "actions",
         cell: ({ row }) => {
@@ -84,31 +74,16 @@ const columns: ColumnDef<columnTypes>[] = [
             );
         },
     },
-    
-   
+
+
 ];
 
 
 export default function LeaveOrder() {
-    const data: columnTypes[] = Data;
-    const [globalFilter, setGlobalFilter] = useState<any>([]);
-
-    const table = useReactTable({
-        data,
+    const { leaveData } = usePage<{ leaveData: ColumnType[] }>().props
+    const { table, globalFilter, setGlobalFilter } = useTable({
+        data: leaveData,
         columns,
-        getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        initialState: {
-            pagination: {
-                pageSize: 12,
-            },
-        },
-        getFilteredRowModel: getFilteredRowModel(),
-        globalFilterFn: "auto",
-        state: {
-            globalFilter,
-        },
-        onGlobalFilterChange: setGlobalFilter,
     });
     const [openDialog, setOpenDialog] = useState(false);
     const [date, setDate] = React.useState<DateRange | undefined>({
@@ -122,65 +97,65 @@ export default function LeaveOrder() {
             <Head title="AttendanceRecord" />
 
             <BodyContentLayout headerName={"Leave Order"}>
-          
-                
-            <div className="flex mb-5 justify-between">
-                <section className="flex gap-7 mt-5 w-full justify-right">
-                    
-                    <section className="flex gap-7 w-1/4 justify-left">
-                        <Input
-                        type="text"
-                        placeholder="Search..."
-                        onChange={(e) =>
-                            setGlobalFilter(e.target.value || "")
-                        }
-                        className="rounded-[10px]"
-                        />
+
+
+                <div className="flex mb-5 justify-between">
+                    <section className="flex gap-7 mt-5 w-full justify-right">
+
+                        <section className="flex gap-7 w-1/4 justify-left">
+                            <Input
+                                type="text"
+                                placeholder="Search..."
+                                onChange={(e) =>
+                                    setGlobalFilter(e.target.value || "")
+                                }
+                                className="rounded-[10px]"
+                            />
                         </section>
                         <section className="flex gap-7 w-full justify-end">
-                        <div>
-                            <Select>
-                                <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="Leave Status" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="all">All</SelectItem>
-                                    <SelectItem value="flexi">Dark</SelectItem>
-                                    <SelectItem value="regular">Regular</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-                        <DialogMenu
-                                    open={openDialog}
-                                    openDialog={() =>
-                                        setOpenDialog(!openDialog)
-                                    }
-                                    trigger={
-                                        <section className="flex gap-1 bg-baseYellow text-black items-center justify-right p-2 rounded-[10px] pl-3 pr-5">
+                            <div>
+                                <Select>
+                                    <SelectTrigger className="w-[180px]">
+                                        <SelectValue placeholder="Leave Status" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="all">All</SelectItem>
+                                        <SelectItem value="flexi">Dark</SelectItem>
+                                        <SelectItem value="regular">Regular</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <DialogMenu
+                                open={openDialog}
+                                openDialog={() =>
+                                    setOpenDialog(!openDialog)
+                                }
+                                trigger={
+                                    <section className="flex gap-1 bg-baseYellow text-black items-center justify-right p-2 rounded-[10px] pl-3 pr-5">
                                         <File size={15} />
                                         Create Leave Order
-                                        </section>
+                                    </section>
+                                }
+                                title="New Leave Order"
+                                description="Add New Leave Order"
+                            >
+                                <OrderStore
+                                    openDialog={() =>
+                                        setOpenDialog(!openDialog,)
                                     }
-                                    title="New Leave Order"
-                                    description="Add New Leave Order"
-                                >
-                                    <OrderStore
-                                        openDialog={() =>
-                                            setOpenDialog(!openDialog,)
-                                        }
-                                    />
-                                </DialogMenu>
+                                />
+                            </DialogMenu>
                         </section>
                     </section>
-            </div>
+                </div>
 
-                 <div>
+                <div>
                     <DataTable
                         columns={columns}
                         table={table}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
-                ></DataTable>
-            </div>
+                    ></DataTable>
+                </div>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin>
     );

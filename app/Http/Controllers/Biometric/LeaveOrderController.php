@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Biometric;
 
 use App\Http\Controllers\Controller;
+use App\Models\LeaveRequest;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,7 +14,12 @@ class LeaveOrderController extends Controller
      */
     public function index()
     {
-        return Inertia::render('BioAdmin/LeaveOrder');
+        $leaveData = LeaveRequest::all();
+
+        return Inertia::render('BioAdmin/LeaveOrder', [
+            'leaveData' => $leaveData,
+            'message' => 'All the leave data have been retrieved successfully.'
+        ]);
     }
 
     /**
