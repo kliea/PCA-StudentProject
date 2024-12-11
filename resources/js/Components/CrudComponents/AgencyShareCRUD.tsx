@@ -1,6 +1,6 @@
 import { useForm } from "@inertiajs/react";
 import { CircleAlert, CircleCheck } from "lucide-react";
-import { FormEventHandler, useState } from "react";
+import { FormEventHandler, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import ConfirmCancelButton from "../ConfirmCancelButton";
@@ -16,19 +16,36 @@ export function AgencyShareStore({
     openDialog: any;
     compensationTypes: Array<string>;
 }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        agency_share_name: "",
-        shorthand: "",
-        amount: 0,
-        is_mandatory: false,
-        remittance_percent: 0,
-        ceiling_amount: 0,
-        compensation_links: [] as Array<string>,
-    });
+    const { data, setData, post, processing, errors, reset, setError } =
+        useForm({
+            agency_share_name: "",
+            shorthand: "",
+            amount: 0,
+            is_mandatory: false,
+            remittance_percent: 0,
+            ceiling_amount: 0,
+            compensation_links: [] as Array<string>,
+        });
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
         data.compensation_links = [...selectedItems];
+
+        if (
+            data.amount == 0 &&
+            data.remittance_percent == 0 &&
+            data.ceiling_amount == 0
+        ) {
+            setError(
+                "amount",
+                "Amount and remittance must not be zero at the same time."
+            );
+            setError(
+                "remittance_percent",
+                "Amount and remittance must not be zero at the same time."
+            );
+            return;
+        }
 
         post(route("store.governmentshare"), {
             onSuccess: () => {
@@ -71,6 +88,8 @@ export function AgencyShareStore({
         ...compensationTypes,
     ]);
     const [selectedItems, setSelectedItems] = useState<Array<string>>([]);
+
+    const [selected, setSelected] = useState<string>("");
     return (
         <form onSubmit={submit} className="h-full">
             <Tabs defaultValue="Properties" className="w-full">
@@ -80,6 +99,8 @@ export function AgencyShareStore({
                 </TabsList>
                 <TabsContent value="Properties">
                     <GovernmentShareStore
+                        selected={selected}
+                        setSelected={setSelected}
                         errors={errors}
                         data={data}
                         setData={setData}
@@ -116,20 +137,46 @@ export function AgencyShareUpdate({
     setOpenDialog: any;
     compensationTypes: Array<string>;
 }) {
-    const { data, setData, put, processing, errors, reset } = useForm({
-        agency_share_name: RowData.agency_share_name,
-        shorthand: RowData.shorthand,
-        amount: RowData.amount,
-        is_mandatory: RowData.is_mandatory,
-        ceiling_amount: RowData.ceiling_amount,
-        remittance_percent: RowData.remittance_percent,
-        compensation_links: [] as Array<string>,
-    });
+    const { data, setData, put, processing, errors, reset, setError } = useForm(
+        {
+            agency_share_name: RowData.agency_share_name,
+            shorthand: RowData.shorthand,
+            amount: RowData.amount,
+            is_mandatory: RowData.is_mandatory,
+            ceiling_amount: RowData.ceiling_amount,
+            remittance_percent: RowData.remittance_percent,
+            compensation_links: [] as Array<string>,
+        }
+    );
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
         data.compensation_links = [...selectedItems];
+
+        if (selected == "Fixed") {
+            data.remittance_percent = 0;
+            data.ceiling_amount = 0;
+        }
+        if (selected == "Remittance") {
+            data.amount = 0;
+        }
+
+        if (
+            data.amount == 0 &&
+            data.remittance_percent == 0 &&
+            data.ceiling_amount == 0
+        ) {
+            setError(
+                "amount",
+                "Amount and remittance must not be zero at the same time."
+            );
+            setError(
+                "remittance_percent",
+                "Amount and remittance must not be zero at the same time."
+            );
+            return;
+        }
 
         put(route("update.governmentshare", RowData), {
             onSuccess: () => {
@@ -183,14 +230,21 @@ export function AgencyShareUpdate({
             .map((item: string) => item.trim());
     } else data.compensation_links = [];
 
-    console.log(data.compensation_links);
-
     const [baseItems, setBaseItems] = useState<Array<string>>([
         ...compensationTypes,
     ]);
     const [selectedItems, setSelectedItems] = useState<Array<string>>([
         ...data.compensation_links,
     ]);
+    const [selected, setSelected] = useState<string>("");
+
+    useEffect(() => {
+        if (data.amount > 0) {
+            setSelected("Fixed");
+        } else if (data.remittance_percent > 0 && data.ceiling_amount > 0) {
+            setSelected("Remittance");
+        }
+    }, []);
 
     return (
         <form onSubmit={submit} className="h-full">
@@ -201,6 +255,8 @@ export function AgencyShareUpdate({
                 </TabsList>
                 <TabsContent value="Properties">
                     <GovernmentShareStore
+                        selected={selected}
+                        setSelected={setSelected}
                         errors={errors}
                         data={data}
                         setData={setData}

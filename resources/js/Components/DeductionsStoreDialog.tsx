@@ -10,6 +10,8 @@ const DeductionsStoreDialog = ({
     data,
     setData,
     errors,
+    selected,
+    setSelected,
 }: {
     data: deductionTypes;
     setData: any;
@@ -26,9 +28,9 @@ const DeductionsStoreDialog = ({
             string
         >
     >;
+    selected: string;
+    setSelected: React.Dispatch<React.SetStateAction<string>>;
 }) => {
-    const [selected, setSelected] = useState<string>();
-
     function handleRadioSelect(value: string) {
         setSelected(value);
     }
@@ -77,7 +79,7 @@ const DeductionsStoreDialog = ({
             <RadioGroup
                 required
                 onValueChange={handleRadioSelect}
-                defaultValue={data.amount > 0 ? "Fixed" : "Remittance"}
+                value={selected}
             >
                 <Label>Deduction Type</Label>
                 <div className="grid grid-cols-2 gap-5">

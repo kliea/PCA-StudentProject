@@ -45,12 +45,12 @@ export interface deductionTypes {
 };
 
 export interface compensationTypes {
-    compensation_code: number;
+    compensation_code?: number;
     compensation_name: string;
     shorthand: string;
     amount: number;
     is_taxable: boolean;
-    is_fixed: number;
+    is_fixed: boolean;
 };
 
 export interface employeeTypes {
