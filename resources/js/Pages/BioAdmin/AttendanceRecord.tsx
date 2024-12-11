@@ -130,31 +130,31 @@ export default function AttendanceRecord() {
             <BodyContentLayout headerName={"Employee Attendance Record"}>
                 <div className="flex items-center justify-center h-full">
                     {selectedEmployee?.fromEmployees ? (
-                        <BodyContentLayout headerName="Employee Information" className="mt-5 h-fit shadow-md lg:w-2/4">
+                        <BodyContentLayout headerName="Employee Information" className="mt-5 h-fit shadow-md lg:w-2/4 bg-[#848484] bg-opacity-10">
                             <div className="grid grid-cols-4 gap-4">
                                 <div className="col-span-2">
-                                    <div className="grid grid-cols-2 gap-4 items-center">
-                                        <h3 className="text-lg font-bold mb-2">Name </h3>
-                                        <p className="rounded bg-[#848484] border-[#979797] border-2 bg-opacity-20 text-center text-xs text-black p-2 pr-5 mb-3">{selectedEmployee.fromEmployees.first_name} {selectedEmployee.fromEmployees.middle_name ? selectedEmployee.fromEmployees.middle_name + ' ' : ''}{selectedEmployee.fromEmployees.last_name}{selectedEmployee.fromEmployees.name_extension ? ' ' + selectedEmployee.fromEmployees.name_extension : ''}</p>
+                                    <div className="grid grid-cols-2  items-center">
+                                        <h3 className=" mb-2">Name </h3>
+                                        <p className="rounded bg-white text-center text-xs text-black p-2 pr-5 mb-3">{selectedEmployee.fromEmployees.first_name} {selectedEmployee.fromEmployees.middle_name ? selectedEmployee.fromEmployees.middle_name + ' ' : ''}{selectedEmployee.fromEmployees.last_name}{selectedEmployee.fromEmployees.name_extension ? ' ' + selectedEmployee.fromEmployees.name_extension : ''}</p>
                                     </div>
-                                    <div className="grid grid-cols-2 gap-4 items-center">
-                                        <h3 className=" font-bold mb-2">Employee ID </h3>
-                                        <p className="rounded bg-[#848484] border-[#979797] border-2 bg-opacity-20 text-center text-xs text-black p-2 pr-5 mb-3">{selectedEmployee.fromEmployees.employee_code}</p>
+                                    <div className="grid grid-cols-2  items-center">
+                                        <h3 className=" mb-2">Employee ID </h3>
+                                        <p className="rounded bg-white text-center text-xs text-black p-2 pr-5 mb-3">{selectedEmployee.fromEmployees.employee_code}</p>
                                     </div>
-                                    <div className="grid grid-cols-2 gap-4 items-center">
-                                        <h3 className=" font-bold mb-2">Email </h3>
-                                        <p className="rounded bg-[#848484] border-[#979797] border-2 bg-opacity-20 text-center text-xs text-black p-2 pr-5 mb-3">no email db</p>
+                                    <div className="grid grid-cols-2  items-center">
+                                        <h3 className=" mb-2">Email </h3>
+                                        <p className="rounded bg-white text-center text-xs text-black p-2 pr-5 mb-3">no email db</p>
                                     </div>
 
                                 </div>
                                 <div className="col-span-2">
-                                    <div className="grid grid-cols-2 gap-4 items-center">
-                                        <h3 className=" font-bold mb-2">Job Title</h3>
-                                        <p className="rounded bg-[#848484] border-[#979797] border-2 bg-opacity-20 text-center text-xs text-black p-2 pr-5 mb-3">{selectedEmployee.fromEmployees.position_code}</p>
+                                    <div className="grid grid-cols-2  items-center">
+                                        <h3 className=" mb-2">Job Title</h3>
+                                        <p className="rounded bg-white text-center text-xs text-black p-2 pr-5 mb-3">{selectedEmployee.fromEmployees.position_code}</p>
                                     </div>
-                                    <div className="grid grid-cols-2 gap-4 items-center">
-                                        <h3 className=" font-bold mb-2">Leave Credits</h3>
-                                        <p className="rounded bg-[#848484] border-[#979797] border-2 bg-opacity-20 text-center text-xs text-black p-2 pr-5 mb-3">no leave credits db</p>
+                                    <div className="grid grid-cols-2  items-center">
+                                        <h3 className=" mb-2">Leave Credits</h3>
+                                        <p className="rounded bg-white text-center text-xs text-black p-2 pr-5 mb-3">no leave credits db</p>
                                     </div>
                                 </div>
                             </div>
@@ -209,7 +209,7 @@ export default function AttendanceRecord() {
                 </div>
 
                 <div>
-                    {selectedEmployee ? (
+                    {/* {selectedEmployee?.fromEmployees ? (
                         <DataTable
                             columns={columns}
                             table={table}
@@ -217,7 +217,12 @@ export default function AttendanceRecord() {
                         ></DataTable>
                     ) : (
                         <div className="text-center mt-5">No employee found or selected</div>
-                    )}
+                    )} */}
+                    <DataTable
+                        columns={columns}
+                        table={table}
+                        rowStyle="odd:bg-white even:bg-transparent text-center"
+                    ></DataTable>
 
                 </div>
             </BodyContentLayout>
