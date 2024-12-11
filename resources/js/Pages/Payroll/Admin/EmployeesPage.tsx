@@ -125,7 +125,7 @@ const columns: ColumnDef<employeeTypes>[] = [
             return (
                 <div>
                     <DropdownDialog
-                        dialogClassName="max-w-full min-h-[350px]"
+                        dialogClassName="max-w-[1000px] min-h-[350px]"
                         openDialog={openDialog}
                         setOpenDialog={setOpenDialog}
                         dialogs={dialogs}

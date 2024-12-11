@@ -2,7 +2,7 @@ import { compensationTypes } from "@/types/payrollPagesTypes";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import InputError from "./InputError";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Switch } from "./ui/switch";
 
@@ -27,6 +27,16 @@ const CompensationStoreDialog = ({
     >;
 }) => {
     const [selected, setSelected] = useState<string>();
+
+    useEffect(() => {
+        if (data.is_fixed) {
+            setSelected("Fixed");
+        } else if (!data.is_fixed) {
+            setSelected("Basic");
+        } else {
+            setSelected("");
+        }
+    }, []);
     function handleRadioSelect(value: string) {
         setSelected(value);
         if (value == "Basic") {
@@ -35,7 +45,6 @@ const CompensationStoreDialog = ({
             data.is_fixed = true;
         }
     }
-
     return (
         <div className="flex flex-col gap-2">
             <div className="grid grid-cols-2 gap-5">
@@ -89,7 +98,7 @@ const CompensationStoreDialog = ({
                 className="flex flex-col gap-2"
                 required
                 onValueChange={handleRadioSelect}
-                defaultValue={data.amount > 0 ? "Fixed" : "Basic"}
+                value={selected}
             >
                 <Label className="my-3">Compensation Type</Label>
                 <div className="grid grid-cols-2 gap-5">

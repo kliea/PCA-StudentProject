@@ -2,24 +2,13 @@ import { useForm } from "@inertiajs/react";
 import { CircleAlert, CircleCheck } from "lucide-react";
 import { FormEventHandler } from "react";
 import { toast } from "sonner";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import InputError from "../InputError";
-import { Switch } from "../ui/switch";
-import {
-    Select,
-    SelectContent,
-    SelectTrigger,
-    SelectValue,
-    SelectItem,
-} from "../ui/select";
 import { Button } from "../ui/button";
 import CompensationStoreDialog from "../CompensationStoreDialog";
 import ConfirmCancelButton from "../ConfirmCancelButton";
 
 export function CompensationStore({ openDialog }: { openDialog: any }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        compensation_name : "",
+        compensation_name: "",
         shorthand: "",
         amount: 0,
         is_taxable: false,
@@ -101,19 +90,14 @@ export function CompensationUpdate({
         amount: RowData.amount,
         is_taxable: RowData.is_taxable,
         is_fixed: RowData.is_fixed,
-        compesation_variant: RowData.compensation_variant,
         ceiling_amount: RowData.ceiling_amount,
     });
-
-    const changeCompensationSettings = (value: string) => {
-        setData("compesation_variant", value);
-    };
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        if (data.compesation_variant === "BASIC PAY") {
-            data.amount = "0";
+        if (!data.is_fixed) {
+            data.amount = 0;
         }
 
         put(route("update.compensations", RowData), {
@@ -138,7 +122,6 @@ export function CompensationUpdate({
                     "amount",
                     "is_taxable",
                     "is_fixed",
-                    "compesation_variant",
                     "ceiling_amount"
                 );
                 setOpenDialog(false);
@@ -163,146 +146,17 @@ export function CompensationUpdate({
         });
     };
     return (
-        <div>
-            <form onSubmit={submit} className="flex gap-3 flex-col">
-                <div>
-                    <div className="flex gap-3 pl-10">
-                        <div>
-                            <Label
-                                htmlFor="compensation_name"
-                                className={
-                                    errors.compensation_name && "text-red-600"
-                                }
-                            >
-                                COMPENSATION NAME
-                            </Label>
-                            <Input
-                                disabled={true}
-                                id="compensation_name"
-                                type="text"
-                                name="compensation_name"
-                                value={data.compensation_name}
-                                onChange={(e) =>
-                                    setData("compensation_name", e.target.value)
-                                }
-                            />
-                            <InputError
-                                message={errors.compensation_name}
-                                className="mt-2"
-                            />
-                        </div>
-                        <div>
-                            <Label
-                                htmlFor="shorthand"
-                                className={errors.shorthand && "text-red-600"}
-                            >
-                                SHORTHAND
-                            </Label>
-                            <Input
-                                id="shorthand"
-                                type="text"
-                                name="shorthand"
-                                value={data.shorthand}
-                                onChange={(e) =>
-                                    setData("shorthand", e.target.value)
-                                }
-                            />
-                            <InputError
-                                message={errors.shorthand}
-                                className="mt-2"
-                            />
-                        </div>
-                    </div>
-                </div>
-
-                <div className="pl-10">
-                    <Label
-                        className={
-                            (errors.compesation_variant || errors.amount) &&
-                            "text-red-600"
-                        }
-                    >
-                        COMPENSATION TYPE
-                    </Label>
-                    <div className="flex max-w-96">
-                        <Select onValueChange={changeCompensationSettings}>
-                            <SelectTrigger>
-                                <SelectValue
-                                    placeholder={
-                                        data.is_fixed
-                                            ? "FIXED AMOUNT"
-                                            : "BASIC PAY"
-                                    }
-                                />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="BASIC PAY">
-                                    BASIC PAY
-                                </SelectItem>
-                                <SelectItem value="FIXED AMOUNT">
-                                    FIXED AMOUNT
-                                </SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    {data.compesation_variant == "FIXED AMOUNT" && (
-                        <div className="max-w-96">
-                            <Label className={errors.amount && "text-red-600"}>
-                                AMOUNT
-                            </Label>
-                            <Input
-                                min={0}
-                                id="amount"
-                                type="number"
-                                name="amount"
-                                step="any"
-                                value={data.amount}
-                                onChange={(e) =>
-                                    setData("amount", e.target.value)
-                                }
-                            />
-                            <InputError
-                                message={errors.amount}
-                                className="mt-2"
-                            />
-                        </div>
-                    )}
-                </div>
-
-                <div className="flex gap-3 pl-10">
-                    <div>
-                        <Label>COMPENSATION SETTINGS</Label>
-                        <div className="flex items-center gap-3 pt-2">
-                            <Label htmlFor="is_mandatory">TAXABLE</Label>
-                            <Switch
-                                id="is_mandatory"
-                                onCheckedChange={() => {
-                                    data.is_taxable = !data.is_taxable;
-                                }}
-                            />
-                        </div>
-                    </div>
-                </div>
-
-                <div className="flex gap-3 justify-end pl-5">
-                    <Button
-                        className="mt-5 w-full max-w-32"
-                        type="button"
-                        onClick={() => setOpenDialog(false)}
-                        variant="ghost"
-                    >
-                        Cancel
-                    </Button>
-                    <Button
-                        className="mt-5 w-full max-w-32"
-                        disabled={processing}
-                        type="submit"
-                    >
-                        Confirm
-                    </Button>
-                </div>
-            </form>
-        </div>
+        <form onSubmit={submit}>
+            <CompensationStoreDialog
+                data={data}
+                errors={errors}
+                setData={setData}
+            ></CompensationStoreDialog>
+            <ConfirmCancelButton
+                processing={processing}
+                setOpenDialog={setOpenDialog}
+            />
+        </form>
     );
 }
 
