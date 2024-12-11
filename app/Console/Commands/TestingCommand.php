@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Libraries\ZKLibrary;
+use DateTime;
 
 class TestingCommand extends Command
 {
@@ -29,9 +30,17 @@ class TestingCommand extends Command
     {
         $this->zk = new ZKLibrary(env('BIOM_IP'), env('BIOM_PORT'));
         $this->zk->connect();
-        // $users_data = $this->zk->getUser();
-        // dump($users_data);
-        // dd($this->zk->getUser());
-        dd($this->zk->getAttendance());
+        $this->zk->disableDevice();
+        // // $users_data = $this->zk->getUser();
+        // // dump($users_data);
+        // // dd($this->zk->getUser());
+        $logs = $this->zk->getAttendance();
+        usort($logs, function ($a,$b)
+        {
+            return strtotime($a[3]) - strtotime($b[3]);
+        });
+        dd($logs);
+        $this->zk->enableDevice();
+        $this->zk->disconnect();
     }
 }

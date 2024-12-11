@@ -54,24 +54,38 @@ class GenerateLogCommand extends Command
             // Fetch all logs from the device
             $logs = $this->zk->getAttendance();
 
+            // to simplify specific calculations and to avoid some bugs
+            usort($logs, function ($a,$b)
+            {
+                return strtotime($a[3]) - strtotime($b[3]);
+            });
+
             // Time range boundaries
-            $morningStart = new DateTime('08:00:00');
-            $morningEnd = new DateTime('12:00:00');
-            $afternoonStart = new DateTime('13:00:00');
-            $afternoonEnd = new DateTime('17:00:00');
+            // Force time boundaries to have the same date
+            $morningStart = (new DateTime('08:00:00'));
+            $morningEnd = (new DateTime('12:00:00'));
+            $afternoonStart = (new DateTime('13:00:00'));
+            $afternoonEnd = (new DateTime('17:00:00'));
 
             foreach ($logs as $log) {
                 try {
                     // Extract log details
                     $device_bio_id = $log[1];
-                    $logDateTime = new DateTime($log[3]);
-                    $logTime = $logDateTime->format('H:i:s');
+                    $logDateTime = new DateTime($log[3]); // Full date and time
                     $logDate = $logDateTime->format('Y-m-d');
+                    $logTime = new DateTime($logDateTime->format('H:i:s'));
+                    
+                    // needs to be change cuz redundant, soon.
+                    $logTime->setDate($logDateTime->format('Y'), $logDateTime->format('m'), $logDateTime->format('d')); // for time comparison
+                    $morningStart->setDate($logDateTime->format('Y'), $logDateTime->format('m'), $logDateTime->format('d'));
+                    $morningEnd->setDate($logDateTime->format('Y'), $logDateTime->format('m'), $logDateTime->format('d'));
+                    $afternoonStart->setDate($logDateTime->format('Y'), $logDateTime->format('m'), $logDateTime->format('d'));
+                    $afternoonEnd->setDate($logDateTime->format('Y'), $logDateTime->format('m'), $logDateTime->format('d'));
+
                     $logType = $log[2]; // 0, 1, 4, 5
 
                     // Find the employee by number
                     $employee = Employee::where('device_bio_id', $device_bio_id)->first();
-
                     if (!$employee) {
                         throw new Exception("Employee with device bio id: {$device_bio_id} not found.");
                     }
@@ -79,65 +93,79 @@ class GenerateLogCommand extends Command
                     // Find or create the time entry for this employee on this date
                     $timeEntry = DailyTimeEntry::firstOrNew([
                         'date' => $logDate,
-                        'employee_code' => $employee->employee_code
+                        'employee_code' => $employee->employee_code,
                     ]);
 
-                    // Set default values for required fields
-                    if (!$timeEntry->exists) {
-                        // $timeEntry->tardy_minutes = 1; // Default value
-                        // $timeEntry->undertime_minutes = 0;
-                        $timeEntry->work_minutes = 0;
-                        $timeEntry->overtime_minutes = 0;
-                    }
-                    
+                    // Initialize if new entry
+                    // if (!$timeEntry->exists) {
+                    //     $timeEntry->work_minutes = 0;
+                    //     $timeEntry->overtime_minutes = 0;
+                    // }
 
                     // For calculations
-                    $timeDiff = null;
-                    $tardyMins = null;
-                    $undertimeMins = null;
+                    $tardyMins = 0;
+                    $undertimeMins = 0;
 
                     // Determine the field to update based on the log type and time
                     if (in_array($logType, [0, 4])) { // Time in
-                        if ($logTime >= $morningStart->format('H:i:s') && $logTime <= $morningEnd->format('H:i:s')) {
-                            $timeEntry->time_in_am = $logTime;
-                            $timeDiff = date_diff($morningStart, $logDateTime);
-                            $tardyMins += $timeDiff->h * 60;
-                            $tardyMins += $timeDiff->i;
+                        if ($logTime >= $morningStart && $logTime <= $morningEnd) {
+                            $timeEntry->time_in_am = $logTime->format('H:i:s');
+                            $timeDiff = $morningStart->diff($logTime);
+                            $tardyMins += $timeDiff->h * 60 + $timeDiff->i;
                             $timeEntry->tardy_minutes = $tardyMins;
-
-                        } elseif ($logTime >= $afternoonStart->format('H:i:s') && $logTime <= $afternoonEnd->format('H:i:s')) {
-                            $timeEntry->time_in_pm = $logTime;
-                            $timeDiff = date_diff($afternoonStart, $logDateTime);
-                            $tardyMins += $timeDiff->h * 60;
-                            $tardyMins += $timeDiff->i;
+                            
+                        } elseif ($logTime >= $afternoonStart && $logTime <= $afternoonEnd) {
+                            $timeEntry->time_in_pm = $logTime->format('H:i:s');
+                            $timeDiff = $afternoonStart->diff($logTime);
+                            $tardyMins += $timeDiff->h * 60 + $timeDiff->i;
                             $timeEntry->tardy_minutes += $tardyMins;
                         }
                     } elseif (in_array($logType, [1, 5])) { // Time out
-                        if ($logTime >= $morningStart->format('H:i:s') && $logTime <= $morningEnd->format('H:i:s')) {
-                            $timeEntry->time_out_am = $logTime;
-                            $timeDiff = date_diff($logDateTime, $morningEnd);
-                            $undertimeMins += $timeDiff->h * 60;
-                            $undertimeMins += $timeDiff->i;
-                            $timeEntry->undertime_minutes += $undertimeMins;
-                            
-                        } elseif ($logTime >= $afternoonStart->format('H:i:s') && $logTime <= $afternoonEnd->format('H:i:s')) {
-                            $timeEntry->time_out_pm = $logTime;
-                            $timeDiff = date_diff($logDateTime, $afternoonEnd);
-                            $undertimeMins += $timeDiff->h * 60;
-                            $undertimeMins += $timeDiff->i;
+                        if ($logTime >= $morningStart && $logTime <= $morningEnd) {
+                            $timeEntry->time_out_am = $logTime->format('H:i:s');
+                            $timeDiff = $logTime->diff($morningEnd);
+                            $undertimeMins += $timeDiff->h * 60 + $timeDiff->i;
+                            $timeEntry->undertime_minutes = $undertimeMins;
+
+                        } elseif ($logTime >= $afternoonStart && $logTime <= $afternoonEnd) {
+                            $timeEntry->time_out_pm = $logTime->format('H:i:s');
+                            $timeDiff = $logTime->diff($afternoonEnd);
+                            $undertimeMins += $timeDiff->h * 60 + $timeDiff->i;
                             $timeEntry->undertime_minutes += $undertimeMins;
                         }
                     }
+
+                    $workMins = 0;
+                    $overtimeMins = 0;
+                    if ($timeEntry->time_in_am && $timeEntry->time_out_am) {
+                        $timeInAM = new DateTime($timeEntry->time_in_am);
+                        $timeOutAM = new DateTime($timeEntry->time_out_am);
+                        $morningWorkTime = $timeInAM->diff($timeOutAM);
+                        $workMins += $morningWorkTime->h * 60 + $morningWorkTime->i;
+                        // dd($morningWorkTime);
+                    }
+            
+                    if ($timeEntry->time_in_pm && $timeEntry->time_out_pm) {
+                        $timeInPM = new DateTime($timeEntry->time_in_pm);
+                        $timeOutPM = new DateTime($timeEntry->time_out_pm);
+                        $afternoonWorkTime = $timeInPM->diff($timeOutPM);
+                        $workMins += $afternoonWorkTime->h * 60 + $afternoonWorkTime->i;
+                    }
+            
+                    // Calculate overtime
+                    $requiredMins = 8 * 60; // 8 hours to mins
+                    $overtimeMins = $workMins > $requiredMins ? $workMins - $requiredMins : 0;
+            
+                    $timeEntry->work_minutes = $workMins;
+                    $timeEntry->overtime_minutes = $overtimeMins;
 
                     // Save the time entry
                     $timeEntry->save();
                 } catch (Exception $e) {
-                    // Log errors for this specific log entry
                     echo "Error processing log entry: " . $e->getMessage() . "\n";
                     continue;
                 }
             }
-
             $this->zk->enableDevice();
             $this->zk->disconnect();
         } catch (Exception $e) {
