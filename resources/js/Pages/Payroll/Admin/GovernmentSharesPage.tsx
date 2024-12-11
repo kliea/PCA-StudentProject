@@ -83,6 +83,7 @@ const GovernmentSharesPage = () => {
                             title="New Government Share"
                             description=""
                         >
+                            
                             <AgencyShareStore
                                 compensationTypes={
                                     usePage().props
