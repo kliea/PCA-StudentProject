@@ -1,9 +1,11 @@
-
 import { DataTable } from "@/Components/DataTable";
 import DropdownDialog from "@/Components/DropdownDialog";
 import AuthenticatedLayout from "@/Components/Layouts/Common/AuthenticatedLayout";
 import { cn } from "@/lib/utils";
-import { sslProfileTypes } from "@/types/payrollPagesTypes";
+import {
+    dropDownDialogsTypes,
+    sslProfileTypes,
+} from "@/types/payrollPagesTypes";
 import { usePage } from "@inertiajs/react";
 import {
     ColumnDef,
@@ -59,7 +61,6 @@ const SslPage = () => {
                 <div className="mb-5 flex flex-row gap-5">
                     <Input
                         type="search"
-                        onChange={(e) => setGlobalFilter(e.target.value || "")}
                         className="w-1/4 rounded-pca"
                         placeholder="Search...."
                     />
@@ -203,7 +204,7 @@ const columns: ColumnDef<sslProfileTypes>[] = [
         cell: ({ row }) => {
             const [openDialog, setOpenDialog] = useState<string | null>(null);
             const rowData = row.original;
-            const dialogs = [
+            const dialogs: dropDownDialogsTypes[] = [
                 {
                     tag: "1",
                     name: "Edit",

@@ -14,6 +14,8 @@ import { usePage } from "@inertiajs/react";
 import {
     ColumnDef,
     getCoreRowModel,
+    getFacetedRowModel,
+    getFacetedUniqueValues,
     getFilteredRowModel,
     getPaginationRowModel,
     getSortedRowModel,
@@ -35,6 +37,8 @@ const GovernmentSharesPage = () => {
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
+        getFacetedRowModel: getFacetedRowModel(),
+        getFacetedUniqueValues: getFacetedUniqueValues(),
         getFilteredRowModel: getFilteredRowModel(),
         globalFilterFn: "auto",
         onGlobalFilterChange: setGlobalFilter,
@@ -176,8 +180,6 @@ const columns: ColumnDef<agencyTypes>[] = [
                         rowData.agency_share_name,
                         "?"
                     ),
-                    // TODO : Apply Type error handling
-                    // TODO: UPDATE CONTROLLERS
                     dialogContent: (
                         <AgencyShareDelete
                             rowId={rowData.agency_share_code}

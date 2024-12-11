@@ -16,11 +16,23 @@ export interface sslProfileTypes {
 export interface payrollIndexTypes {
     payroll_sheet_code?: number;
     fund_cluster: string;
+    start_date : string;
+    end_date: string;
+    date_posted: string;
+    date_paid : string;
     payroll_name : string;
     payroll_type : string;
     compensations: number;
     deductions : number;
     net_pay_amount_due: number;
+}
+
+export interface dropDownDialogsTypes {
+    tag: string;
+    name: string;
+    dialogtitle: string;
+    dialogContent?: React.ReactElement
+    style?: string;
 }
 
 
