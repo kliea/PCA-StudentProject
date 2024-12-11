@@ -9,13 +9,9 @@ import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import { Head, usePage } from "@inertiajs/react";
 import {
     ColumnDef,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    useReactTable,
+
 } from "@tanstack/react-table";
-import { File, FolderUp, MoreHorizontal, PlusIcon } from "lucide-react";
-import Data from "@/Components/Constants/data14.json";
+import { File, MoreHorizontal } from "lucide-react";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
 import DialogMenu from "@/Components/Dialog";
@@ -26,18 +22,10 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/Components/ui/select";
-import { DatePickerWithRange } from "@/Components/DateRangePicker";
 import { addDays } from "date-fns";
 import React, { useState } from "react";
 import { DateRange } from "react-day-picker";
-import { Button } from "@/Components/ui/button";
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/Components/ui/dialog";
+
 import {
     OrderDelete,
     OrderStore,
