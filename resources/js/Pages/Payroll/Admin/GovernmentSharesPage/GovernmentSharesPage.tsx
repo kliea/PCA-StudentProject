@@ -14,8 +14,6 @@ import { usePage } from "@inertiajs/react";
 import {
     ColumnDef,
     getCoreRowModel,
-    getFacetedRowModel,
-    getFacetedUniqueValues,
     getFilteredRowModel,
     getPaginationRowModel,
     getSortedRowModel,
@@ -37,8 +35,6 @@ const GovernmentSharesPage = () => {
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
-        getFacetedRowModel: getFacetedRowModel(),
-        getFacetedUniqueValues: getFacetedUniqueValues(),
         getFilteredRowModel: getFilteredRowModel(),
         globalFilterFn: "auto",
         onGlobalFilterChange: setGlobalFilter,
