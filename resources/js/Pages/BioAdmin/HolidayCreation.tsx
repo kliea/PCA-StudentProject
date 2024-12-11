@@ -25,47 +25,33 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/Components/ui/dialog";
+import { useTable } from "@/hooks/BioAdmin/useTable";
 
 //  Set accepted column types
 type columnTypes = {
-    name: string;
+    holiday_code: string;
+    date: string;
+    holiday_name: string;
     dayoftheweek: string;
-    datestart: string;
-    dateend: string;
 };
 // Generate the headers for the columns
 const columns: ColumnDef<columnTypes>[] = [
-    { accessorKey: "name", header: "Name" },
+    { accessorKey: "holiday_code", header: "Holiday No." },
+    { accessorKey: "date", header: "Date" },
+    { accessorKey: "holiday_name", header: "Name" },
     { accessorKey: "dayoftheweek", header: "Day Of The Week" },
-    { accessorKey: "datestart", header: "Date Start" },
-    { accessorKey: "dateend", header: "Date End" },
-    
-   
+    // { accessorKey: "dateend", header: "Date End" },
+
+
 ];
 
 
 export default function HolidayCreation() {
-    const data: columnTypes[] = Data;
-    const [globalFilter, setGlobalFilter] = useState<any>([]);
-
-    const table = useReactTable({
-        data,
+    const { holidayData } = usePage<{ holidayData: ColumnType[] }>().props
+    const { table, globalFilter, setGlobalFilter } = useTable({
+        data: holidayData,
         columns,
-        getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        initialState: {
-            pagination: {
-                pageSize: 12,
-            },
-        },
-        getFilteredRowModel: getFilteredRowModel(),
-        globalFilterFn: "auto",
-        state: {
-            globalFilter,
-        },
-        onGlobalFilterChange: setGlobalFilter,
     });
-
     const [date, setDate] = React.useState<DateRange | undefined>({
         from: new Date(),
         to: addDays(new Date(), 20),
@@ -77,19 +63,19 @@ export default function HolidayCreation() {
             <Head title="AttendanceRecord" />
 
             <BodyContentLayout headerName={"Holiday Creation"}>
-          
-                
-            <div className="flex mb-5 justify-between">
-                <section className="flex gap-7 mt-5 w-full justify-right">
-                    <section className="flex gap-7 w-1/4 justify-left">
-                        <Input
-                        type="text"
-                        placeholder="Search..."
-                        onChange={(e) =>
-                            setGlobalFilter(e.target.value || "")
-                        }
-                        className="rounded-[10px]"
-                        />
+
+
+                <div className="flex mb-5 justify-between">
+                    <section className="flex gap-7 mt-5 w-full justify-right">
+                        <section className="flex gap-7 w-1/4 justify-left">
+                            <Input
+                                type="text"
+                                placeholder="Search..."
+                                onChange={(e) =>
+                                    setGlobalFilter(e.target.value || "")
+                                }
+                                className="rounded-[10px]"
+                            />
                         </section>
                         <Dialog>
                             <DialogTrigger>
@@ -107,15 +93,15 @@ export default function HolidayCreation() {
                             </DialogContent>
                         </Dialog>
                     </section>
-            </div>
+                </div>
 
-                 <div>
+                <div>
                     <DataTable
                         columns={columns}
                         table={table}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
-                ></DataTable>
-            </div>
+                    ></DataTable>
+                </div>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin>
     );
