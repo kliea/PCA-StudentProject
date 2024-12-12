@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use phpDocumentor\Reflection\Types\Nullable;
 
 return new class extends Migration
 {
@@ -19,9 +20,11 @@ return new class extends Migration
             $table->time('time_out_am')->nullable();
             $table->time('time_in_pm')->nullable();
             $table->time('time_out_pm')->nullable();
+            $table->time('overtime_in')->nullable();
+            $table->time('overtime_out')->nullable();
             $table->integer('tardy_minutes')->nullable();
             $table->integer('undertime_minutes')->nullable();
-            $table->integer('overtime_minutes')->nullable(); //added
+            $table->integer('overtime_minutes')->nullable(); //addedd
             $table->integer('work_minutes')->nullable();
 
             $table->foreignId('employee_code')->constrained('employees')->references('employee_code');

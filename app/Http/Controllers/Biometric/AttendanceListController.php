@@ -26,6 +26,7 @@ class AttendanceListController extends Controller
     }
 
     protected $zk;
+    
     public function fetchLogs()
     {
         $this->zk = new ZKLibrary(env('BIOM_IP'), env('BIOM_PORT'));
@@ -103,7 +104,7 @@ class AttendanceListController extends Controller
                     $undertimeMins = 0;
 
                     // Determine the field to update based on the log type and time
-                    if (in_array($logType, [0, 4])) { // Time in
+                    if (in_array($logType, [0])) { // Time in
                         if ($logTime >= $morningStart && $logTime <= $morningEnd) {
                             $timeEntry->time_in_am = $logTime->format('H:i:s');
                             $timeDiff = $morningStart->diff($logTime);
@@ -116,7 +117,7 @@ class AttendanceListController extends Controller
                             $tardyMins += $timeDiff->h * 60 + $timeDiff->i;
                             $timeEntry->tardy_minutes += $tardyMins;
                         }
-                    } elseif (in_array($logType, [1, 5])) { // Time out
+                    } elseif (in_array($logType, [1])) { // Time out
                         if ($logTime >= $morningStart && $logTime <= $morningEnd) {
                             $timeEntry->time_out_am = $logTime->format('H:i:s');
                             $timeDiff = $logTime->diff($morningEnd);
@@ -129,10 +130,13 @@ class AttendanceListController extends Controller
                             $undertimeMins += $timeDiff->h * 60 + $timeDiff->i;
                             $timeEntry->undertime_minutes += $undertimeMins;
                         }
+                    } elseif (in_array($logType,[4]))
+                    {
+                        $timeEntry->overtime_in = $logTime->format('H:i:s');
+                    } elseif (in_array($logType, [5])) {
+                        $timeEntry->overtime_out = $logTime->format('H:i:s');
                     }
 
-
-                    // for work mins and overtime. dinakaya klinth hilantan jud ko dungag rako unya siguro if makalihok nako
                     $workMins = 0;
                     $overtimeMins = 0;
                     if ($timeEntry->time_in_am && $timeEntry->time_out_am) {
@@ -142,9 +146,7 @@ class AttendanceListController extends Controller
                         $workMins += $morningWorkTime->h * 60 + $morningWorkTime->i;
                         // dd($morningWorkTime);
                     }
-                    
-
-
+            
                     if ($timeEntry->time_in_pm && $timeEntry->time_out_pm) {
                         $timeInPM = new DateTime($timeEntry->time_in_pm);
                         $timeOutPM = new DateTime($timeEntry->time_out_pm);
@@ -153,8 +155,12 @@ class AttendanceListController extends Controller
                     }
             
                     // Calculate overtime
-                    $requiredMins = 8 * 60; // 8 hours to mins
-                    $overtimeMins = $workMins > $requiredMins ? $workMins - $requiredMins : 0;
+                    if ($timeEntry->overtime_in && $timeEntry->overtime_out){
+                        $overtimeIn = new DateTime($timeEntry->overtime_in);
+                        $overtimeOut = new DateTime($timeEntry->overtime_out);
+                        $overtimeDiff = $overtimeIn->diff($overtimeOut);
+                        $overtimeMins += $overtimeDiff-> h * 60 + $overtimeDiff->i;
+                    }
             
                     $timeEntry->work_minutes = $workMins;
                     $timeEntry->overtime_minutes = $overtimeMins;
