@@ -107,7 +107,7 @@ class GenerateLogCommand extends Command
                     $undertimeMins = 0;
 
                     // Determine the field to update based on the log type and time
-                    if (in_array($logType, [0, 4])) { // Time in
+                    if (in_array($logType, [0])) { // Time in
                         if ($logTime >= $morningStart && $logTime <= $morningEnd) {
                             $timeEntry->time_in_am = $logTime->format('H:i:s');
                             $timeDiff = $morningStart->diff($logTime);
@@ -120,7 +120,7 @@ class GenerateLogCommand extends Command
                             $tardyMins += $timeDiff->h * 60 + $timeDiff->i;
                             $timeEntry->tardy_minutes += $tardyMins;
                         }
-                    } elseif (in_array($logType, [1, 5])) { // Time out
+                    } elseif (in_array($logType, [1])) { // Time out
                         if ($logTime >= $morningStart && $logTime <= $morningEnd) {
                             $timeEntry->time_out_am = $logTime->format('H:i:s');
                             $timeDiff = $logTime->diff($morningEnd);
@@ -133,6 +133,11 @@ class GenerateLogCommand extends Command
                             $undertimeMins += $timeDiff->h * 60 + $timeDiff->i;
                             $timeEntry->undertime_minutes += $undertimeMins;
                         }
+                    } elseif (in_array($logType,[4]))
+                    {
+                        $timeEntry->overtime_in = $logTime->format('H:i:s');
+                    } elseif (in_array($logType, [5])) {
+                        $timeEntry->overtime_out = $logTime->format('H:i:s');
                     }
 
                     $workMins = 0;
@@ -153,8 +158,12 @@ class GenerateLogCommand extends Command
                     }
             
                     // Calculate overtime
-                    $requiredMins = 8 * 60; // 8 hours to mins
-                    $overtimeMins = $workMins > $requiredMins ? $workMins - $requiredMins : 0;
+                    if ($timeEntry->overtime_in && $timeEntry->overtime_out){
+                        $overtimeIn = new DateTime($timeEntry->overtime_in);
+                        $overtimeOut = new DateTime($timeEntry->overtime_out);
+                        $overtimeDiff = $overtimeIn->diff($overtimeOut);
+                        $overtimeMins += $overtimeDiff-> h * 60 + $overtimeDiff->i;
+                    }
             
                     $timeEntry->work_minutes = $workMins;
                     $timeEntry->overtime_minutes = $overtimeMins;

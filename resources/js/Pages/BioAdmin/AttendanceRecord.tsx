@@ -60,6 +60,8 @@ type ColumnType = {
     time_out_am: string;
     time_in_pm: string;
     time_out_pm: string;
+    overtime_in: string;
+    overtime_out:string;
     tardy_minutes: number;
     undertime_minutes: number;
     work_minutes: number;
@@ -73,9 +75,11 @@ const columns: ColumnDef<ColumnType>[] = [
     { accessorKey: "time_out_am", header: "AM Time out" },
     { accessorKey: "time_in_pm", header: "PM Time in" },
     { accessorKey: "time_out_pm", header: "PM Time out" },
+    { accessorKey: "overtime_in", header: "Overtime In" },
+    { accessorKey: "overtime_out", header: "Overtime Out" },
     { accessorKey: "tardy_minutes", header: "Tardy Minutes" },
-    { accessorKey: "undertime_minutes", header: "Undertime" },
-    { accessorKey: "work_minutes", header: "Work Time" },
+    { accessorKey: "undertime_minutes", header: "Undertime Minutes" },
+    { accessorKey: "work_minutes", header: "Work Minutes" },
 
 ];
 
