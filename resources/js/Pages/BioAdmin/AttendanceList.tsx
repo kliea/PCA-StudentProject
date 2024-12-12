@@ -1,14 +1,10 @@
-
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutBioAdmin";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
-import { Head, usePage } from "@inertiajs/react";
-import {
-    ColumnDef
-} from "@tanstack/react-table";
+import { Head, useForm, usePage } from "@inertiajs/react";
+import { ColumnDef } from "@tanstack/react-table";
 import { File, Globe, Import } from "lucide-react";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
-
 import {
     Select,
     SelectContent,
@@ -19,7 +15,6 @@ import {
 import { DatePickerWithRange } from "@/Components/DateRangePicker";
 import { useDateRange } from "@/hooks/BioAdmin/useDateRange";
 import { useTable } from "@/hooks/BioAdmin/useTable";
-
 import {
     Dialog,
     DialogContent,
@@ -27,18 +22,8 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/Components/ui/dialog";
-import { Button, buttonVariants } from "@/Components/ui/button";
-
-//  Set accepted column types
-
-// import { useState } from "react";
-// import { usePage } from "@inertiajs/react";
-// import { Input } from "@/Components/ui/input";
-// import { DataTable } from "@/Components/DataTable";
-// import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutBioAdmin";
-// import BodyContentLayout from "@/Layouts/BodyContentLayout";
-// import { Head } from "@inertiajs/react";
-// import { ColumnDef, useReactTable, getCoreRowModel, getPaginationRowModel } from "@tanstack/react-table";
+import { Button } from "@/Components/ui/button";
+import { useState } from "react";
 
 type ColumnType = {
     date: string;
@@ -48,14 +33,13 @@ type ColumnType = {
     time_in_pm: string;
     time_out_pm: string;
     overtime_in: string;
-    overtime_out:string;
+    overtime_out: string;
     tardy_minutes: number;
     undertime_minutes: number;
     overtime_minutes: number;
     work_minutes: number;
 };
 
-// Generate the headers for the columns
 const columns: ColumnDef<ColumnType>[] = [
     { accessorKey: "date", header: "Date" },
     { accessorKey: "employee_code", header: "Employee ID" },
@@ -67,13 +51,13 @@ const columns: ColumnDef<ColumnType>[] = [
     { accessorKey: "overtime_out", header: "Overtime Out" },
     { accessorKey: "tardy_minutes", header: "Tardy Minutes" },
     { accessorKey: "undertime_minutes", header: "Undertime Minutes" },
-    { accessorKey: "overtime_minutes", header: "Overtime Minutes"},
+    { accessorKey: "overtime_minutes", header: "Overtime Minutes" },
     { accessorKey: "work_minutes", header: "Work Time Minutes" },
-
 ];
 
 export default function ShowAttendance() {
-    const { allData } = usePage<{ allData: ColumnType[] }>().props
+    const { allData: initialData } = usePage<{ allData: ColumnType[] }>().props;
+    const [allData, setAllData] = useState(initialData);
 
     const { table, globalFilter, setGlobalFilter } = useTable({
         data: allData,
@@ -82,7 +66,22 @@ export default function ShowAttendance() {
     const { dateRange, setDateRange } = useDateRange();
 
 
-    
+    const { get } = useForm({}); // Initialize properly with default form values if needed
+
+    // Set action for the Form
+    const fetchLogs = async (e: React.FormEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+
+        try {
+            const data = await get(route("bioadmin.fetchLogs"));
+            // setAllData(data);
+            console.log(data);
+        } catch (error) {
+            console.error("Error fetching logs:", error);
+        }
+    };
+
+
     return (
         <AuthenticatedLayoutAdmin
             header={<h2>{usePage().component.split("/")[1]}</h2>}
@@ -90,18 +89,16 @@ export default function ShowAttendance() {
             <Head title="Employee Attendance Report" />
 
             <BodyContentLayout headerName={"Employee Attendance Report"}>
-
-
-                <div className="flex  mb-5 justify-between">
+                <div className="flex mb-5 justify-between">
                     <section className="flex gap-5 w-full justify-between">
-                        <div className="flex gap-5"><div>
-                            <DatePickerWithRange
-                                className=""
-                                date={dateRange}
-                                setDate={setDateRange}
-                            ></DatePickerWithRange>
-                        </div>
-
+                        <div className="flex gap-5">
+                            <div>
+                                <DatePickerWithRange
+                                    className=""
+                                    date={dateRange}
+                                    setDate={setDateRange}
+                                ></DatePickerWithRange>
+                            </div>
                             <Dialog>
                                 <DialogTrigger>
                                     <section className="flex gap-1 bg-secondaryGreen text-white items-center justify-center p-2 rounded-[10px] pl-3 pr-3">
@@ -115,8 +112,11 @@ export default function ShowAttendance() {
                                         </DialogTitle>
                                     </DialogHeader>
                                 </DialogContent>
-                            </Dialog></div>
-                        <div><Button variant="update">Update Log<Import /></Button></div>
+                            </Dialog>
+                        </div>
+                        <Button onClick={fetchLogs} variant="update">
+                            Update Log<Import />
+                        </Button>
                     </section>
                 </div>
                 <div>
@@ -126,7 +126,7 @@ export default function ShowAttendance() {
                         rowStyle="odd:bg-white even:bg-transparent text-center"
                     ></DataTable>
                 </div>
-            </BodyContentLayout >
-        </AuthenticatedLayoutAdmin >
+            </BodyContentLayout>
+        </AuthenticatedLayoutAdmin>
     );
 }

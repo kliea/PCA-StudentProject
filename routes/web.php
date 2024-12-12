@@ -31,7 +31,7 @@ Route::domain('bioadmin.' . env('APP_URL'))->group(
             function () {
                 Route::get('dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
                 Route::get('attendancelists', [AttendanceListController::class, 'index'])->name('bioadmin.attendancelists');
-                Route::post('attendancelists', [AttendanceListController::class, 'fetchLogs'])->name('bioadmin.fetchLogs'); // dinako oy
+                Route::get('fetchlogs', [AttendanceListController::class, 'fetchLogs'])->name('bioadmin.fetchLogs'); // dinako oy
                 // Route::get('autogenerate-today', [DailyTimeEntryController::class, 'generateNewBatch'])->name('generate-DTRs'); ala namani
                 Route::get('attendancerecords', [AttendanceRecordController::class, 'index'])->name('bioadmin.attendancerecords');
                 Route::get('manageusers', [ManageUserController::class, 'index'])->name('bioadmin.manageusers');
