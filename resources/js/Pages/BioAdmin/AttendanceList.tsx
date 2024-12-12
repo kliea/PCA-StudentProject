@@ -73,9 +73,7 @@ export default function ShowAttendance() {
         e.preventDefault();
 
         try {
-            const data = await get(route("bioadmin.fetchLogs"));
-            // setAllData(data);
-            console.log(data);
+            await get(route("bioadmin.fetchLogs"));
         } catch (error) {
             console.error("Error fetching logs:", error);
         }

@@ -5,6 +5,7 @@ import {
     ColumnDef,
     getCoreRowModel,
     getPaginationRowModel,
+    getFilteredRowModel,
     useReactTable,
 } from "@tanstack/react-table";
 import { File } from "lucide-react";
@@ -23,7 +24,7 @@ import {
 } from "@/Components/ui/dialog";
 import { DatePickerWithRange } from "@/Components/DateRangePicker";
 import { useTable } from "@/hooks/BioAdmin/useTable";
-import { useEffect, useMemo, useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 
 //  Set accepted column types
 // type columnTypes = {
@@ -61,7 +62,7 @@ type ColumnType = {
     time_in_pm: string;
     time_out_pm: string;
     overtime_in: string;
-    overtime_out:string;
+    overtime_out: string;
     tardy_minutes: number;
     undertime_minutes: number;
     work_minutes: number;
@@ -86,42 +87,41 @@ const columns: ColumnDef<ColumnType>[] = [
 
 export default function AttendanceRecord() {
     const { tableData } = usePage<{ tableData: ColumnType[] }>().props
-
-    const { table, globalFilter, setGlobalFilter } = useTable({
-        data: tableData,
-        columns,
-    });
-    const { employees } = usePage<{ employees: ColumnType[] }>().props
-
     const { dateRange, setDateRange } = useDateRange();
 
-    // State to manage selected employee
-    const [selectedEmployee, setSelectedEmployee] = useState<{
-        fromTableData: ColumnType | null;
-        fromEmployees: ColumnType | null;
-    } | null>(null);
-    // Filter data based on search input
-    const filteredEmployee = useMemo(() => {
-        if (!globalFilter) return null;
+    const [globalFilter, setGlobalFilter] = useState<string>("");
 
-        // Find the employee in tableData
-        const fromTableData = tableData.find((employee) =>
+    const { employees } = usePage<{ employees: ColumnType[] }>().props
+
+
+    const filteredTableData = useMemo(() => {
+        if (!globalFilter) return tableData;
+        return tableData.filter((employee) =>
             employee.employee_code.toString().includes(globalFilter)
-        ) || null;
+        );
+    }, [globalFilter, tableData]);
 
-        // Find the employee in employees
-        const fromEmployees = employees.find((employee) =>
+
+    const selectedEmployee = useMemo(() => {
+        if (!globalFilter) return [];  // Return an empty array if there's no globalFilter
+        return employees.filter((employee) =>
             employee.employee_code.toString().includes(globalFilter)
-        ) || null;
+        );
+    }, [globalFilter, employees]);
 
-        // Merge information from both sources
-        return { fromTableData, fromEmployees };
-    }, [globalFilter, tableData, employees]);
+    console.log(selectedEmployee)
 
-    // Update selected employee when filteredEmployee changes
-    useEffect(() => {
-        setSelectedEmployee(filteredEmployee);
-    }, [filteredEmployee]);
+    const table = useReactTable({
+        data: filteredTableData,
+        columns,
+        state: {
+            globalFilter,
+        },
+        onGlobalFilterChange: setGlobalFilter,
+        getCoreRowModel: getCoreRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+    });
 
     return (
         <AuthenticatedLayoutAdmin
@@ -132,17 +132,17 @@ export default function AttendanceRecord() {
 
             <BodyContentLayout headerName={"Employee Attendance Record"}>
                 <div className="flex items-center justify-center h-full">
-                    {selectedEmployee?.fromEmployees ? (
+                    {selectedEmployee ? (
                         <BodyContentLayout headerName="Employee Information" className="mt-5 h-fit shadow-md lg:w-2/4 bg-[#848484] bg-opacity-10">
                             <div className="grid grid-cols-4 gap-4">
                                 <div className="col-span-2">
                                     <div className="grid grid-cols-2  items-center">
                                         <h3 className=" mb-2">Name </h3>
-                                        <p className="rounded bg-white text-center text-xs text-black p-2 pr-5 mb-3">{selectedEmployee.fromEmployees.first_name} {selectedEmployee.fromEmployees.middle_name ? selectedEmployee.fromEmployees.middle_name + ' ' : ''}{selectedEmployee.fromEmployees.last_name}{selectedEmployee.fromEmployees.name_extension ? ' ' + selectedEmployee.fromEmployees.name_extension : ''}</p>
+                                        <p className="rounded bg-white text-center text-xs text-black p-2 pr-5 mb-3">{selectedEmployee[0]?.first_name} {selectedEmployee[0]?.middle_name ? selectedEmployee[0]?.middle_name + ' ' : ''}{selectedEmployee[0]?.last_name}{selectedEmployee[0]?.name_extension ? ' ' + selectedEmployee[0]?.name_extension : ''}</p>
                                     </div>
                                     <div className="grid grid-cols-2  items-center">
                                         <h3 className=" mb-2">Employee ID </h3>
-                                        <p className="rounded bg-white text-center text-xs text-black p-2 pr-5 mb-3">{selectedEmployee.fromEmployees.employee_code}</p>
+                                        <p className="rounded bg-white text-center text-xs text-black p-2 pr-5 mb-3">{selectedEmployee[0]?.employee_code}</p>
                                     </div>
                                     <div className="grid grid-cols-2  items-center">
                                         <h3 className=" mb-2">Email </h3>
@@ -153,7 +153,7 @@ export default function AttendanceRecord() {
                                 <div className="col-span-2">
                                     <div className="grid grid-cols-2  items-center">
                                         <h3 className=" mb-2">Job Title</h3>
-                                        <p className="rounded bg-white text-center text-xs text-black p-2 pr-5 mb-3">{selectedEmployee.fromEmployees.position_code}</p>
+                                        <p className="rounded bg-white text-center text-xs text-black p-2 pr-5 mb-3">{selectedEmployee[0]?.position_code}</p>
                                     </div>
                                     <div className="grid grid-cols-2  items-center">
                                         <h3 className=" mb-2">Leave Credits</h3>
@@ -182,7 +182,7 @@ export default function AttendanceRecord() {
                                 onChange={(e) =>
                                     setGlobalFilter(e.target.value || "")
                                 }
-                                placeholder="Search..."
+                                placeholder="Search by Employee ID..."
                                 className="rounded-[10px]"
                             />
                         </section>
