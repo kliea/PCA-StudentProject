@@ -5,7 +5,6 @@ import PayrollProperties from "./PayrollProperties";
 
 export const PayrollsIndexStore = () => {
     const { data, setData, errors, processing } = useForm({});
-
     return (
         <form action="">
             <Tabs defaultValue="Properties" className="w-full">

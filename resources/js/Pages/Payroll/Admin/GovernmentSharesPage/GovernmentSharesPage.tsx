@@ -53,6 +53,7 @@ const GovernmentSharesPage = () => {
             ],
         },
     });
+
     return (
         <AuthenticatedLayout
             pageTitle="Government Shares"
