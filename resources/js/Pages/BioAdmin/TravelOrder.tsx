@@ -27,11 +27,14 @@ import React, { useState } from "react";
 import { DateRange } from "react-day-picker";
 
 import {
-    OrderDelete,
+    
+    OrderRead,
     OrderStore,
     OrderUpdate,
 } from "@/Components/CrudComponents/OrderCrud";
 import { useTable } from "@/hooks/BioAdmin/useTable";
+import DropdownDialog from "@/Components/DropdownDialog";
+import { cn } from "@/lib/utils";
 
 //  Set accepted column types
 type columnTypes = {
@@ -55,28 +58,37 @@ const columns: ColumnDef<columnTypes>[] = [
     {
         id: "actions",
         cell: ({ row }) => {
-            const action = row.original;
+            const [openDialog, setOpenDialog] = useState<string | null>(null);
+            const rowData = row.original;
+            const dialogs = [
+                {
+                    tag: "1",
+                    name: "View Details",
+                    dialogtitle: cn("View Travel Order Details"),
+                    dialogContent: <OrderRead RowData={rowData}></OrderRead>,
+                },
+                
+            ];
+
             return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <section>
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </section>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem>View Details</DropdownMenuItem>
-                        <DropdownMenuItem className="text-green-600">
-                            Approve
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600">
-                            Deny
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <div>
+                    <DropdownDialog
+                        openDialog={openDialog}
+                        setOpenDialog={setOpenDialog}
+                        dialogs={dialogs}
+                        trigger={
+                            <>
+                                <section>
+                                    <MoreHorizontal className="h-4 w-4" />
+                                </section>
+                            </>
+                        }
+                    ></DropdownDialog>
+                </div>
             );
         },
     },
+
 
 
 ];
@@ -149,8 +161,10 @@ export default function TravelOrder() {
                             >
                                 <OrderStore
                                     openDialog={() =>
-                                        setOpenDialog(!openDialog)
+                                        setOpenDialog(!openDialog) 
+                                        
                                     }
+                                     formType="travel"
                                 />
                             </DialogMenu>
                         </section>
