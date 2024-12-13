@@ -9,7 +9,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        default: "bg-primary text-primary-foreground hover:bg-primary/90 flex gap-2",
         update: "bg-baseYellow text-accent-foreground hover:bg-[#0056b3] flex gap-2",
 
         destructive:
