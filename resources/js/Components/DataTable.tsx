@@ -36,7 +36,7 @@ export function DataTable<TData, TValue>({
     rowStyle,
     table,
     className,
-    pageSize,
+    pageSize = 10,
 }: DataTableProps<TData, TValue>) {
     useEffect(() => {
         table.setPageSize(pageSize);

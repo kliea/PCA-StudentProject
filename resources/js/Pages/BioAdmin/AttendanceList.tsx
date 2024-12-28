@@ -91,8 +91,7 @@ export default function ShowAttendance() {
     };
 
     return (
-        <AuthenticatedLayoutAdmin header={<h2>{usePage().component.split("/")[1]}</h2>}>
-            <Head title="Employee Attendance Report" />
+        <AuthenticatedLayoutAdmin header={<h2>Employee Attendance Report</h2>}>
             <BodyContentLayout headerName="Employee Attendance Report">
                 <div className="flex mb-5 justify-between">
                     <section className="flex gap-5 w-full justify-between">
@@ -122,6 +121,6 @@ export default function ShowAttendance() {
                     />
                 </div>
             </BodyContentLayout>
-        </AuthenticatedLayoutAdmin>
+        </AuthenticatedLayoutAdmin >
     );
 }

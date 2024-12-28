@@ -125,12 +125,12 @@ export default function AttendanceRecord() {
 
     return (
         <AuthenticatedLayoutAdmin
-            header={<h2>{usePage().component.split("/")[1]}</h2>}
+            header={<h2>Employee DTR</h2>}
         >
             <Head title="AttendanceRecord" />
 
 
-            <BodyContentLayout headerName={"Employee Attendance Record"}>
+            <BodyContentLayout headerName={"Employee DTR"}>
                 <div className="flex items-center justify-center h-full">
                     {selectedEmployee ? (
                         <BodyContentLayout headerName="Employee Information" className="mt-5 h-fit shadow-md lg:w-2/4 bg-[#848484] bg-opacity-10">

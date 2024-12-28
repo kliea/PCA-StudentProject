@@ -107,7 +107,6 @@ export default function Authenticated({
 
     const [navStatus, setnavStatus] = useState(false);
     const [email, setEmail] = useState<string>('');
-
     useEffect(() => {
         let display_email = localStorage.getItem('email');
 
@@ -160,11 +159,11 @@ export default function Authenticated({
                     {/* Mao ni ang pag generate sa header */}
                     <div
                         className={cn(
-                            " transition-all duration-200 ease-in-out py-2 px-6 sm:px-6 flex gap-3 z-40 justify-between",
+                            " transition-all duration-200 ease-in-out py-2 px-6 sm:px-6 flex gap-3 z-40 justify-end",
                             navStatus ? "ml-64 sm:ml-16" : "ml-16 sm:ml-64"
                         )}
                     >
-                        <div className="flex items-center gap-3">
+                        {/* <div className="flex items-center gap-3">
                             <PanelLeft
                                 onClick={() => setnavStatus(!navStatus)}
                             />
@@ -176,7 +175,7 @@ export default function Authenticated({
                             >
                                 {header}
                             </span>
-                        </div>
+                        </div> */}
                         <div className="flex items-center gap-3">
                             {/* TODO : Add a welcome to the user : Dili nata mag search bar kay taga page tag duha duha nag search bar niya no scroll man ato page*/}
                             <h1 className="hidden lg:block">
