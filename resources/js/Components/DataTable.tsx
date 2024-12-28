@@ -36,37 +36,23 @@ export function DataTable<TData, TValue>({
     className,
 }: DataTableProps<TData, TValue>) {
     return (
-        // Fix Pagination : Moves with table . Prefereable if stay sa bottom
-        // Style the Table
-        // Pagination kay dapat naay pay lain number ug dapat naas tunga or naka highlight ang current page sa pagination
-        // Disable Previous Button Page or Hide kung wanay prev page
-        // Disable Next Button Page or Hide kung wanay next page
-        // Link On Click for Add Button
-        // Optimize Pagination : Possibly Use Manual Pagination
-        <div className="h-full">
-            <div
-                className={cn("rounded-[5px] border shadow-md overflow-hidden")}
-            >
-                <Table className={cn("bg-baseGrey h-full ", className)}>
+        <div className="h-full flex flex-col">
+            {/* Table Container */}
+            <div className={cn("rounded-[5px] border shadow-md flex-grow overflow-hidden")}>
+                <Table className={cn("bg-baseGrey h-full", className)}>
                     <TableHeader className={headerStyle}>
                         {table.getHeaderGroups().map((headerGroup: any) => (
                             <TableRow key={headerGroup.id}>
-                                {headerGroup.headers.map((header: any) => {
-                                    return (
-                                        <TableHead
-                                            key={header.id}
-                                            className="text-center"
-                                        >
-                                            {header.isPlaceholder
-                                                ? null
-                                                : flexRender(
-                                                      header.column.columnDef
-                                                          .header,
-                                                      header.getContext()
-                                                  )}
-                                        </TableHead>
-                                    );
-                                })}
+                                {headerGroup.headers.map((header: any) => (
+                                    <TableHead key={header.id} className="text-center">
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(
+                                                header.column.columnDef.header,
+                                                header.getContext()
+                                            )}
+                                    </TableHead>
+                                ))}
                             </TableRow>
                         ))}
                     </TableHeader>
@@ -76,26 +62,18 @@ export function DataTable<TData, TValue>({
                                 <TableRow
                                     className={rowStyle}
                                     key={row.id}
-                                    data-state={
-                                        row.getIsSelected() && "selected"
-                                    }
+                                    data-state={row.getIsSelected() && "selected"}
                                 >
                                     {row.getVisibleCells().map((cell: any) => (
                                         <TableCell key={cell.id}>
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext()
-                                            )}
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </TableCell>
                                     ))}
                                 </TableRow>
                             ))
                         ) : (
                             <TableRow>
-                                <TableCell
-                                    colSpan={columns.length}
-                                    className="h-24 text-center"
-                                >
+                                <TableCell colSpan={columns.length} className="h-24 text-center">
                                     No results.
                                 </TableCell>
                             </TableRow>
@@ -103,6 +81,58 @@ export function DataTable<TData, TValue>({
                     </TableBody>
                 </Table>
             </div>
+
+            {/* Pagination */}
+            <div className="flex items-center justify-between p-4">
+                <Pagination>
+                    {/* Previous Button */}
+                    <PaginationPrevious
+                        onClick={() => {
+                            if (table.getCanPreviousPage()) {
+                                table.previousPage();
+                            }
+                        }}
+                        className={cn(
+                            !table.getCanPreviousPage() ? "cursor-not-allowed opacity-50" : "",
+                            "px-4 py-2"
+                        )}
+                    >
+                        Previous
+                    </PaginationPrevious>
+
+                    {/* Page Numbers */}
+                    {table.getPageCount() > 1 &&
+                        Array.from({ length: table.getPageCount() }, (_, index) => (
+                            <PaginationItem key={index}>
+                                <PaginationLink
+                                    onClick={() => table.setPageIndex(index)}
+                                    className={cn(
+                                        table.getState().pagination.pageIndex === index &&
+                                        "font-bold bg-primary text-white"
+                                    )}
+                                >
+                                    {index + 1}
+                                </PaginationLink>
+                            </PaginationItem>
+                        ))}
+
+                    {/* Next Button */}
+                    <PaginationNext
+                        onClick={() => {
+                            if (table.getCanNextPage()) {
+                                table.nextPage();
+                            }
+                        }}
+                        className={cn(
+                            !table.getCanNextPage() ? "cursor-not-allowed opacity-50" : "",
+                            "px-4 py-2"
+                        )}
+                    >
+                        Next
+                    </PaginationNext>
+                </Pagination>
+            </div>
+
         </div>
     );
 }

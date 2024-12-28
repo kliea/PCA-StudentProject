@@ -19,7 +19,7 @@ import {
     getCoreRowModel,
     getPaginationRowModel,
     useReactTable,
-    
+
 } from "@tanstack/react-table";
 import { DataTable } from "@/Components/DataTable";
 import { DatePickerWithRange } from "@/Components/DateRangePicker";
@@ -44,7 +44,7 @@ type ColumnType = {
     time_in_pm: string;
     time_out_pm: string;
     overtime_in: string;
-    overtime_out:string;
+    overtime_out: string;
     tardy_minutes: number;
     undertime_minutes: number;
     work_minutes: number;
@@ -63,28 +63,28 @@ const columns: ColumnDef<ColumnType>[] = [
     { accessorKey: "tardy_minutes", header: "Tardy Minutes" },
     { accessorKey: "undertime_minutes", header: "Undertime Minutes" },
     { accessorKey: "work_minutes", header: "Work Time Minutes" },
-    { accessorKey: "employee_code", header: "Employee ID" },    
+    { accessorKey: "employee_code", header: "Employee ID" },
 
 ];
 
 
 
 
-    export default function dashboardb() {
-        const { allData } = usePage<{ allData: columntTypes[] }>().props
-        
+export default function dashboardb() {
+    const { allData } = usePage<{ allData: columntTypes[] }>().props
 
-        const table = useReactTable({
-            data: allData,
-            columns,
-            getCoreRowModel: getCoreRowModel(),
-            getPaginationRowModel: getPaginationRowModel(),
-            initialState: {
-                pagination: {
-                    pageSize: 5,
-                },
+
+    const table = useReactTable({
+        data: allData,
+        columns,
+        getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        initialState: {
+            pagination: {
+                pageSize: 5,
             },
-        });
+        },
+    });
 
     const [date, setDate] = React.useState<DateRange | undefined>({
         from: new Date(),
@@ -97,7 +97,7 @@ const columns: ColumnDef<ColumnType>[] = [
             <Head title="Dashboard" />
 
             <div className="lg:bg-white lg:shadow-md w-full h-full rounded-[10px] overflow-x-auto lg:block lg:overflow-hidden">
-                <div className="flex gap-5 justify-between py-2 sm:p-5">
+                <div className="flex gap-5 justify-between sm:p-5">
                     <StatusCardb
                         cardQuantity={102}
                         cardTitle="Total Employees"
@@ -113,11 +113,9 @@ const columns: ColumnDef<ColumnType>[] = [
                         cardTitle="On time Today"
                         Icon={Clock}
                     />
-                   
+
                 </div>
-                <div className="flex gap-5 justify-between py-2 sm:p-5">
-                    {/* Status Card Props need Backend Data Retrieval */}
-                    {/* Need pag adjustments sa design*/}
+                <div className="flex gap-5 justify-between sm:p-5">
                     <StatusCardb
                         cardQuantity={0}
                         cardTitle="Total Late"
@@ -133,9 +131,9 @@ const columns: ColumnDef<ColumnType>[] = [
                         cardTitle="Pending Application"
                         Icon={Loader}
                     />
-                   
+
                 </div>
-               
+
             </div>
 
 
@@ -150,7 +148,7 @@ const columns: ColumnDef<ColumnType>[] = [
                                 columns={columns}
                                 rowStyle="odd:bg-white even:bg-transparent text-center"
                                 table={table}
-                                className="lg:h-[450px]"
+                                className="lg:h-[250px]"
                             />
                         </BodyContentLayout>
                     </div>
