@@ -118,6 +118,7 @@ export default function ShowAttendance() {
                         columns={columns}
                         table={table}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
+                        pageSize={10} // Limit to 10 rows per page
                     />
                 </div>
             </BodyContentLayout>

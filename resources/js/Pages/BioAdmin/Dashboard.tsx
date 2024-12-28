@@ -148,10 +148,11 @@ export default function dashboardb() {
                                 columns={columns}
                                 rowStyle="odd:bg-white even:bg-transparent text-center"
                                 table={table}
-                                className="lg:h-[250px]"
+                                pageSize={5} // Limit to 5 rows per page
                             />
                         </BodyContentLayout>
                     </div>
+
                 </div>
             </div>
         </AuthenticatedLayoutAdmin>

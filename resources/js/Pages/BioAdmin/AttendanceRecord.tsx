@@ -225,6 +225,8 @@ export default function AttendanceRecord() {
                         columns={columns}
                         table={table}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
+                        pageSize={5} // Limit to 5 rows per page
+
                     ></DataTable>
 
                 </div>

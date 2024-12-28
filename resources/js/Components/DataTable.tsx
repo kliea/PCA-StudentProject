@@ -19,6 +19,7 @@ import {
 } from "@/Components/ui/pagination";
 
 import { ColumnDef, flexRender } from "@tanstack/react-table";
+import { useEffect } from "react";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -26,6 +27,7 @@ interface DataTableProps<TData, TValue> {
     rowStyle?: string;
     table: any;
     className?: string;
+    pageSize?: number;
 }
 
 export function DataTable<TData, TValue>({
@@ -34,11 +36,18 @@ export function DataTable<TData, TValue>({
     rowStyle,
     table,
     className,
+    pageSize,
 }: DataTableProps<TData, TValue>) {
+    useEffect(() => {
+        table.setPageSize(pageSize);
+    }, [table, pageSize]);
+
     return (
         <div className="h-full flex flex-col">
             {/* Table Container */}
-            <div className={cn("rounded-[5px] border shadow-md flex-grow overflow-hidden")}>
+            <div className={cn("rounded-[5px] border shadow-md flex-grow overflow-hidden")}
+
+            >
                 <Table className={cn("bg-baseGrey h-full", className)}>
                     <TableHeader className={headerStyle}>
                         {table.getHeaderGroups().map((headerGroup: any) => (
@@ -100,7 +109,6 @@ export function DataTable<TData, TValue>({
                         Previous
                     </PaginationPrevious>
 
-                    {/* Page Numbers */}
                     {table.getPageCount() > 1 &&
                         Array.from({ length: table.getPageCount() }, (_, index) => (
                             <PaginationItem key={index}>
