@@ -20,6 +20,7 @@ import NavLink from "@/Components/NavLink";
 import { Separator } from "@/Components/ui/separator";
 import { Head } from "@inertiajs/react";
 import { useState } from "react";
+import { NavUser } from "@/Components/common/LogOutFooter";
 const AuthenticatedLayout = ({
     children,
     pageTitle,
@@ -27,9 +28,15 @@ const AuthenticatedLayout = ({
 }: AuthenticatedLayoutAdminProps) => {
     const [open, setOpen] = useState(true);
 
-    // Add Navigation in respecive page @/Constants/Navigations
+    // Placeholder User
+    var user = {
+        name: "John Doe",
+        email: "johnDoe2641@email.com",
+        avatar: "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png",
+    };
 
-    const navigation =
+    // Add Navigation in respecive page @/Constants/Navigations
+    var navigation =
         navigationType == "payrollAdmin" ? PAYROLLADMIN : PAYROLLEMPLOYEE;
 
     return (
@@ -84,6 +91,9 @@ const AuthenticatedLayout = ({
                         </SidebarGroup>
                     ))}
                 </SidebarContent>
+                <SidebarFooter className="bg-baseGreen text-white">
+                    <NavUser user={user} />
+                </SidebarFooter>
             </Sidebar>
 
             <main className="sm:overflow-x-hidden">

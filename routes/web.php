@@ -21,11 +21,11 @@ use App\Http\Controllers\Payroll\SummaryController;
 // Controllers: Biometrics
 use App\Http\Controllers\Biometrics\DailyTimeEntryController;
 use App\Http\Controllers\PageController;
-
+// ->middleware(['auth'])
 // SUBDOMAIN FOR BIOADMIN
 Route::domain('bioadmin.' . env('APP_URL'))->group(
     function () {
-        Route::prefix('admin')->middleware(['auth'])->group(
+        Route::prefix('admin')->group(
             function () {
                 Route::get('dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
                 Route::get('attendancelists', [AttendanceListController::class, 'index'])->name('bioadmin.attendancelists');
@@ -41,6 +41,8 @@ Route::domain('bioadmin.' . env('APP_URL'))->group(
 
 // SUBDOMAIN FOR PAYROLL
 Route::domain('payroll.' . env('APP_URL'))->group(function () {
+    Route::get('test', [AdminPageController::class, 'format'])->name('admin.formats');
+
     Route::prefix('admin')->group(function () {
         Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
         // PAYROLL ROUTES
@@ -60,7 +62,6 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::post('governmentshares/store', [AgencyShareController::class, 'store'])->name('store.governmentshare');
         Route::put('governmentshares/{agency_share_name}', [AgencyShareController::class, 'update'])->name('update.governmentshare');
         Route::delete('governmentshares/{agency_share_name}', [AgencyShareController::class, 'destroy'])->name('delete.governmentshare');
-        Route::get('formats', [AdminPageController::class, 'format'])->name('admin.formats');
 
         // APPOINTMENT ROUTES
         Route::get('appointments', [AppointmentController::class, 'index'])->name('admin.appointment');
@@ -86,6 +87,10 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         //Query routes
         Route::get('/test', [PageController::class, 'testingPage']);
         Route::get('employee/{employee_code}', [EmployeeController::class, 'get_employee_data'])->name('admin.employee_data');
+    });
+
+    Route::fallback(function () {
+        return redirect()->route('admin.formats');
     });
 });
 
