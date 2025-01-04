@@ -13,10 +13,12 @@ export function DatePicker({
     date,
     setDate,
     disabled,
+    dateTag,
 }: {
     date: Date | undefined;
-    setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
+    setDate: any;
     disabled?: boolean;
+    dateTag: string;
 }) {
     return (
         <Popover>
@@ -36,7 +38,7 @@ export function DatePicker({
                 <Calendar
                     mode="single"
                     selected={date}
-                    onSelect={setDate}
+                    onSelect={(e) => setDate(dateTag, e)}
                     initialFocus
                 />
             </PopoverContent>

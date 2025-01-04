@@ -68,6 +68,7 @@ const AppointmentsPage = () => {
                     />
                     <div className="grid grid-cols-1 gap-5 w-1/4">
                         <DialogMenu
+                            dialogClassName=" max-w-[1000px]"
                             open={openDialog}
                             openDialog={() => setOpenDialog(!openDialog)}
                             trigger={
@@ -166,6 +167,7 @@ const columns: ColumnDef<appointmentTypes>[] = [
             return (
                 <div>
                     <DropdownDialog
+                        dialogClassName=" max-w-[1000px]"
                         openDialog={openDialog}
                         setOpenDialog={setOpenDialog}
                         dialogs={dialogs}

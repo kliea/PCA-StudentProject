@@ -88,3 +88,9 @@ export interface employeeTypes {
     step : number;
     salary: number;
 }
+
+export interface employeesListTypes {
+    first_name: string;
+    last_name: string;
+    
+}

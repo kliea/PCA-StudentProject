@@ -3,14 +3,20 @@ import { Checkbox } from "@/Components/ui/checkbox";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
 import useCheckbox from "@/hooks/use-checkbox";
-import { useEffect, useState } from "react";
+import useDatePicker from "@/hooks/use-datepicker";
+import { useState } from "react";
 
 const PayrollProperties = () => {
-    const [date, setDate] = useState<Date | undefined>();
     const { checkbox, setCheckbox } = useCheckbox({
         datePosted: false,
         datePaid: false,
         includeMandatory: false,
+    });
+    const { dates, setDate } = useDatePicker({
+        startingDate: new Date(),
+        endingDate: new Date(),
+        datePosted: new Date(),
+        datePaid: new Date(),
     });
     return (
         <div className="w-full">
@@ -34,11 +40,19 @@ const PayrollProperties = () => {
 
                 <section>
                     <Label> Starting Date</Label>
-                    <DatePicker date={date} setDate={setDate}></DatePicker>
+                    <DatePicker
+                        dateTag="startingDate"
+                        date={dates.startingDate}
+                        setDate={setDate}
+                    ></DatePicker>
                 </section>
                 <section>
                     <Label> Ending Date</Label>
-                    <DatePicker date={date} setDate={setDate}></DatePicker>
+                    <DatePicker
+                        dateTag="endingDate"
+                        date={dates.endingDate}
+                        setDate={setDate}
+                    ></DatePicker>
                 </section>
                 <section className="flex flex-col gap-2">
                     <section className="flex items-center gap-2">
@@ -50,7 +64,11 @@ const PayrollProperties = () => {
                         />
                         <Label> Date Posted</Label>
                     </section>
-                    <DatePicker date={date} setDate={setDate}></DatePicker>
+                    <DatePicker
+                        dateTag="datePosted"
+                        date={dates.datePosted}
+                        setDate={setDate}
+                    ></DatePicker>
                 </section>
                 <section className="flex flex-col gap-2">
                     <section className="flex items-center gap-2">
@@ -60,7 +78,11 @@ const PayrollProperties = () => {
                         />
                         <Label> Date Paid</Label>
                     </section>
-                    <DatePicker date={date} setDate={setDate}></DatePicker>
+                    <DatePicker
+                        dateTag="datePaid"
+                        date={dates.datePaid}
+                        setDate={setDate}
+                    ></DatePicker>
                 </section>
                 <section className="flex items-center gap-2">
                     <Checkbox />

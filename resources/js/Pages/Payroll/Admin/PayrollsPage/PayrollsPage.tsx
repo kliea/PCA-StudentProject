@@ -112,6 +112,8 @@ const PayrollsPage = () => {
             ],
         },
     });
+
+    const [openDialog, setOpenDialog] = useState<boolean>(false);
     return (
         <AuthenticatedLayout
             pageTitle="Payrolls Index"
@@ -127,9 +129,10 @@ const PayrollsPage = () => {
                     ></Input>
                     <div className="w-full grid grid-cols-6 gap-3">
                         <DialogMenu
-                            dialogClassName="max-w-[calc(100%-5%)] min-h-[450px]"
+                            open={openDialog}
+                            dialogClassName="max-w-[calc(100%-5%)] h-[calc(100%-20%)]"
+                            openDialog={() => setOpenDialog(!openDialog)}
                             title="New Payroll Index"
-                            open={true}
                             trigger={
                                 <Button
                                     className="gap-2 rounded-pca"
@@ -140,7 +143,9 @@ const PayrollsPage = () => {
                                 </Button>
                             }
                         >
-                            <PayrollsIndexStore />
+                            <PayrollsIndexStore
+                                openDialog={() => setOpenDialog(!openDialog)}
+                            />
                         </DialogMenu>
                     </div>
                 </div>
@@ -182,7 +187,14 @@ const columns: ColumnDef<payrollIndexTypes>[] = [
     },
     { accessorKey: "date_posted", header: "Date Posted" },
     { accessorKey: "date_paid", header: "Date Paid" },
-    { accessorKey: "net_pay_amount_due", header: "Net Pay" },
+    {
+        accessorKey: "net_pay_amount_due",
+        header: "Net Pay",
+        cell: ({ row }) => {
+            const number = Number(row.getValue("net_pay_amount_due"));
+            return <p>₱ {number.toLocaleString("en-US")}</p>;
+        },
+    },
     {
         id: "action",
         cell: ({ row }) => {
