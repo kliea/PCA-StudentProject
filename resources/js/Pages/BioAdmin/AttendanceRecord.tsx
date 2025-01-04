@@ -8,7 +8,7 @@ import {
     getFilteredRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { File } from "lucide-react";
+import { File, FileSearch } from "lucide-react";
 import Data from "@/Components/Constants/data5.json";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
@@ -25,6 +25,7 @@ import {
 import { DatePickerWithRange } from "@/Components/DateRangePicker";
 import { useTable } from "@/hooks/BioAdmin/useTable";
 import { useState, useMemo, useEffect } from "react";
+import { Button } from "@/Components/ui/button";
 
 //  Set accepted column types
 // type columnTypes = {
@@ -86,30 +87,55 @@ const columns: ColumnDef<ColumnType>[] = [
 
 
 export default function AttendanceRecord() {
+
     const { tableData } = usePage<{ tableData: ColumnType[] }>().props
     const { dateRange, setDateRange } = useDateRange();
 
     const [globalFilter, setGlobalFilter] = useState<string>("");
+    const [filteredTableData, setFilteredTableData] = useState<ColumnType[]>([]);
 
-    const { employees } = usePage<{ employees: ColumnType[] }>().props
+    const { employees } = usePage<{ employees: ColumnType[] }>().props;
 
+    // Set initial filtered data to tableData
+    useEffect(() => {
+        if (tableData) {
+            setFilteredTableData(tableData); // Initially set to tableData
+        }
+    }, [tableData]);
 
-    const filteredTableData = useMemo(() => {
-        if (!globalFilter) return tableData;
-        return tableData.filter((employee) =>
-            employee.employee_code.toString().includes(globalFilter)
-        );
-    }, [globalFilter, tableData]);
+    // Filtering logic moved to a function that gets called when the user clicks a button
+    const filterData = () => {
+        if (!tableData) return [];
 
+        let filteredData = tableData || [];
+
+        // Filter by global search
+        if (globalFilter) {
+            filteredData = filteredData.filter((employee) =>
+                employee.employee_code.toString().includes(globalFilter)
+            );
+        }
+
+        // Filter by date range
+        if (dateRange?.from && dateRange?.to) {
+            const start = new Date(dateRange.from);
+            const end = new Date(dateRange.to);
+
+            filteredData = filteredData.filter((row) => {
+                const rowDate = new Date(row.date); // Parse the string date
+                return rowDate >= start && rowDate <= end; // Ensure within range
+            });
+        }
+
+        setFilteredTableData(filteredData); // Update the filtered data state
+    };
 
     const selectedEmployee = useMemo(() => {
         if (!globalFilter) return [];  // Return an empty array if there's no globalFilter
         return employees.filter((employee) =>
             employee.employee_code.toString().includes(globalFilter)
         );
-    }, [globalFilter, employees]);
-
-    console.log(selectedEmployee)
+    }, [globalFilter, employees, tableData]);
 
     const table = useReactTable({
         data: filteredTableData,
@@ -125,12 +151,12 @@ export default function AttendanceRecord() {
 
     return (
         <AuthenticatedLayoutAdmin
-            header={<h2>{usePage().component.split("/")[1]}</h2>}
+            header={<h2>Employee DTR</h2>}
         >
             <Head title="AttendanceRecord" />
 
 
-            <BodyContentLayout headerName={"Employee Attendance Record"}>
+            <BodyContentLayout headerName={"Employee DTR"}>
                 <div className="flex items-center justify-center h-full">
                     {selectedEmployee ? (
                         <BodyContentLayout headerName="Employee Information" className="mt-5 h-fit shadow-md lg:w-2/4 bg-[#848484] bg-opacity-10">
@@ -146,7 +172,7 @@ export default function AttendanceRecord() {
                                     </div>
                                     <div className="grid grid-cols-2  items-center">
                                         <h3 className=" mb-2">Email </h3>
-                                        <p className="rounded bg-white text-center text-xs text-black p-2 pr-5 mb-3">no email db</p>
+                                        <p className="rounded bg-white text-center text-xs text-black p-2 pr-5 mb-3">no data available</p>
                                     </div>
 
                                 </div>
@@ -157,7 +183,7 @@ export default function AttendanceRecord() {
                                     </div>
                                     <div className="grid grid-cols-2  items-center">
                                         <h3 className=" mb-2">Leave Credits</h3>
-                                        <p className="rounded bg-white text-center text-xs text-black p-2 pr-5 mb-3">no leave credits db</p>
+                                        <p className="rounded bg-white text-center text-xs text-black p-2 pr-5 mb-3">no data available</p>
                                     </div>
                                 </div>
                             </div>
@@ -193,21 +219,27 @@ export default function AttendanceRecord() {
                                 setDate={setDateRange}
                             ></DatePickerWithRange>
                         </div>
-                        <Dialog>
-                            <DialogTrigger>
-                                <section className="flex gap-1 bg-baseYellow text-black items-center justify-center p-2 rounded-[10px] pl-3 pr-5">
-                                    <File size={15} />
-                                    Generate Report
-                                </section>
-                            </DialogTrigger>
-                            <DialogContent>
-                                <DialogHeader>
-                                    <DialogTitle>
-                                        Feature Under Development
-                                    </DialogTitle>
-                                </DialogHeader>
-                            </DialogContent>
-                        </Dialog>
+
+                        <Button onClick={filterData} >
+                            <FileSearch />
+                            Filter Data
+                        </Button>
+                        {globalFilter && dateRange.from && dateRange.to && (
+                            <Dialog>
+                                <DialogTrigger>
+                                    <section className="flex gap-1 bg-baseYellow text-black items-center justify-center p-2 rounded-[10px] pl-3 pr-5">
+                                        <File size={15} />
+                                        Generate Report
+                                    </section>
+                                </DialogTrigger>
+                                <DialogContent>
+                                    <DialogHeader>
+                                        <DialogTitle>
+                                            Feature Under Development
+                                        </DialogTitle>
+                                    </DialogHeader>
+                                </DialogContent>
+                            </Dialog>)}
                     </section>
                 </div>
 
@@ -225,6 +257,8 @@ export default function AttendanceRecord() {
                         columns={columns}
                         table={table}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
+                        pageSize={5} // Limit to 5 rows per page
+
                     ></DataTable>
 
                 </div>

@@ -91,8 +91,7 @@ export default function ShowAttendance() {
     };
 
     return (
-        <AuthenticatedLayoutAdmin header={<h2>{usePage().component.split("/")[1]}</h2>}>
-            <Head title="Employee Attendance Report" />
+        <AuthenticatedLayoutAdmin header={<h2>Employee Attendance Report</h2>}>
             <BodyContentLayout headerName="Employee Attendance Report">
                 <div className="flex mb-5 justify-between">
                     <section className="flex gap-5 w-full justify-between">
@@ -118,9 +117,10 @@ export default function ShowAttendance() {
                         columns={columns}
                         table={table}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
+                        pageSize={10} // Limit to 10 rows per page
                     />
                 </div>
             </BodyContentLayout>
-        </AuthenticatedLayoutAdmin>
+        </AuthenticatedLayoutAdmin >
     );
 }
