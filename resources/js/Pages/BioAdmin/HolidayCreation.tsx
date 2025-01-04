@@ -63,18 +63,20 @@ export default function HolidayCreation() {
             <Head title="AttendanceRecord" />
 
             <BodyContentLayout headerName={"Holiday Creation"}>
-                <div className="flex my-5 justify-between w-full">
-                    <section className="flex gap-7 w-1/4 justify-left">
-                        <Input
-                            type="text"
-                            placeholder="Search..."
-                            onChange={(e) =>
-                                setGlobalFilter(e.target.value || "")
-                            }
-                            className="rounded-[10px]"
-                        />
-                    </section>
-                    <section>
+
+
+                <div className="flex mb-5 justify-between">
+                    <section className="flex gap-7 mt-5 w-full justify-right">
+                        <section className="flex gap-7 w-1/4 justify-left">
+                            <Input
+                                type="text"
+                                placeholder="Search..."
+                                onChange={(e) =>
+                                    setGlobalFilter(e.target.value || "")
+                                }
+                                className="rounded-[10px]"
+                            />
+                        </section>
                         <Dialog>
                             <DialogTrigger>
                                 <section className="flex gap-1 bg-baseYellow text-black items-center justify-right p-2 rounded-[10px] pl-3 pr-5">
