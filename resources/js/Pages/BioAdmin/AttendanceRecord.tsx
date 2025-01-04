@@ -172,7 +172,7 @@ export default function AttendanceRecord() {
                                     </div>
                                     <div className="grid grid-cols-2  items-center">
                                         <h3 className=" mb-2">Email </h3>
-                                        <p className="rounded bg-white text-center text-xs text-black p-2 pr-5 mb-3">no email db</p>
+                                        <p className="rounded bg-white text-center text-xs text-black p-2 pr-5 mb-3">no data available</p>
                                     </div>
 
                                 </div>
@@ -183,7 +183,7 @@ export default function AttendanceRecord() {
                                     </div>
                                     <div className="grid grid-cols-2  items-center">
                                         <h3 className=" mb-2">Leave Credits</h3>
-                                        <p className="rounded bg-white text-center text-xs text-black p-2 pr-5 mb-3">no leave credits db</p>
+                                        <p className="rounded bg-white text-center text-xs text-black p-2 pr-5 mb-3">no data available</p>
                                     </div>
                                 </div>
                             </div>
