@@ -7,7 +7,7 @@ import { Head } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTable } from "@/hooks/BioAdmin/useTable";
 import { Button } from "@/Components/ui/button";
-import { Import } from "lucide-react";
+import { Import, Plus, UserPlus } from "lucide-react";
 
 
 
@@ -63,7 +63,7 @@ export default function ManageUsers() {
                         }
                         className="w-1/4 rounded-[10px] ml-auto"
                     />
-                    <div><Button variant="update">Update Employee List<Import /></Button></div>
+                    <div><Button >Create Employee<UserPlus /></Button></div>
                 </div>
                 <div>
                     <DataTable
