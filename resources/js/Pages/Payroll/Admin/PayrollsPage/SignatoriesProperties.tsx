@@ -10,7 +10,6 @@ import {
 import { Separator } from "@/Components/ui/separator";
 
 const SignatoriesProperty = () => {
-    
     return (
         <div>
             <div className="grid grid-cols-3 items-center justify-center m-5">

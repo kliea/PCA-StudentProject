@@ -2,22 +2,8 @@ import { DatePicker } from "@/Components/DatePicker";
 import { Checkbox } from "@/Components/ui/checkbox";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
-import useCheckbox from "@/hooks/use-checkbox";
-import useDatePicker from "@/hooks/use-datepicker";
-import { useState } from "react";
 
-const PayrollProperties = () => {
-    const { checkbox, setCheckbox } = useCheckbox({
-        datePosted: false,
-        datePaid: false,
-        includeMandatory: false,
-    });
-    const { dates, setDate } = useDatePicker({
-        startingDate: new Date(),
-        endingDate: new Date(),
-        datePosted: new Date(),
-        datePaid: new Date(),
-    });
+const PayrollProperties = ({checkbox, setCheckbox, dates, setDate}:{checkbox: any, setCheckbox: any, dates:any, setDate: any}) => {
     return (
         <div className="w-full">
             <section className="w-full grid grid-cols-4 gap-5">
