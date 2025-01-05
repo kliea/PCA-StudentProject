@@ -1,27 +1,28 @@
-import { agencyTypes } from "@/types/payrollPagesTypes";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-import InputError from "./InputError";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { Switch } from "./ui/switch";
+import InputError from "@/Components/InputError";
+import { Input } from "@/Components/ui/input";
+import { Label } from "@/Components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/Components/ui/radio-group";
+import { Switch } from "@/Components/ui/switch";
+import { deductionTypes } from "@/types/payrollPagesTypes";
 
-const GovernmentShareStore = ({
+const DeductionsStoreDialog = ({
     data,
     setData,
     errors,
     selected,
     setSelected,
 }: {
-    data: agencyTypes;
+    data: deductionTypes;
     setData: any;
     errors: Partial<
         Record<
-            | "agency_share_name"
+            | "deduction_name"
             | "shorthand"
             | "amount"
             | "is_mandatory"
             | "remittance_percent"
             | "ceiling_amount"
+            | "deductionType"
             | "compensation_links",
             string
         >
@@ -37,32 +38,28 @@ const GovernmentShareStore = ({
         <div className="flex flex-col gap-2">
             <div className="grid grid-cols-2 gap-5">
                 <section>
-                    <Label
-                        className={errors.agency_share_name && "text-red-600"}
-                    >
-                        Name of Agency Share
+                    <Label className={errors.deduction_name && "text-red-600"}>
+                        Name of Deduction
                     </Label>
                     <Input
-                        id="agency_share_name"
+                        id="deduction_name"
                         type="text"
-                        name="agency_share_name"
-                        value={data.agency_share_name}
+                        name="deduction_name"
+                        value={data.deduction_name}
                         onChange={(e) =>
                             setData(
-                                "agency_share_name",
+                                "deduction_name",
                                 e.target.value.toUpperCase()
                             )
                         }
                     />
                     <InputError
-                        message={errors.agency_share_name}
+                        message={errors.deduction_name}
                         className="mt-2"
                     />
                 </section>
                 <section>
-                    <Label
-                        className={errors.agency_share_name && "text-red-600"}
-                    >
+                    <Label className={errors.shorthand && "text-red-600"}>
                         Shorthand
                     </Label>
                     <Input
@@ -170,4 +167,4 @@ const GovernmentShareStore = ({
     );
 };
 
-export default GovernmentShareStore;
+export default DeductionsStoreDialog;

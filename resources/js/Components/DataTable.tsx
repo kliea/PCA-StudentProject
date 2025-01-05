@@ -15,6 +15,7 @@ interface DataTableProps<TData, TValue> {
     headerStyle?: string;
     rowStyle?: string;
     table: Table<any>;
+    onMouseEnter?: any;
     className?: string;
 }
 
@@ -23,6 +24,7 @@ export function DataTable<TData, TValue>({
     rowStyle,
     table,
     className,
+    onMouseEnter,
 }: DataTableProps<TData, TValue>) {
     return (
         <div className="h-full">
@@ -56,6 +58,7 @@ export function DataTable<TData, TValue>({
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row: any) => (
                                 <TableRow
+                                    onDoubleClick={() => onMouseEnter(row)}
                                     className={rowStyle}
                                     key={row.id}
                                     data-state={

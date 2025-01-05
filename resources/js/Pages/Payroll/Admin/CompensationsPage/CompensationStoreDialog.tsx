@@ -1,10 +1,10 @@
+import InputError from "@/Components/InputError";
+import { Input } from "@/Components/ui/input";
+import { Label } from "@/Components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/Components/ui/radio-group";
+import { Switch } from "@/Components/ui/switch";
 import { compensationTypes } from "@/types/payrollPagesTypes";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
-import InputError from "./InputError";
 import { useEffect, useState } from "react";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { Switch } from "./ui/switch";
 
 const CompensationStoreDialog = ({
     data,

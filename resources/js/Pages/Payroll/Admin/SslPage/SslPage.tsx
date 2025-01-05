@@ -1,13 +1,11 @@
-import {
-    SslDelete,
-    SslStore,
-    SslUpdate,
-} from "@/Components/CrudComponents/SslCrud";
 import { DataTable } from "@/Components/DataTable";
 import DropdownDialog from "@/Components/DropdownDialog";
 import AuthenticatedLayout from "@/Components/Layouts/Common/AuthenticatedLayout";
 import { cn } from "@/lib/utils";
-import { sslProfileTypes } from "@/types/payrollPagesTypes";
+import {
+    dropDownDialogsTypes,
+    sslProfileTypes,
+} from "@/types/payrollPagesTypes";
 import { usePage } from "@inertiajs/react";
 import {
     ColumnDef,
@@ -24,6 +22,7 @@ import { Button } from "@/Components/ui/button";
 import { Label } from "@/Components/ui/label";
 import { Input } from "@/Components/ui/input";
 import PaginationTable from "@/Components/Pagination";
+import { SslDelete, SslStore, SslUpdate } from "./SslCrud";
 
 const SslPage = () => {
     const data = (usePage().props.data as sslProfileTypes[]) || [];
@@ -53,6 +52,14 @@ const SslPage = () => {
             ],
         },
     });
+
+    var user = {
+        name: "John Doe",
+        email: "johnDoe2641@email.com",
+        avatar: "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png",
+    };
+    
+
     return (
         <AuthenticatedLayout
             pageTitle="Salary Standard Law"
@@ -62,7 +69,6 @@ const SslPage = () => {
                 <div className="mb-5 flex flex-row gap-5">
                     <Input
                         type="search"
-                        onChange={(e) => setGlobalFilter(e.target.value || "")}
                         className="w-1/4 rounded-pca"
                         placeholder="Search...."
                     />
@@ -206,7 +212,7 @@ const columns: ColumnDef<sslProfileTypes>[] = [
         cell: ({ row }) => {
             const [openDialog, setOpenDialog] = useState<string | null>(null);
             const rowData = row.original;
-            const dialogs = [
+            const dialogs: dropDownDialogsTypes[] = [
                 {
                     tag: "1",
                     name: "Edit",

@@ -17,7 +17,7 @@ class SalaryGradeController extends Controller
         $data = SalaryGrade::all();
 
         /* Returning a success message to the user. */
-        return Inertia::render('Payroll/Admin/SslPage', ['data' => $data]);
+        return Inertia::render('Payroll/Admin/SslPage/SslPage', ['data' => $data]);
     }
 
     /* Creates and stores a new salary grade record. */

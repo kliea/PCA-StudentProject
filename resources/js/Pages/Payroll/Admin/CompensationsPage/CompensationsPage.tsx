@@ -1,13 +1,13 @@
 import {
-    AppointmentDelete,
-    AppointmentStore,
-    AppointmentUpdate,
-} from "@/Components/CrudComponents/AppointmentCRUD";
+    CompensationDelete,
+    CompensationStore,
+    CompensationUpdate,
+} from "@/Pages/Payroll/Admin/CompensationsPage/CompensationCRUD";
 import DropdownDialog from "@/Components/DropdownDialog";
 import AuthenticatedLayout from "@/Components/Layouts/Common/AuthenticatedLayout";
 import { Input } from "@/Components/ui/input";
 import { cn } from "@/lib/utils";
-import { appointmentTypes } from "@/types/payrollPagesTypes";
+import { compensationTypes } from "@/types/payrollPagesTypes";
 import { usePage } from "@inertiajs/react";
 import {
     ColumnDef,
@@ -20,13 +20,12 @@ import {
 import { MoreHorizontal, Plus } from "lucide-react";
 import { useState } from "react";
 import DialogMenu from "@/Components/Dialog";
+import { DataTable } from "@/Components/DataTable";
 import { Button } from "@/Components/ui/button";
 import { Label } from "@/Components/ui/label";
-import { DataTable } from "@/Components/DataTable";
-import PaginationTable from "@/Components/Pagination";
 
-const AppointmentsPage = () => {
-    const data = (usePage().props.data as appointmentTypes[]) || [];
+const CompensationsPage = () => {
+    const data = (usePage().props.data as compensationTypes[]) || [];
     const [openDialog, setOpenDialog] = useState(false);
     const [globalFilter, setGlobalFilter] = useState<string>("");
     const table = useReactTable({
@@ -47,7 +46,7 @@ const AppointmentsPage = () => {
             },
             sorting: [
                 {
-                    id: "appointment_code",
+                    id: "compensation_code",
                     desc: false,
                 },
             ],
@@ -55,7 +54,7 @@ const AppointmentsPage = () => {
     });
     return (
         <AuthenticatedLayout
-            pageTitle="Appointments"
+            pageTitle="Compensations"
             navigationType="payrollAdmin"
         >
             <div className="h-full flex flex-col">
@@ -68,58 +67,57 @@ const AppointmentsPage = () => {
                     />
                     <div className="grid grid-cols-1 gap-5 w-1/4">
                         <DialogMenu
+                            dialogClassName="max-w-[1000px] min-h-[450px]"
                             open={openDialog}
                             openDialog={() => setOpenDialog(!openDialog)}
                             trigger={
                                 <Button
                                     className="gap-2 rounded-pca"
-                                    aria-label="New Appointment Profile"
+                                    aria-label="Add Compensations"
                                 >
                                     <Plus size={20} />
-                                    <Label>Add Appointment Profile</Label>
+                                    <Label>Add Compensations</Label>
                                 </Button>
                             }
-                            title="New Appointment"
-                            description=""
+                            title="New Compensation Profile"
                         >
-                            <AppointmentStore
-                                compensationTypes={
-                                    usePage().props
-                                        .compensationTypes as Array<string>
-                                }
+                            <CompensationStore
                                 openDialog={() => setOpenDialog(!openDialog)}
-                            />
+                            ></CompensationStore>
                         </DialogMenu>
                     </div>
                 </div>
                 <DataTable
-                    {...{
-                        table,
-                        rowStyle: "odd:bg-white even:bg-transparent",
-                    }}
-                />
-
-                <PaginationTable table={table}></PaginationTable>
+                    table={table}
+                    rowStyle="odd:bg-white even:bg-transparent"
+                ></DataTable>
             </div>
         </AuthenticatedLayout>
     );
 };
 
-export default AppointmentsPage;
+export default CompensationsPage;
 
-const columns: ColumnDef<appointmentTypes>[] = [
-    { accessorKey: "appointment_code", header: "ID", enableSorting: true },
-    { accessorKey: "appointment_type", header: "TYPE" },
-    { accessorKey: "basic_pay_type", header: "BASIC PAY TYPE" },
-    { accessorKey: "tax_type", header: "TAX TYPE" },
+const columns: ColumnDef<compensationTypes>[] = [
+    { accessorKey: "compensation_code", header: "ID" },
+    { accessorKey: "compensation_name", header: "COMPENSATION NAME" },
+    { accessorKey: "shorthand", header: "SHORTHAND" },
     {
-        accessorKey: "has_mandatory_deduction",
-        header: "MANDATORY DEDUCTION",
+        accessorKey: "amount",
+        header: "AMOUNT",
         cell: ({ row }) => {
-            return row.getValue("has_mandatory_deduction") == true
-                ? "Yes"
-                : "No";
+            const number = Number(row.getValue("amount"));
+            return row.original.is_fixed ? (
+                <p>₱{number.toLocaleString("en-US")}</p>
+            ) : (
+                "BASIC PAY"
+            );
         },
+    },
+    {
+        accessorKey: "is_taxable",
+        header: "TAXABLE",
+        cell: ({ row }) => (row.getValue("is_taxable") ? "YES" : "NO"),
     },
     {
         id: "actions",
@@ -131,18 +129,14 @@ const columns: ColumnDef<appointmentTypes>[] = [
                     tag: "1",
                     name: "Edit",
                     dialogtitle: cn(
-                        "Edit Appointment ",
-                        rowData.appointment_type
+                        "Edit Compensation ",
+                        rowData.compensation_name
                     ),
                     dialogContent: (
-                        <AppointmentUpdate
-                            compensationTypes={
-                                usePage().props
-                                    .compensationTypes as Array<string>
-                            }
+                        <CompensationUpdate
                             RowData={rowData}
                             setOpenDialog={setOpenDialog}
-                        ></AppointmentUpdate>
+                        ></CompensationUpdate>
                     ),
                 },
                 {
@@ -150,14 +144,14 @@ const columns: ColumnDef<appointmentTypes>[] = [
                     name: "Delete",
                     dialogtitle: cn(
                         "Are you sure you want to delete ",
-                        rowData.appointment_type,
+                        rowData.compensation_name,
                         "?"
                     ),
                     dialogContent: (
-                        <AppointmentDelete
-                            rowId={rowData.appointment_code}
+                        <CompensationDelete
+                            rowId={rowData.compensation_code}
                             setOpenDialog={setOpenDialog}
-                        ></AppointmentDelete>
+                        ></CompensationDelete>
                     ),
                     style: "text-red-600",
                 },
@@ -166,6 +160,7 @@ const columns: ColumnDef<appointmentTypes>[] = [
             return (
                 <div>
                     <DropdownDialog
+                        dialogClassName="max-w-[1000px] min-h-[450px]"
                         openDialog={openDialog}
                         setOpenDialog={setOpenDialog}
                         dialogs={dialogs}

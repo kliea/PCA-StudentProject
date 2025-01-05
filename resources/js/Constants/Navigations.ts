@@ -19,8 +19,8 @@ export const PAYROLLADMIN: Array<NavigationLinks> = [
         ],
     },
     {
-        title: "REQUESTS",
-        links: [{ label: "Loans", url: "admin.loans", icon: HandCoins }],
+        title: "SUBSYSTEMS",
+        links: [{ label: "Loan Tracker", url: "admin.loans", icon: HandCoins }],
     },
     {
         title: "CONFIGURATIONS",

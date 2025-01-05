@@ -18,7 +18,7 @@ class CompensationTypeController extends Controller
         $data = CompensationType::all();
 
         //return data to front end
-        return Inertia::render('Payroll/Admin/CompensationsPage', ['data' => $data]);
+        return Inertia::render('Payroll/Admin/CompensationsPage/CompensationsPage', ['data' => $data]);
     }
 
     /**

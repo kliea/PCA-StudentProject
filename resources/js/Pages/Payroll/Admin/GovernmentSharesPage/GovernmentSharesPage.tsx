@@ -1,13 +1,15 @@
 import {
-    CompensationDelete,
-    CompensationStore,
-    CompensationUpdate,
-} from "@/Components/CrudComponents/CompensationCRUD";
+    AgencyShareDelete,
+    AgencyShareStore,
+    AgencyShareUpdate,
+} from "@/Pages/Payroll/Admin/GovernmentSharesPage/AgencyShareCRUD";
+import { DataTable } from "@/Components/DataTable";
 import DropdownDialog from "@/Components/DropdownDialog";
 import AuthenticatedLayout from "@/Components/Layouts/Common/AuthenticatedLayout";
-import { Input } from "@/Components/ui/input";
+import PaginationTable from "@/Components/Pagination";
+import { Button } from "@/Components/ui/button";
 import { cn } from "@/lib/utils";
-import { compensationTypes } from "@/types/payrollPagesTypes";
+import { agencyTypes } from "@/types/payrollPagesTypes";
 import { usePage } from "@inertiajs/react";
 import {
     ColumnDef,
@@ -20,12 +22,11 @@ import {
 import { MoreHorizontal, Plus } from "lucide-react";
 import { useState } from "react";
 import DialogMenu from "@/Components/Dialog";
-import { DataTable } from "@/Components/DataTable";
-import { Button } from "@/Components/ui/button";
+import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
 
-const CompensationsPage = () => {
-    const data = (usePage().props.data as compensationTypes[]) || [];
+const GovernmentSharesPage = () => {
+    const data = (usePage().props.data as agencyTypes[]) || [];
     const [openDialog, setOpenDialog] = useState(false);
     const [globalFilter, setGlobalFilter] = useState<string>("");
     const table = useReactTable({
@@ -46,15 +47,16 @@ const CompensationsPage = () => {
             },
             sorting: [
                 {
-                    id: "compensation_code",
+                    id: "agency_share_code",
                     desc: false,
                 },
             ],
         },
     });
+
     return (
         <AuthenticatedLayout
-            pageTitle="Compensations"
+            pageTitle="Government Shares"
             navigationType="payrollAdmin"
         >
             <div className="h-full flex flex-col">
@@ -73,51 +75,75 @@ const CompensationsPage = () => {
                             trigger={
                                 <Button
                                     className="gap-2 rounded-pca"
-                                    aria-label="Add Compensations"
+                                    aria-label="Add Salary Grade "
                                 >
                                     <Plus size={20} />
-                                    <Label>Add Compensations</Label>
+                                    <Label>Add Government Share</Label>
                                 </Button>
                             }
-                            title="New Compensation Profile"
+                            title="New Government Share"
+                            description=""
                         >
-                            <CompensationStore
+                            <AgencyShareStore
+                                compensationTypes={
+                                    usePage().props
+                                        .compensationTypes as Array<string>
+                                }
                                 openDialog={() => setOpenDialog(!openDialog)}
-                            ></CompensationStore>
+                            />
                         </DialogMenu>
                     </div>
                 </div>
                 <DataTable
-                    table={table}
-                    rowStyle="odd:bg-white even:bg-transparent"
-                ></DataTable>
+                    {...{
+                        table,
+                        rowStyle: "odd:bg-white even:bg-transparent ",
+                    }}
+                />
+
+                <PaginationTable table={table}></PaginationTable>
             </div>
         </AuthenticatedLayout>
     );
 };
 
-export default CompensationsPage;
+export default GovernmentSharesPage;
 
-const columns: ColumnDef<compensationTypes>[] = [
-    { accessorKey: "compensation_code", header: "ID" },
-    { accessorKey: "compensation_name", header: "COMPENSATION NAME" },
+const columns: ColumnDef<agencyTypes>[] = [
+    { accessorKey: "agency_share_code", header: "ID" },
+    { accessorKey: "agency_share_name", header: "NAME OF AGENCY SHARE" },
     { accessorKey: "shorthand", header: "SHORTHAND" },
     {
         accessorKey: "amount",
         header: "AMOUNT",
         cell: ({ row }) => {
             const number = Number(row.getValue("amount"));
-            return row.original.is_fixed ? (
-                <p>₱{number.toLocaleString("en-US")}</p>
-            ) : (
-                "BASIC PAY"
-            );
+            return <p>₱ {number.toLocaleString("en-US")}</p>;
         },
     },
     {
-        accessorKey: "is_taxable",
-        header: "TAXABLE",
-        cell: ({ row }) => (row.getValue("is_taxable") ? "YES" : "NO"),
+        accessorKey: "is_mandatory",
+        header: "MANDATORY",
+        cell: ({ row }) => {
+            return row.getValue("is_mandatory") == true ? "Yes" : "No";
+        },
+    },
+    {
+        accessorKey: "remittance_percent",
+        header: "REMITTANCE %",
+        cell: ({ row }) => {
+            return row.getValue("amount") != 0
+                ? "N/A"
+                : row.getValue("remittance_percent") + "%";
+        },
+    },
+    {
+        accessorKey: "ceiling_amount",
+        header: "CEILING AMOUNT",
+        cell: ({ row }) => {
+            const number = Number(row.getValue("ceiling_amount"));
+            return <p>₱ {number.toLocaleString("en-US")}</p>;
+        },
     },
     {
         id: "actions",
@@ -129,29 +155,33 @@ const columns: ColumnDef<compensationTypes>[] = [
                     tag: "1",
                     name: "Edit",
                     dialogtitle: cn(
-                        "Edit Compensation ",
-                        rowData.compensation_name
+                        "Edit Appointment ",
+                        rowData.agency_share_name
                     ),
                     dialogContent: (
-                        <CompensationUpdate
-                            RowData={rowData}
+                        <AgencyShareUpdate
+                            compensationTypes={
+                                usePage().props
+                                    .compensationTypes as Array<string>
+                            }
                             setOpenDialog={setOpenDialog}
-                        ></CompensationUpdate>
+                            RowData={rowData}
+                        ></AgencyShareUpdate>
                     ),
                 },
                 {
                     tag: "2",
                     name: "Delete",
                     dialogtitle: cn(
-                        "Are you sure you want to delete ",
-                        rowData.compensation_name,
+                        "Are you sure you want to delete Agency Share:  ",
+                        rowData.agency_share_name,
                         "?"
                     ),
                     dialogContent: (
-                        <CompensationDelete
-                            rowId={rowData.compensation_code}
+                        <AgencyShareDelete
+                            rowId={rowData.agency_share_code}
                             setOpenDialog={setOpenDialog}
-                        ></CompensationDelete>
+                        ></AgencyShareDelete>
                     ),
                     style: "text-red-600",
                 },
@@ -160,6 +190,7 @@ const columns: ColumnDef<compensationTypes>[] = [
             return (
                 <div>
                     <DropdownDialog
+                        dialogClassName="max-w-[1000px] min-h-[450px]"
                         openDialog={openDialog}
                         setOpenDialog={setOpenDialog}
                         dialogs={dialogs}

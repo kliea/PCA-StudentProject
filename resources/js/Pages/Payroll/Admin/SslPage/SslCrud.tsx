@@ -4,8 +4,8 @@ import { FormEventHandler, useState } from "react";
 import { toast } from "sonner";
 import { Label } from "@/Components/ui/label";
 import { Input } from "@/Components/ui/input";
-import InputError from "../InputError";
-import { Button } from "../ui/button";
+import InputError from "@/Components/InputError";
+import { Button } from "@/Components/ui/button";
 
 // Component for Storing SSL Data
 export function SslStore({ openDialog }: { openDialog: any }) {
@@ -51,7 +51,7 @@ export function SslStore({ openDialog }: { openDialog: any }) {
                     "step7",
                     "step8"
                 );
-                openDialog(false)
+                openDialog(false);
             },
             onError: () => {
                 toast(

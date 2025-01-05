@@ -40,7 +40,7 @@ class SummaryController extends Controller
                 // array_push($results[0][$i], $net_amount[$i]);
             }
             //>>>>>>>>???
-            return Inertia::render('Payroll/Admin/Payrolls', [
+            return Inertia::render('Payroll/Admin/PayrollsPage/PayrollsPage', [
                 'data' => $results,
                 'net_amount' => $net_amount
             ]);

@@ -2,7 +2,7 @@ import {
     DeductionsDelete,
     DeductionStore,
     DeductionUpdate,
-} from "@/Components/CrudComponents/DeductionCRUD";
+} from "@/Pages/Payroll/Admin/DeductionsPage/DeductionCRUD";
 import DropdownDialog from "@/Components/DropdownDialog";
 import AuthenticatedLayout from "@/Components/Layouts/Common/AuthenticatedLayout";
 import { Input } from "@/Components/ui/input";

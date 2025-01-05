@@ -88,7 +88,6 @@ const columns: ColumnDef<employeeTypes>[] = [
         accessorKey: "Name",
         header: "Name",
         cell: ({ row }) => {
-            console.log(row.original);
             return cn(row.original.last_name, ",", row.original.first_name);
         },
     },

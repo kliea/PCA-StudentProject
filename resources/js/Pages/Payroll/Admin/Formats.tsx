@@ -1,30 +1,40 @@
-import IncludeExcludeBox from "@/Components/IncludeExcludeBox";
-import { Button } from "@/Components/ui/button";
-import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
+import { Combobox } from "@/Components/ComboBox";
+import AuthenticatedLayout from "@/Components/Layouts/Common/AuthenticatedLayout";
 
-import { AdminLinks } from "@/lib/payrollData";
-import { useState } from "react";
+const Formats = () => {
 
-export default function Formats() {
-    const [baseItems, setBaseItems] = useState<Array<string>>([
-        "Regular",
-        "Basic",
-        "Flexi",
-    ]);
-    const [selectedItems, setSelectedItems] = useState<Array<string>>([
-        "Regular",
-    ]);
+    const frameworks = [
+        {
+          value: "next.js",
+          label: "Next.js",
+        },
+        {
+          value: "sveltekit",
+          label: "SvelteKit",
+        },
+        {
+          value: "nuxt.js",
+          label: "Nuxt.js",
+        },
+        {
+          value: "remix",
+          label: "Remix",
+        },
+        {
+          value: "astro",
+          label: "Astro",
+        },
+      ]
+
+
     return (
-        <AuthenticatedLayoutAdmin title="Test" links={AdminLinks}>
-            <IncludeExcludeBox
-                baseItems={baseItems}
-                selectedItems={selectedItems}
-                setBaseItems={setBaseItems}
-                setSelectedItems={setSelectedItems}
-                selectedItemsName="Compensation Links"
-                baseItemsName="Compensation Types"
-                className="h-48"
-            />
-        </AuthenticatedLayoutAdmin>
+        <AuthenticatedLayout
+            pageTitle="Salary Standard Law"
+            navigationType="payrollAdmin"
+        >
+            <Combobox dataset={frameworks}></Combobox>
+        </AuthenticatedLayout>
     );
-}
+};
+
+export default Formats;

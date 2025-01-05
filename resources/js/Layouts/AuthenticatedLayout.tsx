@@ -21,6 +21,7 @@ import { Head } from "@inertiajs/react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { navigationLinks } from "@/types/payroll";
+import { NavUser } from "@/Components/common/LogOutFooter";
 
 export default function AuthenticatedLayoutAdmin({
     children,
@@ -32,6 +33,12 @@ export default function AuthenticatedLayoutAdmin({
     links: navigationLinks[];
 }) {
     const [open, setOpen] = useState(true);
+    var user = {
+        name: "John Doe",
+        email: "johnDoe2641@email.com",
+        avatar: "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png",
+    };
+
     return (
         <SidebarProvider open={open} onOpenChange={() => setOpen(!open)}>
             <Sidebar variant="sidebar" collapsible="icon">
@@ -84,6 +91,9 @@ export default function AuthenticatedLayoutAdmin({
                         </SidebarGroup>
                     ))}
                 </SidebarContent>
+                <SidebarFooter className="bg-baseGreen text-white">
+                    <NavUser user={user} />
+                </SidebarFooter>
             </Sidebar>
             <main className="overflow-x-hidden">
                 <header className="w-screen shadow h-14 py-4 flex gap-3 items-center pl-5">
