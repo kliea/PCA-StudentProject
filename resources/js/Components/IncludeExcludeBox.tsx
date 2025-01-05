@@ -64,7 +64,7 @@ const IncludeExcludeBox = ({
                         </ul>
                     </ScrollArea>
                 ) : (
-                    <div className="bg-baseGrey flex h-full justify-center items-center rounded-md">
+                    <div className="bg-slate-50 flex h-full justify-center items-center rounded-md">
                         <Label>No Available Items</Label>
                     </div>
                 )}
@@ -89,7 +89,7 @@ const IncludeExcludeBox = ({
                         </ul>
                     </ScrollArea>
                 ) : (
-                    <div className="bg-baseGrey flex h-full justify-center items-center rounded-md">
+                    <div className="bg-slate-50 flex h-full justify-center items-center rounded-md">
                         <Label>No Available Items</Label>
                     </div>
                 )}

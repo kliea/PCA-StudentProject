@@ -13,8 +13,8 @@ const LoansPage = () => {
                     <TabsTrigger value="Request">Request</TabsTrigger>
                 </TabsList>
 
-                <TabsContent value="Types">Hello</TabsContent>
-                <TabsContent value="Request">Hello</TabsContent>
+                <TabsContent value="Types">TO BE IMPLEMENTED</TabsContent>
+                <TabsContent value="Request">TO BE IMPLEMENTED</TabsContent>
             </Tabs>
         </AuthenticatedLayout>
     );

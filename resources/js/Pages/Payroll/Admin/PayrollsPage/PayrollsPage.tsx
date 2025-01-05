@@ -114,6 +114,10 @@ const PayrollsPage = () => {
     });
 
     const [openDialog, setOpenDialog] = useState<boolean>(false);
+
+    function handleMouseEnter(data: any) {
+        console.log(data.original);
+    }
     return (
         <AuthenticatedLayout
             pageTitle="Payrolls Index"
@@ -153,6 +157,7 @@ const PayrollsPage = () => {
                     {...{
                         table,
                         rowStyle: "odd:bg-white even:bg-transparent",
+                        onMouseEnter: handleMouseEnter,
                     }}
                 ></DataTable>
             </div>
@@ -208,11 +213,25 @@ const columns: ColumnDef<payrollIndexTypes>[] = [
                         "Edting Properties of ",
                         rowData.payroll_name
                     ),
+                    dialogContent: (
+                        <PayrollsIndexStore openDialog={setOpenDialog} />
+                    ),
+                },
+                {
+                    tag: "2",
+                    name: "Delete",
+                    dialogtitle: cn(
+                        "Are you sure you want to delete Salary Grade",
+                        rowData.payroll_name,
+                        "?"
+                    ),
+                    style: "text-red-600",
                 },
             ];
             return (
                 <div>
                     <DropdownDialog
+                        dialogClassName="max-w-[calc(100%-5%)] h-[calc(100%-20%)]"
                         dialogs={dialogs}
                         openDialog={openDialog}
                         setOpenDialog={setOpenDialog}

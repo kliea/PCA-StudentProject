@@ -1,6 +1,7 @@
+import { Combobox } from "@/Components/ComboBox";
 import { DataTable } from "@/Components/DataTable";
-import DropdownDialog from "@/Components/DropdownDialog";
 import { Button } from "@/Components/ui/button";
+import { Label } from "@/Components/ui/label";
 import { ScrollArea } from "@/Components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import {
@@ -8,8 +9,9 @@ import {
     getCoreRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { MoreHorizontal, Plus } from "lucide-react";
 import { useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
+import IncludeExcludeBox from "@/Components/IncludeExcludeBox";
 
 const EmployeesList = () => {
     const [data, setData] = useState<Array<EmployeesListTypes>>([
@@ -75,25 +77,136 @@ const EmployeesList = () => {
         },
     ]);
 
+    const names = [
+        {
+            value: "Emma Johnson",
+            label: "Emma Johnson",
+        },
+        {
+            value: "Liam Smith",
+            label: "Liam Smith",
+        },
+        {
+            value: "Olivia Brown",
+            label: "Olivia Brown",
+        },
+        {
+            value: "Noah Williams",
+            label: "Noah Williams",
+        },
+        {
+            value: "Ava Jones",
+            label: "Ava Jones",
+        },
+        {
+            value: "Elijah Miller",
+            label: "Elijah Miller",
+        },
+        {
+            value: "Sophia Davis",
+            label: "Sophia Davis",
+        },
+        {
+            value: "James Garcia",
+            label: "James Garcia",
+        },
+        {
+            value: "Isabella Martinez",
+            label: "Isabella Martinez",
+        },
+        {
+            value: "Benjamin Hernandez",
+            label: "Benjamin Hernandez",
+        },
+    ];
+
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
     });
+
+    const [baseItems, setBaseItems] = useState<Array<string>>([]);
+    const [selectedItems, setSelectedItems] = useState<Array<string>>([]);
     return (
         <div className="flex">
-            <section className="w-full">
-                <section className="flex justify-end my-2">
-                    <Button className="gap-2">
-                        <Plus size={20}></Plus>Add Employee
-                    </Button>
-                </section>
-                <ScrollArea className="h-[calc(100%-20%)]">
-                    <DataTable
-                        table={table}
-                        rowStyle="bg-white"
-                    ></DataTable>
-                </ScrollArea>
+            <section className="w-full grid grid-cols-2 gap-5">
+                <div>
+                    <section className="flex justify-start my-2 gap-3">
+                        <Combobox dataset={names} />
+                        <Button type="button">Add Employee</Button>
+                    </section>
+                    <ScrollArea className="h-[calc(100%-20%)] border rounded-[10px]">
+                        <DataTable
+                            table={table}
+                            rowStyle="bg-white"
+                        ></DataTable>
+                    </ScrollArea>
+                </div>
+
+                <div className="flex flex-col gap-3">
+                    <Label className="text-xl my-2">Selected: </Label>
+
+                    <section className="border rounded-[10px] w-full h-[calc(100%-20%)] grid grid-rows-2 p-2 gap-5">
+                        <div>
+                            <Tabs
+                                defaultValue="compensations"
+                                className="w-full"
+                            >
+                                <TabsList>
+                                    <TabsTrigger value="compensations">
+                                        Compensations
+                                    </TabsTrigger>
+                                    <TabsTrigger value="agencyshare">
+                                        Agency Share
+                                    </TabsTrigger>
+                                </TabsList>
+                                <TabsContent value="compensations">
+                                    <IncludeExcludeBox
+                                        baseItems={baseItems}
+                                        selectedItems={selectedItems}
+                                        setBaseItems={setBaseItems}
+                                        setSelectedItems={setSelectedItems}
+                                        selectedItemsName="Payroll Compensations"
+                                        baseItemsName="Compensations"
+                                        className="h-[200px] w-full"
+                                    />
+                                </TabsContent>
+                                <TabsContent value="agencyshare">
+                                    <IncludeExcludeBox
+                                        baseItems={baseItems}
+                                        selectedItems={selectedItems}
+                                        setBaseItems={setBaseItems}
+                                        setSelectedItems={setSelectedItems}
+                                        selectedItemsName="Payroll Agency Shares"
+                                        baseItemsName="Agency Shares"
+                                        className="h-[200px] w-full"
+                                    />
+                                </TabsContent>
+                            </Tabs>
+                        </div>
+                        <div>
+                            <Tabs defaultValue="deductions" className="w-full">
+                                <TabsList>
+                                    <TabsTrigger value="deductions">
+                                        Deductions
+                                    </TabsTrigger>
+                                </TabsList>
+                                <TabsContent value="deductions">
+                                    <IncludeExcludeBox
+                                        baseItems={baseItems}
+                                        selectedItems={selectedItems}
+                                        setBaseItems={setBaseItems}
+                                        setSelectedItems={setSelectedItems}
+                                        selectedItemsName="Payroll Deductions"
+                                        baseItemsName="Deductions"
+                                        className="h-[200px] w-full"
+                                    />
+                                </TabsContent>
+                            </Tabs>
+                        </div>
+                    </section>
+                </div>
             </section>
         </div>
     );
@@ -123,45 +236,5 @@ const columns: ColumnDef<EmployeesListTypes>[] = [
     {
         accessorKey: "deductions",
         header: "Deductions",
-    },
-    {
-        id: "action",
-        cell: ({ row }) => {
-            const [openDialog, setOpenDialog] = useState<string | null>(null);
-            const rowData = row.original;
-            const dialogs = [
-                {
-                    tag: "1",
-                    name: "Edit",
-                    dialogtitle: cn(
-                        "Edit Employee: ",
-                        rowData.last_name,
-                        ",",
-                        rowData.first_name
-                    ),
-                    // dialogContent: (
-
-                    // ),
-                },
-            ];
-
-            return (
-                <div>
-                    <DropdownDialog
-                        dialogClassName="max-w-[1000px] min-h-[350px]"
-                        openDialog={openDialog}
-                        setOpenDialog={setOpenDialog}
-                        dialogs={dialogs}
-                        trigger={
-                            <>
-                                <section>
-                                    <MoreHorizontal className="h-4 w-4" />
-                                </section>
-                            </>
-                        }
-                    ></DropdownDialog>
-                </div>
-            );
-        },
     },
 ];
