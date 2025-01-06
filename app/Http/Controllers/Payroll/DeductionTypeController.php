@@ -19,7 +19,7 @@ class DeductionTypeController extends Controller
         // Fetch data from the database
         $data = DeductionType::all();
 
-        $compensationTypes = CompensationType::pluck('compensation_name');
+        $compensationTypes = CompensationType::pluck('name');
 
         // Return the data to the frontend
         return Inertia::render('Payroll/Admin/DeductionsPage/DeductionsPage', ['data' => $data, 'compensationTypes' => $compensationTypes]);
@@ -39,7 +39,7 @@ class DeductionTypeController extends Controller
 
         /* Validating the user request. */
         $validated = $request->validate([
-            'deduction_name' => 'required|string',
+            'name' => 'required|string',
             'shorthand' => 'required|string',
             'amount' => 'required|numeric',
             'is_mandatory' => 'required|boolean',
