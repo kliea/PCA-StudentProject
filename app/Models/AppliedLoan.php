@@ -17,7 +17,10 @@ class AppliedLoan extends Model
 		'paid_amount',
 		'balance',
 		'employee_code',
-		'loan_code'
+		'loan_code',
+		'amount_paid',
+		'recent_paid',
+		'current_balance',
 	];
 
 	public function loanType() {

@@ -10,13 +10,14 @@ class AgencyShare extends Model
 	protected $primaryKey = 'agency_share_code';
 
 	protected $fillable = [
-		'agency_share_name',
+		'name',
 		'shorthand',
 		'amount',
 		'is_mandatory',
+		'compensation_link',
+		'fixed_amount',
 		'remittance_percent',
 		'ceiling_amount',
-		'compensation_links'
 	];
 	public function appliedShare()
 	{

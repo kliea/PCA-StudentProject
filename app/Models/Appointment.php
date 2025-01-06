@@ -10,10 +10,10 @@ class Appointment extends Model
 	protected $primaryKey = 'appointment_code';
 
 	protected $fillable = [
-		'appointment_type',
+		'compensation_code',
+		'type',
 		'has_mandatory_deduction',
-		'basic_pay_type',
-		'tax_type'
+		'basic_pay_type'
 	];
 
 	public function employee() {
