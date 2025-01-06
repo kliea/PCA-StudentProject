@@ -18,7 +18,7 @@ class AgencyShareController extends Controller
         //fetch data from the database
         $data = AgencyShare::all();
 
-        $compensationTypes = CompensationType::pluck('compensation_name');
+        $compensationTypes = CompensationType::pluck('name');
 
         //return data to front end
         return Inertia::render('Payroll/Admin/GovernmentSharesPage/GovernmentSharesPage', ['data' => $data, 'compensationTypes' => $compensationTypes]);
@@ -37,19 +37,19 @@ class AgencyShareController extends Controller
 
         // Validate user request
         $validate = $request->validate([
-            'agency_share_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'shorthand' => 'required|string|max:50',
             'amount' => 'required|numeric',
             'is_mandatory' => 'required|boolean',
             'remittance_percent' => 'required|numeric',
             'ceiling_amount' => 'required|numeric',
-            'compensation_links' => 'array|nullable',
-            'compensation_links.*' => 'string|nullable',
+            'compensation_link' => 'array|nullable',
+            'compensation_link.*' => 'string|nullable',
         ]);
 
         // Create new AgencyShare
         AgencyShare::create([
-            'agency_share_name' => $validate['agency_share_name'],
+            'name' => $validate['agency_share_name'],
             'shorthand' => $validate['shorthand'],
             'amount' => $validate['amount'],
             'is_mandatory' => $validate['is_mandatory'],
