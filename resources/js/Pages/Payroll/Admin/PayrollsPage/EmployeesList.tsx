@@ -119,6 +119,7 @@ const EmployeesList = () => {
             label: "Benjamin Hernandez",
         },
     ];
+    
 
     const table = useReactTable({
         data,
@@ -126,8 +127,15 @@ const EmployeesList = () => {
         getCoreRowModel: getCoreRowModel(),
     });
 
+    function handleRowSelect(data: any) {
+        var full_name =
+            data.original.first_name + " " + data.original.last_name;
+        setSelectedName(full_name);
+    }
+
     const [baseItems, setBaseItems] = useState<Array<string>>([]);
     const [selectedItems, setSelectedItems] = useState<Array<string>>([]);
+    const [selectedName, setSelectedName] = useState<String>("");
     return (
         <div className="flex">
             <section className="w-full grid grid-cols-2 gap-5">
@@ -138,6 +146,7 @@ const EmployeesList = () => {
                     </section>
                     <ScrollArea className="h-[calc(100%-20%)] border rounded-[10px]">
                         <DataTable
+                            onMouseEnter={handleRowSelect}
                             table={table}
                             rowStyle="bg-white"
                         ></DataTable>
@@ -145,7 +154,9 @@ const EmployeesList = () => {
                 </div>
 
                 <div className="flex flex-col gap-3">
-                    <Label className="text-xl my-2">Selected: </Label>
+                    <Label className="text-xl my-2">
+                        Selected: {selectedName}
+                    </Label>
 
                     <section className="border rounded-[10px] w-full h-[calc(100%-20%)] grid grid-rows-2 p-2 gap-5">
                         <div>
