@@ -11,18 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('travel_orders', function (Blueprint $table) {
-            $table->id('travel_order_code');
-
-			$table->date('date_filed');
-			$table->date('start_date');
-			$table->date('end_date');
-			$table->string('travel_order_type');
-			$table->string('travel_order_description')->nullable();
-			$table->string('travel_order_status');
+        Schema::create('applied_compensations', function (Blueprint $table) {
+            $table->id('applied_compensation_code');
 
 			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');
-			$table->foreignId('approver_code')->constrained('employees')->references('employee_code');
+			$table->foreignId('compensation_code')->constrained('compensation_types')->references('compensation_code');
+            $table->foreignId('payroll_sheet_code')->constrained('payroll_sheets')->references('payroll_sheet_code');
+
+			$table->double('amount')->nullable();
 
             $table->timestamps();
         });
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('travel_orders');
+        Schema::dropIfExists('applied_compensations');
     }
 };

@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -15,13 +14,14 @@ return new class extends Migration
         Schema::create('agency_shares', function (Blueprint $table) {
             $table->id('agency_share_code');
 
-			$table->string('agency_share_name')->unique();
-			$table->string('shorthand')->unique();
-            $table->double('amount');
-            $table->boolean('is_mandatory')->default(false);
-            $table->double('remittance_percent');
-            $table->double('ceiling_amount');
-            $table->string('compensation_links')->nullable();
+            $table->string('name')->unique();
+            $table->string('shorthand')->unique()->nullable();
+
+            $table->boolean('is_mandatory');
+            $table->string('compensation_link')->nullable();
+            $table->double('fixed_amount')->nullable();
+            $table->double('remittance_percent')->nullable();
+            $table->double('ceiling_amount')->nullable();
 
             $table->timestamps();
         });

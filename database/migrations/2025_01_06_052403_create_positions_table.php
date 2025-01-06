@@ -19,11 +19,11 @@ return new class extends Migration
 				This might need to be utilized;
 				or this could be set by the user. */
 
-            $table->string('position_title')->unique();
+            $table->string('title')->unique();
 
-            $table->foreignId('salary_grade_code')->constrained('salary_grades')->references('salary_grade_code');
+            $table->string('salary_grade');
 
-            $table->timestamps();//
+            $table->timestamps();
         });
     }
 
