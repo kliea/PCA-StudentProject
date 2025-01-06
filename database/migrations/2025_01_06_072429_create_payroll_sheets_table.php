@@ -21,8 +21,8 @@ return new class extends Migration
 			$table->string('type');
 			$table->date('start_date');
 			$table->date('end_date')->nullable();
-			$table->date('created_date')->nullable();
-			$table->date('posted_date')->nullable();
+			$table->date('create_date')->nullable();
+			$table->date('post_date')->nullable();
 			$table->date('pay_date')->nullable();
 
             $table->timestamps();
