@@ -38,6 +38,7 @@ Route::domain('bioadmin.' . env('APP_URL'))->group(
                 Route::get('travelorder', [TravelOrderController::class, 'index'])->name('bioadmin.travelorder');
                 Route::get('leaveorder', [LeaveOrderController::class, 'index'])->name('bioadmin.leaveorder');
                 Route::get('holidaycreation', [HolidayCreationController::class, 'index'])->name('bioadmin.holidaycreation');
+                Route::post('holidaycreation', [HolidayCreationController::class, 'store'])->name('store.bioadmin.holidaycreation');
             }
         );
     }
