@@ -100,13 +100,13 @@ export default CompensationsPage;
 
 const columns: ColumnDef<compensationTypes>[] = [
     { accessorKey: "compensation_code", header: "ID" },
-    { accessorKey: "compensation_name", header: "COMPENSATION NAME" },
+    { accessorKey: "name", header: "COMPENSATION NAME" },
     { accessorKey: "shorthand", header: "SHORTHAND" },
     {
-        accessorKey: "amount",
+        accessorKey: "fixed_amount",
         header: "AMOUNT",
         cell: ({ row }) => {
-            const number = Number(row.getValue("amount"));
+            const number = Number(row.getValue("fixed_amount"));
             return row.original.is_fixed ? (
                 <p>₱{number.toLocaleString("en-US")}</p>
             ) : (
@@ -128,10 +128,7 @@ const columns: ColumnDef<compensationTypes>[] = [
                 {
                     tag: "1",
                     name: "Edit",
-                    dialogtitle: cn(
-                        "Edit Compensation ",
-                        rowData.compensation_name
-                    ),
+                    dialogtitle: cn("Edit Compensation ", rowData.name),
                     dialogContent: (
                         <CompensationUpdate
                             RowData={rowData}
@@ -144,7 +141,7 @@ const columns: ColumnDef<compensationTypes>[] = [
                     name: "Delete",
                     dialogtitle: cn(
                         "Are you sure you want to delete ",
-                        rowData.compensation_name,
+                        rowData.name,
                         "?"
                     ),
                     dialogContent: (

@@ -14,15 +14,18 @@ class AppointmentController extends Controller
     /**
      * Display a listing of the resource.
      */
+    /**
+     * Display a listing of the resource.
+     */
     public function index(): Response
     {
         // Fetch data from the database
-        // $data = Appointment::all();
+        $data = Appointment::all();
 
         $compensationTypes = CompensationType::pluck('name');
 
         // Return the data to the frontend
-        return Inertia::render('Payroll/Admin/AppointmentsPage/AppointmentsPage');
+        return Inertia::render('Payroll/Admin/AppointmentsPage/AppointmentsPage', ['data' => $data, 'compensationTypes' => $compensationTypes]);
     }
 
     /**

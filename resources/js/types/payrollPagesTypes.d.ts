@@ -39,7 +39,7 @@ export interface dropDownDialogsTypes {
 
 export interface appointmentTypes {
     appointment_code: number;
-    appointment_type: string;
+    type: string;
     basic_pay_type: string;
     tax_type: string;
     has_mandatory_deduction: boolean;
@@ -68,9 +68,9 @@ export interface deductionTypes {
 
 export interface compensationTypes {
     compensation_code?: number;
-    compensation_name: string;
+    name: string;
     shorthand: string;
-    amount: number;
+    fixed_amount: number;
     is_taxable: boolean;
     is_fixed: boolean;
 };
