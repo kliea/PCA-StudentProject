@@ -13,20 +13,17 @@ return new class extends Migration
     {
         Schema::create('payroll_sheets', function (Blueprint $table) {
             $table->id('payroll_sheet_code');
+            
+            $table->foreignId('signatory_code')->constrained('signatories')->references('signatory_code');
 
-			$table->string('payroll_name');
-			$table->string('payroll_type');
+			$table->string('name');
+
+			$table->string('type');
 			$table->date('start_date');
-			$table->date('end_date');
-			$table->date('date_created');
-			$table->date('date_posted');
-			$table->date('date_paid');
-			$table->string('prepared_by');
-			$table->string('recommended_by');
-			$table->string('certified_by');
-			$table->string('approved_by');
-
-			/* There is no need to record the employee numbers or codes of the signatories. */
+			$table->date('end_date')->nullable();
+			$table->date('created_date')->nullable();
+			$table->date('posted_date')->nullable();
+			$table->date('pay_date')->nullable();
 
             $table->timestamps();
         });

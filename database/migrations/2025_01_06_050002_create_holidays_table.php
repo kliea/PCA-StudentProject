@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('holidays', function (Blueprint $table) {
             $table->id('holiday_code');
 
-			$table->string('holiday_name');
+			$table->string('name');
 			$table->date('date');
-			$table->string('type');
+			$table->string('type')->nullable()->default;
 			$table->boolean('is_recurring');
 
             $table->timestamps();

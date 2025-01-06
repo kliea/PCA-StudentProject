@@ -11,13 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payroll_entries', function (Blueprint $table) {
-            $table->id('payroll_entry_code');
-
-			$table->string('current_position');
+        Schema::create('leave_requests', function (Blueprint $table) {
+            $table->id('leave_request_code');
 
 			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');
-			$table->foreignId('payroll_sheet_code')->constrained('payroll_sheets')->references('payroll_sheet_code');
+			$table->foreignId('approver_code')->constrained('employees')->references('employee_code');
+	
+			$table->string('type');
+			$table->string('description')->nullable();
+			$table->date('start_date');
+			$table->date('end_date');
+			$table->date('file_date');
+            $table->boolean('is_approved')->default('false');
 
             $table->timestamps();
         });
@@ -28,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payroll_entries');
+        Schema::dropIfExists('leave_requests');
     }
 };

@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('compensation_types', function (Blueprint $table) {
-            $table->id('compensation_code');
-
-			$table->string('compensation_name');
-			$table->string('shorthand');
-			$table->double('amount');
-			$table->boolean('is_taxable');
-			$table->boolean('is_fixed');
+        Schema::create('travel_orders', function (Blueprint $table) {
+            $table->id('travel_order_code');
+            
+			$table->string('type');
+			$table->string('description')->nullable();
+			$table->date('start_date');
+			$table->date('end_date');
+			$table->date('file_date');
+            $table->boolean('is_approved')->default('false');
 
             $table->timestamps();
         });
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('compensation_types');
+        Schema::dropIfExists('travel_orders');
     }
 };

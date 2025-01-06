@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('deduction_types', function (Blueprint $table) {
             $table->id('deduction_code');
 
-			$table->string('deduction_name');
-			$table->string('shorthand');
-			$table->double('amount');
+			$table->string('name')->unique();
+			$table->string('shorthand')->unique()->nullable();
+
 			$table->boolean('is_mandatory');
-			$table->double('remittance_percent');
-			$table->double('ceiling_amount');
+            $table->string('compensation_link')->nullable();
+			$table->double('fixed_amount')->nullable();
+			$table->double('remittance_percent')->nullable();
+			$table->double('ceiling_amount')->nullable();
 
             $table->timestamps();
         });

@@ -11,18 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('travel_orders', function (Blueprint $table) {
-            $table->id('travel_order_code');
-
-			$table->date('date_filed');
-			$table->date('start_date');
-			$table->date('end_date');
-			$table->string('travel_order_type');
-			$table->string('travel_order_description');
-			$table->string('travel_order_status');
+        Schema::create('job_orders', function (Blueprint $table) {
+            $table->id('job_order_code');
 
 			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');
-			$table->foreignId('approver_code')->constrained('employees')->references('employee_code');
+			
+            $table->date('start_date');
+			$table->date('end_date');
 
             $table->timestamps();
         });
@@ -33,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('travel_orders');
+        Schema::dropIfExists('job_orders');
     }
 };

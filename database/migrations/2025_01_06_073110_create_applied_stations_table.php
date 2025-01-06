@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('agency_shares', function (Blueprint $table) {
-            $table->id('agency_share_code');
+        Schema::create('applied_stations', function (Blueprint $table) {
+            $table->id('applied_station_code');
 
-			$table->string('agency_share_name');
-			$table->string('shorthand');
-			$table->double('amount');
-			$table->boolean('is_mandatory');
-			$table->double('remittance_percent');
-			$table->double('ceiling_amount');
+            $table->foreignId('station_code')->constrained('stations')->references('station_code');
+			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');            
 
             $table->timestamps();
         });
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('agency_shares');
+        Schema::dropIfExists('applied_stations');
     }
 };

@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('applied_shares', function (Blueprint $table) {
-            $table->id('app_share_code');
+        Schema::create('loan_types', function (Blueprint $table) {
+            $table->id('loan_code');
 
-			$table->double('amount');
-
-			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');
-			$table->foreignId('agency_share_code')->constrained('agency_shares')->references('agency_share_code');
+			$table->string('name')->unique();
+            $table->string('short_hand')->nullable();
+            $table->string('provider')->nullable();
 
             $table->timestamps();
         });
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('applied_shares');
+        Schema::dropIfExists('loan_types');
     }
 };
