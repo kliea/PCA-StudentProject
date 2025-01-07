@@ -19,9 +19,16 @@ import {
     PopoverTrigger,
 } from "@/Components/ui/popover";
 
-export function Combobox({ dataset }: { dataset: any }) {
+export function Combobox({
+    dataset,
+    value,
+    setValue,
+}: {
+    dataset: any;
+    value: any;
+    setValue: any;
+}) {
     const [open, setOpen] = React.useState(false);
-    const [value, setValue] = React.useState("");
 
     return (
         <Popover open={open} onOpenChange={setOpen}>

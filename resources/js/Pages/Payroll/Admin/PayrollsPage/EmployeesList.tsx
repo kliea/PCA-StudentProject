@@ -23,9 +23,11 @@ import {
 const EmployeesList = () => {
     const [data, setData] = useState<Array<EmployeesListTypes>>([]);
 
-    const names = [
+    
+
+    const [employeeslist, setemployeeslist] = useState([
         {
-            value: "Emma Johnson",
+            value: "1",
             label: "Emma Johnson",
         },
         {
@@ -64,7 +66,7 @@ const EmployeesList = () => {
             value: "Benjamin Hernandez",
             label: "Benjamin Hernandez",
         },
-    ];
+    ]);
 
     const table = useReactTable({
         data,
@@ -81,12 +83,18 @@ const EmployeesList = () => {
     const [baseItems, setBaseItems] = useState<Array<string>>([]);
     const [selectedItems, setSelectedItems] = useState<Array<string>>([]);
     const [selectedName, setSelectedName] = useState<String>("");
+    const [value, setValue] = useState("");
+
     return (
         <div className="flex">
             <section className="w-full grid grid-cols-2 gap-5 ">
                 <div className="h-full">
                     <section className="flex justify-start my-2 gap-3">
-                        <Combobox dataset={names} />
+                        <Combobox
+                            dataset={employeeslist}
+                            value={value}
+                            setValue={setValue}
+                        />
                         <Button type="button">Add Employee</Button>
                     </section>
                     <ScrollArea className="h-[500px] border rounded-[10px]">
