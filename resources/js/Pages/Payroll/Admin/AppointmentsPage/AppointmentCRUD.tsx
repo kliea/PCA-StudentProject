@@ -28,12 +28,8 @@ export function AppointmentStore({
         appointment_type: "",
         has_mandatory_deduction: false,
         basic_pay_type: "",
-        tax_type: "",
     });
 
-    const changeTaxType = (value: string) => {
-        data.tax_type = value;
-    };
     const changeBasicPayType = (value: string) => {
         data.basic_pay_type = value;
     };
@@ -60,8 +56,7 @@ export function AppointmentStore({
                 reset(
                     "appointment_type",
                     "has_mandatory_deduction",
-                    "basic_pay_type",
-                    "tax_type"
+                    "basic_pay_type"
                 );
                 openDialog(false);
             },
@@ -134,33 +129,6 @@ export function AppointmentStore({
                         message={errors.basic_pay_type}
                         className="mt-2"
                     />
-                </div>
-
-                <div>
-                    <Label
-                        htmlFor="tax_type"
-                        className={errors.tax_type && "text-red-600"}
-                    >
-                        Tax Type
-                    </Label>
-
-                    <Select onValueChange={changeTaxType}>
-                        <SelectTrigger>
-                            <SelectValue placeholder="SELECT TAX TYPE" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="WITHHOLDING TAX 1">
-                                WITHHOLDING TAX 1
-                            </SelectItem>
-                            <SelectItem value="WITHHOLDING TAX 2">
-                                WITHHOLDING TAX 2
-                            </SelectItem>
-                            <SelectItem value="BASIC SALARY-REGULAR">
-                                WITHHOLDING TAX 3
-                            </SelectItem>
-                        </SelectContent>
-                    </Select>
-                    <InputError message={errors.tax_type} className="mt-2" />
                 </div>
 
                 <div className="flex items-center gap-3">
