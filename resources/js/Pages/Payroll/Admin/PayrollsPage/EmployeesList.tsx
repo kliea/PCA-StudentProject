@@ -13,69 +13,15 @@ import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
 import IncludeExcludeBox from "@/Components/IncludeExcludeBox";
 
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/Components/ui/accordion";
+
 const EmployeesList = () => {
-    const [data, setData] = useState<Array<EmployeesListTypes>>([
-        {
-            first_name: "John",
-            last_name: "Doe",
-            compensations: 5000,
-            deductions: 1000,
-        },
-        {
-            first_name: "Jane",
-            last_name: "Smith",
-            compensations: 6000,
-            deductions: 1200,
-        },
-        {
-            first_name: "Michael",
-            last_name: "Johnson",
-            compensations: 5500,
-            deductions: 1100,
-        },
-        {
-            first_name: "Emily",
-            last_name: "Williams",
-            compensations: 5200,
-            deductions: 1050,
-        },
-        {
-            first_name: "David",
-            last_name: "Brown",
-            compensations: 5800,
-            deductions: 1150,
-        },
-        {
-            first_name: "Sarah",
-            last_name: "Jones",
-            compensations: 5300,
-            deductions: 1080,
-        },
-        {
-            first_name: "Daniel",
-            last_name: "Garcia",
-            compensations: 5700,
-            deductions: 1130,
-        },
-        {
-            first_name: "Olivia",
-            last_name: "Martinez",
-            compensations: 5400,
-            deductions: 1090,
-        },
-        {
-            first_name: "Matthew",
-            last_name: "Rodriguez",
-            compensations: 5600,
-            deductions: 1120,
-        },
-        {
-            first_name: "Sophia",
-            last_name: "Hernandez",
-            compensations: 5500,
-            deductions: 1100,
-        },
-    ]);
+    const [data, setData] = useState<Array<EmployeesListTypes>>([]);
 
     const names = [
         {
@@ -119,7 +65,6 @@ const EmployeesList = () => {
             label: "Benjamin Hernandez",
         },
     ];
-    
 
     const table = useReactTable({
         data,
@@ -138,14 +83,15 @@ const EmployeesList = () => {
     const [selectedName, setSelectedName] = useState<String>("");
     return (
         <div className="flex">
-            <section className="w-full grid grid-cols-2 gap-5">
-                <div>
+            <section className="w-full grid grid-cols-2 gap-5 ">
+                <div className="h-full">
                     <section className="flex justify-start my-2 gap-3">
                         <Combobox dataset={names} />
                         <Button type="button">Add Employee</Button>
                     </section>
-                    <ScrollArea className="h-[calc(100%-20%)] border rounded-[10px]">
+                    <ScrollArea className="h-[500px] border rounded-[10px]">
                         <DataTable
+                            className="h-[500px]"
                             onMouseEnter={handleRowSelect}
                             table={table}
                             rowStyle="bg-white"
@@ -158,7 +104,7 @@ const EmployeesList = () => {
                         Selected: {selectedName}
                     </Label>
 
-                    <section className="border rounded-[10px] w-full h-[calc(100%-20%)] grid grid-rows-2 p-2 gap-5">
+                    <section className=" w-full h-[500px] grid grid-rows-2 p-2 gap-5">
                         <div>
                             <Tabs
                                 defaultValue="compensations"
@@ -237,15 +183,57 @@ const columns: ColumnDef<EmployeesListTypes>[] = [
         accessorKey: "name",
         header: "Name",
         cell: ({ row }) => {
-            return cn(row.original.last_name, ",", row.original.first_name);
+            return (
+                <p className="cursor-pointer">
+                    {cn(row.original.last_name, ",", row.original.first_name)}
+                </p>
+            );
         },
     },
     {
         accessorKey: "compensations",
         header: "Compensations",
+        cell: ({ row }) => {
+            const number = Number(row.getValue("compensations"));
+            return (
+                <Accordion type="single" collapsible>
+                    <AccordionItem value="item-1" className="border-0">
+                        <AccordionTrigger className="p-0">
+                            <p>₱ {number.toLocaleString("en-US")} </p>
+                        </AccordionTrigger>
+                        <AccordionContent>
+                            <div className="flex flex-col">
+                                <span>Basic Pay : P3,000.00</span>
+                                <span>PERA : P2,000.00</span>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
+            );
+        },
     },
     {
         accessorKey: "deductions",
         header: "Deductions",
+        cell: ({ row }) => {
+            const number = Number(row.getValue("compensations"));
+            return (
+                <Accordion type="single" collapsible>
+                    <AccordionItem value="item-1" className="border-0">
+                        <AccordionTrigger className="p-0">
+                            <p>₱ {number.toLocaleString("en-US")} </p>
+                        </AccordionTrigger>
+                        <AccordionContent>
+                            {" "}
+                            <div className="flex flex-col">
+                                <span>GSIS_PREMIUM : P3,000.00</span>
+                                <span>PEKE : P2,000.00</span>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
+                // <p>₱ {number.toLocaleString("en-US")} </p>
+            );
+        },
     },
 ];
