@@ -92,6 +92,10 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::get('/employeelist', [PayrollSheetController::class, 'get_employees'])->name('admin.get_employee_data');
     });
 
+    Route::prefix('employee')->group(function () {
+        Route::get('mydtr', [PageController::class, 'mydtr'])->name('employee.mydtr');
+        Route::get('mypayslip', [PageController::class, 'mypayslip'])->name('employee.mypayslip');
+    });
     Route::fallback(function () {
         return redirect()->route('admin.formats');
     });
