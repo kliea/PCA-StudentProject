@@ -1,11 +1,4 @@
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/Components/ui/card";
+import { Card, CardContent } from "@/Components/ui/card";
 
 const PayrollLoginPage = () => {
     return (
@@ -25,12 +18,13 @@ import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
 import { FormEventHandler } from "react";
 import { useForm } from "@inertiajs/react";
+import InputError from "@/Components/InputError";
 
 export function LoginForm({
     className,
     ...props
 }: React.ComponentProps<"div">) {
-    const { data, post, reset, processing } = useForm({
+    const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
         email: "",
         password: "",
@@ -44,6 +38,8 @@ export function LoginForm({
             onFinish: () => {
                 reset("password"), localStorage.setItem("email", data.email);
                 localStorage.setItem("password", data.password);
+                console.log(data);
+                console.log(localStorage.length);
             },
         });
     };
@@ -63,12 +59,37 @@ export function LoginForm({
                                 </p>
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email</Label>
-                                <Input id="email" type="email" required />
+                                <Label
+                                    htmlFor="email"
+                                    className={errors.email && "text-red-600"}
+                                >
+                                    Email
+                                </Label>
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    name="email"
+                                    value={data.email}
+                                    autoComplete="username"
+                                    onChange={(e) =>
+                                        setData("email", e.target.value)
+                                    }
+                                />
+                                <InputError
+                                    message={errors.email}
+                                    className="mt-2"
+                                />
                             </div>
                             <div className="grid gap-2">
                                 <div className="flex items-center">
-                                    <Label htmlFor="password">Password</Label>
+                                    <Label
+                                        htmlFor="password"
+                                        className={
+                                            errors.password && "text-red-600"
+                                        }
+                                    >
+                                        Password
+                                    </Label>
                                     <a
                                         href="#"
                                         className="ml-auto text-sm underline-offset-2 hover:underline"
@@ -76,7 +97,20 @@ export function LoginForm({
                                         Forgot your password?
                                     </a>
                                 </div>
-                                <Input id="password" type="password" required />
+                                <Input
+                                    id="password"
+                                    type="password"
+                                    name="password"
+                                    value={data.password}
+                                    autoComplete="current-password"
+                                    onChange={(e) =>
+                                        setData("password", e.target.value)
+                                    }
+                                />
+                                <InputError
+                                    message={errors.password}
+                                    className="mt-2"
+                                />
                             </div>
                             <Button
                                 type="submit"
