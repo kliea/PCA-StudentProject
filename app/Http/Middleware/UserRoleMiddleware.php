@@ -6,6 +6,8 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Middleware\error;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class UserRoleMiddleware
 {
@@ -61,7 +63,11 @@ class UserRoleMiddleware
             return redirect()->route('login');
         }
 
-        // Redirect to an external site if unauthorized
-        return redirect()->away('https://www.pca.gov.ph/index.php');
+        $host = FacadesRequest::getHost();
+
+        $subdomain = explode('.', $host)[0];
+
+        // Redirect if user is not authorized
+        return redirect()->route('payroll.login')->withErrors(['access_denied' => 'Unauthorized access.']);
     }
 }

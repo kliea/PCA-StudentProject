@@ -2,8 +2,10 @@ import AuthenticatedLayout from "@/Components/Layouts/Common/AuthenticatedLayout
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
 import LoanTypes from "./LoanTypesPage";
 import LoanRequests from "./LoansRequest";
+import { usePage } from "@inertiajs/react";
 
 const LoansPage = () => {
+    console.log(usePage().props);
     return (
         <AuthenticatedLayout
             pageTitle="Loan Tracker"
