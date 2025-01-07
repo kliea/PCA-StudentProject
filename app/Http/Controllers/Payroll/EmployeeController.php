@@ -21,14 +21,13 @@ class EmployeeController extends Controller
     public function index(): Response
     {
         // Fetch data from the database
-        $data = Employee::all();
+        // $data = Employee::all();
 
-        $stations = Station::pluck('station_name');
-        $appointments = Appointment::pluck('appointment_type');
-        $position = Position::pluck('position_title');
-        $employee = Employee::pluck('salary_type');
+        // $appointments = Appointment::pluck('appointment_type');
+        // $position = Position::pluck('position_title');
+        // $employee = Employee::pluck('salary_type');
         // Return the data to the frontend
-        return Inertia::render('Payroll/Admin/EmployeesPage', ['data' => $data]);
+        return Inertia::render('Payroll/Admin/EmployeesPage');
     }
 
     /**

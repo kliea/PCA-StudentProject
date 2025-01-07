@@ -10,11 +10,11 @@ class CompensationType extends Model
 	protected $primaryKey = 'compensation_code';
 
 	protected $fillable = [
-		'compensation_name',
+		'name',
 		'shorthand',
-		'amount',
 		'is_taxable',
-		'is_fixed'
+		'is_fixed',
+		'fixed_amount',
 	];
 
 	public function appliedCompensation()

@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('holidays', function (Blueprint $table) {
-            $table->id('holiday_code');
+        Schema::create('applied_stations', function (Blueprint $table) {
+            $table->id('applied_station_code');
 
-			$table->string('holiday_name')->unique();
-			$table->date('date');
-			$table->string('type');
-			$table->boolean('is_recurring')->default(true);
+            $table->foreignId('station_code')->constrained('stations')->references('station_code');
+			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');            
 
             $table->timestamps();
         });
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('holidays');
+        Schema::dropIfExists('applied_stations');
     }
 };

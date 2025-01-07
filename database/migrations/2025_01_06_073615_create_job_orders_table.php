@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('applied_compensations', function (Blueprint $table) {
-            $table->id('app_comp_code');
-            $table->double('amount');
+        Schema::create('job_orders', function (Blueprint $table) {
+            $table->id('job_order_code');
+
             $table->foreignId('employee_code')->constrained('employees')->references('employee_code');
-            $table->foreignId('compensation_code')->constrained('compensation_types')->references('compensation_code');
-            $table->foreignId('payroll_sheet_code')->constrained('payroll_sheets')->references('payroll_sheet_code');
+
+            $table->date('start_date');
+            $table->date('end_date');
+
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('applied_compensations');
+        Schema::dropIfExists('job_orders');
     }
 };

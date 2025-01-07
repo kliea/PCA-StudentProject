@@ -10,19 +10,15 @@ class PayrollSheet extends Model
 	protected $primaryKey = 'payroll_sheet_code';
 
 	protected $fillable = [
-		'payroll_name',
-		'payroll_type',
+		'payroll_sheet_code',
+		'signatory_code',
+		'name',
+		'type',
 		'start_date',
 		'end_date',
-		'date_created',
-		'date_posted',
-		'date_paid',
-		'prepared_by',
-		'recommended_by',
-		'certified_by',
-		'approved_by',
-		'fund_cluster',
-		'include_deduction',
+		'create_date',
+		'post_date',
+		'pay_date',
 	];
 	public function payrollEntry() {
 		return $this->hasMany(PayrollEntry::class);

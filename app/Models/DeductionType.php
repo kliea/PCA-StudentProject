@@ -10,13 +10,13 @@ class DeductionType extends Model
 	protected $primaryKey = 'deduction_code';
 
 	protected $fillable = [
-		'deduction_name',
+		'name',
 		'shorthand',
-		'amount',
 		'is_mandatory',
+		'compensation_link',
+		'fixed_amount',
 		'remittance_percent',
 		'ceiling_amount',
-		'compensation_links'
 	];
 
 

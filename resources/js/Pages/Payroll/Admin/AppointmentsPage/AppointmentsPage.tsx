@@ -27,6 +27,8 @@ import {
 
 const AppointmentsPage = () => {
     const data = (usePage().props.data as appointmentTypes[]) || [];
+
+    console.log(usePage().props);
     const [openDialog, setOpenDialog] = useState(false);
     const [globalFilter, setGlobalFilter] = useState<string>("");
     const table = useReactTable({
@@ -110,9 +112,8 @@ export default AppointmentsPage;
 
 const columns: ColumnDef<appointmentTypes>[] = [
     { accessorKey: "appointment_code", header: "ID", enableSorting: true },
-    { accessorKey: "appointment_type", header: "TYPE" },
+    { accessorKey: "type", header: "TYPE" },
     { accessorKey: "basic_pay_type", header: "BASIC PAY TYPE" },
-    { accessorKey: "tax_type", header: "TAX TYPE" },
     {
         accessorKey: "has_mandatory_deduction",
         header: "MANDATORY DEDUCTION",
@@ -131,10 +132,7 @@ const columns: ColumnDef<appointmentTypes>[] = [
                 {
                     tag: "1",
                     name: "Edit",
-                    dialogtitle: cn(
-                        "Edit Appointment ",
-                        rowData.appointment_type
-                    ),
+                    dialogtitle: cn("Edit Appointment ", rowData.type),
                     dialogContent: (
                         <AppointmentUpdate
                             compensationTypes={
@@ -151,7 +149,7 @@ const columns: ColumnDef<appointmentTypes>[] = [
                     name: "Delete",
                     dialogtitle: cn(
                         "Are you sure you want to delete ",
-                        rowData.appointment_type,
+                        rowData.type,
                         "?"
                     ),
                     dialogContent: (

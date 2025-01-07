@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('compensation_types', function (Blueprint $table) {
-            $table->id('compensation_code');
+        Schema::create('holidays', function (Blueprint $table) {
+            $table->id('holiday_code');
 
-			$table->string('compensation_name')->unique();
-			$table->string('shorthand')->unique();
-			$table->double('amount');
-			$table->boolean('is_taxable')->default(false);
-			$table->boolean('is_fixed')->default(false);
+			$table->string('name');
+			$table->date('date');
+			$table->string('type')->nullable()->default;
+			$table->boolean('is_recurring');
 
             $table->timestamps();
         });
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('compensation_types');
+        Schema::dropIfExists('holidays');
     }
 };

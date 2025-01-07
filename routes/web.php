@@ -59,6 +59,7 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::post('compensations/store', [CompensationTypeController::class, 'store'])->name('store.compensations');
         Route::put('compensations/{compensation_code}', [CompensationTypeController::class, 'update'])->name('update.compensations');
         Route::delete('compensations/{compensation_code}', [CompensationTypeController::class, 'destroy'])->name('delete.compensations');
+        
         // AGENCY ROUTES
         Route::get('governmentshares', [AgencyShareController::class, 'index'])->name('admin.governmentshare');
         Route::post('governmentshares/store', [AgencyShareController::class, 'store'])->name('store.governmentshare');

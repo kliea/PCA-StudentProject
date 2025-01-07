@@ -10,7 +10,9 @@ class LoanType extends Model
 	protected $primaryKey = 'loan_code';
 
 	protected $fillable = [
-		'loan_name'
+		'name',
+		'shorthand',
+		'provider',
 	];
 
 	public function appliedLoan() {

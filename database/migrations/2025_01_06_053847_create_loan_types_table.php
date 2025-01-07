@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('applied_deductions', function (Blueprint $table) {
-            $table->id('app_ded_code');
+        Schema::create('loan_types', function (Blueprint $table) {
+            $table->id('loan_code');
 
-			$table->double('amount');
-
-			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');
-			$table->foreignId('deduction_code')->constrained('deduction_types')->references('deduction_code');
+			$table->string('name')->unique();
+            $table->string('shorthand')->nullable();
+            $table->string('provider')->nullable();
 
             $table->timestamps();
         });
@@ -28,6 +27,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('applied_deductions');
+        Schema::dropIfExists('loan_types');
+        Schema::dropIfExists('loan_types');
     }
 };

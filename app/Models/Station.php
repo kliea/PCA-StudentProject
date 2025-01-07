@@ -10,7 +10,7 @@ class Station extends Model
 	protected $primaryKey = 'station_code';
 
 	protected $fillable = [
-		'station_name',
+		'name',
 		'street_address',
 		'barangay',
 		'city',

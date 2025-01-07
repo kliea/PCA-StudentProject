@@ -31,9 +31,16 @@ class SummaryController extends Controller
 
             // // $NetAmount = $results[0]->compensation - $results[0]->deduction;
             // $len = count($results);
+            // // $NetAmount = $results[0]->compensation - $results[0]->deduction;
+            // $len = count($results);
 
             // $net_amount = array_fill(0, $len, null);
+            // $net_amount = array_fill(0, $len, null);
 
+            // for ($i = 0; $i < $len; $i++) {
+            //     $net_amount[$i] = $results[$i]->compensation - $results[$i]->deduction;
+            //     // array_push($results[0][$i], $net_amount[$i]);
+            // }
             // for ($i = 0; $i < $len; $i++) {
             //     $net_amount[$i] = $results[$i]->compensation - $results[$i]->deduction;
             //     // array_push($results[0][$i], $net_amount[$i]);
