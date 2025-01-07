@@ -35,39 +35,6 @@ class DatabaseSeeder extends Seeder
         }
         DB::table('salary_grades')->insert($salaryGrades);
 
-        // positions ================================================================
-        $positions = [];
-
-        $jobTitles = [
-            'Developer',
-            'Analyst',
-            'Coordinator',
-            'Specialist',
-            'Manager',
-            'Engineer',
-            'Consultant',
-            'Technician',
-            'Officer',
-            'Administrator',
-            'Planner',
-            'Supervisor',
-            'Strategist',
-            'Director',
-            'Executive',
-            'Architect',
-            'Assistant',
-            'Lead',
-            'Trainer',
-            'Designer'
-        ];
-
-        for ($i = 1; $i <= 19; $i++) {
-            $positions[] = [
-                'title' => "$jobTitles[$i]",
-                'salary_grade' => $i
-            ];
-        }
-        DB::table('positions')->insert($positions);
 
         // stations =============================================================
         $stations = [];
@@ -192,7 +159,7 @@ class DatabaseSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             $compensationTypes[] = [
                 'name' => $compensation_names[$i], // Correctly reference each name
-                'shorthand' => strtoupper($faker->word),        // Generate random uppercase word
+                'shorthand' => strtoupper($faker->unique()->word),        // Generate random uppercase word
                 'fixed_amount' => $faker->randomFloat(2, 5000, 20000), // Random amount between 5000 and 20000
                 'is_taxable' => $faker->boolean,               // Random boolean
                 'is_fixed' => $faker->boolean,                 // Random boolean
@@ -225,8 +192,7 @@ class DatabaseSeeder extends Seeder
             $appointments[] = [
                 'compensation_code' => $i++,
                 'type' => $appointmentType,
-                'has_mandatory_deduction' => (bool)random_int(0, 1),
-                'basic_pay_type' => $basicPayTypes[array_rand($basicPayTypes)],
+                'has_mandatory_deduction' => (bool)random_int(0, 1)
             ];
         }
         DB::table('appointments')->insert($appointments);
@@ -237,21 +203,56 @@ class DatabaseSeeder extends Seeder
         shuffle($deviceBioIds);
         for ($i = 1; $i <= 50; $i++) {
             $employees[] = [
+                'appointment_code' => $faker->numberBetween(1, 10),
+                'income_tax_code' => $faker->numberBetween(1, 10),
                 'employee_number' => $faker->unique()->randomNumber(5),
                 'first_name' => $faker->firstName,
                 'middle_name' => $faker->lastName,
                 'last_name' => $faker->lastName,
                 'name_extension' => $faker->optional(0.1)->suffix,
-                'salary_type' => $faker->randomElement(['Fixed', 'Hourly', 'Contract']),
                 'salary_step' => $faker->numberBetween(1, 8),
                 'scanner_id' => array_pop($deviceBioIds),
-                'position_code' => $faker->numberBetween(1, 19),
-                'appointment_code' => $faker->numberBetween(1, 10),
-                'income_tax_code' => $faker->numberBetween(1, 10),
+                'is_active' => $faker->boolean
             ];
         }
         // Insert into the employees table
         DB::table('employees')->insert($employees);
+
+        // positions ================================================================
+        $positions = [];
+
+        $jobTitles = [
+            'Developer',
+            'Analyst',
+            'Coordinator',
+            'Specialist',
+            'Manager',
+            'Engineer',
+            'Consultant',
+            'Technician',
+            'Officer',
+            'Administrator',
+            'Planner',
+            'Supervisor',
+            'Strategist',
+            'Director',
+            'Executive',
+            'Architect',
+            'Assistant',
+            'Lead',
+            'Trainer',
+            'Designer'
+        ];
+
+        for ($i = 1; $i <= 19; $i++) {
+            $positions[] = [
+                'employee_code' => random_int(1, 50),
+                'title' => "$jobTitles[$i]",
+                'salary_grade' => $i
+            ];
+        }
+        DB::table('positions')->insert($positions);
+
 
         //Signatory =========================================================================
         
@@ -261,11 +262,7 @@ class DatabaseSeeder extends Seeder
                 'preparer_code'=>$faker->numberBetween(1,49),
                 'recommender_code'=>$faker->numberBetween(1,49),
                 'certifier_code'=>$faker->numberBetween(1,49),
-                'approver_code'=>$faker->numberBetween(1,49),
-                'preparer_position' => $jobTitles[ random_int(1, 19)],
-                'recommender_position'=> $jobTitles[ random_int(1, 19)],
-                'certifier_position'=> $jobTitles[ random_int(1, 19)],
-                'approver_position'=> $jobTitles[ random_int(1, 19)]
+                'approver_code'=>$faker->numberBetween(1,49)
 
             ];
         }
@@ -445,7 +442,7 @@ class DatabaseSeeder extends Seeder
 
             $deductionTypes[] = [
                 'name' => $faker->unique()->word . ' Deduction',  // Random deduction name
-                'shorthand' => strtoupper($faker->word),  // Random shorthand, uppercase
+                'shorthand' => strtoupper($faker->unique()->word),  // Random shorthand, uppercase
                 'fixed_amount' => $faker->randomFloat(2, 1000, 10000),  // Random amount between 1,000 and 10,000
                 'is_mandatory' => $faker->boolean,  // Random boolean value for mandatory status
                 'remittance_percent' => $faker->randomFloat(2, 5, 20),  // Random remittance percent between 5% and 20%
@@ -473,7 +470,7 @@ class DatabaseSeeder extends Seeder
 
             DB::table('agency_shares')->insert([
                 'name' => $faker->company . ' Share',  // Random company share name
-                'shorthand' => strtoupper($faker->lexify('??')),   // Random shorthand (2 letters)
+                'shorthand' => strtoupper($faker->unique()->lexify('??')),   // Random shorthand (2 letters)
                 'fixed_amount' => $faker->randomFloat(2, 50, 500),       // Random amount (50 to 500)
                 'is_mandatory' => $faker->boolean,                // Random boolean (true/false)
                 'remittance_percent' => $faker->randomFloat(2, 0.01, 0.15), // Percent (0.01 to 0.15)
@@ -487,7 +484,7 @@ class DatabaseSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             $loanTypes[] = [
                 'name' => $faker->unique()->word . ' Loan',
-                'shorthand' => strtoupper($faker->lexify('??')),
+                'shorthand' => strtoupper($faker->unique()->lexify('??')),
                 'provider' => $randomString,
             ];
         }
