@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -18,18 +17,17 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/Components/ui/popover";
+import { useState } from "react";
 
 export function EmployeeListComboBox({
     dataset,
-    value,
-    setValue,
+    setSelectedEmployee,
 }: {
     dataset: any;
-    value: any;
-    setValue: any;
+    setSelectedEmployee: any;
 }) {
-    const [open, setOpen] = React.useState(false);
-
+    const [value, setValue] = useState<string>("");
+    const [open, setOpen] = useState(false);
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
@@ -52,14 +50,14 @@ export function EmployeeListComboBox({
                                       value
                               )?.last_name
                           )
-                        : "Select..."}
+                        : "Select Employee..."}
                     <ChevronsUpDown className="opacity-50" />
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-[300px] p-0">
                 <Command>
                     <CommandInput
-                        placeholder="Search..."
+                        placeholder="Search Employee..."
                         className="h-5 my-2"
                     />
                     <CommandList>
@@ -68,12 +66,16 @@ export function EmployeeListComboBox({
                             {dataset.map((data: any) => (
                                 <CommandItem
                                     key={data.employee_code}
-                                    value={data.employee_code}
                                     onSelect={(currentValue) => {
                                         setValue(
                                             currentValue === value
                                                 ? ""
                                                 : currentValue
+                                        );
+                                        setSelectedEmployee(
+                                            value
+                                                ? undefined
+                                                : data.employee_code
                                         );
                                         setOpen(false);
                                     }}

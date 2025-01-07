@@ -25,10 +25,12 @@ use App\Http\Controllers\PageController;
 use Inertia\Inertia;
 
 // ->middleware(['auth'])
+
+
 // SUBDOMAIN FOR BIOADMIN
 Route::domain('bioadmin.' . env('APP_URL'))->group(
     function () {
-        Route::prefix('admin')->group(
+        Route::prefix('admin')->middleware(['auth'])->group(
             function () {
                 Route::get('dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
                 Route::get('attendancelists', [AttendanceListController::class, 'index'])->name('bioadmin.attendancelists');
@@ -104,9 +106,6 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
     Route::prefix('employee')->group(function () {
         Route::get('mydtr', [PageController::class, 'mydtr'])->name('employee.mydtr');
         Route::get('mypayslip', [PageController::class, 'mypayslip'])->name('employee.mypayslip');
-    });
-    Route::fallback(function () {
-        return redirect()->route('admin.formats');
     });
 });
 

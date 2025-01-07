@@ -89,13 +89,15 @@ const EmployeesList = () => {
     }
 
     function handleAddButton() {
-        console.log(value);
+        console.log(selectedEmployee);
     }
 
     const [baseItems, setBaseItems] = useState<Array<string>>([]);
     const [selectedItems, setSelectedItems] = useState<Array<string>>([]);
     const [selectedName, setSelectedName] = useState<String>("");
-    const [value, setValue] = useState("");
+    const [selectedEmployee, setSelectedEmployee] = useState<
+        string | undefined
+    >(undefined);
 
     return (
         <div className="flex">
@@ -104,8 +106,7 @@ const EmployeesList = () => {
                     <section className="flex justify-start my-2 gap-3">
                         <EmployeeListComboBox
                             dataset={employeeslist}
-                            value={value}
-                            setValue={setValue}
+                            setSelectedEmployee={setSelectedEmployee}
                         />
                         <Button type="button" onClick={handleAddButton}>
                             Add Employee
@@ -239,7 +240,6 @@ const columns: ColumnDef<EmployeesListTypes>[] = [
                             <p>₱ {number.toLocaleString("en-US")} </p>
                         </AccordionTrigger>
                         <AccordionContent>
-                            {" "}
                             <div className="flex flex-col">
                                 <span>GSIS_PREMIUM : P3,000.00</span>
                                 <span>PEKE : P2,000.00</span>
@@ -247,7 +247,6 @@ const columns: ColumnDef<EmployeesListTypes>[] = [
                         </AccordionContent>
                     </AccordionItem>
                 </Accordion>
-                // <p>₱ {number.toLocaleString("en-US")} </p>
             );
         },
     },

@@ -23,7 +23,7 @@ class PayrollSheetController extends Controller
 
     public function get_employees()
     {
-        $employees = Employee::all();
+        $employees = Employee::get(['first_name', 'last_name', 'employee_code']);
         return response()->json([
             'status' => 'success',
             'message' => 'Employees retrieved successfully',

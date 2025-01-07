@@ -30,7 +30,7 @@ export function LoginForm({
     className,
     ...props
 }: React.ComponentProps<"div">) {
-    const { data, post, reset, processing } = useForm({
+    const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
         email: "",
         password: "",
@@ -48,6 +48,8 @@ export function LoginForm({
         });
     };
 
+    console.log(data);
+
     return (
         <div className={cn("flex flex-col gap-6", className)} {...props}>
             <Card className="overflow-hidden">
@@ -64,7 +66,17 @@ export function LoginForm({
                             </div>
                             <div className="grid gap-2">
                                 <Label htmlFor="email">Email</Label>
-                                <Input id="email" type="email" required />
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    name="email"
+                                    value={data.email}
+                                    className={errors.email && "text-red-600"}
+                                    autoComplete="username"
+                                    onChange={(e) =>
+                                        setData("email", e.target.value)
+                                    }
+                                />
                             </div>
                             <div className="grid gap-2">
                                 <div className="flex items-center">
@@ -76,7 +88,20 @@ export function LoginForm({
                                         Forgot your password?
                                     </a>
                                 </div>
-                                <Input id="password" type="password" required />
+
+                                <Input
+                                    id="password"
+                                    type="password"
+                                    name="password"
+                                    value={data.password}
+                                    className={
+                                        errors.password && "text-red-600"
+                                    }
+                                    autoComplete="current-password"
+                                    onChange={(e) =>
+                                        setData("password", e.target.value)
+                                    }
+                                />
                             </div>
                             <Button
                                 type="submit"
