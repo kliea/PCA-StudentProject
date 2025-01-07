@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\error;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class UserRoleMiddleware
 {
@@ -40,7 +41,11 @@ class UserRoleMiddleware
             return redirect()->route('bioadmin.dashboard');
         }
 
+        $host = FacadesRequest::getHost();
+
+        $subdomain = explode('.', $host)[0];
+
         // Redirect if user is not authorized
-        return redirect()->route('login')->withErrors(['access_denied' => 'Unauthorized access.']);
+        return redirect()->route('payroll.login')->withErrors(['access_denied' => 'Unauthorized access.']);
     }
 }

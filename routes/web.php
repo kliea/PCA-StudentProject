@@ -22,6 +22,7 @@ use App\Http\Controllers\Payroll\SummaryController;
 // Controllers: Biometrics
 use App\Http\Controllers\Biometrics\DailyTimeEntryController;
 use App\Http\Controllers\PageController;
+use Inertia\Inertia;
 
 // ->middleware(['auth'])
 // SUBDOMAIN FOR BIOADMIN
@@ -43,7 +44,14 @@ Route::domain('bioadmin.' . env('APP_URL'))->group(
 
 // SUBDOMAIN FOR PAYROLL
 Route::domain('payroll.' . env('APP_URL'))->group(function () {
+
     Route::get('test', [AdminPageController::class, 'format'])->name('admin.formats');
+    Route::get('/', function () {
+        return Inertia::render("Payroll/LoginPage");
+    });
+    Route::get('login', function () {
+        return Inertia::render("Payroll/LoginPage");
+    })->name('payroll.login');
 
     Route::prefix('admin')->group(function () {
         Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
