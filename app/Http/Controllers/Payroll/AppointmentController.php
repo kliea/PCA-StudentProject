@@ -61,9 +61,9 @@ class AppointmentController extends Controller
     {
         /* Validating the user request. */
         $validated = $request->validate([
-            'type' => 'required',
+            'type' => 'required|unique:appointments',
             'has_mandatory_deduction' => 'required|boolean',
-            'compensation_code ' => 'required|integer',
+            'compensation_code' => 'required|integer',
         ]);
 
         Appointment::where('appointment_code', $appointment_code)->update($validated);
