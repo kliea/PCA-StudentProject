@@ -40,12 +40,11 @@ Route::domain('bioadmin.' . env('APP_URL'))->group(
 );
 
 // ->middleware(['auth'])
-
 // SUBDOMAIN FOR PAYROLL
 Route::domain('payroll.' . env('APP_URL'))->group(function () {
     Route::get('test', [AdminPageController::class, 'format'])->name('admin.formats');
 
-    Route::prefix('admin')->group(function () {
+    Route::prefix('admin')->middleware('usercheck:admin')->group(function () {
         Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
         // PAYROLL ROUTES
         Route::get('payroll', [SummaryController::class, 'Summary'])->name('admin.payrolls');
