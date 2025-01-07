@@ -66,7 +66,7 @@ export default function HolidayCreation() {
         type: null,
     });
 
-    const [dialogOpen, setDialogOpen] = useState(true); // Dialog state (open/close)
+    const [dialogOpen, setDialogOpen] = useState(false); // Dialog state (open/close)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
