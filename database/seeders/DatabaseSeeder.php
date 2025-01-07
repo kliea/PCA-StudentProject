@@ -35,39 +35,6 @@ class DatabaseSeeder extends Seeder
         }
         DB::table('salary_grades')->insert($salaryGrades);
 
-        // positions ================================================================
-        $positions = [];
-
-        $jobTitles = [
-            'Developer',
-            'Analyst',
-            'Coordinator',
-            'Specialist',
-            'Manager',
-            'Engineer',
-            'Consultant',
-            'Technician',
-            'Officer',
-            'Administrator',
-            'Planner',
-            'Supervisor',
-            'Strategist',
-            'Director',
-            'Executive',
-            'Architect',
-            'Assistant',
-            'Lead',
-            'Trainer',
-            'Designer'
-        ];
-
-        for ($i = 1; $i <= 19; $i++) {
-            $positions[] = [
-                'title' => "$jobTitles[$i]",
-                'salary_grade' => $i
-            ];
-        }
-        DB::table('positions')->insert($positions);
 
         // stations =============================================================
         $stations = [];
@@ -236,7 +203,6 @@ class DatabaseSeeder extends Seeder
         shuffle($deviceBioIds);
         for ($i = 1; $i <= 50; $i++) {
             $employees[] = [
-                'position_code' => $faker->numberBetween(1, 19),
                 'appointment_code' => $faker->numberBetween(1, 10),
                 'income_tax_code' => $faker->numberBetween(1, 10),
                 'employee_number' => $faker->unique()->randomNumber(5),
@@ -251,6 +217,42 @@ class DatabaseSeeder extends Seeder
         }
         // Insert into the employees table
         DB::table('employees')->insert($employees);
+
+        // positions ================================================================
+        $positions = [];
+
+        $jobTitles = [
+            'Developer',
+            'Analyst',
+            'Coordinator',
+            'Specialist',
+            'Manager',
+            'Engineer',
+            'Consultant',
+            'Technician',
+            'Officer',
+            'Administrator',
+            'Planner',
+            'Supervisor',
+            'Strategist',
+            'Director',
+            'Executive',
+            'Architect',
+            'Assistant',
+            'Lead',
+            'Trainer',
+            'Designer'
+        ];
+
+        for ($i = 1; $i <= 19; $i++) {
+            $positions[] = [
+                'employee_code' => random_int(1, 50),
+                'title' => "$jobTitles[$i]",
+                'salary_grade' => $i
+            ];
+        }
+        DB::table('positions')->insert($positions);
+
 
         //Signatory =========================================================================
         

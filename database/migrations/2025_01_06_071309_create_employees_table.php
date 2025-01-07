@@ -20,7 +20,6 @@ return new class extends Migration
                 $table->id('employee_code');
                 
                 $table->foreignId('appointment_code')->constrained('appointments')->references('appointment_code');
-                $table->foreignId('position_code')->constrained('positions')->references('position_code');
                 $table->foreignId('income_tax_code')->constrained('income_taxes')->references('income_tax_code');
 
                 $table->string('employee_number')->unique();

@@ -19,6 +19,8 @@ return new class extends Migration
 				This might need to be utilized;
 				or this could be set by the user. */
 
+            $table->foreignId('employee_code')->constrained('employees')->references('employee_code');
+
 			$table->string('title')->unique();
 
 			$table->string('salary_grade');
