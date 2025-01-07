@@ -21,6 +21,8 @@ return new class extends Migration
 
 			$table->string('type')->unique();
 			$table->boolean('has_mandatory_deduction');
+
+            $table->timestamps();
         });
     }
 

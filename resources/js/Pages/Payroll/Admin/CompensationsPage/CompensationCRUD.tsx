@@ -8,11 +8,11 @@ import CompensationStoreDialog from "./CompensationStoreDialog";
 
 export function CompensationStore({ openDialog }: { openDialog: any }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        compensation_name: "",
-        shorthand: "",
-        amount: 0,
+        name: "NAME",
+        shorthand: "SHORT",
         is_taxable: false,
         is_fixed: false,
+        fixed_amount: 2000,
     });
 
     const submit: FormEventHandler = (e) => {
@@ -27,7 +27,7 @@ export function CompensationStore({ openDialog }: { openDialog: any }) {
                         </div>
                         <div className="flex">
                             <span className="pl-6">
-                                Compensation Type {data.compensation_name} has
+                                Compensation Type {data.name} has
                                 been added!
                             </span>
                         </div>
@@ -35,9 +35,9 @@ export function CompensationStore({ openDialog }: { openDialog: any }) {
                     { duration: 2000 }
                 );
                 reset(
-                    "compensation_name",
+                    "name",
                     "shorthand",
-                    "amount",
+                    "fixed_amount",
                     "is_taxable",
                     "is_fixed"
                 );

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class CompensationType extends Model
 {
+    public $timestamps = false;
+
 	protected $table = 'compensation_types';
 	protected $primaryKey = 'compensation_code';
 
