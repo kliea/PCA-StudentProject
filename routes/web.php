@@ -4,6 +4,7 @@ use App\Http\Controllers\Biometric\DashboardController;
 use App\Http\Controllers\Biometric\AttendanceListController;
 use App\Http\Controllers\Biometric\AttendanceRecordController;
 use App\Http\Controllers\Biometric\ManageUserController;
+use App\Http\Controllers\Payroll\PayrollSheetController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -21,6 +22,7 @@ use App\Http\Controllers\Payroll\SummaryController;
 // Controllers: Biometrics
 use App\Http\Controllers\Biometrics\DailyTimeEntryController;
 use App\Http\Controllers\PageController;
+
 // ->middleware(['auth'])
 // SUBDOMAIN FOR BIOADMIN
 Route::domain('bioadmin.' . env('APP_URL'))->group(
@@ -87,6 +89,7 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         //Query routes
         Route::get('/test', [PageController::class, 'testingPage']);
         Route::get('employee/{employee_code}', [EmployeeController::class, 'get_employee_data'])->name('admin.employee_data');
+        Route::get('/employeelist', [PayrollSheetController::class, 'get_employees'])->name('admin.get_employee_data');
     });
 
     Route::fallback(function () {

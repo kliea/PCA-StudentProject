@@ -40,13 +40,8 @@ class SummaryController extends Controller
             // }
             //>>>>>>>>???
 
-            $employee_id = 1;
 
-            $results = DB::select('SELECT * FROM create_payslip_summary(:employee_id)', [
-                'employee_id' => $employee_id
-            ]);
-
-            return Inertia::render('Payroll/Admin/PayrollsPage/PayrollsPage', ['payslip' => $results]);
+            return Inertia::render('Payroll/Admin/PayrollsPage/PayrollsPage');
 
             // json tester
             // return response()->json([

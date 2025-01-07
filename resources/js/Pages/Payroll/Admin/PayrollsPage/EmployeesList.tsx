@@ -1,4 +1,4 @@
-import { Combobox } from "@/Components/ComboBox";
+import { EmployeeListComboBox } from "@/Components/ComboBox";
 import { DataTable } from "@/Components/DataTable";
 import { Button } from "@/Components/ui/button";
 import { Label } from "@/Components/ui/label";
@@ -9,7 +9,7 @@ import {
     getCoreRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
 import IncludeExcludeBox from "@/Components/IncludeExcludeBox";
 
@@ -19,54 +19,62 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/Components/ui/accordion";
+import axios from "axios";
+
+interface EmployeesListTypes {
+    appointment_code: number;
+    device_bio_id: string;
+    employee_code: number;
+    employee_number: string;
+    first_name: string;
+    last_name: string;
+    middle_name: string;
+    name_extenstion: string | null;
+    position_code: number;
+    salary_step: number;
+    salary_type: string;
+    station_code: number;
+}
 
 const EmployeesList = () => {
     const [data, setData] = useState<Array<EmployeesListTypes>>([]);
 
-    
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    route("admin.get_employee_data")
+                );
+                setData(response.data.data);
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                setLoading(false);
+            }
+        };
 
-    const [employeeslist, setemployeeslist] = useState([
-        {
-            value: "1",
-            label: "Emma Johnson",
-        },
-        {
-            value: "Liam Smith",
-            label: "Liam Smith",
-        },
-        {
-            value: "Olivia Brown",
-            label: "Olivia Brown",
-        },
-        {
-            value: "Noah Williams",
-            label: "Noah Williams",
-        },
-        {
-            value: "Ava Jones",
-            label: "Ava Jones",
-        },
-        {
-            value: "Elijah Miller",
-            label: "Elijah Miller",
-        },
-        {
-            value: "Sophia Davis",
-            label: "Sophia Davis",
-        },
-        {
-            value: "James Garcia",
-            label: "James Garcia",
-        },
-        {
-            value: "Isabella Martinez",
-            label: "Isabella Martinez",
-        },
-        {
-            value: "Benjamin Hernandez",
-            label: "Benjamin Hernandez",
-        },
-    ]);
+        fetchData();
+    }, []);
+
+    const [employeeslist, setemployeeslist] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    route("admin.get_employee_data")
+                );
+                setemployeeslist(response.data.data);
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const table = useReactTable({
         data,
@@ -80,6 +88,10 @@ const EmployeesList = () => {
         setSelectedName(full_name);
     }
 
+    function handleAddButton() {
+        console.log(value);
+    }
+
     const [baseItems, setBaseItems] = useState<Array<string>>([]);
     const [selectedItems, setSelectedItems] = useState<Array<string>>([]);
     const [selectedName, setSelectedName] = useState<String>("");
@@ -90,12 +102,14 @@ const EmployeesList = () => {
             <section className="w-full grid grid-cols-2 gap-5 ">
                 <div className="h-full">
                     <section className="flex justify-start my-2 gap-3">
-                        <Combobox
+                        <EmployeeListComboBox
                             dataset={employeeslist}
                             value={value}
                             setValue={setValue}
                         />
-                        <Button type="button">Add Employee</Button>
+                        <Button type="button" onClick={handleAddButton}>
+                            Add Employee
+                        </Button>
                     </section>
                     <ScrollArea className="h-[500px] border rounded-[10px]">
                         <DataTable
@@ -178,13 +192,6 @@ const EmployeesList = () => {
 };
 
 export default EmployeesList;
-
-interface EmployeesListTypes {
-    first_name: string;
-    last_name: string;
-    compensations: number;
-    deductions: number;
-}
 
 const columns: ColumnDef<EmployeesListTypes>[] = [
     {

@@ -19,7 +19,7 @@ import {
     PopoverTrigger,
 } from "@/Components/ui/popover";
 
-export function Combobox({
+export function EmployeeListComboBox({
     dataset,
     value,
     setValue,
@@ -40,8 +40,18 @@ export function Combobox({
                     className="w-[300px] justify-between"
                 >
                     {value
-                        ? dataset.find((data: any) => data.value === value)
-                              ?.label
+                        ? cn(
+                              dataset.find(
+                                  (data: any) =>
+                                      cn(data.first_name, data.last_name) ===
+                                      value
+                              )?.first_name,
+                              dataset.find(
+                                  (data: any) =>
+                                      cn(data.first_name, data.last_name) ===
+                                      value
+                              )?.last_name
+                          )
                         : "Select..."}
                     <ChevronsUpDown className="opacity-50" />
                 </Button>
@@ -57,8 +67,8 @@ export function Combobox({
                         <CommandGroup>
                             {dataset.map((data: any) => (
                                 <CommandItem
-                                    key={data.value}
-                                    value={data.value}
+                                    key={data.employee_code}
+                                    value={data.employee_code}
                                     onSelect={(currentValue) => {
                                         setValue(
                                             currentValue === value
@@ -68,11 +78,15 @@ export function Combobox({
                                         setOpen(false);
                                     }}
                                 >
-                                    {data.label}
+                                    {cn(data.first_name, data.last_name)}
                                     <Check
                                         className={cn(
                                             "ml-auto",
-                                            value === data.value
+                                            value ===
+                                                cn(
+                                                    data.first_name,
+                                                    data.last_name
+                                                )
                                                 ? "opacity-100"
                                                 : "opacity-0"
                                         )}
