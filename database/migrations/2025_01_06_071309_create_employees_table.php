@@ -29,7 +29,6 @@ return new class extends Migration
                 $table->string('middle_name')->nullable();
                 $table->string('last_name');
                 $table->string('name_extension')->nullable();
-                $table->string('salary_type');
                 $table->integer('salary_step', false, true);
                 $table->string('scanner_id');
                 $table->boolean('is_active')->default(true);
