@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('daily_entries', function (Blueprint $table) {
             $table->id('daily_entry_code');
-            
+
             $table->foreignId('employee_code')->constrained('employees')->references('employee_code');
 
 			$table->time('am_clockin');

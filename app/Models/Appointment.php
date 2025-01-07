@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Appointment extends Model
 {
+    public $timestamps = false;
+
 	protected $table = 'appointments';
 	protected $primaryKey = 'appointment_code';
 
 	protected $fillable = [
 		'type',
-		'appointment_type',
+		'compensation_code',
 		'has_mandatory_deduction',
-		'basic_pay_type',
-		'tax_type'
 	];
 
 	public function employee() {

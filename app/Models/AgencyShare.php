@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class AgencyShare extends Model
 {
+    public $timestamps = false;
+
 	protected $table = 'agency_shares';
 	protected $primaryKey = 'agency_share_code';
 
