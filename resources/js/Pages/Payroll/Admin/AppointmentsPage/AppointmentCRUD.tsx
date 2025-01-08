@@ -33,6 +33,7 @@ export function AppointmentStore({
     const changeBasicPayType = (value: string) => {
         data.type = value;
     };
+
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 

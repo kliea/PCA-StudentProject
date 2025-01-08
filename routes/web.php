@@ -78,6 +78,7 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
 
         // EMPLOYEES ROUTES
         Route::get('employees', [EmployeeController::class, 'index'])->name('admin.employee');
+        Route::put('employees/{employee_code}', [EmployeeController::class, 'update'])->name('update.employee');
 
         // SSL ROUTES
         Route::get('ssl', [SalaryGradeController::class, 'index'])->name('admin.ssl');
@@ -87,7 +88,6 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
 
         //Query routes
         Route::get('/test', [PageController::class, 'testingPage']);
-        Route::get('employee/{employee_code}', [EmployeeController::class, 'get_employee_data'])->name('admin.employee_data');
     });
 
     Route::fallback(function () {
