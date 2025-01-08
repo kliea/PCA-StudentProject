@@ -99,8 +99,9 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
 
         //Query routes
         Route::get('/test', [PageController::class, 'testingPage']);
-        Route::get('employee/{employee_code}', [EmployeeController::class, 'get_employee_data'])->name('admin.employee_data');
+        // Route::get('employee/{employee_code}', [EmployeeController::class, 'get_employee_data'])->name('admin.employee_data');
         Route::get('/employeelist', [PayrollSheetController::class, 'get_employees'])->name('admin.get_employee_data');
+        Route::get('/employee/{id}', [PayrollSheetController::class, 'get_employee'])->name('admin.get_employee');
     });
 
     Route::prefix('employee')->group(function () {

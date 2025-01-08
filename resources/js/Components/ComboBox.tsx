@@ -22,12 +22,16 @@ import { useState } from "react";
 export function EmployeeListComboBox({
     dataset,
     setSelectedEmployee,
+    value,
+    setValue,
 }: {
     dataset: any;
     setSelectedEmployee: any;
+    value: any;
+    setValue: any;
 }) {
-    const [value, setValue] = useState<string>("");
     const [open, setOpen] = useState(false);
+    console.log(value);
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
@@ -73,7 +77,7 @@ export function EmployeeListComboBox({
                                                 : currentValue
                                         );
                                         setSelectedEmployee(
-                                            value
+                                            currentValue === value
                                                 ? undefined
                                                 : data.employee_code
                                         );

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\PayrollSheet;
 use Inertia\Inertia;
 use Inertia\Response;
+use Number;
 
 class PayrollSheetController extends Controller
 {
@@ -28,6 +29,17 @@ class PayrollSheetController extends Controller
             'status' => 'success',
             'message' => 'Employees retrieved successfully',
             'data' => $employees,
+        ]);
+    }
+
+    public function get_employee(int $id)
+    {
+        $employee = Employee::where('employee_code', $id)->first();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Employees retrieved successfully',
+            'data' => $employee,
         ]);
     }
 

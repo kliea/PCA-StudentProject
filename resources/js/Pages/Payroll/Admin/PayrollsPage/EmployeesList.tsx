@@ -20,6 +20,8 @@ import {
     AccordionTrigger,
 } from "@/Components/ui/accordion";
 import axios from "axios";
+import CompensationStoreDialog from "../CompensationsPage/CompensationStoreDialog";
+import { employeesListTypes, employeeTypes } from "@/types/payrollPagesTypes";
 
 interface EmployeesListTypes {
     appointment_code: number;
@@ -38,24 +40,7 @@ interface EmployeesListTypes {
 
 const EmployeesList = () => {
     const [data, setData] = useState<Array<EmployeesListTypes>>([]);
-
     const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(
-                    route("admin.get_employee_data")
-                );
-                setData(response.data.data);
-                setLoading(false);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, []);
 
     const [employeeslist, setemployeeslist] = useState([]);
 
@@ -88,33 +73,62 @@ const EmployeesList = () => {
         setSelectedName(full_name);
     }
 
-    function handleAddButton() {
-        console.log(selectedEmployee);
-    }
+    const handleAddButton = async () => {
+        setLoading(true); // Start loading
+        try {
+            const response = await axios.get(
+                route("admin.get_employee", selectedEmployee)
+            );
+            setData((prevData) => [...prevData, response.data.data]); // Append new data
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        } finally {
+            setLoading(false); // Stop loading
+            setValue("");
+            setemployeeslist((prevList) =>
+                prevList.filter(
+                    (item: EmployeesListTypes) =>
+                        item.employee_code !== selectedEmployee
+                )
+            );
+        }
+    };
+
+    // console.log(
+    //     data.find((data) => data.employee_code == selectedEmployee)
+    //         ?.employee_number
+    // );
 
     const [baseItems, setBaseItems] = useState<Array<string>>([]);
     const [selectedItems, setSelectedItems] = useState<Array<string>>([]);
     const [selectedName, setSelectedName] = useState<String>("");
     const [selectedEmployee, setSelectedEmployee] = useState<
-        string | undefined
+        number | undefined
     >(undefined);
-
+    const [value, setValue] = useState<string>("");
     return (
         <div className="flex">
             <section className="w-full grid grid-cols-2 gap-5 ">
                 <div className="h-full">
-                    <section className="flex justify-start my-2 gap-3">
+                    <section className="flex justify-start my-2 gap-3 ">
                         <EmployeeListComboBox
+                            value={value}
+                            setValue={setValue}
                             dataset={employeeslist}
                             setSelectedEmployee={setSelectedEmployee}
                         />
-                        <Button type="button" onClick={handleAddButton}>
+                        <Button
+                            type="button"
+                            onClick={handleAddButton}
+                            disabled={
+                                selectedEmployee != undefined ? false : true
+                            }
+                        >
                             Add Employee
                         </Button>
                     </section>
                     <ScrollArea className="h-[500px] border rounded-[10px]">
                         <DataTable
-                            className="h-[500px]"
                             onMouseEnter={handleRowSelect}
                             table={table}
                             rowStyle="bg-white"
@@ -201,7 +215,7 @@ const columns: ColumnDef<EmployeesListTypes>[] = [
         cell: ({ row }) => {
             return (
                 <p className="cursor-pointer">
-                    {cn(row.original.last_name, ",", row.original.first_name)}
+                    {cn(row.original.first_name, row.original.last_name)}
                 </p>
             );
         },
