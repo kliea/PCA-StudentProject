@@ -44,11 +44,10 @@ export function EmployeeEdit({
     setOpenDialog: any;
 }) {
     const { data, setData, processing, put, reset, errors } = useForm({
-        title: "Principal",
-        appointment: "Regular",
-        position: "agriculture",
-        station: "nigga",
-        salary_step: 3,
+        station_code: 1,
+        appointment_code: 2,
+        position_code: 3,
+        salary_step: 4
     });
 
     const submit: FormEventHandler = (e) => {
@@ -87,6 +86,7 @@ export function EmployeeEdit({
                         duration: 2000,
                     }
                 );
+                console.log(errors);
             },
         });
     };

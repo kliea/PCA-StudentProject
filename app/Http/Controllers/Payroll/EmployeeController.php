@@ -60,14 +60,13 @@ class EmployeeController extends Controller
     {
         /* Validating the user request. */
         $validated = $request->validate([
-            'title' => 'required|numeric|min:0',
             'appointment_code' => 'required|numeric|min:0',
             'position_code' => 'required|numeric|min:0',
             'salary_step' => 'required|numeric|min:0',
-            'station_code' => 'required|string'
+            'station_code' => 'required|numeric|min:0'
         ]);
 
-        dd();
+        // dd($request);
 
         // call procedure
         DB::select("
