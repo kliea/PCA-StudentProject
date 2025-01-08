@@ -49,7 +49,6 @@ class AppointmentController extends Controller
 
         // Redirect back or to a specific page after saving
         return redirect()->back()->with('success', 'Data saved successfully!');
-        // return response()->json(["json" => "test"]);
     }
 
     /**
@@ -76,6 +75,7 @@ class AppointmentController extends Controller
     // TODO: NEED PUD I DELETE ANG FOREING KEY NGA NAA SA EMPLOYEES (APPOINTMENT_TYPE)
     public function destroy($appointment_code)
     {
+        dd("DISABLED");
         // Find the record by salary_grade
         Appointment::where('appointment_code', $appointment_code)->delete();
         return redirect()->back()->with('success', 'Successfully deleted ssl');
