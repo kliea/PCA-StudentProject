@@ -43,7 +43,7 @@ class EmployeeController extends Controller
             FROM
                 employees AS e
             JOIN
-                positions AS p ON e.employee_code = p.employee_code
+                positions AS p ON e.position_code = p.position_code
             JOIN
                 salary_grades AS sg ON sg.grade = e.salary_step
         ");
@@ -60,37 +60,31 @@ class EmployeeController extends Controller
     {
         /* Validating the user request. */
         $validated = $request->validate([
-            'title' => 'required|string',
-            'appointment_type' => 'required|string',
-            'position' => 'required|string',
+            'title' => 'required|numeric|min:0',
+            'appointment_code' => 'required|numeric|min:0',
+            'position_code' => 'required|numeric|min:0',
             'salary_step' => 'required|numeric|min:0',
-            'station' => 'required|string'
+            'station_code' => 'required|string'
         ]);
 
-        // dd($request->title);
-        DB::update("
-            UPDATE employees e
-            JOIN positions p ON p.employee_code = e.employee_code
-            JOIN appointment a ON a.appointment_code = e.appointment_code
-            JOIN applied_stations as ON as.employee_code = e.employee_code
-            JOIN stations s ON s.station_code = as.station_code
-            SET
-                e.station = ?,
-                a.appointment_type = ?,
-                p.title = ?,
-                s.name = ?,
-                e.salary_step = ?
-            WHERE e.employee_code = ?
-        ", [
-            $request->station,
-            $request->appointment_type,
-            $request->title,
-            $request->station,
-            $request->salary_step,
-            $employee_code
+        dd();
+
+        // call procedure
+        DB::select("
+        CALL update_employee_details(
+            :emp_code,
+            :new_station_code,
+            :new_appointment_code,
+            :new_position_code,
+            :new_salary_step
+        )", [
+            'emp_code' => $employee_code,
+            'new_station_code' => $request->station_code,
+            'new_appointment_code' => $request->appointment_code,
+            'new_position_code' => $request->position_code,
+            'new_salary_step' => $request->salary_step
         ]);
 
-        Employee::where('employee_code', $employee_code)->update($validated);
         return redirect()->back()->with('success', 'Successfully stored Employee');
     }
 
