@@ -20,7 +20,7 @@ class UserRoleMiddleware
     {
         $host = $request->getHost();
         $subdomain = explode('.', $host)[0];
-
+        echo $subdomain;    
         // Prevent infinite redirect loops by excluding certain routes
         $currentRoute = $request->route()->getName();
         $excludedRoutes = ['admin.dashboard', 'employee.dashboard', 'bioemployee.dashboard', 'bioadmin.dashboard', 'login'];
@@ -60,14 +60,11 @@ class UserRoleMiddleware
             }
 
             // Redirect to login for unauthorized users
-            return redirect()->route('login');
+            return redirect()->route('login');  
         }
 
-        $host = FacadesRequest::getHost();
-
-        $subdomain = explode('.', $host)[0];
 
         // Redirect if user is not authorized
-        return redirect()->route('payroll.login')->withErrors(['access_denied' => 'Unauthorized access.']);
+        return redirect()->route('payroll.login');
     }
 }

@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/Components/ui/card";
 const PayrollLoginPage = () => {
     return (
         <div className="flex min-h-svh flex-col items-center justify-center p-6 md:p-10 bg-baseGreen">
-            <div className="w-full max-w-sm md:max-w-3xl ">
+            <div className="w-full max-w-sm md:max-w-3xl">
                 <LoginForm />
             </div>
         </div>
@@ -34,12 +34,15 @@ export function LoginForm({
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
+        console.log("Form submitted with data:", data); // Add this console log to indicate form submission.
+
         post(route("login"), {
             onFinish: () => {
-                reset("password"), localStorage.setItem("email", data.email);
+                reset("password");
+                localStorage.setItem("email", data.email);
                 localStorage.setItem("password", data.password);
-                console.log(data);
-                console.log(localStorage.length);
+                console.log("Form finished processing.");
+                console.log("LocalStorage length:", localStorage.length);
             },
         });
     };
@@ -48,7 +51,7 @@ export function LoginForm({
         <div className={cn("flex flex-col gap-6", className)} {...props}>
             <Card className="overflow-hidden">
                 <CardContent className="grid p-0 md:grid-cols-2">
-                    <form className="p-6 md:p-8 " onSubmit={submit}>
+                    <form className="p-6 md:p-8" onSubmit={submit}>
                         <div className="flex flex-col gap-10">
                             <div className="flex flex-col items-center text-center">
                                 <h1 className="text-2xl font-bold">
