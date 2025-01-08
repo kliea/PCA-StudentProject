@@ -9,13 +9,7 @@ import {
     getCoreRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import {
-    createContext,
-    ReactNode,
-    useContext,
-    useEffect,
-    useState,
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
 import IncludeExcludeBox from "@/Components/IncludeExcludeBox";
 
@@ -27,10 +21,10 @@ import {
 } from "@/Components/ui/accordion";
 import axios from "axios";
 import { Trash } from "lucide-react";
-import { employeesListTypes } from "@/types/payrollPagesTypes";
 import {
     Command,
     CommandEmpty,
+    CommandGroup,
     CommandInput,
     CommandItem,
     CommandList,
@@ -73,33 +67,45 @@ function BoxSelection({ base }: { base: any }) {
         <div className="grid grid-cols-2 gap-3">
             <section className="border border-slate-300 rounded-sm p-2">
                 <section className="flex flex-col items-center">
-                    <section>Applied Compensations</section>
+                    <Label>Applied Compensations</Label>
                     <section className=" w-full">
                         <Command>
-                            <section>
-                                <CommandInput
-                                    placeholder="Search Compensation..."
-                                    className="border border-transparent "
-                                ></CommandInput>
-                                <CommandList className="max-h-28 scrollbar scrollbar-w-2 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-secondaryGreen h-32 overflow-y-scroll ">
-                                    <CommandEmpty>
-                                        No results found.
-                                    </CommandEmpty>
+                            <CommandInput
+                                placeholder="Type a command or search..."
+                                className="border-transparent"
+                            />
+                            <CommandList className="min-h-28 max-h-28 scrollbar-thumb-rounded-full scrollbar-thin scrollbar-thumb-secondaryGreen scrollbar-track-transparent overflow-y-scroll">
+                                <CommandEmpty>No results found.</CommandEmpty>
+                                <CommandGroup>
                                     {base.map((item: any) => (
-                                        <div>
-                                            <CommandItem>
-                                                {item.name}
-                                            </CommandItem>
-                                        </div>
+                                        <CommandItem>{item.name}</CommandItem>
                                     ))}
-                                </CommandList>
-                            </section>
+                                </CommandGroup>
+                            </CommandList>
                         </Command>
                     </section>
                 </section>
             </section>
-            <section className="border border-red-300 rounded-sm p-2">
-                Hello World
+            <section className="border border-slate-300 rounded-sm p-2">
+                <section className="flex flex-col items-center">
+                    <Label>Compensations</Label>
+                    <section className=" w-full">
+                        <Command>
+                            <CommandInput
+                                placeholder="Type a command or search..."
+                                className="border-transparent"
+                            />
+                            <CommandList className="min-h-28 max-h-28 scrollbar-thumb-rounded-full scrollbar-thin scrollbar-thumb-secondaryGreen scrollbar-track-transparent overflow-y-scroll">
+                                <CommandEmpty>No results found.</CommandEmpty>
+                                <CommandGroup>
+                                    {base.map((item: any) => (
+                                        <CommandItem>{item.name}</CommandItem>
+                                    ))}
+                                </CommandGroup>
+                            </CommandList>
+                        </Command>
+                    </section>
+                </section>
             </section>
         </div>
     );

@@ -24,6 +24,7 @@ import { Input } from "@/Components/ui/input";
 import PaginationTable from "@/Components/Pagination";
 import { SslDelete, SslStore, SslUpdate } from "./SslCrud";
 import { METHODS } from "http";
+import axios from "axios";
 
 const SslPage = () => {
     const data = (usePage().props.data as sslProfileTypes[]) || [];
@@ -54,10 +55,34 @@ const SslPage = () => {
         },
     });
 
+    const [openExport, setOpenExport] = useState(false);
+
     var user = {
         name: "John Doe",
         email: "johnDoe2641@email.com",
         avatar: "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png",
+    };
+
+    const handleDownload = async () => {
+        try {
+            const response = await axios.get(route("export.salary_grades"), {
+                responseType: "blob",
+            });
+
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", "ssl.xlsx");
+            document.body.appendChild(link);
+
+            link.click();
+
+            if (link.parentNode) {
+                link.parentNode.removeChild(link);
+            }
+        } catch (error) {
+            console.error("Error during file download:", error);
+        }
     };
 
     return (
@@ -107,8 +132,10 @@ const SslPage = () => {
                         />
 
                         <DialogMenu
+                            open={openExport}
+                            openDialog={() => setOpenExport(!openExport)}
                             trigger={
-                                <Button 
+                                <Button
                                     className="gap-2 rounded-pca"
                                     aria-label="Add SSL"
                                 >
@@ -116,13 +143,22 @@ const SslPage = () => {
                                     <Label>Export</Label>
                                 </Button>
                             }
-                            title="Feature Under Development"
+                            title="Download Salary Standardization Law Grades?"
                         >
-                            <Button type="button">
-                                <Link href={route('export.salary_grades')} method ="get">ihoiuiouoi</Link>
-                            </Button>
+                            <div className="flex gap-5 justify-end pt-5">
+                                <Button
+                                    type="button"
+                                    variant="ghost"
+                                    onClick={() => setOpenExport(!openExport)}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button type="button" onClick={handleDownload}>
+                                    Confirm
+                                </Button>
+                            </div>
                         </DialogMenu>
-                    </div>  
+                    </div>
                 </div>
                 <DataTable
                     {...{
