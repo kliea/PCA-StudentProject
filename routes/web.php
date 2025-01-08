@@ -35,6 +35,7 @@ Route::domain('bioadmin.' . env('APP_URL'))->group(
                 // Route::get('autogenerate-today', [DailyTimeEntryController::class, 'generateNewBatch'])->name('generate-DTRs'); ala namani
                 Route::get('attendancerecords', [AttendanceRecordController::class, 'index'])->name('bioadmin.attendancerecords');
                 Route::get('manageusers', [ManageUserController::class, 'index'])->name('bioadmin.manageusers');
+                Route::post('manageusers', [ManageUserController::class, 'store'])->name('store.bioadmin.manageusers');
                 Route::get('travelorder', [TravelOrderController::class, 'index'])->name('bioadmin.travelorder');
                 Route::get('leaveorder', [LeaveOrderController::class, 'index'])->name('bioadmin.leaveorder');
                 Route::get('holidaycreation', [HolidayCreationController::class, 'index'])->name('bioadmin.holidaycreation');
