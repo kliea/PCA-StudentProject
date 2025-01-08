@@ -35,7 +35,19 @@ class HolidayCreationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the request data
+        $validatedData = $request->validate([
+            'holiday_name' => 'required|string|max:255',
+            'date' => 'required|date',
+            'type' => 'required|string|max:50',
+            'is_recurring' => 'required|boolean',
+        ]);
+
+        // Create the holiday
+        $holiday = Holiday::create($validatedData);
+
+        // Redirect back with a success message
+        return redirect()->route('bioadmin.holidaycreation')->with('success', 'Holiday created successfully.');
     }
 
     /**
