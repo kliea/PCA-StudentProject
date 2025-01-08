@@ -31,7 +31,6 @@ export function EmployeeListComboBox({
     setValue: any;
 }) {
     const [open, setOpen] = useState(false);
-    console.log(value);
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>

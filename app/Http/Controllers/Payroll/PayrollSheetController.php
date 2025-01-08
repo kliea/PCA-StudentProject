@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Payroll;
 
 use App\Http\Controllers\Controller;
+use App\Models\CompensationType;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Models\PayrollSheet;
@@ -41,6 +42,13 @@ class PayrollSheetController extends Controller
             'message' => 'Employees retrieved successfully',
             'data' => $employee,
         ]);
+    }
+
+    public function get_all_compensatation_types()
+    {
+        $compensation_types = CompensationType::all();
+
+        return response()->json(['data' => $compensation_types]);
     }
 
     /**

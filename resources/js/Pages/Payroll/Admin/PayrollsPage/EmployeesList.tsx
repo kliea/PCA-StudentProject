@@ -9,7 +9,13 @@ import {
     getCoreRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
+import {
+    createContext,
+    ReactNode,
+    useContext,
+    useEffect,
+    useState,
+} from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
 import IncludeExcludeBox from "@/Components/IncludeExcludeBox";
 
@@ -20,8 +26,14 @@ import {
     AccordionTrigger,
 } from "@/Components/ui/accordion";
 import axios from "axios";
-import CompensationStoreDialog from "../CompensationsPage/CompensationStoreDialog";
-import { employeesListTypes, employeeTypes } from "@/types/payrollPagesTypes";
+import { Trash } from "lucide-react";
+import { employeesListTypes } from "@/types/payrollPagesTypes";
+import {
+    Command,
+    CommandEmpty,
+    CommandInput,
+    CommandList,
+} from "@/Components/ui/command";
 
 interface EmployeesListTypes {
     appointment_code: number;
@@ -37,12 +49,90 @@ interface EmployeesListTypes {
     salary_type: string;
     station_code: number;
 }
+interface EmployeeListContextTypes {
+    employeeslist: EmployeesListTypes[];
+    setemployeeslist: React.Dispatch<
+        React.SetStateAction<EmployeesListTypes[]>
+    >;
+}
+
+interface TableContextTypes {
+    data: EmployeesListTypes[];
+    setData: React.Dispatch<React.SetStateAction<EmployeesListTypes[]>>;
+}
+
+const TableContext = createContext<TableContextTypes>({} as TableContextTypes);
+
+const EmployeeListContext = createContext<EmployeeListContextTypes>(
+    {} as EmployeeListContextTypes
+);
+
+function BoxSelection({ base }: { base: any }) {
+    return (
+        <div className="grid grid-cols-2 gap-3">
+            <section className="border border-slate-300 rounded-sm p-2">
+                <section className="flex flex-col items-center">
+                    <section>Applied Compensations</section>
+                    <section className=" w-full">
+                        <Command className="max-h-40">
+                            <section>
+                                <CommandInput
+                                    placeholder="Search Compensation..."
+                                    className="border border-transparent "
+                                ></CommandInput>
+                                <CommandList>
+                                    <CommandEmpty>
+                                        No results found.
+                                    </CommandEmpty>
+                                    {base.map((item: any) => (
+                                        <div>
+                                            <CommandEmpty>
+                                                {item.name}
+                                            </CommandEmpty>
+                                        </div>
+                                    ))}
+                                </CommandList>
+                            </section>
+                        </Command>
+                    </section>
+                </section>
+            </section>
+            <section className="border border-red-300 rounded-sm p-2">
+                Hello World
+            </section>
+        </div>
+    );
+}
 
 const EmployeesList = () => {
     const [data, setData] = useState<Array<EmployeesListTypes>>([]);
     const [loading, setLoading] = useState(true);
+    const [baseItems, setBaseItems] = useState<Array<string>>([]);
+    const [selectedItems, setSelectedItems] = useState<Array<string>>([]);
+    const [selectedName, setSelectedName] = useState<String>("");
+    const [selectedEmployee, setSelectedEmployee] = useState<
+        number | undefined
+    >(undefined);
+    const [value, setValue] = useState<string>("");
+    const [employeeslist, setemployeeslist] = useState<
+        Array<EmployeesListTypes>
+    >([]);
 
-    const [employeeslist, setemployeeslist] = useState([]);
+    const [compensationList, setCompensationList] = useState<Array<any>>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    route("admin.get_all_compensations")
+                );
+                setCompensationList(response.data.data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchData();
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -50,7 +140,12 @@ const EmployeesList = () => {
                 const response = await axios.get(
                     route("admin.get_employee_data")
                 );
-                setemployeeslist(response.data.data);
+                setemployeeslist(
+                    response.data.data.sort(
+                        (a: EmployeesListTypes, b: EmployeesListTypes) =>
+                            a.first_name.localeCompare(b.first_name)
+                    )
+                );
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -91,118 +186,116 @@ const EmployeesList = () => {
                         item.employee_code !== selectedEmployee
                 )
             );
+            setSelectedEmployee(undefined);
         }
     };
 
-    // console.log(
-    //     data.find((data) => data.employee_code == selectedEmployee)
-    //         ?.employee_number
-    // );
-
-    const [baseItems, setBaseItems] = useState<Array<string>>([]);
-    const [selectedItems, setSelectedItems] = useState<Array<string>>([]);
-    const [selectedName, setSelectedName] = useState<String>("");
-    const [selectedEmployee, setSelectedEmployee] = useState<
-        number | undefined
-    >(undefined);
-    const [value, setValue] = useState<string>("");
     return (
-        <div className="flex">
-            <section className="w-full grid grid-cols-2 gap-5 ">
-                <div className="h-full">
-                    <section className="flex justify-start my-2 gap-3 ">
-                        <EmployeeListComboBox
-                            value={value}
-                            setValue={setValue}
-                            dataset={employeeslist}
-                            setSelectedEmployee={setSelectedEmployee}
-                        />
-                        <Button
-                            type="button"
-                            onClick={handleAddButton}
-                            disabled={
-                                selectedEmployee != undefined ? false : true
-                            }
-                        >
-                            Add Employee
-                        </Button>
-                    </section>
-                    <ScrollArea className="h-[500px] border rounded-[10px]">
-                        <DataTable
-                            onMouseEnter={handleRowSelect}
-                            table={table}
-                            rowStyle="bg-white"
-                        ></DataTable>
-                    </ScrollArea>
-                </div>
-
-                <div className="flex flex-col gap-3">
-                    <Label className="text-xl my-2">
-                        Selected: {selectedName}
-                    </Label>
-
-                    <section className=" w-full h-[500px] grid grid-rows-2 p-2 gap-5">
-                        <div>
-                            <Tabs
-                                defaultValue="compensations"
-                                className="w-full"
-                            >
-                                <TabsList>
-                                    <TabsTrigger value="compensations">
-                                        Compensations
-                                    </TabsTrigger>
-                                    <TabsTrigger value="agencyshare">
-                                        Agency Share
-                                    </TabsTrigger>
-                                </TabsList>
-                                <TabsContent value="compensations">
-                                    <IncludeExcludeBox
-                                        baseItems={baseItems}
-                                        selectedItems={selectedItems}
-                                        setBaseItems={setBaseItems}
-                                        setSelectedItems={setSelectedItems}
-                                        selectedItemsName="Payroll Compensations"
-                                        baseItemsName="Compensations"
-                                        className="h-[200px] w-full"
-                                    />
-                                </TabsContent>
-                                <TabsContent value="agencyshare">
-                                    <IncludeExcludeBox
-                                        baseItems={baseItems}
-                                        selectedItems={selectedItems}
-                                        setBaseItems={setBaseItems}
-                                        setSelectedItems={setSelectedItems}
-                                        selectedItemsName="Payroll Agency Shares"
-                                        baseItemsName="Agency Shares"
-                                        className="h-[200px] w-full"
-                                    />
-                                </TabsContent>
-                            </Tabs>
+        <TableContext.Provider value={{ data, setData }}>
+            <EmployeeListContext.Provider
+                value={{ employeeslist, setemployeeslist }}
+            >
+                <div className="flex">
+                    <section className="w-full grid grid-cols-2 gap-5 ">
+                        <div className="h-full">
+                            <section className="flex justify-start my-2 gap-3 ">
+                                <EmployeeListComboBox
+                                    value={value}
+                                    setValue={setValue}
+                                    dataset={employeeslist}
+                                    setSelectedEmployee={setSelectedEmployee}
+                                />
+                                <Button
+                                    type="button"
+                                    onClick={handleAddButton}
+                                    disabled={
+                                        selectedEmployee != undefined
+                                            ? false
+                                            : true
+                                    }
+                                >
+                                    Add Employee
+                                </Button>
+                            </section>
+                            <ScrollArea className="h-[500px] border rounded-[10px]">
+                                <DataTable
+                                    onMouseEnter={handleRowSelect}
+                                    table={table}
+                                    rowStyle="bg-white"
+                                ></DataTable>
+                            </ScrollArea>
                         </div>
-                        <div>
-                            <Tabs defaultValue="deductions" className="w-full">
-                                <TabsList>
-                                    <TabsTrigger value="deductions">
-                                        Deductions
-                                    </TabsTrigger>
-                                </TabsList>
-                                <TabsContent value="deductions">
-                                    <IncludeExcludeBox
-                                        baseItems={baseItems}
-                                        selectedItems={selectedItems}
-                                        setBaseItems={setBaseItems}
-                                        setSelectedItems={setSelectedItems}
-                                        selectedItemsName="Payroll Deductions"
-                                        baseItemsName="Deductions"
-                                        className="h-[200px] w-full"
-                                    />
-                                </TabsContent>
-                            </Tabs>
+
+                        <div className="flex flex-col gap-3">
+                            <Label className="text-xl my-2">
+                                Selected: {selectedName}
+                            </Label>
+
+                            <section className=" w-full h-[500px] grid grid-rows-2 p-2 gap-5">
+                                <div>
+                                    <Tabs
+                                        defaultValue="compensations"
+                                        className="w-full"
+                                    >
+                                        <TabsList>
+                                            <TabsTrigger value="compensations">
+                                                Compensations
+                                            </TabsTrigger>
+                                            <TabsTrigger value="agencyshare">
+                                                Agency Share
+                                            </TabsTrigger>
+                                        </TabsList>
+                                        <TabsContent value="compensations">
+                                            <BoxSelection
+                                                base={compensationList}
+                                            ></BoxSelection>
+                                        </TabsContent>
+                                        <TabsContent value="agencyshare">
+                                            <IncludeExcludeBox
+                                                baseItems={baseItems}
+                                                selectedItems={selectedItems}
+                                                setBaseItems={setBaseItems}
+                                                setSelectedItems={
+                                                    setSelectedItems
+                                                }
+                                                selectedItemsName="Payroll Agency Shares"
+                                                baseItemsName="Agency Shares"
+                                                className="h-[200px] w-full"
+                                            />
+                                        </TabsContent>
+                                    </Tabs>
+                                </div>
+                                <div>
+                                    <Tabs
+                                        defaultValue="deductions"
+                                        className="w-full"
+                                    >
+                                        <TabsList>
+                                            <TabsTrigger value="deductions">
+                                                Deductions
+                                            </TabsTrigger>
+                                        </TabsList>
+                                        <TabsContent value="deductions">
+                                            <IncludeExcludeBox
+                                                baseItems={baseItems}
+                                                selectedItems={selectedItems}
+                                                setBaseItems={setBaseItems}
+                                                setSelectedItems={
+                                                    setSelectedItems
+                                                }
+                                                selectedItemsName="Payroll Deductions"
+                                                baseItemsName="Deductions"
+                                                className="h-[200px] w-full"
+                                            />
+                                        </TabsContent>
+                                    </Tabs>
+                                </div>
+                            </section>
                         </div>
                     </section>
                 </div>
-            </section>
-        </div>
+            </EmployeeListContext.Provider>
+        </TableContext.Provider>
     );
 };
 
@@ -261,6 +354,40 @@ const columns: ColumnDef<EmployeesListTypes>[] = [
                         </AccordionContent>
                     </AccordionItem>
                 </Accordion>
+            );
+        },
+    },
+    {
+        // prevList.filter(
+        //     (item: EmployeesListTypes) =>
+        //         item.employee_code !== selectedEmployee
+        // )
+        id: "actions",
+        cell: ({ row }) => {
+            const { employeeslist, setemployeeslist } =
+                useContext(EmployeeListContext);
+            const { data, setData } = useContext(TableContext);
+            function handleDelete() {
+                setemployeeslist(
+                    (prevList: any) =>
+                        (prevList = [...prevList, row.original].sort((a, b) =>
+                            a.first_name.localeCompare(b.first_name)
+                        ))
+                );
+                setData((prevList: any) =>
+                    prevList.filter(
+                        (item: EmployeesListTypes) => item !== row.original
+                    )
+                );
+            }
+            return (
+                <div className="justify-end flex items-center pr-5">
+                    <Trash
+                        color="red"
+                        className="hover:cursor-pointer hover:scale-110 active:scale-95"
+                        onClick={handleDelete}
+                    ></Trash>
+                </div>
             );
         },
     },

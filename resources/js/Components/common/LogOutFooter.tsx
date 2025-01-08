@@ -89,7 +89,7 @@ export function NavUser({
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => route("logout")}>
+                <DropdownMenuItem>
                     <span className="flex items-center gap-1 w-full">
                         <LogOut size={15} />
                         Log out

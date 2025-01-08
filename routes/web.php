@@ -102,6 +102,8 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         // Route::get('employee/{employee_code}', [EmployeeController::class, 'get_employee_data'])->name('admin.employee_data');
         Route::get('/employeelist', [PayrollSheetController::class, 'get_employees'])->name('admin.get_employee_data');
         Route::get('/employee/{id}', [PayrollSheetController::class, 'get_employee'])->name('admin.get_employee');
+        Route::get('/compensationTypes' , [PayrollSheetController::class, 'get_all_compensatation_types'])->name('admin.get_all_compensations');
+
     });
 
     Route::prefix('employee')->group(function () {
