@@ -54,7 +54,8 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         return Inertia::render("Payroll/LoginPage");
     })->name('payroll.login');
 
-    Route::prefix('admin')->middleware(['usercheck:admin', 'auth'])->group(function () {
+    // Route::prefix('admin')->middleware(['usercheck:admin', 'auth'])->group(function () {
+    Route::prefix('admin')->group(function () {
         Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
         // PAYROLL ROUTES
         Route::get('payroll', [SummaryController::class, 'Summary'])->name('admin.payrolls');
@@ -119,4 +120,4 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
 });
 
 
-// require __DIR__ . '/auth.php';
+require __DIR__ . '/auth.php';

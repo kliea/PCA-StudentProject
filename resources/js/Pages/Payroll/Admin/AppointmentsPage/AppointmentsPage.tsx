@@ -20,15 +20,16 @@ import { Label } from "@/Components/ui/label";
 import { DataTable } from "@/Components/DataTable";
 import PaginationTable from "@/Components/Pagination";
 import {
-    AppointmentDelete,
     AppointmentStore,
     AppointmentUpdate,
 } from "./AppointmentCRUD";
 
 const AppointmentsPage = () => {
     const data = (usePage().props.data as appointmentTypes[]) || [];
+    const compensationTypes = usePage().props.compensationTypes;
 
-    console.log(usePage().props);
+    // console.log(compensationTypes);
+
     const [openDialog, setOpenDialog] = useState(false);
     const [globalFilter, setGlobalFilter] = useState<string>("");
     const table = useReactTable({
@@ -87,8 +88,7 @@ const AppointmentsPage = () => {
                         >
                             <AppointmentStore
                                 compensationTypes={
-                                    usePage().props
-                                        .compensationTypes as Array<string>
+                                    compensationTypes
                                 }
                                 openDialog={() => setOpenDialog(!openDialog)}
                             />

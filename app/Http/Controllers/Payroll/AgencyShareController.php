@@ -24,7 +24,6 @@ class AgencyShareController extends Controller
         return Inertia::render('Payroll/Admin/GovernmentSharesPage/GovernmentSharesPage', ['data' => $data, 'compensationTypes' => $compensationTypes]);
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
@@ -64,9 +63,6 @@ class AgencyShareController extends Controller
     /**
      * Update the specified resource in storage.
      */
-
-    //  TODO: SA PAG UPDATE SA MGA DAPAT NAKA UNIQUE LIKE SHORTHAND DAPAT MA ADDRESS
-    // [x]: MANA BAIIII
     public function update(Request $request, $agency_share_code)
     {
         $links = $request->input('compensation_link')
