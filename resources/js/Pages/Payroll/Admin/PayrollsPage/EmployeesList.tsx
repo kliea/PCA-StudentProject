@@ -32,6 +32,7 @@ import {
     Command,
     CommandEmpty,
     CommandInput,
+    CommandItem,
     CommandList,
 } from "@/Components/ui/command";
 
@@ -74,21 +75,21 @@ function BoxSelection({ base }: { base: any }) {
                 <section className="flex flex-col items-center">
                     <section>Applied Compensations</section>
                     <section className=" w-full">
-                        <Command className="max-h-40">
+                        <Command>
                             <section>
                                 <CommandInput
                                     placeholder="Search Compensation..."
                                     className="border border-transparent "
                                 ></CommandInput>
-                                <CommandList>
+                                <CommandList className="max-h-28 scrollbar scrollbar-w-2 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-secondaryGreen h-32 overflow-y-scroll ">
                                     <CommandEmpty>
                                         No results found.
                                     </CommandEmpty>
                                     {base.map((item: any) => (
                                         <div>
-                                            <CommandEmpty>
+                                            <CommandItem>
                                                 {item.name}
-                                            </CommandEmpty>
+                                            </CommandItem>
                                         </div>
                                     ))}
                                 </CommandList>
@@ -251,17 +252,9 @@ const EmployeesList = () => {
                                             ></BoxSelection>
                                         </TabsContent>
                                         <TabsContent value="agencyshare">
-                                            <IncludeExcludeBox
-                                                baseItems={baseItems}
-                                                selectedItems={selectedItems}
-                                                setBaseItems={setBaseItems}
-                                                setSelectedItems={
-                                                    setSelectedItems
-                                                }
-                                                selectedItemsName="Payroll Agency Shares"
-                                                baseItemsName="Agency Shares"
-                                                className="h-[200px] w-full"
-                                            />
+                                            <BoxSelection
+                                                base={compensationList}
+                                            ></BoxSelection>
                                         </TabsContent>
                                     </Tabs>
                                 </div>
