@@ -20,14 +20,14 @@ class UserRoleMiddleware
     {
         $host = $request->getHost();
         $subdomain = explode('.', $host)[0];
-        echo $subdomain;    
-        // Prevent infinite redirect loops by excluding certain routes
-        $currentRoute = $request->route()->getName();
-        $excludedRoutes = ['admin.dashboard', 'employee.dashboard', 'bioemployee.dashboard', 'bioadmin.dashboard', 'login'];
 
-        if (in_array($currentRoute, $excludedRoutes)) {
-            return $next($request);
-        }
+        // Prevent infinite redirect loops by excluding certain routes
+        // $currentRoute = $request->route()->getName();
+        // $excludedRoutes = ['admin.dashboard', 'employee.dashboard', 'bioemployee.dashboard', 'bioadmin.dashboard', 'login'];
+
+        // if (in_array($currentRoute, $excludedRoutes)) {
+        //     return $next($request);
+        // }
 
         if ($subdomain === 'payroll') {
             if (Auth::check() && Auth::user()->user_level === $role) {
@@ -36,6 +36,7 @@ class UserRoleMiddleware
 
             if (Auth::check()) {
                 if (Auth::user()->user_level === 'admin') {
+                    dd("in admin");
                     return redirect()->route('admin.dashboard');
                 }
 
@@ -45,6 +46,7 @@ class UserRoleMiddleware
             }
 
             // Redirect to a default dashboard or login if unauthenticated
+            
             return redirect()->route('login');
         }
 

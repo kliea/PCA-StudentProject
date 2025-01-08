@@ -52,7 +52,7 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         return Inertia::render("Payroll/LoginPage");
     })->name('payroll.login');
 
-    Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::prefix('admin')->middleware(['usercheck:admin','auth'])->group(function () {
         Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
         // PAYROLL ROUTES
         Route::get('payroll', [SummaryController::class, 'Summary'])->name('admin.payrolls');
@@ -109,7 +109,7 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::get('mypayslip', [PageController::class, 'mypayslip'])->name('employee.mypayslip');
     });
     Route::fallback(function () {
-        return redirect()->route('admin.formats');
+        return redirect()->route('login');
     });
 });
 
