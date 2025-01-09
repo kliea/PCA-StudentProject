@@ -214,6 +214,27 @@ class DatabaseSeeder extends Seeder
         }
         DB::table('positions')->insert($positions);
 
+        // employees ========================================================================
+        $employees = [];
+        $deviceBioIds = range(1, 100);
+        shuffle($deviceBioIds);
+        for ($i = 1; $i <= 50; $i++) {
+            $employees[] = [
+                'position_code' => $faker->numberBetween(1, 10),
+                'appointment_code' => $faker->numberBetween(1, 10),
+                'employee_number' => $faker->unique()->randomNumber(5),
+                'first_name' => $faker->firstName,
+                'middle_name' => $faker->lastName,
+                'last_name' => $faker->lastName,
+                'name_extension' => $faker->optional(0.1)->suffix,
+                'salary_step' => $faker->numberBetween(1, 8),
+                'scanner_id' => array_pop($deviceBioIds),
+                'is_active' => $faker->boolean
+            ];
+        }
+        // Insert into the employees table
+        DB::table('employees')->insert($employees);
+
         // daily time entries ==================================================================
         $dailyTimeEntries = [];
         for ($i = 0; $i < 50; $i++) {
@@ -228,6 +249,7 @@ class DatabaseSeeder extends Seeder
             $undertimeMinutes = max(0, $expectedDailyMinutes - $totalMinutesWorked - $tardyMinutes);
 
             $dailyTimeEntries[] = [
+                'employee_code' => random_int(1, 49),
                 'am_clockin' => $timeInAm,
                 'am_clockout' => $timeOutAm,
                 'pm_clockin' => $timeInPm,
@@ -239,28 +261,6 @@ class DatabaseSeeder extends Seeder
             ];
         }
         DB::table('daily_entries')->insert($dailyTimeEntries);
-
-        // employees ========================================================================
-        $employees = [];
-        $deviceBioIds = range(1, 100);
-        shuffle($deviceBioIds);
-        for ($i = 1; $i <= 50; $i++) {
-            $employees[] = [
-                'position_code' => $faker->numberBetween(1, 10),
-                'appointment_code' => $faker->numberBetween(1, 10),
-                'daily_entry_code' => $faker->numberBetween(1, 10),
-                'employee_number' => $faker->unique()->randomNumber(5),
-                'first_name' => $faker->firstName,
-                'middle_name' => $faker->lastName,
-                'last_name' => $faker->lastName,
-                'name_extension' => $faker->optional(0.1)->suffix,
-                'salary_step' => $faker->numberBetween(1, 8),
-                'scanner_id' => array_pop($deviceBioIds),
-                'is_active' => $faker->boolean
-            ];
-        }
-        // Insert into the employees table
-        DB::table('employees')->insert($employees);
 
         //Signatory =========================================================================
 
