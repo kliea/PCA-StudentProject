@@ -491,43 +491,43 @@ class DatabaseSeeder extends Seeder
         }
         DB::table('loan_types')->insert($loanTypes);
 
-        // payroll entries====================================================
-        $payrollEntries = [];
-        for ($i = 1; $i <= 10; $i++) {
-            $payrollEntries[] = [
-                'current_position' => 'Project Manager ' . $faker->randomDigitNotNull,  // Random position with number
-                'employee_code' => $i,
-                'payroll_sheet_code' => $faker->numberBetween(1, 10),  // Random payroll sheet code (1-10)
-            ];
-        }
-        DB::table('payroll_entries')->insert($payrollEntries);
+        // // payroll entries====================================================
+        // $payrollEntries = [];
+        // for ($i = 1; $i <= 10; $i++) {
+        //     $payrollEntries[] = [
+        //         'current_position' => 'Project Manager ' . $faker->randomDigitNotNull,  // Random position with number
+        //         'employee_code' => $i,
+        //         'payroll_sheet_code' => $faker->numberBetween(1, 10),  // Random payroll sheet code (1-10)
+        //     ];
+        // }
+        // DB::table('payroll_entries')->insert($payrollEntries);
 
-        // applied_compensations===================================================================
-        $appliedCompensations = [];
+        // // applied_compensations===================================================================
+        // $appliedCompensations = [];
 
-        for ($i = 1; $i <= 10; $i++) {
-            $appliedCompensations[] = [
-                'employee_code' => $i,
-                'compensation_code' => $i,
-                'payroll_sheet_code' => $faker->numberBetween(1, 10),
-                'amount' => $faker->randomFloat(2, 50, 5000)
-            ];
-        }
-        DB::table('applied_compensations')->insert($appliedCompensations);
+        // for ($i = 1; $i <= 10; $i++) {
+        //     $appliedCompensations[] = [
+        //         'employee_code' => $i,
+        //         'compensation_code' => $i,
+        //         'payroll_sheet_code' => $faker->numberBetween(1, 10),
+        //         'amount' => $faker->randomFloat(2, 50, 5000)
+        //     ];
+        // }
+        // DB::table('applied_compensations')->insert($appliedCompensations);
 
 
-        // applied deductions====================================================================
-        $appliedDeductions = [];
+        // // applied deductions====================================================================
+        // $appliedDeductions = [];
 
-        for ($i = 1; $i <= 10; $i++) {
-            $appliedDeductions[] = [
-                'employee_code' => $i,
-                'deduction_code' => $faker->numberBetween(1, 5),
-                'payroll_sheet_code' => $faker->numberBetween(1, 10),
-                'amount' => $faker->randomFloat(2, 500, 5000),
-            ];
-        }
-        DB::table('applied_deductions')->insert($appliedDeductions);
+        // for ($i = 1; $i <= 10; $i++) {
+        //     $appliedDeductions[] = [
+        //         'employee_code' => $i,
+        //         'deduction_code' => $faker->numberBetween(1, 5),
+        //         'payroll_sheet_code' => $faker->numberBetween(1, 10),
+        //         'amount' => $faker->randomFloat(2, 500, 5000),
+        //     ];
+        // }
+        // DB::table('applied_deductions')->insert($appliedDeductions);
 
         // applied shares ====================================================================
         $appliedShares = [];

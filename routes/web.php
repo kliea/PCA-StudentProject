@@ -18,6 +18,7 @@ use App\Http\Controllers\Payroll\DeductionTypeController;
 use App\Http\Controllers\Payroll\EmployeeController;
 use App\Http\Controllers\Payroll\LoanController;
 use App\Http\Controllers\Payroll\SummaryController;
+use App\Http\Controllers\Payroll\PayrollController;
 
 // Controllers: Biometrics
 use App\Http\Controllers\Biometrics\DailyTimeEntryController;
@@ -104,6 +105,8 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
 
         //export to excel
         Route::get('/export-salary-grades', [SalaryGradeController::class, 'exportToExcel'])->name('export.salary_grades');
+        Route::get('/export-payroll-function', [PayrollsheetController::class, 'exportPayrollFunction'])->name('export.payroll.function');
+        Route::get('/export-payroll-entries', [PayrollController::class, 'exportPayrollEntries'])->name('export.payroll.entries');
 
         Route::get('/employee/{id}', [PayrollSheetController::class, 'get_employee'])->name('admin.get_employee');
         Route::get('/compensationTypes', [PayrollSheetController::class, 'get_all_compensatation_types'])->name('admin.get_all_compensations');
@@ -119,4 +122,4 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
 });
 
 
-// require __DIR__ . '/auth.php';
+require __DIR__ . '/auth.php';
