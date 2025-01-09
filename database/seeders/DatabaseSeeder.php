@@ -117,25 +117,6 @@ class DatabaseSeeder extends Seeder
         }
         DB::table('holidays')->insert($holidays);
 
-        // income_taxes ==================================================================================
-        $incomeTaxes = [];
-
-        // Generate 10 random income tax brackets
-        for ($i = 0; $i < 10; $i++) {
-            $lowerbound = random_int(10000, 100000);
-            $upperbound = $lowerbound + random_int(10000, 50000);
-            $base_amount = $lowerbound * 0.1;
-            $tax_rate = random_int(5, 30) + (random_int(0, 99) / 100);
-
-            $incomeTaxes[] = [
-                'lowerbound' => $lowerbound,
-                'upperbound' => $upperbound,
-                'base_amount' => $base_amount,
-                'tax_rate' => $tax_rate
-            ];
-        }
-        DB::table('income_taxes')->insert($incomeTaxes);
-
         // compensation_types ==================================================
 
         // compensation types
@@ -267,7 +248,6 @@ class DatabaseSeeder extends Seeder
             $employees[] = [
                 'position_code' => $faker->numberBetween(1, 10),
                 'appointment_code' => $faker->numberBetween(1, 10),
-                'income_tax_code' => $faker->numberBetween(1, 10),
                 'daily_entry_code' => $faker->numberBetween(1, 10),
                 'employee_number' => $faker->unique()->randomNumber(5),
                 'first_name' => $faker->firstName,
@@ -495,7 +475,6 @@ class DatabaseSeeder extends Seeder
         $payrollEntries = [];
         for ($i = 1; $i <= 10; $i++) {
             $payrollEntries[] = [
-                'current_position' => 'Project Manager ' . $faker->randomDigitNotNull,  // Random position with number
                 'employee_code' => $i,
                 'payroll_sheet_code' => $faker->numberBetween(1, 10),  // Random payroll sheet code (1-10)
             ];
