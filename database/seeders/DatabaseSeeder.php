@@ -270,8 +270,8 @@ class DatabaseSeeder extends Seeder
                 'preparer_code'=>$faker->numberBetween(1,49),
                 'recommender_code'=>$faker->numberBetween(1,49),
                 'certifier_code'=>$faker->numberBetween(1,49),
-                'approver_code'=>$faker->numberBetween(1,49)
-
+                'approver_code'=>$faker->numberBetween(1,49),
+                'name'=>$faker->word
             ];
         }
         DB::table('signatories')->insert($signatoryData);
