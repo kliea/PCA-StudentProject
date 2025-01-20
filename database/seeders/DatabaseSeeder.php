@@ -394,6 +394,9 @@ class DatabaseSeeder extends Seeder
 
             $payrollSheets[] = [
                 'name' => $payrollName,
+                'fund_cluster' => $faker->word,
+                'payroll_format' => $faker->word,
+                'include_mandatory_deductions' => $faker->boolean,
                 'type' => $payrollType,
                 'signatory_code' => $signatory_code,
                 'start_date' => $startDate,
