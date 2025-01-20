@@ -18,6 +18,7 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('fund_cluster');
+            $table->string('payroll_format');
             $table->boolean('include_mandatory_deductions');
             
             $table->string('type');
