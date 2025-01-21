@@ -19,21 +19,20 @@ return new class extends Migration
 
                 $table->id('employee_code');
 
-                $table->foreignId('position_code')->constrained('positions')->references('position_code');
                 $table->foreignId('appointment_code')->constrained('appointments')->references('appointment_code')->nullable();
-                $table->foreignId('income_tax_code')->constrained('income_taxes')->references('income_tax_code');
-                $table->foreignId('daily_entry_code')->constrained('daily_entries')->references('daily_entry_code');
+                $table->foreignId('position_code')->constrained('positions')->references('position_code');
+                $table->foreignId('user_code')->constrained('users')->references('user_code');
 
                 $table->string('employee_number')->unique();
+                $table->string('scanner_id')->unique();
 
                 $table->string('first_name');
                 $table->string('middle_name')->nullable();
                 $table->string('last_name');
                 $table->string('name_extension')->nullable();
                 $table->integer('salary_step', false, true);
-                $table->string('scanner_id');
                 $table->boolean('is_active')->default(true);
-
+                $table->double('credits');
                 $table->timestamps();
         });
     }
