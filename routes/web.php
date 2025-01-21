@@ -48,12 +48,9 @@ Route::domain('bioadmin.' . env('APP_URL'))->group(
 Route::domain('payroll.' . env('APP_URL'))->group(function () {
 
     Route::get('test', [AdminPageController::class, 'format'])->name('admin.formats');
-    Route::get('/', function () {
-        return Inertia::render("Payroll/LoginPage");
-    });
     Route::get('login', function () {
         return Inertia::render("Payroll/LoginPage");
-    })->name('payroll.login');
+    })->name('payroll.login')->middleware('prevent.auth.access');;
 
     Route::prefix('admin')->middleware(['usercheck:admin', 'auth'])->group(function () {
         Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
@@ -117,7 +114,7 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::get('mypayslip', [PageController::class, 'mypayslip'])->name('employee.mypayslip');
     });
     Route::fallback(function () {
-        return redirect()->route('login');
+        return redirect()->route('payroll.login');
     });
 });
 
