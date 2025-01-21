@@ -22,11 +22,13 @@ class AppointmentController extends Controller
         // Fetch data from the database
         $data = Appointment::all();
 
-        // $compensationTypes = CompensationType::pluck('name');
-        $compensationTypes = CompensationType::all();
+        $compensationTypes = CompensationType::pluck('name');
+
+        // create a query that recieves appointments together with compensation_types.name
+        
 
         // Return the data to the frontend
-        return Inertia::render('Payroll/Admin/AppointmentsPage/AppointmentsPage', ['data' => $data, 'compensationTypes' => $compensationTypes]);
+        return Inertia::render('Payroll/Admin/AppointmentsPage/AppointmentsPage', ['data' => $data, 'compensationTypes' => $compensationTypes, csrf_token()]);
     }
 
     /**
@@ -38,9 +40,7 @@ class AppointmentController extends Controller
         $validated = $request->validate([
             'type' => 'required|unique:appointments',
             'has_mandatory_deduction' => 'required|boolean',
-            'compensation_code' => 'required|integer|exists:compensation_types,compensation_code',
-        ], [
-            'compensation_code.exists' => 'The selected compensation code does not exist.',
+            'compensation_code' => 'required|integer',
         ]);
 
         // Create a new profile record in the database
