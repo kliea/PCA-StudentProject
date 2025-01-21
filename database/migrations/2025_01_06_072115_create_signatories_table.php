@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('certifier_code')->constrained('employees')->references('employee_code');
             $table->foreignId('approver_code')->constrained('employees')->references('employee_code');
 
-            $table->String('name');
+            $table->string('name');
             
             $table->timestamps();
         });

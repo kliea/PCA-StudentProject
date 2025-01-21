@@ -17,7 +17,25 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // for fakeh data
+        // users =================================================================
+        $users = [];
+        
+        for ($i = 1; $i <= 50; $i++) {
+            $users[] = [
+                'name' => "User $i",
+                'email' => "user$i@example.com",
+                'user_level' => $i % 2 == 0 ? 'admin' : 'bioadmin',
+                'email_verified_at' => now(),
+                'password' => Hash::make('password123'),
+                'remember_token' => Str::random(10),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+        
+        DB::table('users')->insert($users);
+        
+        // for fakeh data ========================================================
         $faker = Faker::create();
 
         // SSL ===================================================================
@@ -223,13 +241,15 @@ class DatabaseSeeder extends Seeder
                 'position_code' => $faker->numberBetween(1, 10),
                 'appointment_code' => $faker->numberBetween(1, 10),
                 'employee_number' => $faker->unique()->randomNumber(5),
+                'user_code' => $i,
                 'first_name' => $faker->firstName,
                 'middle_name' => $faker->lastName,
                 'last_name' => $faker->lastName,
                 'name_extension' => $faker->optional(0.1)->suffix,
                 'salary_step' => $faker->numberBetween(1, 8),
                 'scanner_id' => array_pop($deviceBioIds),
-                'is_active' => $faker->boolean
+                'is_active' => $faker->boolean,
+                'credits' => $faker->numberBetween(1, 10)
             ];
         }
         // Insert into the employees table
@@ -257,7 +277,6 @@ class DatabaseSeeder extends Seeder
                 'late_minutes' => $tardyMinutes,
                 'under_minutes' => $undertimeMinutes,
                 'work_minutes' => $totalMinutesWorked,
-                'credits' => $faker->numberBetween(0, 10)
             ];
         }
         DB::table('daily_entries')->insert($dailyTimeEntries);
@@ -383,7 +402,7 @@ class DatabaseSeeder extends Seeder
 
              // Combine into a single string separated by commas
 
-            $payrollName = $faker->word. ' Payroll';
+            $payrollName = $faker->unique()->word. ' Payroll';
             $payrollType = $faker->randomElement(['Regular', 'Overtime', 'Bonus', 'Holiday']);
             $startDate = $faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d');
             $endDate = (new DateTime($startDate))->modify('+' . $faker->numberBetween(1, 5) . ' days')->format('Y-m-d');
@@ -485,91 +504,68 @@ class DatabaseSeeder extends Seeder
         DB::table('payroll_entries')->insert($payrollEntries);
 
         // applied_compensations===================================================================
-        $appliedCompensations = [];
+        // $appliedCompensations = [];
 
-        for ($i = 1; $i <= 10; $i++) {
-            $appliedCompensations[] = [
-                'employee_code' => $i,
-                'compensation_code' => $i,
-                'payroll_sheet_code' => $faker->numberBetween(1, 10),
-                'amount' => $faker->randomFloat(2, 50, 5000)
-            ];
-        }
-        DB::table('applied_compensations')->insert($appliedCompensations);
+        // for ($i = 1; $i <= 10; $i++) {
+        //     $appliedCompensations[] = [
+        //         'employee_code' => $i,
+        //         'compensation_code' => $i,
+        //         'payroll_sheet_code' => $faker->numberBetween(1, 10),
+        //         'amount' => $faker->randomFloat(2, 50, 5000)
+        //     ];
+        // }
+        // DB::table('applied_compensations')->insert($appliedCompensations);
 
 
         // applied deductions====================================================================
-        $appliedDeductions = [];
+        // $appliedDeductions = [];
 
-        for ($i = 1; $i <= 10; $i++) {
-            $appliedDeductions[] = [
-                'employee_code' => $i,
-                'deduction_code' => $faker->numberBetween(1, 5),
-                'payroll_sheet_code' => $faker->numberBetween(1, 10),
-                'amount' => $faker->randomFloat(2, 500, 5000),
-            ];
-        }
-        DB::table('applied_deductions')->insert($appliedDeductions);
+        // for ($i = 1; $i <= 10; $i++) {
+        //     $appliedDeductions[] = [
+        //         'employee_code' => $i,
+        //         'deduction_code' => $faker->numberBetween(1, 5),
+        //         'payroll_sheet_code' => $faker->numberBetween(1, 10),
+        //         'amount' => $faker->randomFloat(2, 500, 5000),
+        //     ];
+        // }
+        // DB::table('applied_deductions')->insert($appliedDeductions);
 
         // applied shares ====================================================================
-        $appliedShares = [];
-        for ($i = 1; $i <= 10; $i++) {
-            $appliedShares[] = [
-                'employee_code' => $i,
-                'agency_share_code' => $faker->numberBetween(1, 5),
-                'payroll_sheet_code' => $faker->numberBetween(1, 10),
-                'amount' => $faker->randomFloat(2, 100, 5000),
-            ];
-        }
-        DB::table('applied_shares')->insert($appliedShares);
+        // $appliedShares = [];
+        // for ($i = 1; $i <= 10; $i++) {
+        //     $appliedShares[] = [
+        //         'employee_code' => $i,
+        //         'agency_share_code' => $faker->numberBetween(1, 5),
+        //         'payroll_sheet_code' => $faker->numberBetween(1, 10),
+        //         'amount' => $faker->randomFloat(2, 100, 5000),
+        //     ];
+        // }
+        // DB::table('applied_shares')->insert($appliedShares);
 
         // applied loans====================================================================
-        $appliedLoans = [];
+        // $appliedLoans = [];
 
-        for ($i = 1; $i <= 10; $i++) {
-            $startDate = $faker->date();
-            $endDate = $faker->date();
+        // for ($i = 1; $i <= 10; $i++) {
+        //     $startDate = $faker->date();
+        //     $endDate = $faker->date();
 
-            while (strtotime($endDate) <= strtotime($startDate)) {
-                $endDate = $faker->date();
-            }
+        //     while (strtotime($endDate) <= strtotime($startDate)) {
+        //         $endDate = $faker->date();
+        //     }
 
-            $appliedLoans[] = [
-                'employee_code' => $i,        // Random employee code between 1 and 10
-                'loan_code' => $faker->numberBetween(1, 5),             // Random loan code between 1 and 5
-                'start_date' => $startDate,
-                'end_date' => $endDate,
-                'monthly_amount' => $faker->randomFloat(2, 50, 5000),  // Random monthly amount between 50 and 5000
-                'begin_balance' => $faker->randomFloat(2, 50, 5000),    // Random begin balance
-                'amount_paid' => $faker->randomFloat(2, 50, 5000),      // Random paid amount
-                'current_balance' => $faker->randomFloat(2, 50, 5000),          // Random balance
-                'recent_paid' => $faker->randomFloat(2, 50, 5000),    // Random previous paid amount
-            ];
-        }
-        DB::table('applied_loans')->insert($appliedLoans);
+        //     $appliedLoans[] = [
+        //         'employee_code' => $i,        // Random employee code between 1 and 10
+        //         'loan_code' => $faker->numberBetween(1, 5),             // Random loan code between 1 and 5
+        //         'start_date' => $startDate,
+        //         'end_date' => $endDate,
+        //         'monthly_amount' => $faker->randomFloat(2, 50, 5000),  // Random monthly amount between 50 and 5000
+        //         'begin_balance' => $faker->randomFloat(2, 50, 5000),    // Random begin balance
+        //         'amount_paid' => $faker->randomFloat(2, 50, 5000),      // Random paid amount
+        //         'current_balance' => $faker->randomFloat(2, 50, 5000),          // Random balance
+        //         'recent_paid' => $faker->randomFloat(2, 50, 5000),    // Random previous paid amount
+        //     ];
+        // }
+        // DB::table('applied_loans')->insert($appliedLoans);
 
-
-        DB::table('users')->insert([
-            [
-                'name' => 'Bio Admin',
-                'email' => 'bioadmin@example.com',
-                'user_level' => 'bioadmin',
-                'email_verified_at' => now(),
-                'password' => Hash::make('password123'), // Change to a secure password
-                'remember_token' => Str::random(10), // Use Str::random
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Admin User',
-                'email' => 'admin@example.com',
-                'user_level' => 'admin',
-                'email_verified_at' => now(),
-                'password' => Hash::make('password123'), // Change to a secure password
-                'remember_token' => Str::random(10), // Use Str::random
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
     }
 }
