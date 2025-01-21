@@ -21,6 +21,7 @@ import { DataTable } from "@/Components/DataTable";
 import PaginationTable from "@/Components/Pagination";
 import {
     AppointmentDelete,
+    // AppointmentDelete,
     AppointmentStore,
     AppointmentUpdate,
 } from "./AppointmentCRUD";

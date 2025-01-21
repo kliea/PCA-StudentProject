@@ -26,9 +26,11 @@ export function AppointmentStore({
 }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         type: "",
-        compensation_code: 0,
+        compensation_name: "",
         has_mandatory_deduction: false,
     });
+
+    console.log(data);
 
     const changeBasicPayType = (value: string) => {
         data.type = value;
@@ -105,34 +107,34 @@ export function AppointmentStore({
 
                 {/* second div */}
 
-                <div>
-                <Label
-    htmlFor="compensation_code"
-    className={errors.compensation_code && "text-red-600"}
-    >
-        Compensation Code
-    </Label>
-    <Select
-        id="compensation_code"
-        // value={data.compensation_code || ""}
-        // onValueChange={(value) => setData("compensation_code", value)}
-    >
-        <SelectTrigger>
-            <SelectValue placeholder="Select a compensation type" />  {/* Placeholder visible when no value is selected */}
-        </SelectTrigger>
-        <SelectContent>
+        <div>
+            <Label
+                htmlFor="compensation_code"
+                className={errors.compensation_name && "text-red-600"}
+                >
+                    Compensation Code
+                </Label>
+                <Select
+                    id="compensation_name"
+                    // value={data.compensation_code || ""}
+                    // onValueChange={(value) => setData("compensation_code", value)}
+                >
+                <SelectTrigger>
+                    <SelectValue placeholder="Select a compensation type" />  {/* Placeholder visible when no value is selected */}
+                </SelectTrigger>
+                <SelectContent>
             {
-                compensationTypes.map(compensation => {
+                compensationTypes.map(compensation_name => {
                     return (  // Add return here
-                        <SelectItem onMouseDown={()=> setData("compensation_code" , compensation.compensation_code)} key={compensation.name} value={compensation.name}>
-                            {compensation.name}
+                        <SelectItem onMouseDown={()=> setData("compensation_name" , compensation_name)} key={compensation_name} value={compensation_name}>
+                            {compensation_name}
                         </SelectItem>
                     );
                 })
             }
         </SelectContent>
     </Select>
-    <InputError message={errors.compensation_code} className="mt-2" />
+    <InputError message={errors.compensation_name} className="mt-2" />
 
     </div>
 

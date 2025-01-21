@@ -15,9 +15,6 @@ class AppointmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): Response
     {
         $data = DB::select('
@@ -29,8 +26,11 @@ class AppointmentController extends Controller
             FROM appointments AS a;
         ');
 
+        // for selection of store appointments
+        $compensation_name = CompensationType::pluck("name");
+
         // Return the data to the frontend
-        return Inertia::render('Payroll/Admin/AppointmentsPage/AppointmentsPage', ['data' => $data]);
+        return Inertia::render('Payroll/Admin/AppointmentsPage/AppointmentsPage', ['data' => $data, 'compensationTypes' => $compensation_name]);
     }
 
     /**
@@ -42,14 +42,21 @@ class AppointmentController extends Controller
         $validated = $request->validate([
             'type' => 'required|unique:appointments',
             'has_mandatory_deduction' => 'required|boolean',
-            'compensation_code' => 'required|integer',
+            'compensation_name' => 'required|string',
         ]);
+
+        // process compensation name => compensation code
+        $compensation_code = DB::select(
+            'select compensation_code
+            from compensation_types
+            where name = ?', [$validated["compensation_name"]]
+        );
 
         // Create a new profile record in the database
         Appointment::create([
             'type' => $validated['type'],
             'has_mandatory_deduction' => $validated['has_mandatory_deduction'],
-            'compensation_code' => $validated['compensation_code'],
+            'compensation_code' => $compensation_code[0]->compensation_code,
         ]);
 
         // Redirect back or to a specific page after saving
@@ -59,8 +66,6 @@ class AppointmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    //  TODO: SA PAG UPDATE SA MGA DAPAT NAKA UNIQUE LIKE SHORTHAND DAPAT MA ADDRESS
-    // [x]: MANA SAB BAIII
     public function update(Request $request, $appointment_code)
     {
         /* Validating the user request. */
@@ -76,11 +81,8 @@ class AppointmentController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     */
-    // TODO: NEED PUD I DELETE ANG FOREING KEY NGA NAA SA EMPLOYEES (APPOINTMENT_TYPE)
-    public function destroy($appointment_code)
+     */    public function destroy($appointment_code)
     {
-        dd("DISABLED");
         // Find the record by salary_grade
         Appointment::where('appointment_code', $appointment_code)->delete();
         return redirect()->back()->with('success', 'Successfully deleted ssl');
