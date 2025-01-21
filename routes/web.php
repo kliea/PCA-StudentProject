@@ -18,6 +18,7 @@ use App\Http\Controllers\Payroll\DeductionTypeController;
 use App\Http\Controllers\Payroll\EmployeeController;
 use App\Http\Controllers\Payroll\LoanController;
 use App\Http\Controllers\Payroll\SummaryController;
+use App\Http\Controllers\Payroll\PayrollController;
 
 // Controllers: Biometrics
 use App\Http\Controllers\Biometrics\DailyTimeEntryController;
@@ -47,12 +48,9 @@ Route::domain('bioadmin.' . env('APP_URL'))->group(
 Route::domain('payroll.' . env('APP_URL'))->group(function () {
 
     Route::get('test', [AdminPageController::class, 'format'])->name('admin.formats');
-    Route::get('/', function () {
-        return Inertia::render("Payroll/LoginPage");
-    });
     Route::get('login', function () {
         return Inertia::render("Payroll/LoginPage");
-    })->name('payroll.login');
+    })->name('payroll.login')->middleware('prevent.auth.access');;
 
     Route::prefix('admin')->middleware(['usercheck:admin', 'auth'])->group(function () {
         Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
@@ -104,6 +102,8 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
 
         //export to excel
         Route::get('/export-salary-grades', [SalaryGradeController::class, 'exportToExcel'])->name('export.salary_grades');
+        Route::get('/export-payroll-function', [PayrollsheetController::class, 'exportPayrollFunction'])->name('export.payroll.function');
+        Route::get('/export-payroll-entries', [PayrollController::class, 'exportPayrollEntries'])->name('export.payroll.entries');
 
         Route::get('/employee/{id}', [PayrollSheetController::class, 'get_employee'])->name('admin.get_employee');
         Route::get('/compensationTypes', [PayrollSheetController::class, 'get_all_compensatation_types'])->name('admin.get_all_compensations');
@@ -114,7 +114,7 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::get('mypayslip', [PageController::class, 'mypayslip'])->name('employee.mypayslip');
     });
     Route::fallback(function () {
-        return redirect()->route('login');
+        return redirect()->route('payroll.login');
     });
 });
 
