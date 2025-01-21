@@ -20,6 +20,7 @@ import { Label } from "@/Components/ui/label";
 import { DataTable } from "@/Components/DataTable";
 import PaginationTable from "@/Components/Pagination";
 import {
+    AppointmentDelete,
     AppointmentStore,
     AppointmentUpdate,
 } from "./AppointmentCRUD";
@@ -113,7 +114,7 @@ export default AppointmentsPage;
 const columns: ColumnDef<appointmentTypes>[] = [
     { accessorKey: "appointment_code", header: "ID", enableSorting: true },
     { accessorKey: "type", header: "TYPE" },
-    { accessorKey: "basic_pay_type", header: "BASIC PAY TYPE" },
+    { accessorKey: "compensation_name", header: "BASIC PAY TYPE" },
     {
         accessorKey: "has_mandatory_deduction",
         header: "MANDATORY DEDUCTION",

@@ -8,6 +8,7 @@ use App\Models\CompensationType;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AppointmentController extends Controller
 {
@@ -19,16 +20,17 @@ class AppointmentController extends Controller
      */
     public function index(): Response
     {
-        // Fetch data from the database
-        $data = Appointment::all();
-
-        $compensationTypes = CompensationType::pluck('name');
-
-        // create a query that recieves appointments together with compensation_types.name
-        
+        $data = DB::select('
+            SELECT 
+                a.*, 
+                (SELECT ct.name 
+                FROM compensation_types AS ct 
+                WHERE a.compensation_code = ct.compensation_code) AS compensation_name
+            FROM appointments AS a;
+        ');
 
         // Return the data to the frontend
-        return Inertia::render('Payroll/Admin/AppointmentsPage/AppointmentsPage', ['data' => $data, 'compensationTypes' => $compensationTypes, csrf_token()]);
+        return Inertia::render('Payroll/Admin/AppointmentsPage/AppointmentsPage', ['data' => $data]);
     }
 
     /**
