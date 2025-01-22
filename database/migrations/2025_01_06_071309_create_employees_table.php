@@ -23,17 +23,17 @@ return new class extends Migration
             $table->foreignId('position_code')->constrained('positions')->references('position_code');
             $table->foreignId('user_code')->constrained('users')->references('id');
 
-                $table->string('employee_number')->unique();
+            $table->string('employee_number')->unique();
+            $table->string('scanner_id')->unique();
 
-                $table->string('first_name');
-                $table->string('middle_name')->nullable();
-                $table->string('last_name');
-                $table->string('name_extension')->nullable();
-                $table->integer('salary_step', false, true);
-                $table->string('scanner_id');
-                $table->boolean('is_active')->default(true);
-
-                $table->timestamps();
+            $table->string('first_name');
+            $table->string('middle_name')->nullable();
+            $table->string('last_name');
+            $table->string('name_extension')->nullable();
+            $table->integer('salary_step', false, true);
+            $table->boolean('is_active')->default(true);
+            $table->double('credits');
+            $table->timestamps();
         });
     }
 
