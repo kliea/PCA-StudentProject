@@ -50,10 +50,10 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
     Route::get('test', [AdminPageController::class, 'format'])->name('admin.formats');
     Route::get('login', function () {
         return Inertia::render("Payroll/LoginPage");
-    })->name('payroll.login')->middleware('prevent.auth.access');;
+    })->name('payroll.login')->middleware('prevent.auth.access');
 
-    // Route::prefix('admin')->middleware(['usercheck:admin', 'auth'])->group(function () {
     Route::prefix('admin')->group(function () {
+        // Route::prefix('admin')->group(function () {
         Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
         // PAYROLL ROUTES
         Route::get('payroll', [SummaryController::class, 'Summary'])->name('admin.payrolls');

@@ -16,8 +16,10 @@ class PreventAuthenticatedAccess
      */
     public function handle(Request $request, Closure $next): Response
     {
+        
         if (Auth::check() && $request->route()->getName() === 'payroll.login') {
             // Redirect authenticated user to the dashboard based on their role
+
             if (Auth::user()->user_level === 'admin') {
                 return redirect()->route('admin.dashboard');
             }
@@ -26,6 +28,8 @@ class PreventAuthenticatedAccess
                 return redirect()->route('employee.dashboard');
             }
         }
+
+
         return $next($request);
     }
 }

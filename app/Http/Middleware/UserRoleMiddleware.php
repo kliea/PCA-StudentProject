@@ -21,15 +21,11 @@ class UserRoleMiddleware
         $host = $request->getHost();
         $subdomain = explode('.', $host)[0];
 
-        
-
         if ($subdomain === 'payroll') {
-            if (Auth::check() && Auth::user()->user_level === $role) {
-                return $next($request);
-            }
 
             if (Auth::check()) {
                 if (Auth::user()->user_level === 'admin') {
+
                     return redirect()->route('admin.dashboard');
                 }
 
@@ -55,10 +51,10 @@ class UserRoleMiddleware
             }
 
             // Redirect to login for unauthorized users
-            return redirect()->route('login');  
+            return redirect()->route('login');
         }
 
-
+        
         // Redirect if user is not authorized
         return redirect()->route('payroll.login');
     }
