@@ -52,7 +52,7 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         return Inertia::render("Payroll/LoginPage");
     })->name('payroll.login')->middleware('prevent.auth.access');
 
-    Route::prefix('admin')->group(function () {
+    Route::prefix('admin')->middleware(['auth'])->group(function () {
         // Route::prefix('admin')->group(function () {
         Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
         // PAYROLL ROUTES
