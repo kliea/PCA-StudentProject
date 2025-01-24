@@ -18,7 +18,7 @@ import { ReactNode } from "react";
                                   */
 }
 
-export default Modal function ({
+export default function Modal({
     children,
     title,
     trigger,

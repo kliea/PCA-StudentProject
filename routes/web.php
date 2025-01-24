@@ -6,6 +6,7 @@ use App\Http\Controllers\Biometric\AttendanceRecordController;
 use App\Http\Controllers\Biometric\ManageUserController;
 use App\Http\Controllers\Payroll\PayrollSheetController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 
 // Controllers: Payroll
@@ -23,19 +24,9 @@ use App\Http\Controllers\Payroll\PayrollController;
 // Controllers: Biometrics
 use App\Http\Controllers\Biometrics\DailyTimeEntryController;
 use App\Http\Controllers\PageController;
-use Inertia\Inertia;
-use App\Http\Controllers\SalaryGradeController;
-use App\Http\Controllers\DailyTimeEntryController;
-use App\Http\Controllers\AgencyShareController;
-use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Biometric\HolidayCreationController;
 use App\Http\Controllers\Biometric\LeaveOrderController;
 use App\Http\Controllers\Biometric\TravelOrderController;
-use App\Http\Controllers\CompensationTypeController;
-use App\Http\Controllers\DeductionTypeController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\LoanController;
-use App\Http\Controllers\SummaryController;
 
 Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'generateNewBatch'])->name('generate-DTRs');
 
