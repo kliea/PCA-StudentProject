@@ -5,14 +5,15 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Faker\Factory as Faker;
 
 class DemoSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
-    {
+	/**
+	 * Run the database seeds.
+	 */
+	public function run(): void
+	{
 		DB::table('salary_grades')->insert([
 			['grade' => 1,	'step1' => 13000, 	'step2' => 13109,  'step3' => 13219,  'step4' => 13329,  'step5' => 13441,   'step6' => 13553,   'step7' => 13666,  'step8' => 13780],
 			['grade' => 2,	'step1' => 13819, 	'step2' => 13925,  'step3' => 14032,  'step4' => 14140,  'step5' => 14248,   'step6' => 14357,   'step7' => 14468,  'step8' => 14578],
@@ -210,14 +211,17 @@ class DemoSeeder extends Seeder
 			'ceiling_amount' => 0.0
 		]);
 
-		DB::table('agency_shares')->insert([
-			'agency_share_name' => 'GSIS',
-			'shorthand' => 'GSIS',
-			'amount' => 10000.0,
-			'is_mandatory' => true,
-			'remittance_percent' => 12.0,
-			'ceiling_amount' => 0.0
-		]);
+        for ($i = 0; $i < 10; $i++) {
+            DB::table('agency_shares')->insert([
+                'agency_share_name' => $faker->company . ' Share',
+                'shorthand' => strtoupper($faker->lexify('??')),
+                'amount' => $faker->randomFloat(2, 50, 500),
+                'is_mandatory' => $faker->boolean,
+                'remittance_percent' => $faker->randomFloat(2, 0.01, 0.15),
+                'ceiling_amount' => $faker->randomFloat(2, 10, 100),
+                'compensation_links' => DB::raw('ARRAY[' . implode(',', $faker->randomElements([1, 2, 3, 4, 5], 3)) . ']'),
+            ]);
+        }
 
 		DB::table('loan_types')->insert([
 			'loan_name' => 'House Loan'
@@ -254,8 +258,9 @@ class DemoSeeder extends Seeder
 			'begin_balance' => 100.0,
 			'paid_amount' => 200.0,
 			'balance' => 200.0,
+			'previous_paid' => 100.01,
 			'employee_code' => 1,
 			'loan_code' => 1
 		]);
-    }
+	}
 }

@@ -10,6 +10,8 @@ class Employee extends Model
 	protected $primaryKey = 'employee_code';
 
 	protected $fillable = [
+		'appointment_code',
+		'position_code',
 		'employee_number',
 		'first_name',
 		'middle_name',
@@ -18,9 +20,8 @@ class Employee extends Model
 		'device_bio_id',
 		'salary_type',
 		'salary_step',
-		'position_code',
-		'appointment_code',
-		'station_code'
+		'scanner_id',
+		'is_active',
 	];
 
 	public function position()

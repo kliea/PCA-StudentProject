@@ -1,5 +1,9 @@
+// TODO: ADD FUNCTIONALITY SA CARDS
+// FIXME: RECENT PAYROLS SHOULD BE PAYROLL SHEETS NOT PAYSLIPS
+// TODO: REMOVE RECENT LOAN REQUEST
+// TODO: FIX LOGIC SA DATE SELECTOR
+
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
-import { Head, usePage } from "@inertiajs/react";
 import StatusCard from "@/Components/StatusCard";
 import {
     Banknote,
@@ -30,6 +34,7 @@ import {
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
 import { AdminLinks } from "@/lib/payrollData";
+import AuthenticatedLayout from "@/Components/Layouts/Common/AuthenticatedLayout";
 
 type recentPayrolls = {
     period: string;
@@ -166,7 +171,10 @@ export default function Dashboard() {
         to: addDays(new Date(), 20),
     });
     return (
-        <AuthenticatedLayoutAdmin title="Dashboard" links={AdminLinks}>
+        <AuthenticatedLayout
+            pageTitle="Salary Standard Law"
+            navigationType="payrollAdmin"
+        >
             <DatePickerWithRange
                 className="mb-5"
                 date={date}
@@ -251,6 +259,6 @@ export default function Dashboard() {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayoutAdmin>
+        </AuthenticatedLayout>
     );
 }

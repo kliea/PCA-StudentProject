@@ -10,15 +10,18 @@ class DeductionType extends Model
 	protected $primaryKey = 'deduction_code';
 
 	protected $fillable = [
-		'deduction_name',
+		'name',
 		'shorthand',
-		'amount',
 		'is_mandatory',
+		'compensation_link',
+		'fixed_amount',
 		'remittance_percent',
-		'ceiling_amount'
+		'ceiling_amount',
 	];
 
-	public function appliedDeduction() {
+
+	public function appliedDeduction()
+	{
 		return $this->hasMany(AppliedDeduction::class);
 	}
 }

@@ -10,14 +10,12 @@ class TravelOrder extends Model
 	protected $primaryKey = 'travel_order_code';
 
 	protected $fillable = [
-		'date_filed',
+		'type',
+		'description',
 		'start_date',
 		'end_date',
-		'travel_order_type',
-		'travel_order_description',
-		'travel_order_status',
-		'employee_code',
-		'approver_code'
+		'file_date',
+		'is_approved',
 	];
 
 	public function employee() {
