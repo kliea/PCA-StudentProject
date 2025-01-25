@@ -25,6 +25,7 @@ import {
 } from "@/Components/ui/dialog";
 import { Button } from "@/Components/ui/button";
 import { useState } from "react";
+import PaginationTable from "@/Components/Pagination";
 
 // Column Definitions
 const columns: ColumnDef<ColumnType>[] = [
@@ -120,6 +121,7 @@ export default function ShowAttendance() {
                         pageSize={10} // Limit to 10 rows per page
                     />
                 </div>
+                <PaginationTable table={table}></PaginationTable>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin >
     );

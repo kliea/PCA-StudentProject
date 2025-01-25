@@ -8,7 +8,7 @@ import {
 import { Calendar } from "lucide-react";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
-
+import PaginationTable from "@/Components/Pagination";
 import { addDays } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
@@ -218,6 +218,7 @@ export default function HolidayCreation() {
                         table={table}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
                     ></DataTable>
+                    <PaginationTable table={table}></PaginationTable>
                 </div>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin>

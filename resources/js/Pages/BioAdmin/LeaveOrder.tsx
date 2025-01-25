@@ -14,7 +14,7 @@ import {
 import { File, MoreHorizontal } from "lucide-react";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
-
+import PaginationTable from "@/Components/Pagination";
 import {
     Select,
     SelectContent,
@@ -63,7 +63,7 @@ const columns: ColumnDef<columnTypes>[] = [
                     dialogtitle: cn("View Leave Details"),
                     dialogContent: <OrderRead RowData={rowData}></OrderRead>,
                 },
-                
+
             ];
 
             return (
@@ -165,6 +165,8 @@ export default function LeaveOrder() {
                         table={table}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
                     ></DataTable>
+                    <PaginationTable table={table}></PaginationTable>
+
                 </div>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin>

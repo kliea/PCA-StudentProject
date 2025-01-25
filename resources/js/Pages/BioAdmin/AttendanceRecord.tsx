@@ -12,7 +12,7 @@ import { File, FileSearch } from "lucide-react";
 import Data from "@/Components/Constants/data5.json";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
-
+import PaginationTable from "@/Components/Pagination";
 import { useDateRange } from "@/hooks/BioAdmin/useDateRange";
 
 import {
@@ -260,7 +260,7 @@ export default function AttendanceRecord() {
                         pageSize={5} // Limit to 5 rows per page
 
                     ></DataTable>
-
+                    <PaginationTable table={table}></PaginationTable>
                 </div>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin>

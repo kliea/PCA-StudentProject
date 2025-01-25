@@ -18,7 +18,7 @@ import {
 } from "@/Components/ui/dialog";
 import { useEffect, useState } from "react";
 import { Alert, AlertTitle, AlertDescription } from "@/Components/ui/alert"; // Import your Alert component
-
+import PaginationTable from "@/Components/Pagination";
 
 
 type EmployeeType = {
@@ -297,7 +297,9 @@ export default function ManageUsers() {
                         columns={columns}
                         table={table}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
-                    />
+                    />                    <PaginationTable table={table}></PaginationTable>
+
+
                 </div>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin >

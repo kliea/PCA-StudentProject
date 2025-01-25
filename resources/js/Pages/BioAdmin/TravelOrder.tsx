@@ -25,9 +25,9 @@ import {
 import { addDays } from "date-fns";
 import React, { useState } from "react";
 import { DateRange } from "react-day-picker";
-
+import PaginationTable from "@/Components/Pagination";
 import {
-    
+
     OrderRead,
     OrderStore,
     OrderUpdate,
@@ -67,7 +67,7 @@ const columns: ColumnDef<columnTypes>[] = [
                     dialogtitle: cn("View Travel Order Details"),
                     dialogContent: <OrderRead RowData={rowData}></OrderRead>,
                 },
-                
+
             ];
 
             return (
@@ -161,10 +161,10 @@ export default function TravelOrder() {
                             >
                                 <OrderStore
                                     openDialog={() =>
-                                        setOpenDialog(!openDialog) 
-                                        
+                                        setOpenDialog(!openDialog)
+
                                     }
-                                     formType="travel"
+                                    formType="travel"
                                 />
                             </DialogMenu>
                         </section>
@@ -177,6 +177,7 @@ export default function TravelOrder() {
                         table={table}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
                     ></DataTable>
+                    <PaginationTable table={table}></PaginationTable>
                 </div>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin>

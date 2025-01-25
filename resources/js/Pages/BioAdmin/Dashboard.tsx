@@ -23,7 +23,7 @@ import {
 } from "@tanstack/react-table";
 import { DataTable } from "@/Components/DataTable";
 import { DatePickerWithRange } from "@/Components/DateRangePicker";
-
+import PaginationTable from "@/Components/Pagination";
 import payrollData from "@/Components/Constants/data3.json";
 import loanData from "@/Components/Constants/data4.json";
 import React from "react";
@@ -150,9 +150,10 @@ export default function dashboardb() {
                                 table={table}
                                 pageSize={5} // Limit to 5 rows per page
                             />
+                            <PaginationTable table={table}></PaginationTable>
+
                         </BodyContentLayout>
                     </div>
-
                 </div>
             </div>
         </AuthenticatedLayoutAdmin>
