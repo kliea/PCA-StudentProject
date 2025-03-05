@@ -24,27 +24,28 @@ import { useForm } from "@inertiajs/react";
 import { Alert, AlertTitle, AlertDescription } from "@/Components/ui/alert"; // Import your Alert component
 
 
-//  Set accepted column types
 type columnTypes = {
-    holiday_code: string;
+    holiday_code: number;
     date: string;
-    holiday_name: string;
-    dayoftheweek: string;
+    name: string;
+    type: string;
+    is_recurring: boolean;
+    created_at: string | null;
+    updated_at: string | null;
 };
+
 // Generate the headers for the columns
 const columns: ColumnDef<columnTypes>[] = [
     { accessorKey: "holiday_code", header: "Holiday No." },
     { accessorKey: "date", header: "Date" },
-    { accessorKey: "holiday_name", header: "Name" },
-    { accessorKey: "dayoftheweek", header: "Day Of The Week" },
-    // { accessorKey: "dateend", header: "Date End" },
-
-
+    { accessorKey: "name", header: "Name" },
+    { accessorKey: "type", header: "Holiday Type" },
 ];
 
 
 export default function HolidayCreation() {
-    const { holidayData } = usePage<{ holidayData: ColumnType[] }>().props
+    const { holidayData } = usePage<{ holidayData: ColumnType[] }>().props;
+    console.log(holidayData);
     const { table, globalFilter, setGlobalFilter } = useTable({
         data: holidayData,
         columns,

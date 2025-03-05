@@ -29,12 +29,35 @@ class TravelOrderController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'type' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'file_date' => 'required|date',
+            'is_approved' => 'nullable|boolean',
+            'employee_number' => 'required|exists:employees,employee_number', // Assuming you have an employees table
+        ]);
+
+        // Create a new TravelOrder instance with the validated data
+        $travelOrder = TravelOrder::create([
+            'type' => $validatedData['type'],
+            'description' => $validatedData['description'],
+            'start_date' => $validatedData['start_date'],
+            'end_date' => $validatedData['end_date'],
+            'file_date' => $validatedData['file_date'],
+            'is_approved' => $validatedData['is_approved'] ?? false, // Default to false if not provided
+        ]);
+
+        // Associate the travel order with an employee
+        $travelOrder->employee()->associate($validatedData['employee_number']);
+        $travelOrder->save();
+
+        // Redirect or return a response
+        return redirect()->route('bioadmin.travelorder')->with('success', 'Travel Order created successfully.');
     }
 
     /**

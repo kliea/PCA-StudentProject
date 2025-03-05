@@ -38,23 +38,26 @@ import { cn } from "@/lib/utils";
 
 //  Set accepted column types
 type columnTypes = {
-    employee_code: string;
-    // name: string;
+    travel_order_code: number;
+    description: string;
     start_date: string;
     end_date: string;
-    travel_order_type: string;
-    venuedestination: string;
-    travel_order_status: string;
+    file_date: string;
+    is_approved: boolean;
+    type: string;
+    updated_at: string | null;
+    created_at: string | null;
 };
+
 // Generate the headers for the columns
 const columns: ColumnDef<columnTypes>[] = [
-    { accessorKey: "employee_code", header: "Employee ID" },
+    { accessorKey: "description", header: "Employee ID" },
     // { accessorKey: "name", header: "Name" },
     { accessorKey: "start_date", header: "Start Date" },
     { accessorKey: "end_date", header: "End Date" },
-    { accessorKey: "travel_order_type", header: "Purpose of Travel" },
-    { accessorKey: "venuedestination", header: "Venue Destination" },
-    { accessorKey: "travel_order_status", header: "Status" },
+    { accessorKey: "type", header: "Purpose of Travel" },
+    { accessorKey: "description", header: "Venue Destination" },
+    { accessorKey: "is_approved", header: "Status" },
     {
         id: "actions",
         cell: ({ row }) => {
@@ -95,7 +98,9 @@ const columns: ColumnDef<columnTypes>[] = [
 
 
 export default function TravelOrder() {
-    const { travelOrderData } = usePage<{ travelOrderData: ColumnType[] }>().props
+    const { travelOrderData } = usePage<{ travelOrderData: ColumnType[] }>().props;
+
+    console.log(travelOrderData);
     const { table, globalFilter, setGlobalFilter } = useTable({
         data: travelOrderData,
         columns,
@@ -162,7 +167,6 @@ export default function TravelOrder() {
                                 <OrderStore
                                     openDialog={() =>
                                         setOpenDialog(!openDialog)
-
                                     }
                                     formType="travel"
                                 />

@@ -24,19 +24,22 @@ import PaginationTable from "@/Components/Pagination";
 type EmployeeType = {
     appointment_code: number;
     created_at: string | null;
-    device_bio_id: string;
+    credits: string;
     employee_code: number;
     employee_number: string;
     first_name: string;
+    is_active: boolean;
     last_name: string;
     middle_name: string | null;
     name_extension: string | null;
     position: string | null;
     position_code: number;
     salary_step: number;
-    salary_type: string;
-    station_code: number;
+    scanner_id: string;
+    updated_at: string | null;
+    user_code: number;
 };
+
 
 const columns: ColumnDef<EmployeeType>[] = [
     { accessorKey: "employee_number", header: "Employee Number" },
@@ -47,7 +50,7 @@ const columns: ColumnDef<EmployeeType>[] = [
             `${row.original.first_name} ${row.original.middle_name ? row.original.middle_name + ' ' : ''}${row.original.last_name}${row.original.name_extension ? ' ' + row.original.name_extension : ''}`
     },
     { accessorKey: "position_code", header: "Position Code" },
-    { accessorKey: "salary_type", header: "Salary Type" },
+    { accessorKey: "scanner_id", header: "Biometric Device ID" },
 ];
 
 export default function ManageUsers() {

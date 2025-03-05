@@ -42,17 +42,16 @@ export function DataTable<TData, TValue>({
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup: any) => (
                             <TableRow key={headerGroup.id}>
-                                {headerGroup.headers.map((header: any) => {
+                                {headerGroup.headers.map((header: any, index: number) => {
                                     return (
                                         <TableHead
                                             key={header.id}
-                                            className={headerStyle}
+                                            className={'text-center'} // Tailwind class for margin-left
                                         >
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
-                                                    header.column.columnDef
-                                                        .header,
+                                                    header.column.columnDef.header,
                                                     header.getContext()
                                                 )}
                                         </TableHead>

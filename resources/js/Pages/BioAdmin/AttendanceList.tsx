@@ -39,7 +39,6 @@ const columns: ColumnDef<ColumnType>[] = [
     { accessorKey: "overtime_out", header: "Overtime Out" },
     { accessorKey: "tardy_minutes", header: "Tardy Minutes" },
     { accessorKey: "undertime_minutes", header: "Undertime Minutes" },
-    { accessorKey: "overtime_minutes", header: "Overtime Minutes" },
     { accessorKey: "work_minutes", header: "Work Time Minutes" },
 ];
 

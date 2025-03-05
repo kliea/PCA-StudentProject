@@ -36,21 +36,28 @@ import DropdownDialog from "@/Components/DropdownDialog";
 import { cn } from "@/lib/utils";
 //  Set accepted column types
 type columnTypes = {
-    employee_code: string;
-    // name: string;
+    leave_request_code: number;
+    employee_code: number;
+    approver_code: number;
+    description: string;
     leave_request_type: string;
-    date_filed: string;
-    leave_request_status: string;
+    start_date: string;
+    end_date: string;
+    file_date: string;
+    is_approved: boolean;
+    created_at: string | null;
+    updated_at: string | null;
 };
+
 // Generate the headers for the columns
 const columns: ColumnDef<columnTypes>[] = [
     { accessorKey: "employee_code", header: "Employee ID" },
-    // { accessorKey: "name", header: "Name" },
+    { accessorKey: "name", header: "Name" },
     {
-        accessorKey: "leave_request_type", header: "Leave Type"
+        accessorKey: "type", header: "Leave Type"
     },
-    { accessorKey: "date_filed", header: "Applied On" },
-    { accessorKey: "leave_request_status", header: "Status" },
+    { accessorKey: "file_date", header: "Applied On" },
+    { accessorKey: "is_approved", header: "Status" },
     {
         id: "actions",
         cell: ({ row }) => {
@@ -90,7 +97,8 @@ const columns: ColumnDef<columnTypes>[] = [
 
 
 export default function LeaveOrder() {
-    const { leaveData } = usePage<{ leaveData: ColumnType[] }>().props
+    const { leaveData } = usePage<{ leaveData: ColumnType[] }>().props;
+    console.log(leaveData);
     const { table, globalFilter, setGlobalFilter } = useTable({
         data: leaveData,
         columns,

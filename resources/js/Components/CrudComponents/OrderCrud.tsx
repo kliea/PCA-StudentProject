@@ -5,10 +5,16 @@ import { Input } from "@/Components/ui/input";
 import InputError from "../InputError";
 import { Button } from "../ui/button";
 
-export function OrderStore({ openDialog, formType }: { openDialog: any, formType: "leave" | "travel" }) {
+export function OrderStore({ openDialog, formType }: { openDialog: any; formType: "leave" | "travel" }) {
+
+  const currentDate = new Date().toISOString().split("T")[0];
+
+
   const { data, setData, post, processing, errors, reset } = useForm({
-    // Common fields (could be shared across forms)
-    employee_code: "",
+    // Common fields
+    employee_number: "",
+    file_date: currentDate, // Set default to current date
+
 
     // Fields for Leave Request
     leave_request_type: "",
@@ -18,13 +24,22 @@ export function OrderStore({ openDialog, formType }: { openDialog: any, formType
     // Fields for Travel Order
     start_date: "",
     end_date: "",
-    travel_order_type: "",
+    type: "",
     venuedestination: "",
     travel_order_status: "",
   });
+
   const submit: FormEventHandler = (e) => {
     e.preventDefault();
-
+    post(route("store.bioadmin.travelorder"), {
+      onSuccess: () => {
+        reset();
+        openDialog(); // Close the dialog on success
+      },
+      onError: (errors) => {
+        console.error("Failed to create order:", errors);
+      },
+    });
   };
 
   return (
@@ -38,31 +53,39 @@ export function OrderStore({ openDialog, formType }: { openDialog: any, formType
           <p className="text-sm text-gray-600">Leave Credits: 212</p>
         </div>
 
+        {/* Common Fields */}
+        <div>
+          <Label htmlFor="employee_id" className={errors.employee_number ? "text-red-600" : ""}>
+            Employee ID
+          </Label>
+          <Input
+            id="employee_id"
+            type="text"
+            value={data.employee_number}
+            onChange={(e) => setData("employee_number", e.target.value)}
+          />
+          <InputError message={errors.employee_number} className="mt-2" />
+        </div>
+
+        <div>
+          <Label htmlFor="file_date" className={errors.file_date ? "text-red-600" : ""}>
+            File Date
+          </Label>
+          <Input
+            id="file_date"
+            type="date"
+            value={data.file_date}
+            onChange={(e) => setData("file_date", e.target.value)}
+          />
+          <InputError message={errors.file_date} className="mt-2" />
+        </div>
+
         {/* Conditional Rendering of Fields Based on formType */}
         {formType === "leave" ? (
           // Leave Request Fields
           <>
             <div>
-              <Label
-                htmlFor="employee_code"
-                className={errors.employee_code ? "text-red-600" : ""}
-              >
-                Employee ID
-              </Label>
-              <Input
-                id="employee_code"
-                type="text"
-                value={data.employee_code}
-                onChange={(e) => setData("employee_code", e.target.value)}
-              />
-              <InputError message={errors.employee_code} className="mt-2" />
-            </div>
-
-            <div>
-              <Label
-                htmlFor="leave_request_type"
-                className={errors.leave_request_type ? "text-red-600" : ""}
-              >
+              <Label htmlFor="leave_request_type" className={errors.leave_request_type ? "text-red-600" : ""}>
                 Leave Request Type
               </Label>
               <Input
@@ -75,10 +98,7 @@ export function OrderStore({ openDialog, formType }: { openDialog: any, formType
             </div>
 
             <div>
-              <Label
-                htmlFor="date_filed"
-                className={errors.date_filed ? "text-red-600" : ""}
-              >
+              <Label htmlFor="date_filed" className={errors.date_filed ? "text-red-600" : ""}>
                 Date Filed
               </Label>
               <Input
@@ -91,10 +111,7 @@ export function OrderStore({ openDialog, formType }: { openDialog: any, formType
             </div>
 
             <div>
-              <Label
-                htmlFor="leave_request_status"
-                className={errors.leave_request_status ? "text-red-600" : ""}
-              >
+              <Label htmlFor="leave_request_status" className={errors.leave_request_status ? "text-red-600" : ""}>
                 Leave Request Status
               </Label>
               <Input
@@ -110,26 +127,7 @@ export function OrderStore({ openDialog, formType }: { openDialog: any, formType
           // Travel Order Fields
           <>
             <div>
-              <Label
-                htmlFor="employee_code"
-                className={errors.employee_code ? "text-red-600" : ""}
-              >
-                Employee ID
-              </Label>
-              <Input
-                id="employee_code"
-                type="text"
-                value={data.employee_code}
-                onChange={(e) => setData("employee_code", e.target.value)}
-              />
-              <InputError message={errors.employee_code} className="mt-2" />
-            </div>
-
-            <div>
-              <Label
-                htmlFor="start_date"
-                className={errors.start_date ? "text-red-600" : ""}
-              >
+              <Label htmlFor="start_date" className={errors.start_date ? "text-red-600" : ""}>
                 Start Date
               </Label>
               <Input
@@ -142,10 +140,7 @@ export function OrderStore({ openDialog, formType }: { openDialog: any, formType
             </div>
 
             <div>
-              <Label
-                htmlFor="end_date"
-                className={errors.end_date ? "text-red-600" : ""}
-              >
+              <Label htmlFor="end_date" className={errors.end_date ? "text-red-600" : ""}>
                 End Date
               </Label>
               <Input
@@ -158,26 +153,20 @@ export function OrderStore({ openDialog, formType }: { openDialog: any, formType
             </div>
 
             <div>
-              <Label
-                htmlFor="travel_order_type"
-                className={errors.travel_order_type ? "text-red-600" : ""}
-              >
+              <Label htmlFor="type" className={errors.type ? "text-red-600" : ""}>
                 Travel Order Type
               </Label>
               <Input
-                id="travel_order_type"
+                id="type"
                 type="text"
-                value={data.travel_order_type}
-                onChange={(e) => setData("travel_order_type", e.target.value)}
+                value={data.type}
+                onChange={(e) => setData("type", e.target.value)}
               />
-              <InputError message={errors.travel_order_type} className="mt-2" />
+              <InputError message={errors.type} className="mt-2" />
             </div>
 
             <div>
-              <Label
-                htmlFor="venuedestination"
-                className={errors.venuedestination ? "text-red-600" : ""}
-              >
+              <Label htmlFor="venuedestination" className={errors.venuedestination ? "text-red-600" : ""}>
                 Venue/Destination
               </Label>
               <Input
@@ -190,10 +179,7 @@ export function OrderStore({ openDialog, formType }: { openDialog: any, formType
             </div>
 
             <div>
-              <Label
-                htmlFor="travel_order_status"
-                className={errors.travel_order_status ? "text-red-600" : ""}
-              >
+              <Label htmlFor="travel_order_status" className={errors.travel_order_status ? "text-red-600" : ""}>
                 Travel Order Status
               </Label>
               <Input
@@ -209,7 +195,6 @@ export function OrderStore({ openDialog, formType }: { openDialog: any, formType
 
         {/* Submit and Cancel Buttons */}
         <div className="flex justify-between gap-3">
-
           <Button
             variant="destructive"
             className="mt-5 w-full"
@@ -229,7 +214,6 @@ export function OrderStore({ openDialog, formType }: { openDialog: any, formType
     </div>
   );
 }
-
 export function OrderUpdate({ RowData }: { RowData: any }) {
 
 }
