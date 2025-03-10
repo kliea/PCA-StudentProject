@@ -98,9 +98,8 @@ const columns: ColumnDef<columnTypes>[] = [
 
 
 export default function TravelOrder() {
-    const { travelOrderData } = usePage<{ travelOrderData: ColumnType[] }>().props;
+    const { travelOrderData } = usePage<{ travelOrderData: ColumnTypes[] }>().props;
 
-    console.log(travelOrderData);
     const { table, globalFilter, setGlobalFilter } = useTable({
         data: travelOrderData,
         columns,

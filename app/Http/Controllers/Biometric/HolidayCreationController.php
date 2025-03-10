@@ -22,6 +22,16 @@ class HolidayCreationController extends Controller
         ]);
     }
 
+    public function istitk()
+    {
+        $holidayData = Holiday::all();
+
+        return Inertia::render('BioAdmin/HolidayCreation', [
+            'holidayData' => $holidayData,
+            'message' => 'All the leave data have been retrieved successfully.'
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
